@@ -1,0 +1,246 @@
+/** common mixins **/
+.default-font(@font-size: 14px, @font-color: #000){
+    font-family: '微軟正黑體', "Heiti TC", serif;
+    font-size: @font-size;
+    color: @font-color;
+}
+.abs-div(@left; @top; @width; @height; @image-src: ignore; @marginLeft:0; @marginTop:0;){
+    position: absolute;
+    left: @left * 1px;
+    top: @top * 1px;
+    width: @width * 1px;
+    height: @height * 1px;
+    margin-left: @marginLeft * 1px;
+    margin-top: @marginTop * 1px;
+
+    & when not (@image-src = ignore)
+    {
+        .image-bg(@image-src);
+    }
+}
+.abs-div-2(@selector: none; @left; @top; @width; @height; @image-src: ignore; @marginLeft:0; @marginTop:0;){
+
+
+    & when not (@selector = none)
+    {
+        .@{selector}{
+            .my-mixin();
+        }
+    }
+
+    & when (@selector = none)
+    {
+        .my-mixin();
+    }
+
+    .my-mixin() {
+        .abs-div(@left, @top, @width, @height, @image-src, @marginLeft, @marginTop);
+    }
+}
+.centralized-div(@left; @top; @width; @height; @offsetX:0; @offsetY:0;){
+    position: absolute;
+    left: @left;
+    top: @top;
+    width: @width;
+    height: @height;
+    margin-left: -@width*.5 + @offsetX;
+    margin-top: -@height*.5 + @offsetY;
+}
+.label-centralize(@cwidth, @cheight, @width, @height, @offsetX: 0, @offsetY: 0, @scale: 1){
+    position: absolute;
+
+
+    @w: @width * @scale;
+    @h: @height * @scale;
+
+    width: percentage(@w/@cwidth);
+    height: percentage(@h/@cheight);
+    left: percentage((-@w*.5 + @offsetX)/@cwidth);
+    top: percentage((@offsetY)/@cheight);
+
+}
+
+.unselectable(){
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.percent-container(@position: absolute; @width: 100px; @height: 100px;){
+    position: @position;
+    width: @width;
+    height: @height;
+}
+
+.percent-div(@selector: none; @left: 0; @top: 0; @width; @height; @image-src: none;
+    @left-percent: 0; @top-percent: 0; @cwidth: 100; @cheight: 100;
+    @background-size: cover; @background-color: none; @scale: 1;)
+{
+    & when not (@selector = none)
+    {
+        .@{selector}{
+            .my-mixin();
+        }
+    }
+
+    & when (@selector = none)
+    {
+        .my-mixin();
+    }
+
+    .my-mixin(){
+
+        position: absolute;
+
+        @w: @width * @scale;
+        @h: @height * @scale;
+
+        left: percentage((@left + @w*@left-percent)/@cwidth);
+        top: percentage((@top + @h*@top-percent)/@cheight);
+
+        width: percentage(@w/@cwidth);
+        height: percentage(@h/@cheight);
+        & when not(@image-src = none){
+            .image-bg(@image-src, @background-size);
+        }
+        & when not(@background-color = none)
+        {
+            background-color: @background-color;
+        }
+    }
+}
+.image-bg(@src; @background-size: auto;){
+    @image-path: "../images/";
+    background-image: url("@{image-path}@{src}");
+    background-size: @background-size;
+}
+.fade-button(@image-src, @background-offset: 0 -100%, @duration: .5s){
+    &:hover{
+        cursor: pointer;
+    }
+    .hover-clip{
+        position: absolute;
+        width: 100%;
+        height:100%;
+        .image-bg(@image-src);
+        background-position: @background-offset;
+        background-size: cover;
+
+        opacity: 0;
+        transition: opacity @duration ease-in;
+
+        &:hover{
+            opacity: 1;
+        }
+
+        &.selected{
+            opacity: 1;
+        }
+    }
+}
+.fade-button-2(@image-src, @background-offset: 0 -100%, @duration: .5s){
+    overflow: hidden;
+    .bottom-clip{
+        position: absolute;
+        width: 200%;
+        height:100%;
+        .image-bg(@image-src, cover);
+
+        opacity: 1;
+        transition: opacity @duration ease-in;
+    }
+    .top-clip{
+        position: absolute;
+        width: 200%;
+        height:100%;
+        left: -100%;
+        .image-bg(@image-src, cover);
+
+        opacity: 0;
+        transition: opacity @duration ease-in;
+    }
+
+    &:hover{
+        cursor: pointer;
+
+        .bottom-clip{
+            opacity: 0;
+        }
+        .top-clip{
+            opacity: 1;
+        }
+    }
+}
+
+.image-div(@selector: none; @src; @left; @top; @w; @h; @cursor: default;){
+
+    & when not (@selector = none)
+    {
+        .@{selector}{
+            .my-mixin();
+        }
+    }
+
+    & when (@selector = none)
+    {
+        .my-mixin();
+    }
+
+    .my-mixin()
+    {
+        position: absolute;
+        .image-bg(@src);
+        left: @left*1px;
+        top: @top*1px;
+        width: @w*1px;
+        height: @h*1px;
+        cursor: @cursor;
+    }
+
+}
+.fade-btn(@selector: none; @src; @left; @top; @w; @h; @duration: .4s;){
+
+    & when not (@selector = none)
+    {
+        .@{selector}{
+            .my-mixin();
+        }
+    }
+
+    & when (@selector = none)
+    {
+        .my-mixin();
+    }
+
+    .my-mixin(){
+
+        position: absolute;
+        .image-bg(@src);
+        left: @left*1px;
+        top: @top*1px;
+        width: @w*1px;
+        height: @h*1px;
+
+        .hover-state{
+            .image-bg(@src);
+            width: @w*1px;
+            height: @h*1px;
+            background-position: 0 -100%;
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: opacity @duration ease-out;
+        }
+
+        &:hover{
+            cursor: pointer;
+            .hover-state{
+                opacity: 1;
+            }
+        }
+    }
+}

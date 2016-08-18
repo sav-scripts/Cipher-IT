@@ -1,0 +1,94 @@
+/** common mixins **/
+html {
+  padding: 0;
+  margin: 0;
+}
+body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background: #faefd8;
+  padding: 0;
+  margin: 0;
+}
+.template-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#scene-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#invisible-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+.bound {
+  position: absolute;
+  border: 1px solid red;
+  margin-left: -1px;
+  margin-top: -1px;
+  z-index: 1000;
+  pointer-events: none;
+}
+.bound .text {
+  position: absolute;
+  top: 4px;
+  width: 200px;
+  height: 20px;
+  left: 50%;
+  margin-left: -100px;
+  color: red;
+  text-align: center;
+}
+/* index */
+#index {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+  /*
+    .my-image{
+        .centralized-div(50%, 50%, 1200px, 628px);
+        .image-bg("sample.png");
+    }
+    */
+}
+#index .my-image {
+  position: absolute;
+  left: -600%;
+  top: -314%;
+  width: 1900%;
+  height: 628%;
+  background-image: url("../images/sample.png");
+  background-size: cover;
+}
+@media (max-width: 1280px) {
+  #index .my-image {
+    position: absolute;
+    left: -600%;
+    top: -314%;
+    width: 1200%;
+    height: 628%;
+    background-image: url("../images/sample.png");
+    background-size: cover;
+  }
+}
+@media (max-width: 640px) {
+  #index .my-image {
+    position: absolute;
+    left: -300%;
+    top: -157%;
+    width: 600%;
+    height: 314%;
+    background-image: url("../images/sample.png");
+    background-size: cover;
+  }
+}

@@ -1,0 +1,65 @@
+<shader id="shape">
+
+
+    <script type="x-shader/x-vertex">
+
+        // Attributes
+        attribute vec3 position;
+        attribute vec2 uv;
+        attribute vec2 uv2;
+
+        // Uniforms
+        uniform mat4 worldViewProjection;
+
+        // Varying
+        varying vec2 vUV;
+
+        void main()
+        {
+            gl_Position = worldViewProjection * vec4(position, 1.0);
+//            vUV = uv2;
+            vUV = uv;
+//            vTime = t;
+        }
+
+    </script>
+
+    <script type="x-shader/x-fragment">
+
+        #define M_PI 3.1415926535897932384626433832795
+
+        const float PIx2 = M_PI *2.0;
+
+        varying vec2 vUV;
+
+        uniform sampler2D textureSampler;
+        uniform sampler2D noiseSampler;
+        uniform float time;
+
+        float rand(vec2 co){
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+
+
+        void main(void) {
+
+            float t = time * 300. + .0001;
+
+//            vec2 uv = vec2(vUV.x, mod(vUV.y + time, 1.0));
+//            gl_FragColor = texture2D(textureSampler, uv);
+
+            gl_FragColor = texture2D(textureSampler, vUV);
+
+//            gl_FragColor.w = .5;
+
+//            gl_FragColor.w = rand(vUV*(time+.001));
+            gl_FragColor = vec4(1.0, 1.0, 1.0, .5);
+
+            gl_FragColor.w = sin(vUV.y*10000. + t * PIx2) * .3;
+        }
+
+
+    </script>
+
+</shader>

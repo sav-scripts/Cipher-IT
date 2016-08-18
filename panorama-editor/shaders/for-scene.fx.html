@@ -1,0 +1,112 @@
+<shader id="noise">
+
+
+    <script type="x-shader/x-vertex">
+
+        // Attributes
+        attribute vec3 position;
+        attribute vec2 uv;
+        attribute vec2 uv2;
+
+        // Uniforms
+        uniform mat4 worldViewProjection;
+
+        // Varying
+        varying vec2 vUV;
+        varying float vTime;
+
+        float rand(vec2 co){
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+        void main()
+        {
+            gl_Position = worldViewProjection * vec4(position, 1.0);
+            vUV = uv;
+            vTime = rand(vec2(position.y, position.y));
+        }
+
+    </script>
+
+    <script type="x-shader/x-fragment">
+
+        #define M_PI 3.1415926535897932384626433832795
+
+        const float PIx2 = M_PI *2.0;
+
+        const float MOTION_BLUR_POWER = .3;
+        const float MOTION_BLUR_POWERx2 = MOTION_BLUR_POWER * 2.;
+
+        varying vec2 vUV;
+//        varying float vTime;
+
+        uniform sampler2D textureSampler;
+        uniform sampler2D noiseSampler;
+        uniform float time;
+        uniform vec2 motion;
+
+        float rand(vec2 co){
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+
+
+        void main(void)
+        {
+
+            gl_FragColor = texture2D(textureSampler, vUV);
+
+            float motionPower = .0;
+
+            if(motion.x != 0. || motion.y != 0.)
+            {
+                float dx = .02 * motion.x;
+                float dy = -.02 * motion.y;
+
+                gl_FragColor += texture2D(textureSampler, vec2(vUV.x+dx, vUV.y+dy)) * MOTION_BLUR_POWER;
+                motionPower += MOTION_BLUR_POWER;
+            }
+
+            if(motionPower > .0) gl_FragColor /= (1. + motionPower);
+
+
+
+            // split float part and int part from U
+            /*
+            float modX = mod(vUV.x * 1000., 1.);
+            float x = vUV.x * 10000.;
+            x = x - mod(x, 1.);
+            float r  = rand(vec2(x*.0001, x*.0001));
+            */
+
+            float r  = rand(vec2(vUV.x*.0001, vUV.x*.0001));
+
+            /*
+            float alpha2 = sin(vUV.y*10. - t * PIx2);
+
+            if(vUV.y < .2)
+            {
+                alpha2 *= smoothstep(.0, .2, vUV.y);
+            }
+            if(vUV.y > .8)
+            {
+                alpha2 *= smoothstep(1.0, .8, vUV.y);
+            }
+            */
+
+            //if(gl_FragColor.x < .8) return;
+
+//            float noiseFactor = (gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3. * .5;
+            float noiseFactor = .5;
+
+            float r2 = rand(vUV*time) * noiseFactor;
+
+            //if(r2 > .5) r2 = .0;
+
+            gl_FragColor.xyz *= 1. + r2;
+        }
+
+
+    </script>
+
+</shader>

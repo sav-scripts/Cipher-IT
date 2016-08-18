@@ -1,0 +1,77 @@
+<html>
+<head>
+
+    <title>Scene Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="viewport" content="width=device-width">
+    <!--<meta name="mobile-web-app-capable" content="yes">-->
+
+
+    <style>
+        html, body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /*overflow-x: hidden;*/
+            /*overflow-y: auto;*/
+            background:black;
+        }
+
+        #render-canvas{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+        .test-layer{
+            position: absolute;
+            width: 600px;
+            height: 300px;
+            touch-action: none;
+            z-index: 1;
+        }
+
+    </style>
+
+</head>
+
+<body onload="Main.init();">
+
+    <canvas id="render-canvas"></canvas>
+
+
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script src="js/lib/babylon.2.4.max.js"></script>
+    <script src="js/lib/babylon.skyMaterial.js"></script>
+    <script src="js/lib/hand-1.3.7.js"></script>
+    <script src="js/lib/KeyboardControl.0.0.2.js"></script>
+    <script src="js/lib/dat.gui.js"></script>
+    <script src="js/Main.js"></script>
+    <script src="js/SphereScene.js"></script>
+    <script src="js/lib/pnltri.js"></script>
+    <script src="js/ShapeEditor.js"></script>
+    <script src="js/ShaderLoader.js"></script>
+    <script src="js/BillboardEditor.js"></script>
+    <script src="js/MaterialLib.js"></script>
+    <script src="js/PostProcessLib.js"></script>
+
+    <style scoped="">
+
+        .dg.a{
+            margin-right: 0;
+        }
+        .dg.main{
+            clear:right;
+            margin-bottom: 30px;
+        }
+
+    </style>
+
+</body>
+</html>

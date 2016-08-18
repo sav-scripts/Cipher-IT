@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1334">
+
+    <meta property="fb:app_id" content="xxx"/>
+    <meta property="og:title" content="xxx" />
+    <meta property="og:type" content="activity" />
+    <meta property="og:url" content="xxx" />
+    <meta property="og:description" content="xxx" />
+    <meta property="og:image" content="xxx" />
+
+    <link rel="stylesheet" href="styles/main.css">
+
+</head>
+<body onload="Main.init();">
+
+
+    <div id="invisible-container"></div>
+    <div id="scene-container">
+
+        <div id="index" resizable="640x320p0x0;1280x640p10x10;1920x1000">
+            <div class="my-image"></div>
+        </div>
+
+    </div>
+
+    <div id="fb-root"></div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
+
+
+    <!-- build:js js/optimized.js -->
+    <script src="js/lib/FBHelper.1.0.2.js"></script>
+    <script src="js/lib/Helper.1.0.2.js"></script>
+    <script src="js/lib/ScalableContent.1.0.0.js"></script>
+    <script src="js/Main.js"></script>
+    <!-- endbuild -->
+
+</body>
+</html>

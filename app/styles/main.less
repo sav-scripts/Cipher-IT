@@ -1,0 +1,79 @@
+@import "common-mixins.less";
+
+@background-color: #faefd8;
+
+
+html {
+    padding: 0;
+    margin: 0;
+}
+body{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: @background-color;
+    padding: 0;
+    margin: 0;
+}
+.template-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+#scene-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#invisible-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.bound{
+    position: absolute;
+    border: 1px solid red;
+    margin-left: -1px;
+    margin-top: -1px;
+
+    z-index: 1000;
+    pointer-events: none;
+
+    .text{
+        position: absolute;
+        top:4px;
+        width: 200px;
+        height:20px;
+        left:50%;
+        margin-left: -100px;
+        color:red;
+        text-align: center;
+    }
+}
+
+/* index */
+#index {
+
+    .percent-container();
+    left: 50%;
+    top: 50%;
+
+    .percent-div(my-image, -600, -314, 1900, 628, "sample.png");
+    @media (max-width: 1280px){
+        .percent-div(my-image, -600, -314, 1200, 628, "sample.png");
+    }
+    @media (max-width: 640px){
+        .percent-div(my-image, -300, -157, 600, 314, "sample.png");
+    }
+
+    /*
+    .my-image{
+        .centralized-div(50%, 50%, 1200px, 628px);
+        .image-bg("sample.png");
+    }
+    */
+}
