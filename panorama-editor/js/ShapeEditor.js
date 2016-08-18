@@ -23,8 +23,13 @@
 
     var self = window.ShapeEditor =
     {
+        renderingGroupId: 2,
+        editorRenderingGroupId: 3,
+
         nodeSample: null,
         focusNodeSample: null,
+
+        container: null,
 
         init: function(scene)
         {
@@ -37,7 +42,16 @@
             this.nodeSample = createNodeSample(BABYLON.Color3.Blue());
             this.focusNodeSample = createNodeSample(BABYLON.Color3.Red());
 
-            KeyboardControl.add("completeEdit", KeyCodeDic.space,
+            this.container = new BABYLON.Mesh("shape container", _scene);
+            this.container.renderingGroupId = this.renderingGroupId;
+
+            this.nodeSample.parent = this.container;
+            this.nodeSample.renderingGroupId = this.editorRenderingGroupId;
+
+            this.focusNodeSample.parent = this.container;
+            this.focusNodeSample.renderingGroupId = this.editorRenderingGroupId;
+
+                KeyboardControl.add("completeEdit", KeyCodeDic.space,
             {
                 onKeyUp: function()
                 {
@@ -321,6 +335,10 @@
             this._focusNode.position.y = node.position.y = position.y;
             this._focusNode.position.z = node.position.z = position.z;
 
+
+            //node.renderingGroupId = ShapeEditor.renderingGroupId;
+            node.parent = ShapeEditor.container;
+
             node.setEnabled(false);
 
             node.isPickable = false;
@@ -417,7 +435,10 @@
 
             if(this._nodes.length >= 2)
             {
-                this._lineMesh = BABYLON.Mesh.CreateLines("lines", this._points, this._scene, false);
+                var mesh = this._lineMesh = BABYLON.Mesh.CreateLines("lines", this._points, this._scene, false);
+
+                mesh.renderingGroupId = ShapeEditor.editorRenderingGroupId;
+                mesh.parent = ShapeEditor.container;
             }
         },
 
@@ -514,28 +535,29 @@
                 vertexData.uvs2 = uvs2;
                 //vertexData.normals = normals;
 
-                var blankmesh = new BABYLON.Mesh("blank", this._scene);
-                blankmesh.position = BABYLON.Vector3.Zero();
+                var mesh = new BABYLON.Mesh("blank", this._scene);
+                mesh.position = BABYLON.Vector3.Zero();
 
                 //var mat = new BABYLON.StandardMaterial("randomMesh", this._scene);
                 //mat.emissiveColor = new BABYLON.Color3(1,1,1);
-                //blankmesh.material = mat;
+                //mesh.material = mat;
 
-                blankmesh.material = MaterialLib.getMaterial('flashShape');
+                mesh.material = MaterialLib.getMaterial('flashShape');
 
-                blankmesh.visibility = .5;
+                mesh.visibility = .5;
 
-                vertexData.applyToMesh(blankmesh, true);
+                vertexData.applyToMesh(mesh, true);
 
-                blankmesh._editType = 'editorMesh';
+                mesh._editType = 'editorMesh';
 
-                blankmesh._editSerial = this._serial;
+                mesh._editSerial = this._serial;
 
-                blankmesh.isPickable = false;
+                mesh.isPickable = false;
 
-                blankmesh.renderingGroupId = 1;
+                mesh.renderingGroupId = ShapeEditor.renderingGroupId;
+                mesh.parent = ShapeEditor.container;
 
-                this._mesh = blankmesh;
+                this._mesh = mesh;
             }
         },
 

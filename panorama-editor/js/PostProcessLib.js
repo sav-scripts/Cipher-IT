@@ -13,7 +13,8 @@
 
         _dic = 
         {
-            "noise": {label: "雜訊 + 動態模糊", enabled: true}
+            "noise": {label: "雜訊 + 動態模糊", enabled: true},
+            "drunk": {label: "暈眩", enabled: false}
         };
 
     var self = window.PostProcessLib =
@@ -27,6 +28,7 @@
             _pipeline = new BABYLON.PostProcessRenderPipeline(engine, SCENE_PIPELINE_NAME);
 
             buildNoise();
+            buildDrunk();
 
             _scene.postProcessRenderPipelineManager.addPipeline(_pipeline);
             _scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(SCENE_PIPELINE_NAME, camera);
@@ -35,7 +37,7 @@
             {
                 if(!_dic[key].enabled)
                 {
-                    _scene.postProcessRenderPipelineManager.disableEffectInPipeline(SCENE_PIPELINE_NAME, 'noise', _camera);
+                    _scene.postProcessRenderPipelineManager.disableEffectInPipeline(SCENE_PIPELINE_NAME, key, _camera);
                 }
             }
 
@@ -104,6 +106,45 @@
             __motion = new BABYLON.Vector2(0, 0);
 
         var postProcess = new BABYLON.PostProcess(effectName, "noise", ["time", "motion"], null, 1, null, null, _engine, true);
+        var effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
+
+        _pipeline.addEffect(effect);
+
+        postProcess.onApply = function (effect)
+        {
+            time += .01;
+            effect.setFloat("time", time);
+
+
+            var motion = -_camera.inertialAlphaOffset * 100;
+            if(motion > 1) motion = 1;
+            if(motion < -1) motion = -1;
+
+            if(Math.abs(motion) > Math.abs(__motion.x)) __motion.x = motion;
+            __motion.x *= .87;
+            if(__motion.x < .01 && __motion.x > .01) __motion.x = 0;
+
+            motion = -_camera.inertialBetaOffset * 100;
+            if(motion > 1) motion = 1;
+            if(motion < -1) motion = -1;
+
+            if(Math.abs(motion) > Math.abs(__motion.y)) __motion.y = motion;
+            __motion.y *= .87;
+            if(__motion.y < .01 && __motion.y > .01) __motion.y = 0;
+
+
+            effect.setVector2("motion", __motion);
+
+        };
+    }
+
+    function buildDrunk()
+    {
+        var effectName = 'drunk',
+            time = 0.1,
+            __motion = new BABYLON.Vector2(0, 0);
+
+        var postProcess = new BABYLON.PostProcess(effectName, "drunk", ["time", "motion", "screenSize"], null, 1, null, null, _engine, true);
         var effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
 
         _pipeline.addEffect(effect);

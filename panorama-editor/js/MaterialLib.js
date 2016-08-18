@@ -87,10 +87,10 @@
             uniforms: ["worldViewProjection"]
         });
 
-        shaderMaterial.__motion = 0;
+        shaderMaterial.__motion = new BABYLON.Vector2(0, 0);
 
         shaderMaterial.setFloat("time", time);
-        shaderMaterial.setFloat("motion", shaderMaterial.__motion);
+        shaderMaterial.setVector2("motion", shaderMaterial.__motion);
 
         shaderMaterial.backFaceCulling = false;
 
@@ -103,8 +103,8 @@
 
             shaderMaterial.setFloat('time', time);
 
-            shaderMaterial.__motion *= .91;
-            shaderMaterial.setFloat("motion", shaderMaterial.__motion);
+            //shaderMaterial.__motion.x *= .91;
+            //shaderMaterial.setVector2("motion", shaderMaterial.__motion);
 
         });
 

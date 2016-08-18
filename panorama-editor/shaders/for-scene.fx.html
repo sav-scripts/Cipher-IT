@@ -109,4 +109,62 @@
 
     </script>
 
+
+
+</shader>
+
+
+<shader id="drunk">
+
+    <script type="x-shader/x-fragment">
+
+
+
+        #define M_PI 3.1415926535897932384626433832795
+
+        const float PIx2 = M_PI *2.0;
+
+        const float MOTION_BLUR_POWER = .3;
+        const float MOTION_BLUR_POWERx2 = MOTION_BLUR_POWER * 2.;
+
+        varying vec2 vUV;
+//        varying float vTime;
+
+        uniform sampler2D textureSampler;
+        uniform sampler2D noiseSampler;
+        uniform float time;
+        uniform vec2 motion;
+        uniform vec2 screenSize;
+
+
+        float perspective = 0.3;
+
+        const int samples = 25;
+        const float minBlur = .1;
+        const float maxBlur = .3;
+        const float speed = 3.;
+
+        void main(void)
+        {
+            vec2 p = vUV.xy;
+
+            vec4 result = vec4(0);
+
+            float timeQ = mix(minBlur, maxBlur, (sin(time*speed)+1.)/2.);
+
+            for (int i=0; i<=samples; i++)
+            {
+                float q = float(i)/float(samples);
+                result += texture2D(textureSampler, p + (vec2(0.5)-p)*q*timeQ)/float(samples);
+            }
+
+
+            gl_FragColor = result;
+        }
+
+
+    </script>
+
+
+
 </shader>

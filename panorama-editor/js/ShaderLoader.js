@@ -59,6 +59,13 @@
                     {
                         console.warn("loaded shader file: ["+name+"] shader element lack id");
                     }
+                    else
+                    {
+                        if($vertex.length) BABYLON.Effect.ShadersStore[id + "VertexShader"] = $vertex.text();
+                        if($fragement.length) BABYLON.Effect.ShadersStore[id + "FragmentShader"] = $fragement.text();
+                    }
+
+                    /*
                     else if(!$vertex.length)
                     {
                         console.warn("loaded shader file: ["+name+"] shader id: ["+id+"] lack vertex script");
@@ -72,6 +79,7 @@
                         BABYLON.Effect.ShadersStore[id + "VertexShader"] = $vertex.text();
                         BABYLON.Effect.ShadersStore[id + "FragmentShader"] = $fragement.text();
                     }
+                    */
                 });
 
 
