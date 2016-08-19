@@ -8,28 +8,29 @@
         _gui,
         _guiFolder,
 
-        _editModeOn = false,
-        _hintText = "按住 Ctrl 鍵編輯形狀",
+        _isEditModeOn = false,
+        _hintText = "按住 Ctrl 編輯 Shape",
 
+        _serial = 0,
         _editingObject,
         _editorObjectDic = {},
         _editorObjectCache = [],
 
         _toLastStepButton,
-        _completeButton,
         _deleteAllButton,
+        _completeButton,
 
-        _serial = 0;
+        _isEnabled = false;
 
     var self = window.ShapeEditor =
     {
         renderingGroupId: 2,
         editorRenderingGroupId: 3,
 
+        container: null,
+
         nodeSample: null,
         focusNodeSample: null,
-
-        container: null,
 
         init: function(scene)
         {
@@ -38,12 +39,12 @@
             setupGUI();
             updateFolderLabel(_hintText);
 
-
-            this.nodeSample = createNodeSample(BABYLON.Color3.Blue());
-            this.focusNodeSample = createNodeSample(BABYLON.Color3.Red());
-
             this.container = new BABYLON.Mesh("shape container", _scene);
             this.container.renderingGroupId = this.renderingGroupId;
+            this.container.isPickable = false;
+
+            this.nodeSample = Tools.createNodeSample(_scene, BABYLON.Color3.Blue());
+            this.focusNodeSample = Tools.createNodeSample(_scene, BABYLON.Color3.Red());
 
             this.nodeSample.parent = this.container;
             this.nodeSample.renderingGroupId = this.editorRenderingGroupId;
@@ -51,28 +52,46 @@
             this.focusNodeSample.parent = this.container;
             this.focusNodeSample.renderingGroupId = this.editorRenderingGroupId;
 
-                KeyboardControl.add("completeEdit", KeyCodeDic.space,
+            KeyboardControl.add("ShapeEditor complete", KeyCodeDic.space,
             {
                 onKeyUp: function()
                 {
-                    if(_editModeOn && _editingObject && _editingObject.getNumPoints() > 2)
+                    if(_isEnabled && _isEditModeOn && _editingObject && _editingObject.getNumPoints() > 2)
                     {
                         self.completeEdit();
                     }
+                }
+            }).add("ShapeEditor toLastStep", "Z".charCodeAt(0),
+            {
+                onKeyDown: function()
+                {
+                    if(_isEnabled && KeyboardControl.funcKeysDown.ctrl && _editingObject) self.requestToLastStep();
+                }
+            }).add("ShapeEditor delete", KeyCodeDic.delete,
+            {
+                onKeyDown: function()
+                {
+                    if(_isEnabled) self.clearEditingObject();
                 }
             });
         },
 
         enable: function()
         {
+            if(_isEnabled) return;
+            _isEnabled = true;
+
             $(_guiFolder.domElement).css("display", "block");
         },
 
         disable: function()
         {
+            if(!_isEnabled) return;
+            _isEnabled = false;
+
             $(_guiFolder.domElement).css("display", "none");
 
-            if(_editModeOn)
+            if(_isEditModeOn)
             {
 
                 if(_editingObject.getNumPoints() > 2)
@@ -82,6 +101,7 @@
                 else
                 {
                     _editingObject.clear();
+                    self._editModeOff(true);
                 }
             }
 
@@ -89,7 +109,7 @@
 
         editAtPoint: function(point, uv)
         {
-            if(!_editModeOn)
+            if(!_isEditModeOn)
             {
                 if(!_editingObject)
                 {
@@ -100,13 +120,15 @@
                     else
                     {
                         _serial++;
-                        _editingObject = new EditorObject(_serial, _scene);
+                        _editingObject = new ShapeObject(_serial, _scene);
                     }
 
                     _editorObjectDic[_editingObject.getSerial()] = _editingObject;
+
+                    updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
                 }
 
-                this.toEditMode();
+                this._editModeOn();
             }
 
             _editingObject.setEnabled(true);
@@ -122,14 +144,35 @@
                 _editingObject = _editorObjectDic[serial];
                 _editingObject.setEnabled(true);
 
-                //_editingObject.clearMesh();
+                updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
 
-                this.toEditMode();
+                this._editModeOn();
             }
         },
 
-        endEditMode: function(putEditingObjectIntoCache)
+        _editModeOn: function()
         {
+            if(_isEditModeOn) return;
+            _isEditModeOn = true;
+
+
+            _guiFolder.open();
+
+            var key, object;
+            for(key in _editorObjectDic)
+            {
+                object = _editorObjectDic[key];
+                if(object._mesh) object._mesh.isPickable = false;
+            }
+
+            self.update();
+        },
+
+        _editModeOff: function(putEditingObjectIntoCache)
+        {
+            if(!_isEditModeOn) return;
+            _isEditModeOn = false;
+
             if(_editingObject)
             {
                 if(putEditingObjectIntoCache)
@@ -148,33 +191,6 @@
                 if(object._mesh) object._mesh.isPickable = true;
             }
 
-            this.toHintMode();
-        },
-
-        toEditMode: function()
-        {
-            if(_editModeOn) return;
-            _editModeOn = true;
-
-
-            updateFolderLabel("編輯中形狀: #" + _serial);
-            _guiFolder.open();
-
-            var key, object;
-            for(key in _editorObjectDic)
-            {
-                object = _editorObjectDic[key];
-                if(object._mesh) object._mesh.isPickable = false;
-            }
-
-            self.update();
-        },
-
-        toHintMode: function()
-        {
-            if(!_editModeOn) return;
-            _editModeOn = false;
-
             updateFolderLabel(_hintText);
 
             self.update();
@@ -182,7 +198,7 @@
 
         update: function()
         {
-            if(_editModeOn && _editingObject)
+            if(_isEditModeOn && _editingObject)
             {
                 var numPoints = _editingObject.getNumPoints();
 
@@ -227,17 +243,19 @@
             {
                 //_editingObject.updateMesh();
                 _editingObject.setEnabled(false);
-                self.endEditMode();
+                self._editModeOff();
             }
         },
 
         clearEditingObject: function()
         {
-            if(_deleteAllButton && _deleteAllButton._active)
+            if(_editingObject && _deleteAllButton && _deleteAllButton._active)
             {
                 if(confirm("確定要刪除這個形狀嗎？"))
                 {
-                    if(_editingObject) _editingObject.clear();
+                    _editingObject.clear();
+                    self._editModeOff(true);
+
                 }
             }
         }
@@ -263,30 +281,13 @@
         _gui.resetFolderLabel(_guiFolder.name, hintText);
     }
 
-    function createNodeSample(color)
-    {
-        var node, boxmat;
-
-        node = BABYLON.Mesh.CreateBox("nodeSample", 1, _scene);
-
-        boxmat = new BABYLON.StandardMaterial("boxmat", _scene);
-
-        boxmat.emissiveColor = color;
-
-        node.material = boxmat;
-
-        node.setEnabled(false);
-
-        return node;
-    }
-
 }());
 
 (function(){
 
-    window.EditorObject = EditorObject;
+    window.ShapeObject = ShapeObject;
 
-    function EditorObject(serial, scene)
+    function ShapeObject(serial, scene)
     {
         this._serial = serial;
         this._scene = scene;
@@ -299,7 +300,7 @@
         this._focusNode.setEnabled(false);
     }
 
-    EditorObject.prototype =
+    ShapeObject.prototype =
     {
         _scene: null,
         _points: null,
@@ -317,7 +318,7 @@
 
         toString: function()
         {
-            return "EditorObject #" + this._serial;
+            return "ShapeObject #" + this._serial;
         },
 
         getNumPoints: function(){ return this._nodes.length; },
@@ -371,7 +372,7 @@
             if(!this._nodes.length)
             {
                 this._focusNode.setEnabled(false);
-                ShapeEditor.endEditMode(true);
+                ShapeEditor._editModeOff(true);
             }
             else
             {
@@ -435,7 +436,7 @@
 
             if(this._nodes.length >= 2)
             {
-                var mesh = this._lineMesh = BABYLON.Mesh.CreateLines("lines", this._points, this._scene, false);
+                var mesh = this._lineMesh = BABYLON.MeshBuilder.CreateLines("shape line", {points:this._points, updateAble: false}, this._scene);
 
                 mesh.renderingGroupId = ShapeEditor.editorRenderingGroupId;
                 mesh.parent = ShapeEditor.container;
@@ -535,7 +536,7 @@
                 vertexData.uvs2 = uvs2;
                 //vertexData.normals = normals;
 
-                var mesh = new BABYLON.Mesh("blank", this._scene);
+                var mesh = new BABYLON.Mesh("shape", this._scene);
                 mesh.position = BABYLON.Vector3.Zero();
 
                 //var mat = new BABYLON.StandardMaterial("randomMesh", this._scene);
@@ -547,8 +548,6 @@
                 mesh.visibility = .5;
 
                 vertexData.applyToMesh(mesh, true);
-
-                mesh._editType = 'editorMesh';
 
                 mesh._editSerial = this._serial;
 
@@ -591,8 +590,6 @@
             }
 
             this.clearMesh();
-
-            ShapeEditor.endEditMode(true);
         }
     };
 

@@ -13,8 +13,8 @@
 
         _dic = 
         {
-            "noise": {label: "雜訊 + 動態模糊", enabled: true},
-            "drunk": {label: "暈眩", enabled: false}
+            "noise": {label: "雜訊 + 動態模糊", enabled: true, effect: null},
+            "drunk": {label: "暈眩", enabled: false, effect: null}
         };
 
     var self = window.PostProcessLib =
@@ -106,9 +106,9 @@
             __motion = new BABYLON.Vector2(0, 0);
 
         var postProcess = new BABYLON.PostProcess(effectName, "noise", ["time", "motion"], null, 1, null, null, _engine, true);
-        var effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
 
-        _pipeline.addEffect(effect);
+        _dic[effectName].effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
+        _pipeline.addEffect(_dic[effectName].effect);
 
         postProcess.onApply = function (effect)
         {
@@ -145,9 +145,9 @@
             __motion = new BABYLON.Vector2(0, 0);
 
         var postProcess = new BABYLON.PostProcess(effectName, "drunk", ["time", "motion", "screenSize"], null, 1, null, null, _engine, true);
-        var effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
 
-        _pipeline.addEffect(effect);
+        _dic[effectName].effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
+        _pipeline.addEffect(_dic[effectName].effect);
 
         postProcess.onApply = function (effect)
         {

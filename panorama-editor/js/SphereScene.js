@@ -12,7 +12,14 @@
         _sceneSphere,
         _arcCamera,
         _wireSphere,
-        _mainSphere;
+        _mainSphere,
+
+        _isCameraControlOn = false,
+        _isDragging = false,
+        _draggingMesh,
+
+        $imageInput,
+        _loadedImage;
 
     var _gui;
 
@@ -26,10 +33,12 @@
 
         _cameraBetaLimit: 90,
 
-        _firstTextureIndex: 0,
+        _firstTextureIndex: 1,
         _textureFile: null,
         _textureList:
         [
+            "外部載入圖片",
+            '360TEST_02_0000.jpg',
             '360TEST.jpg',
             '360TEST-透明.png',
             '01.jpg',
@@ -48,7 +57,7 @@
             "noise"
         ],
 
-        _firstToolIndex: 1,
+        _firstToolIndex: 2,
         _toolIndex: 0,
         _toolIndexTemp: 0,
         _toolList:
@@ -58,12 +67,15 @@
             "billboard":2
         },
 
+        _shapeDisplaying: true,
+        _billboardDisplaying: true,
+
         init: function(canvas, engine)
         {
+
             _canvas = canvas;
             _engine = engine;
             _scene = createScene();
-
             //applySkybox(_scene);
 
 
@@ -74,13 +86,14 @@
             self.materialUpdate(self._sceneMaterialList[self._firstMaterialIndex]);
             self.textureUpdate(self._textureList[self._firstTextureIndex]);
 
+            setupImageInput();
 
             setupGUI();
 
             PostProcessLib.init(engine, _scene, _arcCamera);
 
             ShapeEditor.init(_scene);
-            BillboardManager.init(_scene);
+            BillboardEditor.init(_scene, SCENE_SIZE);
 
 
 
@@ -98,22 +111,26 @@
                 var scene = new BABYLON.Scene(engine);
                 scene.clearColor = new BABYLON.Color3(0,0,0);
 
+                //console.log(scene.actionManager);
+                //scene.actionManager = new BABYLON.ActionManager(scene);
+
                 MaterialLib.init(scene);
 
 
                 var camera = _arcCamera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 0, new BABYLON.Vector3(0, 0, -1), scene);
                 //camera.fov = .8;
                 camera.setTarget(new BABYLON.Vector3(0,0,0));
-                camera.attachControl(canvas, true, false);
 
                 camera.angularSensibilityX = 2500;
                 camera.angularSensibilityY = 2500;
 
 
-                camera.upperRadiusLimit = SCENE_SIZE - 2;
+                camera.upperRadiusLimit = SCENE_SIZE - 10;
                 camera.lowerRadiusLimit = camera.radius = .1;
 
                 //console.log(camera.zoomOnFactor);
+
+                self.setCameraControlOn(true);
 
 
                 _mainSphere = buildAsImage(scene);
@@ -123,73 +140,108 @@
                 {
                     onKeyDown: function()
                     {
-                        _arcCamera.detachControl(_canvas);
+                        if(!_isDragging) self.setCameraControlOn(false);
                     },
 
                     onKeyUp: function()
                     {
-                        _arcCamera.attachControl(_canvas, true, false);
+                        if(!_isDragging) self.setCameraControlOn(true);
                     }
                 });
 
-                KeyboardControl.add("ctrl+Z", "Z".charCodeAt(0),
+                scene.onPointerDown = function(event)
                 {
-                    onKeyDown: function()
+                    if(self._toolIndex == 2)
                     {
-                        if(KeyboardControl.funcKeysDown.ctrl) ShapeEditor.requestToLastStep();
-                    }
-                }).add("delete", KeyCodeDic.delete,
-                {
-                    onKeyDown: function()
-                    {
-                        ShapeEditor.clearEditingObject();
-                    }
-                });
-
-
-                scene.onPointerUp = function (event)
-                {
-                    /*
-                    if(event.ctrlKey)
-                    {
-                        event.preventDefault();
-                        event.stopPropagation();
-
-                        var pickinfo = scene.pick(event.clientX, event.clientY);
-                        //console.log(pickinfo.getTextureCoordinates());
-                        //console.log(pickinfo);
-
-                        if(pickinfo.pickedMesh._editType == 'background')
+                        var myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
                         {
-                            ShapeEditor.editAtPoint(pickinfo.pickedPoint, pickinfo.getTextureCoordinates());
-                        }
-                        else if(pickinfo.pickedMesh._editType == "editorMesh")
-                        {
-                            ShapeEditor.edit(pickinfo.pickedMesh._editSerial);
-                        }
-                    }
-                    */
-                    if(event.ctrlKey && self._toolIndex == 1)
-                    {
-                        var pickinfo = scene.pick(event.clientX, event.clientY);
-                        //console.log(pickinfo.getTextureCoordinates());
-                        //console.log(pickinfo);
+                            return (mesh.isPickable && mesh.name == 'billboardTargetNode');
+                        });
 
-                        if(pickinfo.pickedMesh._editType == 'background')
+                        if(myPickinfo.pickedMesh)
                         {
-                            ShapeEditor.editAtPoint(pickinfo.pickedPoint, pickinfo.getTextureCoordinates());
-                        }
-                        else if(pickinfo.pickedMesh._editType == "editorMesh")
-                        {
-                            ShapeEditor.edit(pickinfo.pickedMesh._editSerial);
+                            _isDragging = true;
+                            self.setCameraControlOn(false);
+                            _draggingMesh = myPickinfo.pickedMesh;
+                            //console.log("check: " + myPickinfo.pickedMesh._editSerial);
                         }
                     }
                 };
 
                 scene.onPointerMove = function(event)
                 {
-                    event.preventDefault();
-                    event.stopPropagation();
+                    if(_isDragging)
+                    {
+                        if(self._toolIndex == 2)
+                        {
+                            var myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'background');
+                            });
+
+                            if(myPickinfo.pickedMesh)
+                            {
+                                BillboardEditor.moveTargetTo(myPickinfo.pickedPoint, myPickinfo.getTextureCoordinates())
+                            }
+
+                            //ShapeEditor.editAtPoint(pickinfo.pickedPoint, pickinfo.getTextureCoordinates());
+                        }
+                    }
+                };
+
+
+                scene.onPointerUp = function (event)
+                {
+                    if(event.ctrlKey)
+                    {
+                        var pickinfo = scene.pick(event.clientX, event.clientY),
+                            myPickinfo;
+                        //console.log(pickinfo.getTextureCoordinates());
+                        //console.log(pickinfo);
+
+                        if(self._toolIndex == 1)
+                        {
+                            myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'shape');
+                            });
+
+                            if(myPickinfo.pickedMesh)
+                            {
+                                ShapeEditor.edit(myPickinfo.pickedMesh._editSerial);
+                            }
+                            else if(pickinfo.pickedMesh && pickinfo.pickedMesh.name == 'background')
+                            {
+                                ShapeEditor.editAtPoint(pickinfo.pickedPoint, pickinfo.getTextureCoordinates());
+                            }
+                        }
+
+                        if(self._toolIndex == 2)
+                        {
+                            //myPickinfo = scene.pick()
+
+                            myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'billboard');
+                            });
+
+                            if(myPickinfo.pickedMesh)
+                            {
+                                BillboardEditor.edit(myPickinfo.pickedMesh._editSerial);
+                            }
+                            else if(pickinfo.pickedMesh && pickinfo.pickedMesh.name == 'background')
+                            {
+                                BillboardEditor.createEmptyObject(pickinfo.pickedPoint);
+                            }
+                        }
+                    }
+
+                    if(_isDragging)
+                    {
+                        _isDragging = false;
+                        self.setCameraControlOn(true);
+
+                    }
                 };
 
                 scene.registerBeforeRender(function()
@@ -219,6 +271,21 @@
             }
         },
 
+        setCameraControlOn: function(b)
+        {
+            if(b == _isCameraControlOn) return;
+            _isCameraControlOn = b;
+
+            if(_isCameraControlOn)
+            {
+                _arcCamera.attachControl(_canvas, true, false);
+            }
+            else
+            {
+                _arcCamera.detachControl(_canvas);
+            }
+        },
+
         debugLayerUpdate: function()
         {
             (self._debugLayerOn)? _scene.debugLayer.show(): _scene.debugLayer.hide();
@@ -240,15 +307,32 @@
         {
             if(v) self._textureFile = v;
 
+            //console.log("v = " + v);
+
+            var isFirstItem = (self._textureFile ==  self._textureList[0]);
+
             var textureName = self._textureFile,
                 texture = _textureDic[textureName],
                 mat = _mainSphere.material;
             
             if(!texture)
             {
-                texture = _textureDic[textureName] = new BABYLON.Texture("textures/" + textureName, _scene);
+                if(isFirstItem)
+                {
+                    if(_loadedImage)
+                    {
+                        console.error("unexpected error");
+                    }
+                    else
+                    {
+                        texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
+                    }
+                }
+                else
+                {
+                    texture = _textureDic[textureName] = new BABYLON.Texture("textures/" + textureName, _scene);
+                }
             }
-
 
             if(textureName == self._textureList[1])
             {
@@ -305,7 +389,7 @@
             }
             else if(oldIndex == 2)
             {
-
+                BillboardEditor.disable();
             }
 
             if(self._toolIndex == 0)
@@ -319,9 +403,26 @@
             }
             else if(self._toolIndex == 2)
             {
-
+                BillboardEditor.enable();
             }
+        },
+
+        shapeDisplaying: function(v)
+        {
+            ShapeEditor.container.setEnabled(v);
+        },
+
+        billboardDisplaying: function(v)
+        {
+            BillboardEditor.container.setEnabled(v);
+        },
+
+        triggerChangeImage: function()
+        {
+            $imageInput[0].value = null;
+            $imageInput[0].click();
         }
+
     };
 
     function setupGUI()
@@ -329,19 +430,53 @@
         var gui = Main.gui,
             folder = gui.addFolder('場景');
 
-        folder.add(self, '_textureFile', self._textureList).name("貼圖").onChange(self.textureUpdate);
-        folder.add(self, '_sceneMaterial', self._sceneMaterialList).name("著色器").onChange(self.materialUpdate);
-        folder.add(self, '_cameraBetaLimit').min(0).max(90).step(1).name('鏡頭上下角度限制').onChange(self.cameraBetaLimitUpdate);
-        folder.add(self, '_wireLayerOn').name('格線').onChange(self.wireLayerUpdate);
-        folder.add(self, '_debugLayerOn').name("DebugLayer").onChange(self.debugLayerUpdate);
+
+        //console.log(f);
 
         _gui =
         {
             folder: folder,
+            triggerChangeImage: folder.add(self, "triggerChangeImage").name('載入場景圖片'),
+            map: folder.add(self, '_textureFile', self._textureList).name("貼圖").onChange(self.textureUpdate),
+            shader: folder.add(self, '_sceneMaterial', self._sceneMaterialList).name("著色器").onChange(self.materialUpdate),
+            cameraBetaLimit: folder.add(self, '_cameraBetaLimit').min(0).max(90).step(1).name('鏡頭角度限制').onChange(self.cameraBetaLimitUpdate),
+            cameraRadiusLimit: folder.add(_arcCamera, 'radius').min(_arcCamera.lowerRadiusLimit).max(_arcCamera.upperRadiusLimit).step(1).name('鏡頭距離').listen(),
+            grid: folder.add(self, '_wireLayerOn').name('格線').onChange(self.wireLayerUpdate),
+            shapeVisible: folder.add(self, '_shapeDisplaying').name('Shape 顯示').onChange(self.shapeDisplaying),
+            billboardVisible: folder.add(self, '_billboardDisplaying').name('Billboard 顯示').onChange(self.billboardDisplaying),
+            debugLayer: folder.add(self, '_debugLayerOn').name("DebugLayer").onChange(self.debugLayerUpdate),
             tool: folder.add(self, '_toolIndexTemp', self._toolList).name("編輯模式").onChange(self.toolUpdate)
         };
 
         folder.open();
+    }
+
+
+
+    function setupImageInput()
+    {
+        $imageInput = $("#scene-image-input");
+
+        Tools.setupImageInput($imageInput[0], function(img)
+        {
+            _loadedImage = img;
+
+            var textureName = self._textureList[0];
+
+            _textureDic[textureName] = new BABYLON.Texture("data:myimage", _scene, null, true, null, null, null, _loadedImage.src, true);
+
+            //console.log(_gui.map);
+
+            _gui.map.setValue(textureName);
+
+            //self.textureUpdate(textureName);
+            /*
+            if(_editingObject)
+            {
+                _editingObject.changeImage(img, true);
+            }
+            */
+        });
     }
 
 
@@ -357,14 +492,14 @@
 
     function buildAsImage(scene)
     {
-        var sphere = _sceneSphere = new BABYLON.Mesh.CreateSphere("sphere", SPHERE_SEGMENTS, SCENE_SIZE*2, scene);
+        var sphere = _sceneSphere = new BABYLON.Mesh.CreateSphere("background", SPHERE_SEGMENTS, SCENE_SIZE*2, scene);
         sphere.scaling.y = -1;
 
-        sphere._editType = 'background';
-
-        sphere.isBlocked = true;
+        //sphere.isBlocked = true;
 
         //sphere.material = MaterialLib.getMaterial('normal');
+
+        //sphere.isPickable = false;
 
         return sphere;
     }

@@ -6,11 +6,13 @@
     var self = window.Main =
     {
         gui: null,
-        guiWidth: 250,
+        guiWidth: 280,
 
         init: function()
         {
             KeyboardControl.init(false, false);
+
+            window.Loading = SquareLoading;
 
             //console.log(String.fromCharCode(90));
             //console.log("Z".charCodeAt(0));

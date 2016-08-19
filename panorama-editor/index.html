@@ -35,6 +35,10 @@
             z-index: 1;
         }
 
+        #billboard-image-input{
+            visibility: hidden;
+        }
+
     </style>
 
 </head>
@@ -42,9 +46,11 @@
 <body onload="Main.init();">
 
     <canvas id="render-canvas"></canvas>
-
+    <input type="file" id="billboard-image-input" accept="image/png"/>
+    <input type="file" id="scene-image-input" accept="image/jpeg,image/png"/>
 
     <!-- scripts -->
+    <script src="js/lib/SquareLoading.1.0.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
     <script src="js/lib/babylon.2.4.max.js"></script>
@@ -60,6 +66,7 @@
     <script src="js/BillboardEditor.js"></script>
     <script src="js/MaterialLib.js"></script>
     <script src="js/PostProcessLib.js"></script>
+    <script src="js/Tools.js"></script>
 
     <style scoped="">
 
