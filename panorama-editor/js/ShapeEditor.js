@@ -7,6 +7,7 @@
 
         _gui,
         _guiFolder,
+        _guiItems,
 
         _isEditModeOn = false,
         _hintText = "按住 Ctrl 編輯 Shape",
@@ -16,21 +17,30 @@
         _editorObjectDic = {},
         _editorObjectCache = [],
 
-        _toLastStepButton,
-        _deleteAllButton,
-        _completeButton,
-
         _isEnabled = false;
 
     var self = window.ShapeEditor =
     {
-        renderingGroupId: 2,
+        renderingGroupId: 1,
         editorRenderingGroupId: 3,
 
         container: null,
 
         nodeSample: null,
         focusNodeSample: null,
+
+        getEditorObjectDic: function()
+        {
+            return _editorObjectDic;
+        },
+
+        setEditorRenderingGroupId: function(v)
+        {
+            self.editorRenderingGroupId = v;
+
+            if(self.nodeSample) self.nodeSample.renderingGroupId = v;
+            if(self.focusNodeSample) self.focusNodeSample.renderingGroupId = v;
+        },
 
         init: function(scene)
         {
@@ -125,7 +135,8 @@
 
                     _editorObjectDic[_editingObject.getSerial()] = _editingObject;
 
-                    updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+                    //updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+                    updateGUIItems(_editingObject);
                 }
 
                 this._editModeOn();
@@ -144,7 +155,8 @@
                 _editingObject = _editorObjectDic[serial];
                 _editingObject.setEnabled(true);
 
-                updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+                //updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+                updateGUIItems(_editingObject);
 
                 this._editModeOn();
             }
@@ -191,6 +203,7 @@
                 if(object._mesh) object._mesh.isPickable = true;
             }
 
+            updateGUIItems();
             updateFolderLabel(_hintText);
 
             self.update();
@@ -202,36 +215,39 @@
             {
                 var numPoints = _editingObject.getNumPoints();
 
-                if(_toLastStepButton)
+                if(_guiItems.toLastStep)
                 {
-                    _toLastStepButton._active = (numPoints > 0);
-                    $(_toLastStepButton.__li).css("display", _toLastStepButton._active? "block": "none");
+                    _guiItems.toLastStep._active = (numPoints > 0);
+                    $(_guiItems.toLastStep.__li).css("display", _guiItems.toLastStep._active? "block": "none");
                 }
 
-                if(_completeButton)
+                if(_guiItems.complete)
                 {
-                    _completeButton._active = (numPoints > 2);
-                    $(_completeButton.__li).css("display", _completeButton._active? "block": "none");
+                    _guiItems.complete._active = (numPoints > 2);
+                    $(_guiItems.complete.__li).css("display", _guiItems.complete._active? "block": "none");
                 }
 
-                if(_deleteAllButton)
+                if(_guiItems.deleteAll)
                 {
-                    _deleteAllButton._active = (numPoints > 0);
-                    $(_deleteAllButton.__li).css("display", _deleteAllButton._active? "block": "none");
+                    _guiItems.deleteAll._active = (numPoints > 0);
+                    $(_guiItems.deleteAll.__li).css("display", _guiItems.deleteAll._active? "block": "none");
                 }
             }
             else
             {
-                $(_toLastStepButton.__li).css("display", "none");
-                $(_completeButton.__li).css("display", "none");
-                $(_deleteAllButton.__li).css("display", "none");
+                if(_guiItems)
+                {
+                    $(_guiItems.toLastStep.__li).css("display", "none");
+                    $(_guiItems.complete.__li).css("display", "none");
+                    $(_guiItems.deleteAll.__li).css("display", "none");
+                }
             }
         },
 
         requestToLastStep: function()
         {
 
-            if(_toLastStepButton && _toLastStepButton._active)
+            if(_guiItems.toLastStep && _guiItems.toLastStep._active)
             {
                 _editingObject.toLastStep();
             }
@@ -239,7 +255,7 @@
 
         completeEdit: function()
         {
-            if(_completeButton && _completeButton._active)
+            if(_guiItems.complete && _guiItems.complete._active)
             {
                 //_editingObject.updateMesh();
                 _editingObject.setEnabled(false);
@@ -249,7 +265,7 @@
 
         clearEditingObject: function()
         {
-            if(_editingObject && _deleteAllButton && _deleteAllButton._active)
+            if(_editingObject && _guiItems.deleteAll && _guiItems.deleteAll._active)
             {
                 if(confirm("確定要刪除這個形狀嗎？"))
                 {
@@ -258,6 +274,13 @@
 
                 }
             }
+        },
+
+        clearAll: function()
+        {
+            //for(var key in _editorObjectDic)
+            //{
+            //}
         }
     };
 
@@ -266,14 +289,53 @@
         _gui = Main.gui;
         _guiFolder = _gui.addFolder('shapeEditorFolder');
 
-        _toLastStepButton = _guiFolder.add(self, "requestToLastStep").name("刪除點 (Ctrl+Z)");
-        _deleteAllButton = _guiFolder.add(self, "clearEditingObject").name("刪除全部 (Delete)");
-        _completeButton = _guiFolder.add(self, "completeEdit").name("完成 (SPACEBAR)");
+        //_guiItems.toLastStep = _guiFolder.add(self, "requestToLastStep").name("刪除點 (Ctrl+Z)");
+        //_guiItems.deleteAll = _guiFolder.add(self, "clearEditingObject").name("刪除全部 (Delete)");
+        //_guiItems.complete = _guiFolder.add(self, "completeEdit").name("完成 (SPACEBAR)");
 
         $(_guiFolder.domElement).css("display", "none");
         //console.log(_guiFolder.domElement);
 
         self.update();
+    }
+
+    function updateGUIItems(editingObject)
+    {
+
+        if(_guiItems)
+        {
+            _guiItems.renderingGroupId.remove();
+
+            _guiItems.toLastStep.remove();
+            _guiItems.deleteAll.remove();
+            _guiItems.complete.remove();
+
+            _guiItems = null;
+        }
+
+        if(editingObject)
+        {
+            updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+
+            _guiItems =
+            {
+                renderingGroupId: _guiFolder.add(_editingObject, "_renderingGroupId")
+            };
+
+            _guiItems.renderingGroupId = _guiItems.renderingGroupId.min(1).max(3).step(1).name("圖層深度");
+            _guiItems.renderingGroupId.onChange(function()
+            {
+                editingObject.updateRenderingGroupId();
+                //SphereScene.sortRenderingOrder();
+            });
+
+            _guiItems.toLastStep = _guiFolder.add(self, "requestToLastStep").name("刪除點 (Ctrl+Z)");
+            _guiItems.deleteAll = _guiFolder.add(self, "clearEditingObject").name("刪除全部 (Delete)");
+            _guiItems.complete = _guiFolder.add(self, "completeEdit").name("完成 (SPACEBAR)");
+
+
+            _guiFolder.open();
+        }
     }
 
     function updateFolderLabel(hintText)
@@ -287,10 +349,12 @@
 
     window.ShapeObject = ShapeObject;
 
-    function ShapeObject(serial, scene)
+    function ShapeObject(serial, scene, renderingGroupId)
     {
         this._serial = serial;
         this._scene = scene;
+
+        this._renderingGroupId = renderingGroupId || ShapeEditor.renderingGroupId;
 
         this._points = [];
         this._uvs = [];
@@ -308,6 +372,12 @@
         _nodes: null,
         _lineMesh: null,
         _focusNode: null,
+
+        _renderingGroupId: 0,
+        updateRenderingGroupId: function()
+        {
+            if(this._mesh) this._mesh.renderingGroupId = this._renderingGroupId;
+        },
 
         _isEnabled: false,
 
@@ -553,7 +623,7 @@
 
                 mesh.isPickable = false;
 
-                mesh.renderingGroupId = ShapeEditor.renderingGroupId;
+                mesh.renderingGroupId = this._renderingGroupId;
                 mesh.parent = ShapeEditor.container;
 
                 this._mesh = mesh;

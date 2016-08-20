@@ -33,6 +33,19 @@
 
         sceneSize: 200,
 
+        getEditorObjectDic: function()
+        {
+            return _editorObjectDic;
+        },
+
+        setEditorRenderingGroupId: function(v)
+        {
+            self.editorRenderingGroupId = v;
+
+            if(self.nodeSample) self.nodeSample.renderingGroupId = v;
+            if(self.focusNodeSample) self.focusNodeSample.renderingGroupId = v;
+        },
+
         init: function(scene, sceneSize)
         {
             _scene = scene;
@@ -55,14 +68,10 @@
             this.focusNodeSample.renderingGroupId = this.editorRenderingGroupId;
 
 
-            //self.addSprite("./textures/d1.png", 0, -15, 150);
-            createObject("./textures/d2.png", 0, 0, -200);
-            createObject("./textures/d3.png", 200, 0, 0);
-            createObject("./textures/d4.png", -200, 0, 0);
-
-            //self.addSprite("./textures/popu02.png", 0, 5, 150,.1);
-            createObject("./textures/char.png", 0, 0, 200);
-            //self.addSprite("./textures/popu02.png", 0, 5, 150,.1);
+            //createObject("./textures/d2.png", 0, 0, -200);
+            //createObject("./textures/d3.png", 200, 0, 0);
+            //createObject("./textures/d4.png", -200, 0, 0);
+            //createObject("./textures/char.png", 0, 0, 200);
 
             setupImageInput();
             setupGUI();
@@ -142,7 +151,7 @@
             _editingObject = targetObject;
             _editingObject.setEnabled(true);
 
-            updateGUIItems(_editingObject);
+            updateGUIItems();
 
         },
 
@@ -190,6 +199,66 @@
             updateGUIItems();
 
             self._editModeOff();
+        },
+
+        clearAll: function()
+        {
+            var key, obj;
+            for(key in _editorObjectDic)
+            {
+                obj = _editorObjectDic[key];
+                obj.dispose();
+            }
+
+            _editorObjectDic = {};
+
+            self.completeEdit();
+        },
+
+        getExportData: function()
+        {
+            var key, out, dataArray = [], imageArray = [];
+
+            for(key in _editorObjectDic)
+            {
+                if(_editorObjectDic[key]._imageSrc)
+                {
+                    out = _editorObjectDic[key].getExportData();
+                    dataArray.push(out.data);
+                    imageArray.push(out.image);
+                }
+            }
+
+
+            return {dataArray:dataArray, imageArray: imageArray};
+        },
+
+        applyImportData: function(dataArray, imageDic)
+        {
+            self.clearAll();
+
+            _serial = 0;
+            var i, obj;
+            for(i=0;i<dataArray.length;i++)
+            {
+                obj = dataArray[i];
+
+                var serial =obj.serial,
+                    imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
+                    imageHead = obj.imageDataHead,
+                    imageSrc = imageHead + imageDic[imagePath];
+
+                //console.log(imageSrc);
+
+                _editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY, obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingGroupId);
+
+                _serial = Math.max(_serial, serial);
+
+            }
+
+
+            _serial++;
+            //console.log("_serial = " + _serial);
         }
 
     };
@@ -208,16 +277,16 @@
     {
         $imageInput = $("#billboard-image-input");
 
-        Tools.setupImageInput($imageInput[0], function(img)
+        Tools.setupImageInput($imageInput[0], function(imageSrcBase64)
         {
             if(_editingObject)
             {
-                _editingObject.changeImage(img, true);
+                _editingObject.changeImage(imageSrcBase64, true);
             }
         });
     }
 
-    function updateGUIItems(editingObject)
+    function updateGUIItems()
     {
 
         if(_guiItems)
@@ -230,11 +299,10 @@
             _guiItems.changeImageBuggon.remove();
             _guiItems.deleteButton.remove();
             _guiItems.completeButton.remove();
+            _guiItems.renderingGroupId.remove();
 
             _guiItems = null;
         }
-
-
 
         if(_editingObject)
         {
@@ -242,34 +310,40 @@
 
             _guiItems =
             {
-                offsetX: _guiFolder.add(editingObject, "_offsetX"),
-                offsetY: _guiFolder.add(editingObject, "_offsetY"),
-                radius: _guiFolder.add(editingObject, "_radius"),
-                scale: _guiFolder.add(editingObject, "_scale")
+                offsetX: _guiFolder.add(_editingObject, "_offsetX"),
+                offsetY: _guiFolder.add(_editingObject, "_offsetY"),
+                radius: _guiFolder.add(_editingObject, "_radius"),
+                scale: _guiFolder.add(_editingObject, "_scale"),
+                renderingGroupId: _guiFolder.add(_editingObject, "_renderingGroupId")
             };
 
             var obj =
             {
-                "對準場景 Y 軸": 0,
-                "對準鏡頭": 1,
-                "對準場景中心": 2
+                "對準鏡頭 Y 軸": 0,
+                "對準鏡頭 中心": 1
             };
 
             // fix for dat gui chain bug
             _guiItems.offsetX = _guiItems.offsetX.min(0).max(1).step(.001).name("水平中心");
-            _guiItems.offsetX.onChange(function(){ editingObject._updateGeom.call(editingObject);});
+            _guiItems.offsetX.onChange(function(){ _editingObject._updateGeom.call(_editingObject);});
 
             _guiItems.offsetY = _guiItems.offsetY.min(0).max(1).step(.001).name("垂直中心");
-            _guiItems.offsetY.onChange(function(){ editingObject._updateGeom.call(editingObject);});
+            _guiItems.offsetY.onChange(function(){ _editingObject._updateGeom.call(_editingObject);});
 
-            _guiItems.radius = _guiItems.radius.min(0).max(_sceneSize).step(.01).name("深度");
+            _guiItems.radius = _guiItems.radius.min(0).max(_sceneSize).step(.01).name("3D 深度");
             _guiItems.radius.onChange(function()
             {
                 _editingObject.updatePosition();
             });
 
+            _guiItems.renderingGroupId = _guiItems.renderingGroupId.min(1).max(3).step(1).name("圖層深度");
+            _guiItems.renderingGroupId.onChange(function()
+            {
+                _editingObject.updateRenderingGroupId();
+            });
+
             _guiItems.scale = _guiItems.scale.min(0).max(1).step(.001).name("縮放尺寸");
-            _guiItems.scale.onChange(function(){ editingObject._updateGeom.call(editingObject);});
+            _guiItems.scale.onChange(function(){ _editingObject._updateGeom.call(_editingObject);});
 
             _guiItems.billboardMode = _guiFolder.add(_editingObject, "_billboardMode", obj).name("對準方式").onChange(function()
             {
@@ -294,11 +368,11 @@
         self.edit(_serial);
     }
 
-    function createObject(imageSrc, x, y, z, scale)
-    {
-        _serial++;
-        _editorObjectDic[_serial] = new BillboardObject(_serial, _scene, new BABYLON.Vector3(x, y, z), _sceneSize, imageSrc, scale);
-    }
+    //function createObject(imageSrc, x, y, z, scale)
+    //{
+    //    _serial++;
+    //    _editorObjectDic[_serial] = new BillboardObject(_serial, _scene, new BABYLON.Vector3(x, y, z), _sceneSize, scale, imageSrc);
+    //}
 
     function updateFolderLabel(label)
     {
@@ -315,7 +389,7 @@
 
     BillboardObject.sceneSize = 200;
 
-    function BillboardObject(serial, scene, targetVector, radius, imageSrc, scale)
+    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, isDataUrl, offsetX, offsetY, renderingGroupId)
     {
         var self = this;
 
@@ -324,13 +398,22 @@
 
         this._scale = scale || 1;
 
+        if(offsetX === undefined) offsetX = .5;
+        if(offsetY === undefined) offsetY = .5;
+
+        this._offsetX = offsetX;
+        this._offsetY = offsetY;
+
+        this._renderingGroupId = renderingGroupId || BillboardEditor.renderingGroupId;
+
         radius = radius || BillboardObject.sceneSize;
 
 
         var mesh = self._mesh = new BABYLON.MeshBuilder.CreatePlane("billboard", {width: 16, height:16, updatable: true}, scene);
         mesh.parent = BillboardEditor.container;
-        mesh.renderingGroupId = BillboardEditor.renderingGroupId;
         mesh.visibility = .3;
+
+        self.updateRenderingGroupId();
 
         mesh._editSerial = this._serial;
 
@@ -350,29 +433,13 @@
 
         this._targetNode._editSerial = this._serial;
 
-
         self.updatePosition(targetVector, radius);
 
-
-
-
-
-
         this._targetNode.actionManager = new BABYLON.ActionManager(scene);
-        //var action = new BABYLON.Action(BABYLON.ActionManager.OnPointerOverTrigger);
-        //var action2 = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, mouseOutUnit);
         this._targetNode.actionManager.registerAction(new BABYLON.Action(BABYLON.ActionManager.OnPointerOverTrigger));
-        //this._targetNode.actionManager.registerAction(new BABYLON.Action(BABYLON.ActionManager.OnPointerOutTrigger));
-
-        //this._targetNode.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
-        //{
-        //    console.log("check");
-        //}));
 
 
-
-
-        if(imageSrc) self.changeImage(imageSrc);
+        if(imageSrc) self.changeImage(imageSrc, isDataUrl);
     }
 
     BillboardObject.prototype =
@@ -390,6 +457,13 @@
         _imageWidth: 0,
         _imageHeight: 0,
 
+        _layerId: 0,
+        _renderingGroupId: 0,
+        updateRenderingGroupId: function()
+        {
+            this._mesh.renderingGroupId = this._renderingGroupId;
+        },
+
         _offsetX: .5,
         _offsetY:.5,
 
@@ -406,6 +480,9 @@
         _targetVector: null,
         _targetPosition: null,
         _centerPosition: null,
+
+        _imageSrc: null,
+        _imageIsDataUrl : false,
 
         _isDisposed: false,
 
@@ -444,7 +521,7 @@
             }
         },
 
-        changeImage: function(imageOrSrc, isDataURL)
+        changeImage: function(imageSrc, isDataURL)
         {
             var self = this;
 
@@ -456,39 +533,33 @@
                 this._texture = null;
             }
 
-            if(typeof  imageOrSrc === 'string')
+            this._imageSrc = imageSrc;
+            this._imageIsDataUrl = Boolean(isDataURL);
+
+
+            var texture;
+
+            if(isDataURL)
             {
-                var img = document.createElement("img");
-                img.src = imageOrSrc;
-                img.onload = function()
-                {
-                    build(img);
-                };
+                // BABYLON.Texture.TRILINEAR_SAMPLINGMODE make more smooth result when texture scaled down
+                //texture = self._texture = new BABYLON.Texture("data:billboard-" + self._serial + "-" + new Date().getTime(), self._scene, false, true, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, onload, null, imageSrc, true);
+
+                texture = self._texture = new BABYLON.Texture("data:billboard-" + self._serial + "-" + new Date().getTime(), self._scene, false, true, null, onload, null, imageSrc, true);
             }
             else
             {
-                build(imageOrSrc);
+                texture = self._texture = new BABYLON.Texture(imageSrc, self._scene, false, true, null, onload);
             }
 
-            function build(img)
+            function onload()
             {
                 if(self._isDisposed) return;
 
-                var texture;
+                var size = texture.getBaseSize();
 
-                if(isDataURL)
-                {
-                    //Texture('data:my_image_name', scene, noMipmap, invertY, samplingMode, onLoad, onError, buffer, deleteBuffer);
 
-                    texture = self._texture = new BABYLON.Texture("data:myimage", self._scene, null, true, null, null, null, img.src, true);
-                }
-                else
-                {
-                    texture = self._texture = new BABYLON.Texture(img.src, self._scene);
-                }
-
-                self._imageWidth = img.width;
-                self._imageHeight = img.height;
+                self._imageWidth = size.width;
+                self._imageHeight = size.height;
 
                 self._material.opacityTexture = texture;
                 self._material.diffuseTexture = texture;
@@ -532,21 +603,11 @@
         {
             if(this._billboardMode == 0)
             {
-                this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_NONE;
-                var position = new BABYLON.Vector3(0, this._centerPosition.y, 0);
-                this._mesh.lookAt(position);
+                this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_Y;
             }
             else if(this._billboardMode == 1)
             {
-                this._mesh.rotation = BABYLON.Vector3.Zero();
                 this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
-                //this._mesh.lookAt(this._scene.activeCamera.position);
-            }
-            else if(this._billboardMode == 2)
-            {
-                this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_NONE;
-                //console.log(BABYLON.Vector3.Zero());
-                this._mesh.lookAt(BABYLON.Vector3.Zero());
             }
 
         },
@@ -609,6 +670,34 @@
 
             if(this._texture) this._texture.dispose();
             if(this._material) this._material.dispose();
+
+            this._isDisposed = true;
+        },
+
+        getExportData: function()
+        {
+            var imageName = "billboard."+this._serial+".png";
+
+            var obj = ImageObject.HandleImageSrc(this._imageSrc, this._imageIsDataUrl);
+
+            return {
+                data:
+                {
+                    serial: this._serial,
+                    offsetX: this._offsetX,
+                    offsetY: this._offsetY,
+                    radius: this._radius,
+                    scale: this._scale,
+                    targetX: this._targetPosition.x,
+                    targetY: this._targetPosition.y,
+                    targetZ: this._targetPosition.z,
+                    image: imageName,
+                    imageDataHead: obj.imageHead,
+                    renderingGroupId: this._renderingGroupId
+                },
+                image: new ImageObject(imageName, DataManager.BILLBOARD_FOLDER_PATH, obj.imageSrc, this._imageIsDataUrl, obj.imageHead)
+            };
+
         }
 
     };

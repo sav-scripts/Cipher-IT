@@ -18,14 +18,13 @@
         _isDragging = false,
         _draggingMesh,
 
-        $imageInput,
-        _loadedImage;
+        $imageInput;
 
     var _gui;
 
     var _textureDic = {};
 
-    var self = window.SpehereScene =
+    var self = window.SphereScene =
     {
         _debugLayerOn: false,
 
@@ -33,12 +32,16 @@
 
         _cameraBetaLimit: 90,
 
-        _firstTextureIndex: 1,
-        _textureFile: null,
+
+        _loadedImageSrc: null,
+        _backgroundImageIsDataUrl: false,
+
+        _firstTextureIndex: 0,
+        _textureFileName: null,
         _textureList:
         [
             "外部載入圖片",
-            '360TEST_02_0000.jpg',
+            '360TEST_02.jpg',
             '360TEST.jpg',
             '360TEST-透明.png',
             '01.jpg',
@@ -70,7 +73,7 @@
         _shapeDisplaying: true,
         _billboardDisplaying: true,
 
-        init: function(canvas, engine)
+        init: function(canvas, engine, onReady)
         {
 
             _canvas = canvas;
@@ -95,8 +98,6 @@
             ShapeEditor.init(_scene);
             BillboardEditor.init(_scene, SCENE_SIZE);
 
-
-
             self.setTool(self._firstToolIndex);
 
 
@@ -104,6 +105,8 @@
             {
                 _scene.render();
             });
+
+            if(onReady) onReady.call();
 
 
             function createScene()
@@ -128,10 +131,11 @@
                 camera.upperRadiusLimit = SCENE_SIZE - 10;
                 camera.lowerRadiusLimit = camera.radius = .1;
 
+                camera.alpha = Math.PI *1.90;
+
                 //console.log(camera.zoomOnFactor);
 
                 self.setCameraControlOn(true);
-
 
                 _mainSphere = buildAsImage(scene);
                 _wireSphere = buildWireSphere(scene);
@@ -194,7 +198,10 @@
                 {
                     if(event.ctrlKey)
                     {
-                        var pickinfo = scene.pick(event.clientX, event.clientY),
+                        var pickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'background');
+                            }),
                             myPickinfo;
                         //console.log(pickinfo.getTextureCoordinates());
                         //console.log(pickinfo);
@@ -305,28 +312,21 @@
 
         textureUpdate: function(v)
         {
-            if(v) self._textureFile = v;
+            if(v) self._textureFileName = v;
 
             //console.log("v = " + v);
 
-            var isFirstItem = (self._textureFile ==  self._textureList[0]);
+            self._backgroundImageIsDataUrl = (self._textureFileName ==  self._textureList[0]);
 
-            var textureName = self._textureFile,
+            var textureName = self._textureFileName,
                 texture = _textureDic[textureName],
                 mat = _mainSphere.material;
             
             if(!texture)
             {
-                if(isFirstItem)
+                if(self._backgroundImageIsDataUrl)
                 {
-                    if(_loadedImage)
-                    {
-                        console.error("unexpected error");
-                    }
-                    else
-                    {
-                        texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
-                    }
+                    texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
                 }
                 else
                 {
@@ -366,7 +366,7 @@
 
             _sceneSphere.material = MaterialLib.getMaterial(v);
 
-            if(self._textureFile) self.textureUpdate();
+            if(self._textureFileName) self.textureUpdate();
         },
 
         setTool: function(index)
@@ -421,6 +421,30 @@
         {
             $imageInput[0].value = null;
             $imageInput[0].click();
+        },
+
+        applyBase64Background: function(imageSrc)
+        {
+            var textureName = self._textureList[0];
+
+            self._loadedImageSrc = imageSrc;
+
+            _textureDic[textureName] = new BABYLON.Texture("data:background"+new Date().getTime(), _scene, null, true, null, null, null, imageSrc, true);
+
+            _gui.map.setValue(textureName);
+        },
+
+        getBackgroundData: function()
+        {
+            //var isDataUrl = self._backgroundImageIsDataUrl;
+            var imageSrc = self._backgroundImageIsDataUrl? self._loadedImageSrc: "textures/" + self._textureFileName;
+
+            if(imageSrc == null) return null;
+
+            var obj = ImageObject.HandleImageSrc(imageSrc, self._backgroundImageIsDataUrl);
+            var ext = obj.imageHead == DataManager.PNG_HEAD? '.png': '.jpg';
+
+            return new ImageObject('background'+ext, 'textures/', obj.imageSrc, self._backgroundImageIsDataUrl, obj.imageHead);
         }
 
     };
@@ -437,7 +461,7 @@
         {
             folder: folder,
             triggerChangeImage: folder.add(self, "triggerChangeImage").name('載入場景圖片'),
-            map: folder.add(self, '_textureFile', self._textureList).name("貼圖").onChange(self.textureUpdate),
+            map: folder.add(self, '_textureFileName', self._textureList).name("貼圖").onChange(self.textureUpdate),
             shader: folder.add(self, '_sceneMaterial', self._sceneMaterialList).name("著色器").onChange(self.materialUpdate),
             cameraBetaLimit: folder.add(self, '_cameraBetaLimit').min(0).max(90).step(1).name('鏡頭角度限制').onChange(self.cameraBetaLimitUpdate),
             cameraRadiusLimit: folder.add(_arcCamera, 'radius').min(_arcCamera.lowerRadiusLimit).max(_arcCamera.upperRadiusLimit).step(1).name('鏡頭距離').listen(),
@@ -457,25 +481,9 @@
     {
         $imageInput = $("#scene-image-input");
 
-        Tools.setupImageInput($imageInput[0], function(img)
+        Tools.setupImageInput($imageInput[0], function(imageSrc)
         {
-            _loadedImage = img;
-
-            var textureName = self._textureList[0];
-
-            _textureDic[textureName] = new BABYLON.Texture("data:myimage", _scene, null, true, null, null, null, _loadedImage.src, true);
-
-            //console.log(_gui.map);
-
-            _gui.map.setValue(textureName);
-
-            //self.textureUpdate(textureName);
-            /*
-            if(_editingObject)
-            {
-                _editingObject.changeImage(img, true);
-            }
-            */
+            self.applyBase64Background(imageSrc);
         });
     }
 

@@ -35,7 +35,7 @@
             z-index: 1;
         }
 
-        #billboard-image-input{
+        #billboard-image-input, #scene-image-input, #scene-input{
             visibility: hidden;
         }
 
@@ -48,6 +48,7 @@
     <canvas id="render-canvas"></canvas>
     <input type="file" id="billboard-image-input" accept="image/png"/>
     <input type="file" id="scene-image-input" accept="image/jpeg,image/png"/>
+    <input type="file" id="scene-input" accept="application/zip"/>
 
     <!-- scripts -->
     <script src="js/lib/SquareLoading.1.0.1.js"></script>
@@ -67,6 +68,10 @@
     <script src="js/MaterialLib.js"></script>
     <script src="js/PostProcessLib.js"></script>
     <script src="js/Tools.js"></script>
+    <script src="js/DataManager.js"></script>
+    <script src="js/lib/FileSaver.min.js"></script>
+    <script src="js/lib/jszip.js"></script>
+    <script src="js/lib/jszip-utils.min.js"></script>
 
     <style scoped="">
 

@@ -2,15 +2,14 @@
 
     window.Tools =
     {
-        setupImageInput: function(inputDom, onLoad)
-        {
-            //inputDom.value = null;
-            //inputDom.click();
 
+        setupImageInput: function(inputDom, onLoad, returnAsImage)
+        {
             $(inputDom).on("change", function()
             {
                 Loading.progress('empty').show();
                 loadFile(inputDom);
+
 
             });
 
@@ -18,18 +17,26 @@
             {
                 if (inputDom.files && inputDom.files[0])
                 {
-
-                    //console.log(_imageInput.input.files[0].size);
                     var reader = new FileReader();
 
-                    reader.onload = function (event)
+                    reader.onload = function ()
                     {
-                        loadImg(event.target.result);
+                        if(returnAsImage)
+                        {
+                            loadImg(reader.result);
+                        }
+                        else
+                        {
+                            //console.log(reader.result);
+                            Loading.hide();
+                            if(onLoad) onLoad.call(null, reader.result);
+                        }
                     };
 
                     reader.readAsDataURL(inputDom.files[0]);
                 }
             }
+
 
             function loadImg(src)
             {
@@ -43,6 +50,7 @@
 
                 img.src = src;
             }
+
         },
 
         createNodeSample: function(scene, color, size)

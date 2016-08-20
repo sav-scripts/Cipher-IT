@@ -5,6 +5,11 @@
 
     var self = window.Main =
     {
+        settings:
+        {
+            scenePath: "zips/scenedata.zip?v=" + new Date().getTime()
+        },
+
         gui: null,
         guiWidth: 280,
 
@@ -24,9 +29,16 @@
 
             setupGUI();
 
+            Loading.progress("引擎初始化中").show();
+
+            DataManager.init();
+
             ShaderLoader.loadFiles(["shape", "for-scene"],function()
             {
-                SpehereScene.init(canvas, engine);
+                SphereScene.init(canvas, engine, function()
+                {
+                    DataManager.loadFromZip(self.settings.scenePath);
+                });
             });
 
             window.addEventListener("resize", function () {
