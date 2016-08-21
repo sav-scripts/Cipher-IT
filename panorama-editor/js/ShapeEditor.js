@@ -10,7 +10,7 @@
         _guiItems,
 
         _isEditModeOn = false,
-        _hintText = "按住 Ctrl 編輯 Shape",
+        _hintText = "按住 Ctrl 點擊畫面新增 Shape",
 
         _serial = 0,
         _editingObject,
@@ -21,7 +21,8 @@
 
     var self = window.ShapeEditor =
     {
-        renderingGroupId: 1,
+        objectDefaultRenderingOrder: 100,
+        objectRenderingGroupId: 1,
         editorRenderingGroupId: 3,
 
         container: null,
@@ -50,7 +51,6 @@
             updateFolderLabel(_hintText);
 
             this.container = new BABYLON.Mesh("shape container", _scene);
-            this.container.renderingGroupId = this.renderingGroupId;
             this.container.isPickable = false;
 
             this.nodeSample = Tools.createNodeSample(_scene, BABYLON.Color3.Blue());
@@ -170,12 +170,12 @@
 
             _guiFolder.open();
 
-            var key, object;
-            for(key in _editorObjectDic)
-            {
-                object = _editorObjectDic[key];
-                if(object._mesh) object._mesh.isPickable = false;
-            }
+            //var key, object;
+            //for(key in _editorObjectDic)
+            //{
+            //    object = _editorObjectDic[key];
+            //    if(object._mesh) object._mesh.isPickable = false;
+            //}
 
             self.update();
         },
@@ -196,12 +196,12 @@
                 _editingObject = null;
             }
 
-            var key, object;
-            for(key in _editorObjectDic)
-            {
-                object = _editorObjectDic[key];
-                if(object._mesh) object._mesh.isPickable = true;
-            }
+            //var key, object;
+            //for(key in _editorObjectDic)
+            //{
+            //    object = _editorObjectDic[key];
+            //    if(object._mesh) object._mesh.isPickable = true;
+            //}
 
             updateGUIItems();
             updateFolderLabel(_hintText);
@@ -255,7 +255,7 @@
 
         completeEdit: function()
         {
-            if(_guiItems.complete && _guiItems.complete._active)
+            if(_guiItems && _guiItems.complete && _guiItems.complete._active)
             {
                 //_editingObject.updateMesh();
                 _editingObject.setEnabled(false);
@@ -278,9 +278,82 @@
 
         clearAll: function()
         {
-            //for(var key in _editorObjectDic)
-            //{
-            //}
+            var key, obj;
+            for(key in _editorObjectDic)
+            {
+                obj = _editorObjectDic[key];
+                obj.dispose();
+            }
+
+            _editorObjectDic = {};
+            _editorObjectCache = [];
+
+            self.completeEdit();
+        },
+
+        getExportData: function()
+        {
+            var key, out, dataArray = [];
+
+            for(key in _editorObjectDic)
+            {
+                out = _editorObjectDic[key].getExportData();
+                if(out)
+                {
+                    dataArray.push(out.data);
+                }
+            }
+
+
+            return {dataArray:dataArray};
+        },
+
+        applyImportData: function(dataArray)
+        {
+            self.clearAll();
+
+            //return;
+
+            _serial = 0;
+            var i, k, obj;
+
+            for(i=0;i<dataArray.length;i++)
+            {
+                obj = dataArray[i];
+
+                var serial = obj.serial,
+                    vertices = obj.vertices,
+                    uvs = obj.uvs,
+                    numPoints = vertices.length/ 3,
+                    position, uv, index;
+
+                //console.log(imageSrc);
+                //console.log(numPoints);
+
+                //continue;
+
+                var newObj = _editorObjectDic[serial] = new ShapeObject(serial, _scene, obj.renderingOrder);
+
+                for(k=0;k<numPoints;k++)
+                {
+                    index = k*3;
+                    position = new BABYLON.Vector3(vertices[index], vertices[index+1], vertices[index+2]);
+
+                    index = k*2;
+                    uv = new BABYLON.Vector2(uvs[index], uvs[index+1]);
+
+                    newObj.addPoint(position, uv, true);
+                }
+
+                newObj.updateLine();
+                newObj.updateMesh();
+
+                newObj._mesh.isPickable = true;
+
+                _serial = Math.max(_serial, serial);
+            }
+
+            _serial++;
         }
     };
 
@@ -288,15 +361,9 @@
     {
         _gui = Main.gui;
         _guiFolder = _gui.addFolder('shapeEditorFolder');
-
-        //_guiItems.toLastStep = _guiFolder.add(self, "requestToLastStep").name("刪除點 (Ctrl+Z)");
-        //_guiItems.deleteAll = _guiFolder.add(self, "clearEditingObject").name("刪除全部 (Delete)");
-        //_guiItems.complete = _guiFolder.add(self, "completeEdit").name("完成 (SPACEBAR)");
-
         $(_guiFolder.domElement).css("display", "none");
-        //console.log(_guiFolder.domElement);
 
-        self.update();
+        //self.update();
     }
 
     function updateGUIItems(editingObject)
@@ -304,7 +371,7 @@
 
         if(_guiItems)
         {
-            _guiItems.renderingGroupId.remove();
+            _guiItems.renderingOrder.remove();
 
             _guiItems.toLastStep.remove();
             _guiItems.deleteAll.remove();
@@ -319,14 +386,13 @@
 
             _guiItems =
             {
-                renderingGroupId: _guiFolder.add(_editingObject, "_renderingGroupId")
+                renderingOrder: _guiFolder.add(_editingObject, "_renderingOrder")
             };
 
-            _guiItems.renderingGroupId = _guiItems.renderingGroupId.min(1).max(3).step(1).name("圖層深度");
-            _guiItems.renderingGroupId.onChange(function()
+            _guiItems.renderingOrder = _guiItems.renderingOrder.min(-10).max(10).step(1).name("圖層深度");
+            _guiItems.renderingOrder.onChange(function()
             {
-                editingObject.updateRenderingGroupId();
-                //SphereScene.sortRenderingOrder();
+                editingObject.updateRenderingOrder();
             });
 
             _guiItems.toLastStep = _guiFolder.add(self, "requestToLastStep").name("刪除點 (Ctrl+Z)");
@@ -349,12 +415,12 @@
 
     window.ShapeObject = ShapeObject;
 
-    function ShapeObject(serial, scene, renderingGroupId)
+    function ShapeObject(serial, scene, renderingOrder)
     {
         this._serial = serial;
         this._scene = scene;
 
-        this._renderingGroupId = renderingGroupId || ShapeEditor.renderingGroupId;
+        this._renderingOrder = renderingOrder === undefined? 0: renderingOrder;
 
         this._points = [];
         this._uvs = [];
@@ -367,16 +433,25 @@
     ShapeObject.prototype =
     {
         _scene: null,
+
         _points: null,
         _uvs: null,
+
+        _meshVertices: null,
+        _meshUVs: null,
+
         _nodes: null,
         _lineMesh: null,
         _focusNode: null,
 
-        _renderingGroupId: 0,
-        updateRenderingGroupId: function()
+        _renderingOrder: 0,
+        updateRenderingOrder: function()
         {
-            if(this._mesh) this._mesh.renderingGroupId = this._renderingGroupId;
+            if(this._mesh)
+            {
+                this._mesh.renderingGroupId = ShapeEditor.objectRenderingGroupId;
+                this._mesh.alphaIndex = this._renderingOrder + ShapeEditor.objectDefaultRenderingOrder;
+            }
         },
 
         _isEnabled: false,
@@ -393,12 +468,12 @@
 
         getNumPoints: function(){ return this._nodes.length; },
 
-        addPoint: function(position, uv)
+        addPoint: function(position, uv, skipUpdate)
         {
             if(this._nodes.length)
             {
                 var lastNode = this._nodes[this._nodes.length-1];
-                lastNode.setEnabled(true);
+                lastNode.setEnabled(this._isEnabled);
             }
 
             var node = ShapeEditor.nodeSample.createInstance('nodeInstance');
@@ -407,7 +482,6 @@
             this._focusNode.position.z = node.position.z = position.z;
 
 
-            //node.renderingGroupId = ShapeEditor.renderingGroupId;
             node.parent = ShapeEditor.container;
 
             node.setEnabled(false);
@@ -418,13 +492,15 @@
             this._uvs.push(uv);
             this._nodes.push(node);
 
-            this._focusNode.setEnabled(true);
+            this._focusNode.setEnabled(this._isEnabled);
 
-            this.updateLine();
-            this.updateMesh();
+            if(!skipUpdate)
+            {
+                this.updateLine();
+                this.updateMesh();
 
-
-            ShapeEditor.update();
+                ShapeEditor.update();
+            }
         },
 
         toLastStep: function()
@@ -465,6 +541,11 @@
             if(b === this._isEnabled) return;
             this._isEnabled = b;
 
+            this._updateHintNodes();
+        },
+
+        _updateHintNodes: function()
+        {
             var i, node;
 
             if(this._isEnabled)
@@ -510,6 +591,8 @@
 
                 mesh.renderingGroupId = ShapeEditor.editorRenderingGroupId;
                 mesh.parent = ShapeEditor.container;
+
+                mesh.setEnabled(this._isEnabled);
             }
         },
 
@@ -555,6 +638,9 @@
                     minV = Math.min(minV, uv.y);
                     maxV = Math.max(maxV, uv.y);
                 }
+
+                this._meshVertices = positions.concat([]);
+                this._meshUVs = uvs.concat([]);
 
                 //console.log(Math.abs(maxU - minU));
 
@@ -614,19 +700,21 @@
                 //mesh.material = mat;
 
                 mesh.material = MaterialLib.getMaterial('flashShape');
+                //mesh.material = MaterialLib.getMaterial('noise');
 
-                mesh.visibility = .5;
+                mesh.visibility = .99999;
 
                 vertexData.applyToMesh(mesh, true);
 
                 mesh._editSerial = this._serial;
 
-                mesh.isPickable = false;
+                //mesh.isPickable = false;
 
-                mesh.renderingGroupId = this._renderingGroupId;
                 mesh.parent = ShapeEditor.container;
 
                 this._mesh = mesh;
+
+                this.updateRenderingOrder();
             }
         },
 
@@ -643,6 +731,9 @@
         {
             this._points = [];
             this._uvs = [];
+            this._meshUVs = null;
+            this._meshVertices = null;
+
             var i, node;
             for(i=0;i<this._nodes.length;i++)
             {
@@ -660,6 +751,27 @@
             }
 
             this.clearMesh();
+        },
+
+        dispose: function()
+        {
+            this.clear();
+        },
+
+        getExportData: function()
+        {
+            if(this._points.length < 3) return null;
+
+            return {
+                data:
+                {
+                    serial: this._serial,
+                    vertices: this._meshVertices,
+                    uvs: this._meshUVs,
+                    renderingOrder: this._renderingOrder
+                }
+            };
+
         }
     };
 

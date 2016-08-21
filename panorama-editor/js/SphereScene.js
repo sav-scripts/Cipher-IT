@@ -32,7 +32,6 @@
 
         _cameraBetaLimit: 90,
 
-
         _loadedImageSrc: null,
         _backgroundImageIsDataUrl: false,
 
@@ -155,25 +154,74 @@
 
                 scene.onPointerDown = function(event)
                 {
-                    if(self._toolIndex == 2)
+                    if(self._toolIndex != 0)
                     {
-                        var myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                        if(event.ctrlKey)
                         {
-                            return (mesh.isPickable && mesh.name == 'billboardTargetNode');
-                        });
+                            var backgrounPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'background');
+                            });
+                            pickedMesh = backgrounPickinfo.pickedMesh;
 
-                        if(myPickinfo.pickedMesh)
+                            if(pickedMesh)
+                            {
+                                if(self._toolIndex == 2)
+                                {
+                                    BillboardEditor.createEmptyObject(backgrounPickinfo.pickedPoint);
+                                }
+                                else if(self._toolIndex == 1)
+                                {
+                                    ShapeEditor.editAtPoint(backgrounPickinfo.pickedPoint, backgrounPickinfo.getTextureCoordinates());
+                                }
+                            }
+                        }
+                        else
                         {
-                            _isDragging = true;
-                            self.setCameraControlOn(false);
-                            _draggingMesh = myPickinfo.pickedMesh;
-                            //console.log("check: " + myPickinfo.pickedMesh._editSerial);
+                            var nodePickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                            {
+                                return (mesh.isPickable && mesh.name == 'billboardTargetNode');
+                            });
+
+
+                            if(nodePickinfo.pickedMesh)
+                            {
+                                _isDragging = true;
+                                self.setCameraControlOn(false);
+                                _draggingMesh = nodePickinfo.pickedMesh;
+                                //console.log("check: " + myPickinfo.pickedMesh._editSerial);
+                            }
+                            else
+                            {
+
+                                var objectPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
+                                {
+                                    return (mesh.isPickable && (mesh.name == 'billboard' || mesh.name == 'shape'));
+                                });
+
+                                var pickedMesh = objectPickinfo.pickedMesh;
+
+                                if(pickedMesh)
+                                {
+                                    if(pickedMesh.name == 'billboard')
+                                    {
+                                        self.setTool(2);
+                                        BillboardEditor.edit(pickedMesh._editSerial);
+                                    }
+                                    else if(pickedMesh.name == 'shape')
+                                    {
+                                        self.setTool(1);
+                                        ShapeEditor.edit(pickedMesh._editSerial);
+                                    }
+                                }
+                            }
                         }
                     }
                 };
 
                 scene.onPointerMove = function(event)
                 {
+
                     if(_isDragging)
                     {
                         if(self._toolIndex == 2)
@@ -196,53 +244,6 @@
 
                 scene.onPointerUp = function (event)
                 {
-                    if(event.ctrlKey)
-                    {
-                        var pickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
-                            {
-                                return (mesh.isPickable && mesh.name == 'background');
-                            }),
-                            myPickinfo;
-                        //console.log(pickinfo.getTextureCoordinates());
-                        //console.log(pickinfo);
-
-                        if(self._toolIndex == 1)
-                        {
-                            myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
-                            {
-                                return (mesh.isPickable && mesh.name == 'shape');
-                            });
-
-                            if(myPickinfo.pickedMesh)
-                            {
-                                ShapeEditor.edit(myPickinfo.pickedMesh._editSerial);
-                            }
-                            else if(pickinfo.pickedMesh && pickinfo.pickedMesh.name == 'background')
-                            {
-                                ShapeEditor.editAtPoint(pickinfo.pickedPoint, pickinfo.getTextureCoordinates());
-                            }
-                        }
-
-                        if(self._toolIndex == 2)
-                        {
-                            //myPickinfo = scene.pick()
-
-                            myPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
-                            {
-                                return (mesh.isPickable && mesh.name == 'billboard');
-                            });
-
-                            if(myPickinfo.pickedMesh)
-                            {
-                                BillboardEditor.edit(myPickinfo.pickedMesh._editSerial);
-                            }
-                            else if(pickinfo.pickedMesh && pickinfo.pickedMesh.name == 'background')
-                            {
-                                BillboardEditor.createEmptyObject(pickinfo.pickedPoint);
-                            }
-                        }
-                    }
-
                     if(_isDragging)
                     {
                         _isDragging = false;
@@ -502,12 +503,8 @@
     {
         var sphere = _sceneSphere = new BABYLON.Mesh.CreateSphere("background", SPHERE_SEGMENTS, SCENE_SIZE*2, scene);
         sphere.scaling.y = -1;
-
-        //sphere.isBlocked = true;
-
-        //sphere.material = MaterialLib.getMaterial('normal');
-
-        //sphere.isPickable = false;
+        //sphere.visibility = .99999;
+        //sphere.alphaIndex = 0;
 
         return sphere;
     }

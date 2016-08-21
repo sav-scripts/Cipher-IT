@@ -40,7 +40,7 @@
         var material = new BABYLON.StandardMaterial("material1", _scene);
         material.emissiveColor = new BABYLON.Color3(1,1,1);
         material.backFaceCulling = false;
-        material.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
+        //material.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 
         _materialDic['normal'] = material;
     }
@@ -52,7 +52,7 @@
 
         var shaderMaterial = new BABYLON.ShaderMaterial("shapeShader", _scene, "shape",
             {
-                needAlphaBlending: true,
+                //needAlphaBlending: true,
                 attributes: ["position", "normal", "uv", "uv2"],
                 uniforms: ["worldViewProjection"]
             });

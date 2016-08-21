@@ -9,7 +9,7 @@
         _guiItems,
 
         _isEditModeOn = false,
-        _hintText = '按住 Ctrl 編輯 Billboard',
+        _hintText = '按住 Ctrl 點擊畫面新增 Billboard',
 
         _sceneSize = 200,
 
@@ -23,7 +23,8 @@
 
     var self = window.BillboardEditor =
     {
-        renderingGroupId: 1,
+        objectDefaultRenderingOrder: 100,
+        objectRenderingGroupId: 1,
         editorRenderingGroupId: 3,
 
         container: null,
@@ -55,7 +56,6 @@
             BillboardObject.sceneSize = _sceneSize;
 
             this.container = new BABYLON.Mesh("shape container", _scene);
-            this.container.renderingGroupId = this.renderingGroupId;
             this.container.isPickable = false;
 
             this.nodeSample = Tools.createNodeSample(_scene, BABYLON.Color3.Blue());
@@ -250,7 +250,7 @@
 
                 //console.log(imageSrc);
 
-                _editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY, obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingGroupId);
+                _editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY, obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder);
 
                 _serial = Math.max(_serial, serial);
 
@@ -299,7 +299,7 @@
             _guiItems.changeImageBuggon.remove();
             _guiItems.deleteButton.remove();
             _guiItems.completeButton.remove();
-            _guiItems.renderingGroupId.remove();
+            _guiItems.renderingOrder.remove();
 
             _guiItems = null;
         }
@@ -314,7 +314,7 @@
                 offsetY: _guiFolder.add(_editingObject, "_offsetY"),
                 radius: _guiFolder.add(_editingObject, "_radius"),
                 scale: _guiFolder.add(_editingObject, "_scale"),
-                renderingGroupId: _guiFolder.add(_editingObject, "_renderingGroupId")
+                renderingOrder: _guiFolder.add(_editingObject, "_renderingOrder")
             };
 
             var obj =
@@ -336,10 +336,10 @@
                 _editingObject.updatePosition();
             });
 
-            _guiItems.renderingGroupId = _guiItems.renderingGroupId.min(1).max(3).step(1).name("圖層深度");
-            _guiItems.renderingGroupId.onChange(function()
+            _guiItems.renderingOrder = _guiItems.renderingOrder.min(-10).max(10).step(1).name("圖層深度");
+            _guiItems.renderingOrder.onChange(function()
             {
-                _editingObject.updateRenderingGroupId();
+                _editingObject.updateRenderingOrder();
             });
 
             _guiItems.scale = _guiItems.scale.min(0).max(1).step(.001).name("縮放尺寸");
@@ -389,7 +389,7 @@
 
     BillboardObject.sceneSize = 200;
 
-    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, isDataUrl, offsetX, offsetY, renderingGroupId)
+    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, isDataUrl, offsetX, offsetY, renderingOrder)
     {
         var self = this;
 
@@ -404,7 +404,7 @@
         this._offsetX = offsetX;
         this._offsetY = offsetY;
 
-        this._renderingGroupId = renderingGroupId || BillboardEditor.renderingGroupId;
+        this._renderingOrder = renderingOrder === undefined? 0: renderingOrder;
 
         radius = radius || BillboardObject.sceneSize;
 
@@ -413,7 +413,7 @@
         mesh.parent = BillboardEditor.container;
         mesh.visibility = .3;
 
-        self.updateRenderingGroupId();
+        self.updateRenderingOrder();
 
         mesh._editSerial = this._serial;
 
@@ -457,11 +457,11 @@
         _imageWidth: 0,
         _imageHeight: 0,
 
-        _layerId: 0,
-        _renderingGroupId: 0,
-        updateRenderingGroupId: function()
+        _renderingOrder: 0,
+        updateRenderingOrder: function()
         {
-            this._mesh.renderingGroupId = this._renderingGroupId;
+            this._mesh.renderingGroupId = BillboardEditor.objectRenderingGroupId;
+            this._mesh.alphaIndex = this._renderingOrder + BillboardEditor.objectDefaultRenderingOrder;
         },
 
         _offsetX: .5,
@@ -566,7 +566,7 @@
 
                 self._updateGeom();
 
-                self._mesh.visibility = 1;
+                self._mesh.visibility = .99999;
             }
         },
 
@@ -604,10 +604,12 @@
             if(this._billboardMode == 0)
             {
                 this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_Y;
+                //this._mesh.lookAt(new BABYLON.Vector3(0, this._mesh.position.y, 0));
             }
             else if(this._billboardMode == 1)
             {
                 this._mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+                //this._mesh.lookAt(new BABYLON.Vector3(0, 0, 0));
             }
 
         },
@@ -693,7 +695,7 @@
                     targetZ: this._targetPosition.z,
                     image: imageName,
                     imageDataHead: obj.imageHead,
-                    renderingGroupId: this._renderingGroupId
+                    renderingOrder: this._renderingOrder
                 },
                 image: new ImageObject(imageName, DataManager.BILLBOARD_FOLDER_PATH, obj.imageSrc, this._imageIsDataUrl, obj.imageHead)
             };

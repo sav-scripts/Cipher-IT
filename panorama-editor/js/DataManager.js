@@ -71,6 +71,7 @@
         else
         {
             var billboardData = BillboardEditor.getExportData();
+            var shapeData = ShapeEditor.getExportData();
 
             var imageArray = [backgroundImageData].concat(billboardData.imageArray);
 
@@ -79,7 +80,8 @@
                 version: _version,
                 backgroundImage: backgroundImageData.name,
                 backgroundImageHead: backgroundImageData.imageHead,
-                billboardData: billboardData.dataArray
+                billboardData: billboardData.dataArray,
+                shapeData: shapeData.dataArray
             };
 
 
@@ -150,15 +152,14 @@
                 {
                     Loading.progress('資料分析中').show();
 
-                    var billbaordData = data.billboardData;
+                    var billbaordData = data.billboardData,
+                        shapeData = data.shapeData;
 
                     extractImages(zip, function(imageDic)
                     {
                         BillboardEditor.applyImportData(billbaordData, imageDic);
 
-                        //console.log(data.backgroundImage);
-                        //console.log(data.backgroundImageHead);
-                        //console.log(imageDic['textures/'+data.backgroundImage]);
+                        ShapeEditor.applyImportData(shapeData);
 
                         SphereScene.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
 

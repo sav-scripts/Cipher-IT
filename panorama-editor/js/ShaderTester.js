@@ -29,14 +29,6 @@
 
                 var scene = createScene();
 
-                scene.registerBeforeRender(function()
-                {
-                    _time += _dTime;
-                    //_time %= 1;
-
-                    _shaderMaterial.setFloat("time", _time);
-                });
-
                 engine.runRenderLoop(function ()
                 {
                     scene.render();
@@ -80,20 +72,16 @@
                 //plane.material = mat;
 
 
+                var mainTexture = new BABYLON.Texture("textures/amiga.jpg", scene);
 
 
-                 var shaderMaterial = new BABYLON.ShaderMaterial("shader", scene,
-                 {
-                     vertex: "shape",
-                     fragment: "shape"
-                 },
+
+                 var shaderMaterial = new BABYLON.ShaderMaterial("shader", scene, "shape-test",
                  {
                      needAlphaBlending: true,
                      attributes: ["position", "normal", "uv"],
                      uniforms: ["worldViewProjection"]
                  });
-
-                 var mainTexture = new BABYLON.Texture("textures/amiga.jpg", scene);
 
                  shaderMaterial.setTexture("textureSampler", mainTexture);
                 shaderMaterial.setTexture("noiseSampler", new BABYLON.Texture("textures/noise-good.png", scene));
@@ -101,9 +89,42 @@
                 //shaderMaterial.alphaMode = BABYLON.Engine.ALPHA_ADD;
                  shaderMaterial.backFaceCulling = false;
 
+                scene.registerBeforeRender(function()
+                {
+                    _time += _dTime;
+                    //_time %= 1;
+
+                    shaderMaterial.setFloat("time", _time);
+                });
+
                 //console.log(plane.setVerticesData);
 
-                 _shaderMaterial = plane.material = shaderMaterial;
+                 //_shaderMaterial = plane.material = shaderMaterial;
+
+
+                var plane2 = BABYLON.Mesh.CreatePlane("plane", 1, scene);
+                plane2.position.x = .5;
+                plane2.position.y = .3;
+                plane2.position.z = .5;
+
+
+                var material = new BABYLON.StandardMaterial("material1", scene);
+                material.emissiveColor = new BABYLON.Color3(1,1,1);
+                material.backFaceCulling = false;
+                //material.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
+                material.diffuseTexture = mainTexture;
+
+                plane.material = material;
+                plane2.material = shaderMaterial;
+
+                //plane.renderingGroupId = 1;
+                //plane2.renderingGroupId = 2;
+
+                plane.visibility = .999;
+                plane2.visibility = .999;
+
+                plane.alphaIndex = 1;
+                plane2.alphaIndex = 2;
 
 
                 return scene;
