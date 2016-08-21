@@ -372,6 +372,8 @@
 
         setTool: function(index)
         {
+            if(this._toolIndex == index) return;
+
             _gui.tool.setValue(index);
         },
 

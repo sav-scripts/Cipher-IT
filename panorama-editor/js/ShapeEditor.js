@@ -133,6 +133,8 @@
                         _editingObject = new ShapeObject(_serial, _scene);
                     }
 
+                    if(_editingObject._mesh) _editingObject._mesh.isPickable = false;
+
                     _editorObjectDic[_editingObject.getSerial()] = _editingObject;
 
                     //updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
@@ -148,12 +150,33 @@
 
         edit: function(serial)
         {
-            if(_editingObject) return;
+            //if(_editingObject) return;
+
 
             if(_editorObjectDic[serial])
             {
+                if(_editingObject && _editingObject == _editorObjectDic[serial]) return;
+
+
+
+                if(_editingObject)
+                {
+                    if(_editingObject._mesh) _editingObject._mesh.isPickable = true;
+                    _editingObject.setEnabled(false);
+
+                    if(_editingObject._points.length < 3)
+                    {
+                        _editingObject.clear();
+                        _editorObjectCache.push(_editingObject);
+                        delete _editorObjectDic[_editingObject.getSerial()];
+                    }
+
+                }
+
                 _editingObject = _editorObjectDic[serial];
                 _editingObject.setEnabled(true);
+
+                if(_editingObject._mesh) _editingObject._mesh.isPickable = false;
 
                 //updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
                 updateGUIItems(_editingObject);
@@ -187,7 +210,12 @@
 
             if(_editingObject)
             {
-                if(putEditingObjectIntoCache)
+
+                if(_editingObject._mesh) _editingObject._mesh.isPickable = true;
+                _editingObject.setEnabled(false);
+
+                //if(putEditingObjectIntoCache)
+                if(_editingObject._points.length < 3)
                 {
                     _editorObjectCache.push(_editingObject);
                     delete _editorObjectDic[_editingObject.getSerial()];
@@ -255,12 +283,12 @@
 
         completeEdit: function()
         {
-            if(_guiItems && _guiItems.complete && _guiItems.complete._active)
-            {
-                //_editingObject.updateMesh();
-                _editingObject.setEnabled(false);
+            //console.log('complete edit');
+            //if(_guiItems && _guiItems.complete && _guiItems.complete._active)
+            //{
+            //    _editingObject.setEnabled(false);
                 self._editModeOff();
-            }
+            //}
         },
 
         clearEditingObject: function()
@@ -708,7 +736,7 @@
 
                 mesh._editSerial = this._serial;
 
-                //mesh.isPickable = false;
+                mesh.isPickable = false;
 
                 mesh.parent = ShapeEditor.container;
 
