@@ -14,7 +14,8 @@
         _dic = 
         {
             "noise": {label: "雜訊 + 動態模糊", enabled: false, effect: null},
-            "drunk": {label: "暈眩", enabled: false, effect: null}
+            "drunk": {label: "暈眩", enabled: false, effect: null},
+            "fogWave": {label: "今天喝太多", enabled: false, effect: null}
         };
 
     var self = window.PostProcessLib =
@@ -29,6 +30,7 @@
 
             buildNoise();
             buildDrunk();
+            buildFogWave();
 
             _scene.postProcessRenderPipelineManager.addPipeline(_pipeline);
             _scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(SCENE_PIPELINE_NAME, camera);
@@ -173,6 +175,24 @@
 
 
             effect.setVector2("motion", __motion);
+
+        };
+    }
+
+    function buildFogWave()
+    {
+        var effectName = 'fogWave',
+            time = 0.1;
+
+        var postProcess = new BABYLON.PostProcess(effectName, "wave", ["time"], null, 1, null, null, _engine, false);
+
+        _dic[effectName].effect = new BABYLON.PostProcessRenderEffect(_engine, effectName, function() {return postProcess;});
+        _pipeline.addEffect(_dic[effectName].effect);
+
+        postProcess.onApply = function (effect)
+        {
+            time += .01;
+            effect.setFloat("time", time);
 
         };
     }

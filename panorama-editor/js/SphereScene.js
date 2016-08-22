@@ -40,6 +40,7 @@
         _textureList:
         [
             "外部載入圖片",
+            '360TEST_03.jpg',
             '360TEST_02.jpg',
             '360TEST.jpg',
             '360TEST-透明.png',

@@ -1,6 +1,13 @@
 @import "common-mixins.less";
+@import "misc.less";
+@import "elements.less";
 
-@background-color: #faefd8;
+//@background-color: #faefd8;
+@background-color: black;
+
+@pc-width: 1024px;
+@mobile-width: 640px;
+
 
 
 html {
@@ -12,10 +19,20 @@ body{
     width: 100%;
     height: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
     background: @background-color;
     padding: 0;
     margin: 0;
+
+
+//    &.scroll-mode{
+//        overflow-y: auto;
+//    }
+
+
 }
+
+
 .template-container{
     position: absolute;
     width: 100%;
@@ -24,8 +41,16 @@ body{
 #scene-container{
     position: absolute;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    height: auto;
+    min-height: 90%;
+
+//    overflow-x: hidden;
+
+//    min-width: 1024px;
+//    overflow-x: hidden;
+//    overflow-y: visible;
+
+//    min-height: 100%;
 }
 #invisible-container{
     position: absolute;
@@ -55,25 +80,343 @@ body{
     }
 }
 
-/* index */
-#index {
 
-    .percent-container();
-    left: 50%;
-    top: 50%;
 
-    .percent-div(my-image, -600, -314, 1900, 628, "sample.png");
-    @media (max-width: 1280px){
-        .percent-div(my-image, -600, -314, 1200, 628, "sample.png");
+@media (max-width: @pc-width) {
+    body{
+        overflow-x: auto;
     }
-    @media (max-width: 640px){
-        .percent-div(my-image, -300, -157, 600, 314, "sample.png");
+    #scene-container{
+        width: @pc-width;
+    }
+}
+
+
+@media (max-width: @mobile-width) {
+    body{
+        overflow-x: hidden;
+    }
+    #scene-container{
+        width: 100%;
+    }
+}
+
+/** my mixins **/
+.layout(@src;){
+
+    .layout{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .image-bg(@src);
+        opacity: .3;
+    }
+}
+.centeralized-layout(@src; @width; @height;)
+{
+    .layout {
+        .image-bg(@src);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: @width * 1px;
+        height: @height * 1px;
+        margin-left: -@width * .5px;
+        margin-top: -@height * .5px;
+        opacity: .3;
+    }
+}
+
+/** footer **/
+#footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 10%;
+    .image-bg("footer.png", contain);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #121212
+}
+
+/** participate **/
+#participate{
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .part-1{
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        min-height: 600px;
+
+        .image-bg("participate-1-background.jpg", cover);
+        background-position: center center;
+
+        .centeralized-layout("layouts/participate-1-pc.jpg", 1920, 700);
+
+        .wrapper{
+            .percent-container();
+
+            .percent-div(logo, -83,-117,167,127,"participate-1-logo.png");
+            .percent-div(title-1, -150,27,291,37,"participate-1-title-1.png");
+            .percent-div(title-2, -60,81,119,34,"participate-1-title-2.png");
+        }
+
+
+        .arrow-down{
+            .abs-div-2(none, -31,287,60,60,"participate-1-arrow-down.png");
+            cursor: pointer;
+            top: auto;
+            left:50%;
+            margin-left: -30px;
+            bottom:40px;
+
+
+            @keyframes float-arrow {
+                0%   { bottom: 40px; }
+                50% { bottom: 10px; }
+                100% { bottom: 40px; }
+            }
+            animation: float-arrow 2s infinite;
+        }
+
     }
 
-    /*
-    .my-image{
-        .centralized-div(50%, 50%, 1200px, 628px);
-        .image-bg("sample.png");
+    .part-2{
+        @cw: 1920px;
+        @ch: 700px;
+
+        position: relative;
+        width: 100%;
+//        height: @ch;
+//        padding-bottom: 36.458%;
+        padding-bottom: @ch / @cw * 100%;
+
+        .image-bg("participate-2-background.jpg", cover);
+        background-position: center center;
+
+        .centeralized-layout("layouts/participate-2-pc.jpg", 1920, 700);
+
+        .content{
+            position: absolute;
+            width: percentage(450 / @cw);
+            height: percentage(266 / @ch);
+
+            left: percentage(454 / @cw);
+            top: percentage(194 / @ch);
+
+            .image-bg("participate-2-content.png", cover);
+            //.percent-div(none; 100; 0; 450; 266; "participate-2-content.png"; @cwidth: @cw; @cheight: @ch;);
+        }
+
     }
-    */
+
+    .part-3{
+        @ch: 1281px;
+//        @ch: 1148px;
+
+        position: relative;
+        width: 100%;
+        height: @ch;
+        min-height: 111.1111%;
+
+        .centeralized-layout("layouts/participate-3-pc.jpg", 1920, 1148);
+
+        .image-bg("participate-3-background.jpg", cover);
+        background-position: center center;
+
+        .wrapper{
+            .percent-container();
+
+            .percent-div(title, -503, -518, 219, 35, "participate-3-title.png");
+            .percent-div(content, -498, -432, 961, 482, "participate-3-content.png");
+            .percent-div(dates, 52, -303, 129, 274, "participate-3-dates.png");
+            .percent-div(form, -499, 91, 1000, 233, "participate-3-form.png");
+
+            .fade-btn(btn-send,"participate-3-btn-send.png",278,377,223,52);
+
+            .percent-div(eula-text, -466, 379, 353, 13, "participate-3-eula.png");
+
+
+            .percent-div(btn-rule, -349, 375, 62, 21);
+            .percent-div(btn-privacy, -275, 375, 165, 21);
+
+            .btn-rule, .btn-privacy{
+                cursor: pointer;
+//                background: rgba(0,0,0,.5);
+            }
+
+            .checkbox{
+                position: absolute;
+                left: -500px;
+                top:376px;
+            }
+
+
+            select{
+
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+
+                background: url("../images/select-arrow.png") no-repeat;
+                background-color: rgba(0,0,0,0);
+                background-position: right 9px;
+
+                height: 24px;
+
+                border: none;
+
+                cursor: pointer;
+
+                text-align: center;
+                text-align-last:center;
+
+                .default-font(14px, #697085);
+
+                option{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: center;
+                    text-align-last:center;
+                }
+
+                &::-ms-expand {
+                    display: none;
+                }
+            }
+
+            .birthday-fields{
+                position: absolute;
+                left: -391px;
+                top:282px;
+                width: 600px;
+
+                #select-year, #select-month, #select-day{
+                    position: absolute;
+                    width: 264px;
+                    color: white;
+                }
+
+                #select-month{
+                    left: 302px;
+                }
+
+
+                #select-day{
+                    left: 603px;
+                }
+
+
+            }
+
+            .event-select{
+                position: absolute;
+                left: -395px;
+                top: 165px;
+                width: 573px;
+                text-align: left;
+                text-align-last:left;
+            }
+
+            .gender-select{
+                position: absolute;
+                left: 256px;
+                top: 106px;
+                width: 217px;
+            }
+
+            input{
+                .default-font(14px, white);
+
+                border: none;
+//                background:rgba(0,0,0,.3);
+                background: none;
+                height:24px;
+                width: 100px;
+
+                &.hint-mode{
+                    color:#697085;
+                }
+            }
+
+            .user-name{
+                position: absolute;
+                left: -393px;
+                top:105px;
+                width: 500px;
+            }
+
+            .user-email{
+                position: absolute;
+                left: -393px;
+                top:224px;
+                width: 500px;
+            }
+
+            .user-phone{
+                position: absolute;
+                left: 298px;
+                top: 166px;
+                width: 160px;
+                text-align: center;
+            }
+
+            .time-group-1, .time-group-2, .time-group-3{
+
+                position: absolute;
+                width: 366px;
+                height: 63px;
+                left: 52px;
+//                .image-bg("participate-3-times.png");
+
+                .my-mixin(1, 0,0,120,18);
+                .my-mixin(2, 120,0,130,18);
+                .my-mixin(3, 250,0,130,18);
+
+                .my-mixin(4, 0,22,120,18);
+                .my-mixin(5, 120,22,130,18);
+                .my-mixin(6, 250,22,130,18);
+
+                .my-mixin(7, 0,48,120,18);
+
+                .my-mixin(@index; @left; @top; @width; @height: 24px;)
+                {
+                    .time:nth-child(@{index})
+                    {
+                        position: absolute;
+                        left:@left * 1px;
+                        top:@top * 1px;
+                        width:@width * 1px;
+                        height: @height * 1px;
+//                        background: rgba(0,0,0,.3);
+                        .image-bg("participate-3-times.png");
+                        background-position: -@left*1px -@top*1px;
+                        background-repeat: no-repeat;
+
+                        &.filled{
+                            opacity: .3;
+                        }
+                    }
+                }
+            }
+
+            .time-group-1{
+                top: -266px;
+            }
+
+            .time-group-2{
+                top: -142px;
+            }
+
+            .time-group-3{
+                top: -14px;
+            }
+
+        }
+    }
 }

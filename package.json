@@ -1,6 +1,6 @@
 {
-  "name": "site template",
-  "description": "site template",
+  "name": "cipher",
+  "description": "cipher",
   "version": "0.0.0",
   "devDependencies":{
     "bower": "~1.2.8",

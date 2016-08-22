@@ -182,6 +182,9 @@
                 updateGUIItems(_editingObject);
 
                 this._editModeOn();
+
+
+                self.update();
             }
         },
 

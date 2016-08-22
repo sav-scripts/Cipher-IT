@@ -69,10 +69,12 @@
     user-select: none;
 }
 
-.percent-container(@position: absolute; @width: 100px; @height: 100px;){
+.percent-container(@position: absolute; @width: 100px; @height: 100px; @left: 50%; @top: 50%;){
     position: @position;
     width: @width;
     height: @height;
+    left: @left;
+    top: @top;
 }
 
 .percent-div(@selector: none; @left: 0; @top: 0; @width; @height; @image-src: none;

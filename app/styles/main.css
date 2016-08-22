@@ -1,4 +1,99 @@
 /** common mixins **/
+/* .custom-checkbox */
+.custom-checkbox {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.custom-checkbox label {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.custom-checkbox label:after {
+  content: '';
+  width: 7px;
+  height: 4px;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border: 2px solid #43ac8c;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  opacity: 0;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.custom-checkbox label:hover::after {
+  opacity: 0;
+}
+.custom-checkbox input[type=checkbox] {
+  visibility: hidden;
+}
+.custom-checkbox input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+.custom-checkbox.no-style {
+  background: none;
+  border: none;
+}
+.custom-checkbox.no-style label {
+  display: none;
+}
+.custom-checkbox.no-style input[type=checkbox] {
+  visibility: visible;
+  position: absolute;
+  left: 1px;
+  top: 1px;
+}
+@media (max-width: 640px) {
+  .custom-checkbox.big {
+    width: 41px;
+    height: 41px;
+  }
+  .custom-checkbox.big label {
+    width: 39px;
+    height: 39px;
+  }
+  .custom-checkbox.big label:after {
+    width: 23px;
+    height: 13px;
+    left: 7px;
+    top: 7px;
+    border: 6px solid #000000;
+    border-top: none;
+    border-right: none;
+  }
+  .custom-checkbox.middle {
+    width: 29px;
+    height: 29px;
+  }
+  .custom-checkbox.middle label {
+    width: 27px;
+    height: 27px;
+  }
+  .custom-checkbox.middle label:after {
+    width: 13px;
+    height: 7px;
+    left: 7px;
+    top: 7px;
+    border: 4px solid #000000;
+    border-top: none;
+    border-right: none;
+  }
+}
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 html {
   padding: 0;
   margin: 0;
@@ -8,7 +103,8 @@ body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  background: #faefd8;
+  overflow-y: auto;
+  background: black;
   padding: 0;
   margin: 0;
 }
@@ -20,8 +116,8 @@ body {
 #scene-container {
   position: absolute;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: auto;
+  min-height: 90%;
 }
 #invisible-container {
   position: absolute;
@@ -47,48 +143,505 @@ body {
   color: red;
   text-align: center;
 }
-/* index */
-#index {
+@media (max-width: 1024px) {
+  body {
+    overflow-x: auto;
+  }
+  #scene-container {
+    width: 1024px;
+  }
+}
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+  #scene-container {
+    width: 100%;
+  }
+}
+/** my mixins **/
+/** footer **/
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+  background-image: url("../images/footer.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #121212;
+}
+/** participate **/
+#participate {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#participate .part-1 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  background-image: url("../images/participate-1-background.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+#participate .part-1 .layout {
+  background-image: url("../images/layouts/participate-1-pc.jpg");
+  background-size: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 700px;
+  margin-left: -960px;
+  margin-top: -350px;
+  opacity: .3;
+}
+#participate .part-1 .wrapper {
   position: absolute;
   width: 100px;
   height: 100px;
   left: 50%;
   top: 50%;
-  /*
-    .my-image{
-        .centralized-div(50%, 50%, 1200px, 628px);
-        .image-bg("sample.png");
-    }
-    */
 }
-#index .my-image {
+#participate .part-1 .wrapper .logo {
   position: absolute;
-  left: -600%;
-  top: -314%;
-  width: 1900%;
-  height: 628%;
-  background-image: url("../images/sample.png");
+  left: -83%;
+  top: -117%;
+  width: 167%;
+  height: 127%;
+  background-image: url("../images/participate-1-logo.png");
   background-size: cover;
 }
-@media (max-width: 1280px) {
-  #index .my-image {
-    position: absolute;
-    left: -600%;
-    top: -314%;
-    width: 1200%;
-    height: 628%;
-    background-image: url("../images/sample.png");
-    background-size: cover;
+#participate .part-1 .wrapper .title-1 {
+  position: absolute;
+  left: -150%;
+  top: 27%;
+  width: 291%;
+  height: 37%;
+  background-image: url("../images/participate-1-title-1.png");
+  background-size: cover;
+}
+#participate .part-1 .wrapper .title-2 {
+  position: absolute;
+  left: -60%;
+  top: 81%;
+  width: 119%;
+  height: 34%;
+  background-image: url("../images/participate-1-title-2.png");
+  background-size: cover;
+}
+#participate .part-1 .arrow-down {
+  position: absolute;
+  left: -31px;
+  top: 287px;
+  width: 60px;
+  height: 60px;
+  margin-left: 0px;
+  margin-top: 0px;
+  background-image: url("../images/participate-1-arrow-down.png");
+  background-size: auto;
+  cursor: pointer;
+  top: auto;
+  left: 50%;
+  margin-left: -30px;
+  bottom: 40px;
+  animation: float-arrow 2s infinite;
+}
+@keyframes float-arrow {
+  0% {
+    bottom: 40px;
+  }
+  50% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: 40px;
   }
 }
-@media (max-width: 640px) {
-  #index .my-image {
-    position: absolute;
-    left: -300%;
-    top: -157%;
-    width: 600%;
-    height: 314%;
-    background-image: url("../images/sample.png");
-    background-size: cover;
-  }
+#participate .part-2 {
+  position: relative;
+  width: 100%;
+  padding-bottom: 36.45833333%;
+  background-image: url("../images/participate-2-background.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+#participate .part-2 .layout {
+  background-image: url("../images/layouts/participate-2-pc.jpg");
+  background-size: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 700px;
+  margin-left: -960px;
+  margin-top: -350px;
+  opacity: .3;
+}
+#participate .part-2 .content {
+  position: absolute;
+  width: 23.4375%;
+  height: 38%;
+  left: 23.64583333%;
+  top: 27.71428571%;
+  background-image: url("../images/participate-2-content.png");
+  background-size: cover;
+}
+#participate .part-3 {
+  position: relative;
+  width: 100%;
+  height: 1281px;
+  min-height: 111.1111%;
+  background-image: url("../images/participate-3-background.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+#participate .part-3 .layout {
+  background-image: url("../images/layouts/participate-3-pc.jpg");
+  background-size: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1148px;
+  margin-left: -960px;
+  margin-top: -574px;
+  opacity: .3;
+}
+#participate .part-3 .wrapper {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+}
+#participate .part-3 .wrapper .title {
+  position: absolute;
+  left: -503%;
+  top: -518%;
+  width: 219%;
+  height: 35%;
+  background-image: url("../images/participate-3-title.png");
+  background-size: cover;
+}
+#participate .part-3 .wrapper .content {
+  position: absolute;
+  left: -498%;
+  top: -432%;
+  width: 961%;
+  height: 482%;
+  background-image: url("../images/participate-3-content.png");
+  background-size: cover;
+}
+#participate .part-3 .wrapper .dates {
+  position: absolute;
+  left: 52%;
+  top: -303%;
+  width: 129%;
+  height: 274%;
+  background-image: url("../images/participate-3-dates.png");
+  background-size: cover;
+}
+#participate .part-3 .wrapper .form {
+  position: absolute;
+  left: -499%;
+  top: 91%;
+  width: 1000%;
+  height: 233%;
+  background-image: url("../images/participate-3-form.png");
+  background-size: cover;
+}
+#participate .part-3 .wrapper .btn-send {
+  position: absolute;
+  background-image: url("../images/participate-3-btn-send.png");
+  background-size: auto;
+  left: 278px;
+  top: 377px;
+  width: 223px;
+  height: 52px;
+}
+#participate .part-3 .wrapper .btn-send .hover-state {
+  background-image: url("../images/participate-3-btn-send.png");
+  background-size: auto;
+  width: 223px;
+  height: 52px;
+  background-position: 0 -100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+}
+#participate .part-3 .wrapper .btn-send:hover {
+  cursor: pointer;
+}
+#participate .part-3 .wrapper .btn-send:hover .hover-state {
+  opacity: 1;
+}
+#participate .part-3 .wrapper .eula-text {
+  position: absolute;
+  left: -466%;
+  top: 379%;
+  width: 353%;
+  height: 13%;
+  background-image: url("../images/participate-3-eula.png");
+  background-size: cover;
+}
+#participate .part-3 .wrapper .btn-rule {
+  position: absolute;
+  left: -349%;
+  top: 375%;
+  width: 62%;
+  height: 21%;
+}
+#participate .part-3 .wrapper .btn-privacy {
+  position: absolute;
+  left: -275%;
+  top: 375%;
+  width: 165%;
+  height: 21%;
+}
+#participate .part-3 .wrapper .btn-rule,
+#participate .part-3 .wrapper .btn-privacy {
+  cursor: pointer;
+}
+#participate .part-3 .wrapper .checkbox {
+  position: absolute;
+  left: -500px;
+  top: 376px;
+}
+#participate .part-3 .wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("../images/select-arrow.png") no-repeat;
+  background-color: rgba(0, 0, 0, 0);
+  background-position: right 9px;
+  height: 24px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-align-last: center;
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: #697085;
+}
+#participate .part-3 .wrapper select option {
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: black;
+  background: white;
+  text-align: center;
+  text-align-last: center;
+}
+#participate .part-3 .wrapper select::-ms-expand {
+  display: none;
+}
+#participate .part-3 .wrapper .birthday-fields {
+  position: absolute;
+  left: -391px;
+  top: 282px;
+  width: 600px;
+}
+#participate .part-3 .wrapper .birthday-fields #select-year,
+#participate .part-3 .wrapper .birthday-fields #select-month,
+#participate .part-3 .wrapper .birthday-fields #select-day {
+  position: absolute;
+  width: 264px;
+  color: white;
+}
+#participate .part-3 .wrapper .birthday-fields #select-month {
+  left: 302px;
+}
+#participate .part-3 .wrapper .birthday-fields #select-day {
+  left: 603px;
+}
+#participate .part-3 .wrapper .event-select {
+  position: absolute;
+  left: -395px;
+  top: 165px;
+  width: 573px;
+  text-align: left;
+  text-align-last: left;
+}
+#participate .part-3 .wrapper .gender-select {
+  position: absolute;
+  left: 256px;
+  top: 106px;
+  width: 217px;
+}
+#participate .part-3 .wrapper input {
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: white;
+  border: none;
+  background: none;
+  height: 24px;
+  width: 100px;
+}
+#participate .part-3 .wrapper input.hint-mode {
+  color: #697085;
+}
+#participate .part-3 .wrapper .user-name {
+  position: absolute;
+  left: -393px;
+  top: 105px;
+  width: 500px;
+}
+#participate .part-3 .wrapper .user-email {
+  position: absolute;
+  left: -393px;
+  top: 224px;
+  width: 500px;
+}
+#participate .part-3 .wrapper .user-phone {
+  position: absolute;
+  left: 298px;
+  top: 166px;
+  width: 160px;
+  text-align: center;
+}
+#participate .part-3 .wrapper .time-group-1,
+#participate .part-3 .wrapper .time-group-2,
+#participate .part-3 .wrapper .time-group-3 {
+  position: absolute;
+  width: 366px;
+  height: 63px;
+  left: 52px;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(1),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(1),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(1) {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 120px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(1).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(1).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(1).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(2),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(2),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(2) {
+  position: absolute;
+  left: 120px;
+  top: 0px;
+  width: 130px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: -120px 0px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(2).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(2).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(2).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(3),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(3),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(3) {
+  position: absolute;
+  left: 250px;
+  top: 0px;
+  width: 130px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: -250px 0px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(3).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(3).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(3).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(4),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(4),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(4) {
+  position: absolute;
+  left: 0px;
+  top: 22px;
+  width: 120px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: 0px -22px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(4).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(4).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(4).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(5),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(5),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(5) {
+  position: absolute;
+  left: 120px;
+  top: 22px;
+  width: 130px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: -120px -22px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(5).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(5).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(5).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(6),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(6),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(6) {
+  position: absolute;
+  left: 250px;
+  top: 22px;
+  width: 130px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: -250px -22px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(6).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(6).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(6).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(7),
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(7),
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(7) {
+  position: absolute;
+  left: 0px;
+  top: 48px;
+  width: 120px;
+  height: 18px;
+  background-image: url("../images/participate-3-times.png");
+  background-size: auto;
+  background-position: 0px -48px;
+  background-repeat: no-repeat;
+}
+#participate .part-3 .wrapper .time-group-1 .time:nth-child(7).filled,
+#participate .part-3 .wrapper .time-group-2 .time:nth-child(7).filled,
+#participate .part-3 .wrapper .time-group-3 .time:nth-child(7).filled {
+  opacity: .3;
+}
+#participate .part-3 .wrapper .time-group-1 {
+  top: -266px;
+}
+#participate .part-3 .wrapper .time-group-2 {
+  top: -142px;
+}
+#participate .part-3 .wrapper .time-group-3 {
+  top: -14px;
 }

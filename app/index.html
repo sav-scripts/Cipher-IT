@@ -17,30 +17,51 @@
 </head>
 <body onload="Main.init();">
 
+    <script src="js/lib/SquareLoading.1.0.1.js"></script>
+    <script>
+
+        window.Loading = SquareLoading;
+        Loading.progress(0).show();
+
+    </script>
 
     <div id="invisible-container"></div>
     <div id="scene-container">
 
-        <div id="index" resizable="640x320p0x0;1280x640p10x10;1920x1000">
-            <div class="my-image"></div>
-        </div>
+        <!--<div id="index" resizable="640x320p0x0;1280x640p10x10;1920x1000">-->
+            <!--<div class="my-image"></div>-->
+        <!--</div>-->
 
     </div>
+
+    <div id="footer"></div>
 
     <div id="fb-root"></div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
     <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
+    <script src="js/lib/jquery.waitforimages.min.js"></script>
+    <script src="js/lib/jquery.mousewheel.min.js"></script>
 
 
     <!-- build:js js/optimized.js -->
     <script src="js/lib/FBHelper.1.0.2.js"></script>
+    <script src="js/lib/FormHelper.0.0.4.js"></script>
     <script src="js/lib/Helper.1.0.2.js"></script>
     <script src="js/lib/ScalableContent.1.0.0.js"></script>
+    <script src="js/lib/SceneHandler.1.0.4.js"></script>
+    <script src="js/ApiProxy.js"></script>
+    <script src="js/lib/Utility.0.0.14.js"></script>
     <script src="js/Main.js"></script>
+    <script src="js/Participate.js"></script>
     <!-- endbuild -->
 
 </body>

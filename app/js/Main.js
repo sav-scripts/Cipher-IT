@@ -3,11 +3,64 @@
     "use strict";
     var self = window.Main =
     {
+        settings:
+        {
+            isLocal: false,
+            isMobile: false,
+
+            useFakeData: false,
+
+            isiOS: false,
+            isLineBrowser: false,
+
+            deadTime: null,
+
+            viewport:
+            {
+                width: 0,
+                height: 0,
+                ranges: [640],
+                index: -1,
+                changed: false
+            }
+        },
+
+        hashArray:
+        [
+            "/Participate"
+        ],
+
         init: function()
         {
-            ScalableContent.init([640, 1280]);
-            ScalableContent.enableFixFullImage = true;
-            ScalableContent.enableDrawBounds = true;
+            //ScalableContent.init([640, 1280]);
+            //ScalableContent.enableFixFullImage = true;
+            //ScalableContent.enableDrawBounds = true;
+
+
+            self.settings.isiOS = Utility.isiOS();
+
+            window._CLICK_ = (self.settings.isiOS)? "touchend": "click";
+
+            //ApiProxy.callApi("get_event_data", null, null, function(response)
+            //{
+            //    console.log(response);
+            //});
+
+            startApp();
+
+            function startApp()
+            {
+                SceneHandler.init(Main.hashArray,
+                {
+                    defaultHash: "/Participate",
+                    listeningHashChange: true,
+                    loadingClass: Loading,
+                    version: new Date().getTime()
+                });
+
+                SceneHandler.toFirstHash();
+            }
+
 
             $(window).on("resize", onResize);
             onResize();
@@ -19,11 +72,65 @@
         var width = $(window).width(),
             height = $(window).height();
 
-
         //ScalableContent.updateView(1280, height);
 
-        ScalableContent.updateView(width, height);
-        ScalableContent.updateResizeAble();
+        //ScalableContent.updateView(width, height);
+        //ScalableContent.updateResizeAble();
     }
+
+}());
+
+
+
+(function(){
+
+    window.MyTools =
+    {
+        setupInput: function($input, activeHint, maxLength, toUpperCase)
+        {
+            var defaultText = $input.val();
+
+            if(activeHint)
+            {
+                $input.on("focus", function()
+                {
+                    $input.toggleClass("hint-mode", false);
+                    if($input.val() == defaultText) $input.val('');
+                });
+
+                $input.on("blur", function()
+                {
+                    if($input.val() == '')
+                    {
+                        $input.val(defaultText);
+                        $input.toggleClass("hint-mode", true);
+                    }
+                    else
+                    {
+                        $input.toggleClass("hint-mode", false);
+                    }
+                });
+
+                $input._checkOk = function()
+                {
+                    return !($input.val() == defaultText);
+                };
+            }
+
+            $input.on("input", function()
+            {
+                if(toUpperCase)
+                {
+                    $input.val($input.val().toUpperCase());
+                }
+                if(maxLength && $input.val().length > maxLength)
+                {
+                    $input.val($input.val().substr(0, maxLength));
+                }
+            });
+
+        }
+
+    };
 
 }());
