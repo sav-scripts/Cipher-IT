@@ -9,4 +9,9 @@ while($r = mysqli_fetch_assoc($result)) {
     $rows[] = $r;
 }
 
-print json_encode($rows);
+$response = (object)[
+    "error" => "",
+    "data" => $rows
+];
+
+exit(json_encode($response));

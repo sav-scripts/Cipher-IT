@@ -9,6 +9,7 @@
 @mobile-width: 640px;
 
 
+@pc-menu-width: 363px;
 
 html {
     padding: 0;
@@ -44,6 +45,12 @@ body{
     height: auto;
     min-height: 90%;
 
+    transition: margin-left .5s ease-out;
+
+    &.menu-open-mode{
+        margin-left: -@pc-menu-width;
+    }
+
 //    overflow-x: hidden;
 
 //    min-width: 1024px;
@@ -56,6 +63,7 @@ body{
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow:hidden;
     visibility: hidden;
 }
 
@@ -127,6 +135,194 @@ body{
     }
 }
 
+/** loading **/
+#loading{
+    position: fixed;
+    width: 100%;
+    height: 90%;
+    background-color:#101010;
+
+    z-index: 99;
+
+    #loading-icon{
+
+        position: absolute;
+        width: 183px;
+        height: 103px;
+
+        margin-left: -85px;
+        margin-top: -50px;
+
+        left:50%;
+        top:50%;
+
+        .image-bg("loading.gif");
+    }
+
+    #loading-text{
+        position: absolute;
+        left:50%;
+        top:50%;
+        .default-font(14px, #43ac8d);
+        font-weight: bold;
+
+        width: 60px;
+        height: 30px;
+        margin-left: -31px;
+        margin-top: -17px;
+        text-align: center;
+    }
+}
+
+/** menu **/
+#menu{
+    position: fixed;
+    right:0;
+    top:0;
+    height: 100%;
+
+    z-index: 100;
+
+    .icon{
+        z-index: 2;
+
+        position: absolute;
+        width: 53px;
+        height: 53px;
+        background-color: #3b3b3b;
+        right: 16px;
+        top:16px;
+        cursor: pointer;
+
+        .bar-1, .bar-2, .bar-3{
+            position: absolute;
+            width: 12px;
+            height: 2px;
+            background-color: white;
+            left:50%;
+            top:50%;
+            margin-left: -6px;
+        }
+        .bar-1{
+            margin-top: -9px;
+        }
+        .bar-2{
+            margin-top: -1px;
+        }
+        .bar-3{
+            margin-top: 7px;
+
+        }
+    }
+
+    .container{
+
+        @w: @pc-menu-width;
+        position: absolute;
+        left:0;
+//        visibility: hidden;
+
+        width: @w;
+        height:100%;
+
+        background-color: #1a1a1a;
+
+        transition: left .5s ease-out;
+
+        &.open-mode{
+//            visibility: visible;
+            left: -@w;
+        }
+
+        .layout('layouts/menu-pc.jpg');
+
+        .button-group{
+            position: absolute;
+            left:59px;
+            top:70px;
+
+            .my-mixin(1, 0, 0, 214px, 50px);
+            .my-mixin(2, 0, 50px, 214px, 40px, true);
+            .my-mixin(3, 0, 90px, 214px, 40px, true);
+            .my-mixin(4, 0, 130px, 214px, 40px, true);
+            .my-mixin(5, 0, 180px, 214px, 35px);
+            .my-mixin(6, 0, 218px, 214px, 40px, true);
+            .my-mixin(7, 0, 258px, 214px, 40px, true);
+            .my-mixin(8, 0, 298px, 214px, 40px, true);
+            .my-mixin(9, 0, 348px, 214px, 40px, true);
+            .my-mixin(10, 0, 388px, 214px, 40px, true);
+            .my-mixin(11, 0, 428px, 54px, 54px, true);
+
+            .my-mixin(@index; @left; @top; @width; @height; @button-mode: none;)
+            {
+                .item-@{index}{
+
+                    @src: "menu-buttons.png";
+                    @image-x: @left;
+                    @image-y: @top;
+
+                    position: absolute;
+                    left: @left;
+                    top: @top;
+                    width: @width;
+                    height: @height;
+
+                    .normal-state{
+
+                        position: absolute;
+                        .image-bg(@src);
+                        width: 100%;
+                        height: 100%;
+                        background-position: 0 -@image-y;
+                        opacity: 1;
+
+
+                        pointer-events: none;
+                        transition-delay:0s;
+                    }
+
+
+                    & when not (@button-mode = none)
+                    {
+
+                        .hover-state{
+
+                            position: absolute;
+                            .image-bg(@src);
+                            width: 100%;
+                            height: 100%;
+                            background-position: -214px -@image-y;
+                            opacity: 0;
+
+
+                            pointer-events: none;
+
+                            visibility:hidden;
+                            transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+                        }
+
+                        &:hover{
+                            cursor: pointer;
+                            .normal-state{
+                                opacity: 0;
+                                visibility:hidden;
+                                transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+                            }
+
+                            .hover-state{
+                                opacity: 1;
+                                visibility:visible;
+                                transition-delay:0s;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+
 /** footer **/
 #footer{
     position: fixed;
@@ -136,7 +332,14 @@ body{
     .image-bg("footer.png", contain);
     background-position: center center;
     background-repeat: no-repeat;
-    background-color: #121212
+    background-color: #121212;
+
+
+    transition: margin-left .5s ease-out;
+
+    &.menu-open-mode{
+        margin-left: -@pc-menu-width;
+    }
 }
 
 /** participate **/
@@ -145,6 +348,12 @@ body{
     position: absolute;
     width: 100%;
     height: 100%;
+
+    .text-animation{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 
     .part-1{
         position: relative;
@@ -187,30 +396,63 @@ body{
     }
 
     .part-2{
-        @cw: 1920px;
-        @ch: 700px;
 
         position: relative;
         width: 100%;
-//        height: @ch;
-//        padding-bottom: 36.458%;
-        padding-bottom: @ch / @cw * 100%;
 
-        .image-bg("participate-2-background.jpg", cover);
-        background-position: center center;
+        @cw: 1920px;
+        @ch: 700px;
 
-        .centeralized-layout("layouts/participate-2-pc.jpg", 1920, 700);
+        height: 700px;
 
-        .content{
+        overflow: hidden;
+
+
+        @media (min-width: 1920px)
+        {
+            height: 0;
+            padding-bottom: @ch / @cw * 100%;
+        }
+
+
+        .wrapper{
+
             position: absolute;
-            width: percentage(450 / @cw);
-            height: percentage(266 / @ch);
 
-            left: percentage(454 / @cw);
-            top: percentage(194 / @ch);
+            left: 50%;
+            margin-left: -@cw*.5;
+            width: @cw;
 
-            .image-bg("participate-2-content.png", cover);
-            //.percent-div(none; 100; 0; 450; 266; "participate-2-content.png"; @cwidth: @cw; @cheight: @ch;);
+            height: 100%;
+
+            @media (min-width: 1920px)
+            {
+                width: 100%;
+                left:0;
+                margin-left: 0;
+            }
+
+//            width: 100%;
+//            padding-bottom: @ch / @cw * 100%;
+
+            .image-bg("participate-2-background.jpg", cover);
+            background-position: center center;
+
+            .centeralized-layout("layouts/participate-2-pc.jpg", 1920, 700);
+
+
+            .content{
+                position: absolute;
+                width: percentage(450 / @cw);
+                height: percentage(266 / @ch);
+
+                left: percentage(454 / @cw);
+                top: percentage(194 / @ch);
+
+                .image-bg("participate-2-content.png", cover);
+                //.percent-div(none; 100; 0; 450; 266; "participate-2-content.png"; @cwidth: @cw; @cheight: @ch;);
+            }
+
         }
 
     }
@@ -224,6 +466,15 @@ body{
         height: @ch;
         min-height: 111.1111%;
 
+        transition: height 1s ease-in-out;
+
+        overflow: hidden;
+
+        &.close-mode{
+            min-height: 0;
+            height: 0;
+        }
+
         .centeralized-layout("layouts/participate-3-pc.jpg", 1920, 1148);
 
         .image-bg("participate-3-background.jpg", cover);
@@ -232,9 +483,13 @@ body{
         .wrapper{
             .percent-container();
 
-            .percent-div(title, -503, -518, 219, 35, "participate-3-title.png");
-            .percent-div(content, -498, -432, 961, 482, "participate-3-content.png");
-            .percent-div(dates, 52, -303, 129, 274, "participate-3-dates.png");
+            margin-top: 30px;
+
+            @dy: -25px;
+
+            .percent-div(title, -503, -558+@dy, 415, 43, "participate-3-title.png");
+            .percent-div(content, -498, -467+@dy, 1001, 520, "participate-3-content.png");
+            .percent-div(dates, 52, -303+@dy, 129, 274, "participate-3-dates.png");
             .percent-div(form, -499, 91, 1000, 233, "participate-3-form.png");
 
             .fade-btn(btn-send,"participate-3-btn-send.png",278,377,223,52);
@@ -284,6 +539,12 @@ body{
                     text-align: center;
                     text-align-last:center;
                 }
+                optgroup{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: center;
+                    text-align-last:center;
+                }
 
                 &::-ms-expand {
                     display: none;
@@ -321,6 +582,21 @@ body{
                 width: 573px;
                 text-align: left;
                 text-align-last:left;
+
+
+                option{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: left;
+                    text-align-last:left;
+                    text-indent: 0;
+                }
+                optgroup{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: left;
+                    text-align-last:left;
+                }
             }
 
             .gender-select{
@@ -406,15 +682,15 @@ body{
             }
 
             .time-group-1{
-                top: -266px;
+                top: -266px+@dy;
             }
 
             .time-group-2{
-                top: -142px;
+                top: -142px+@dy;
             }
 
             .time-group-3{
-                top: -14px;
+                top: -14px+@dy;
             }
 
         }

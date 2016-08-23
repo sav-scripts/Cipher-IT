@@ -1,6 +1,6 @@
 <?php
 
-include "../db.inc";
+require_once "../db.inc";
 
 
 
@@ -50,9 +50,10 @@ for ($day = 0; $day < $eventDaysCount; $day ++)
     for($time = 0; $time < $timeArrayCount; $time++)
     {
         $numParticipated = $timeArray[$time];
+        $participateAble = $numParticipated == 0? 1: 0;
         $eventName = $timeDic[$time];
 
-        $sql = "INSERT INTO `events` (`id`, `event_date`, `event_index`, `event_name`, `num_participated`) VALUES (NULL, '$date', '$time', '$eventName', '$numParticipated');";
+        $sql = "INSERT INTO `events` (`id`, `event_date`, `event_index`, `event_name`, `num_participated`, `participate_able`) VALUES (NULL, '$date', '$time', '$eventName', '$numParticipated', '$participateAble');";
 
         $result = mysqli_query($link, $sql);
 

@@ -17,11 +17,20 @@
 </head>
 <body onload="Main.init();">
 
-    <script src="js/lib/SquareLoading.1.0.1.js"></script>
+    <div id="loading">
+
+        <div id="loading-icon"></div>
+        <div id="loading-text">99</div>
+
+    </div>
+
+    <script src="js/Loading.js"></script>
     <script>
 
-        window.Loading = SquareLoading;
-        Loading.progress(0).show();
+//        window.Loading = SquareLoading;
+//        Loading.progress(0).show();
+
+    Loading.progress('').show();
 
     </script>
 
@@ -34,6 +43,35 @@
 
     </div>
 
+    <div id="menu">
+
+
+        <div class="icon">
+            <div class="bar-1"></div>
+            <div class="bar-2"></div>
+            <div class="bar-3"></div>
+        </div>
+        <div class="container">
+
+            <!--<div class="layout"></div>-->
+
+            <div class="button-group">
+                <div class="item-1"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-2"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-3"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-4"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-5"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-6"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-7"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-8"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-9"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-10"><div class="normal-state"></div><div class="hover-state"></div></div>
+                <div class="item-11"><div class="normal-state"></div><div class="hover-state"></div></div>
+            </div>
+        </div>
+
+    </div>
+
     <div id="footer"></div>
 
     <div id="fb-root"></div>
@@ -43,13 +81,13 @@
     <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
 
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
     <script src="js/lib/jquery.waitforimages.min.js"></script>
     <script src="js/lib/jquery.mousewheel.min.js"></script>
+
+    <script src="js/lib/createjs-2015.11.26.min.js"></script>
+    <script src="form_Canvas.js"></script>
 
 
     <!-- build:js js/optimized.js -->
@@ -61,6 +99,7 @@
     <script src="js/ApiProxy.js"></script>
     <script src="js/lib/Utility.0.0.14.js"></script>
     <script src="js/Main.js"></script>
+    <script src="js/UI.js"></script>
     <script src="js/Participate.js"></script>
     <!-- endbuild -->
 

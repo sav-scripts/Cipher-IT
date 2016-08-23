@@ -36,10 +36,13 @@
             //ScalableContent.enableFixFullImage = true;
             //ScalableContent.enableDrawBounds = true;
 
+            //return;
 
             self.settings.isiOS = Utility.isiOS();
 
             window._CLICK_ = (self.settings.isiOS)? "touchend": "click";
+
+            Menu.init();
 
             //ApiProxy.callApi("get_event_data", null, null, function(response)
             //{
@@ -72,10 +75,25 @@
         var width = $(window).width(),
             height = $(window).height();
 
-        //ScalableContent.updateView(1280, height);
 
-        //ScalableContent.updateView(width, height);
-        //ScalableContent.updateResizeAble();
+        var i,
+            vp = self.settings.viewport;
+        for(i=0;i<vp.ranges.length;i++)
+        {
+            if(vp.ranges[i] >= width) break;
+        }
+
+        var oldIndex = vp.index;
+
+        vp.index = i;
+        vp.width = width;
+        vp.height = height;
+        vp.changed = (oldIndex !== vp.index);
+
+        if(SceneHandler.currentScene)
+        {
+            SceneHandler.currentScene.resize();
+        }
     }
 
 }());

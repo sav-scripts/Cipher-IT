@@ -246,3 +246,68 @@
         }
     }
 }
+.fade-btn-2(@selector: none; @src; @left; @top; @w; @h; @duration: .4s;){
+
+    & when not (@selector = none)
+    {
+        .@{selector}{
+            .my-mixin();
+        }
+    }
+
+    & when (@selector = none)
+    {
+        .my-mixin();
+    }
+
+    .my-mixin(){
+
+        position: absolute;
+//        .image-bg(@src);
+        left: @left*1px;
+        top: @top*1px;
+        width: @w*1px;
+        height: @h*1px;
+
+
+        .normal-state{
+            .image-bg(@src);
+            width: @w*1px;
+            height: @h*1px;
+            background-position: 0 0;
+
+            pointer-events: none;
+
+            opacity: 1;
+            visibility:visible;
+            transition-delay:0s;
+        }
+
+        .hover-state{
+            .image-bg(@src);
+            width: @w*1px;
+            height: @h*1px;
+            background-position: 0 -100%;
+
+            pointer-events: none;
+
+            opacity: 0;
+            visibility:hidden;
+            transition:visibility 0s linear @duration,opacity @duration ease-out;
+        }
+
+        &:hover{
+            cursor: pointer;
+            .normal-state{
+                opacity: 0;
+                visibility:hidden;
+                transition:visibility 0s linear @duration,opacity @duration ease-out;
+            }
+            .hover-state{
+                opacity: 1;
+                visibility:visible;
+                transition-delay:0s;
+            }
+        }
+    }
+}

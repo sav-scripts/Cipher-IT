@@ -118,11 +118,16 @@ body {
   width: 100%;
   height: auto;
   min-height: 90%;
+  transition: margin-left 0.5s ease-out;
+}
+#scene-container.menu-open-mode {
+  margin-left: -363px;
 }
 #invisible-container {
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   visibility: hidden;
 }
 .bound {
@@ -160,6 +165,524 @@ body {
   }
 }
 /** my mixins **/
+/** loading **/
+#loading {
+  position: fixed;
+  width: 100%;
+  height: 90%;
+  background-color: #101010;
+  z-index: 99;
+}
+#loading #loading-icon {
+  position: absolute;
+  width: 183px;
+  height: 103px;
+  margin-left: -85px;
+  margin-top: -50px;
+  left: 50%;
+  top: 50%;
+  background-image: url("../images/loading.gif");
+  background-size: auto;
+}
+#loading #loading-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: #43ac8d;
+  font-weight: bold;
+  width: 60px;
+  height: 30px;
+  margin-left: -31px;
+  margin-top: -17px;
+  text-align: center;
+}
+/** menu **/
+#menu {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 100;
+}
+#menu .icon {
+  z-index: 2;
+  position: absolute;
+  width: 53px;
+  height: 53px;
+  background-color: #3b3b3b;
+  right: 16px;
+  top: 16px;
+  cursor: pointer;
+}
+#menu .icon .bar-1,
+#menu .icon .bar-2,
+#menu .icon .bar-3 {
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background-color: white;
+  left: 50%;
+  top: 50%;
+  margin-left: -6px;
+}
+#menu .icon .bar-1 {
+  margin-top: -9px;
+}
+#menu .icon .bar-2 {
+  margin-top: -1px;
+}
+#menu .icon .bar-3 {
+  margin-top: 7px;
+}
+#menu .container {
+  position: absolute;
+  left: 0;
+  width: 363px;
+  height: 100%;
+  background-color: #1a1a1a;
+  transition: left 0.5s ease-out;
+}
+#menu .container.open-mode {
+  left: -363px;
+}
+#menu .container .layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/layouts/menu-pc.jpg");
+  background-size: auto;
+  opacity: .3;
+}
+#menu .container .button-group {
+  position: absolute;
+  left: 59px;
+  top: 70px;
+}
+#menu .container .button-group .item-1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 214px;
+  height: 50px;
+}
+#menu .container .button-group .item-1 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-2 {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-2 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -50px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-2 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -50px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-2:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-2:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-2:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-3 {
+  position: absolute;
+  left: 0;
+  top: 90px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-3 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -90px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-3 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -90px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-3:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-3:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-3:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-4 {
+  position: absolute;
+  left: 0;
+  top: 130px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-4 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -130px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-4 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -130px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-4:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-4:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-4:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-5 {
+  position: absolute;
+  left: 0;
+  top: 180px;
+  width: 214px;
+  height: 35px;
+}
+#menu .container .button-group .item-5 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -180px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-6 {
+  position: absolute;
+  left: 0;
+  top: 218px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-6 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -218px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-6 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -218px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-6:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-6:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-6:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-7 {
+  position: absolute;
+  left: 0;
+  top: 258px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-7 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -258px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-7 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -258px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-7:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-7:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-7:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-8 {
+  position: absolute;
+  left: 0;
+  top: 298px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-8 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -298px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-8 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -298px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-8:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-8:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-8:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-9 {
+  position: absolute;
+  left: 0;
+  top: 348px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-9 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -348px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-9 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -348px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-9:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-9:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-9:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-10 {
+  position: absolute;
+  left: 0;
+  top: 388px;
+  width: 214px;
+  height: 40px;
+}
+#menu .container .button-group .item-10 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -388px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-10 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -388px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-10:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-10:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-10:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-11 {
+  position: absolute;
+  left: 0;
+  top: 428px;
+  width: 54px;
+  height: 54px;
+}
+#menu .container .button-group .item-11 .normal-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -428px;
+  opacity: 1;
+  pointer-events: none;
+  transition-delay: 0s;
+}
+#menu .container .button-group .item-11 .hover-state {
+  position: absolute;
+  background-image: url("../images/menu-buttons.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -214px -428px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-11:hover {
+  cursor: pointer;
+}
+#menu .container .button-group .item-11:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#menu .container .button-group .item-11:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
 /** footer **/
 #footer {
   position: fixed;
@@ -171,9 +694,18 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-color: #121212;
+  transition: margin-left 0.5s ease-out;
+}
+#footer.menu-open-mode {
+  margin-left: -363px;
 }
 /** participate **/
 #participate {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#participate .text-animation {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -264,12 +796,33 @@ body {
 #participate .part-2 {
   position: relative;
   width: 100%;
-  padding-bottom: 36.45833333%;
+  height: 700px;
+  overflow: hidden;
+}
+@media (min-width: 1920px) {
+  #participate .part-2 {
+    height: 0;
+    padding-bottom: 36.45833333%;
+  }
+}
+#participate .part-2 .wrapper {
+  position: absolute;
+  left: 50%;
+  margin-left: -960px;
+  width: 1920px;
+  height: 100%;
   background-image: url("../images/participate-2-background.jpg");
   background-size: cover;
   background-position: center center;
 }
-#participate .part-2 .layout {
+@media (min-width: 1920px) {
+  #participate .part-2 .wrapper {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+  }
+}
+#participate .part-2 .wrapper .layout {
   background-image: url("../images/layouts/participate-2-pc.jpg");
   background-size: auto;
   position: absolute;
@@ -281,7 +834,7 @@ body {
   margin-top: -350px;
   opacity: .3;
 }
-#participate .part-2 .content {
+#participate .part-2 .wrapper .content {
   position: absolute;
   width: 23.4375%;
   height: 38%;
@@ -295,9 +848,15 @@ body {
   width: 100%;
   height: 1281px;
   min-height: 111.1111%;
+  transition: height 1s ease-in-out;
+  overflow: hidden;
   background-image: url("../images/participate-3-background.jpg");
   background-size: cover;
   background-position: center center;
+}
+#participate .part-3.close-mode {
+  min-height: 0;
+  height: 0;
 }
 #participate .part-3 .layout {
   background-image: url("../images/layouts/participate-3-pc.jpg");
@@ -317,29 +876,30 @@ body {
   height: 100px;
   left: 50%;
   top: 50%;
+  margin-top: 30px;
 }
 #participate .part-3 .wrapper .title {
   position: absolute;
   left: -503%;
-  top: -518%;
-  width: 219%;
-  height: 35%;
+  top: -583%;
+  width: 415%;
+  height: 43%;
   background-image: url("../images/participate-3-title.png");
   background-size: cover;
 }
 #participate .part-3 .wrapper .content {
   position: absolute;
   left: -498%;
-  top: -432%;
-  width: 961%;
-  height: 482%;
+  top: -492%;
+  width: 1001%;
+  height: 520%;
   background-image: url("../images/participate-3-content.png");
   background-size: cover;
 }
 #participate .part-3 .wrapper .dates {
   position: absolute;
   left: 52%;
-  top: -303%;
+  top: -328%;
   width: 129%;
   height: 274%;
   background-image: url("../images/participate-3-dates.png");
@@ -435,6 +995,14 @@ body {
   text-align: center;
   text-align-last: center;
 }
+#participate .part-3 .wrapper select optgroup {
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: black;
+  background: white;
+  text-align: center;
+  text-align-last: center;
+}
 #participate .part-3 .wrapper select::-ms-expand {
   display: none;
 }
@@ -462,6 +1030,23 @@ body {
   left: -395px;
   top: 165px;
   width: 573px;
+  text-align: left;
+  text-align-last: left;
+}
+#participate .part-3 .wrapper .event-select option {
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: black;
+  background: white;
+  text-align: left;
+  text-align-last: left;
+  text-indent: 0;
+}
+#participate .part-3 .wrapper .event-select optgroup {
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 14px;
+  color: black;
+  background: white;
   text-align: left;
   text-align-last: left;
 }
@@ -637,11 +1222,11 @@ body {
   opacity: .3;
 }
 #participate .part-3 .wrapper .time-group-1 {
-  top: -266px;
+  top: -291px;
 }
 #participate .part-3 .wrapper .time-group-2 {
-  top: -142px;
+  top: -167px;
 }
 #participate .part-3 .wrapper .time-group-3 {
-  top: -14px;
+  top: -39px;
 }

@@ -5,6 +5,7 @@
 
         <div class="part-1">
             <!--<div class="layout"></div>-->
+            <canvas class="text-animation" width="1920" height="1080"></canvas>
             <div class="wrapper">
                 <div class="logo"></div>
                 <div class="title-1"></div>
@@ -14,9 +15,10 @@
         </div>
 
         <div class="part-2">
+            <div class="wrapper">
 
-            <!--<div class="layout"></div>-->
-            <div class="content"></div>
+                <div class="content"></div>
+            </div>
 
         </div>
 
@@ -30,14 +32,14 @@
                 <!--<div class="time"></div>-->
 
                 <div class="form"></div>
-                <div class="btn-send"><div class="hover-state"></div></div>
+                <div class="btn-send"><div class="normal-state"></div><div class="hover-state"></div></div>
 
                 <div class="eula-text"></div>
                 <div class="btn-rule"></div>
                 <div class="btn-privacy"></div>
 
                 <div class="checkbox custom-checkbox">
-                    <input type="checkbox" id="upload-checkbox" class="upload-checkbox" checked />
+                    <input type="checkbox" id="upload-checkbox" class="participate-checkbox" checked />
                     <label for="upload-checkbox"></label>
                 </div>
 
@@ -54,11 +56,11 @@
                 </div>
 
                 <select class="event-select" name="event-select" title="">
-                    <option>選擇場次</option>
+                    <option value="">選擇場次</option>
                 </select>
 
                 <select class="gender-select" name="event-select" title="">
-                    <option>選擇性別</option>
+                    <option value="">選擇性別</option>
                     <option value="female">女士</option>
                     <option value="male">先生</option>
                 </select>
