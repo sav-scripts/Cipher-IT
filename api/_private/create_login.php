@@ -6,7 +6,7 @@
  * Time: 下午 12:15
  */
 
-require_once "../db.inc";
+require_once "./common.inc";
 
 $defaultUserName = "admin";
 $defaultUserPassword = "H&OCipher";

@@ -5,6 +5,7 @@
 
     var $doms = {},
         _isOpen = false,
+        _isHiding = true,
         _iconTl;
 
     var self = window.Menu =
@@ -43,6 +44,16 @@
                 Participate.toContent('part3');
             });
 
+            setupButton(8, 'participate rule', function()
+            {
+                SceneHandler.toHash("/ParticipateRule");
+            });
+
+            //console.log("check");
+            self.Logo = createHideAble($("#logo"), false);
+
+            //self.show();
+
 
             //self.open();
         },
@@ -70,6 +81,23 @@
             $doms.buttonContainer.toggleClass("open-mode", false);
             $("#scene-container").toggleClass("menu-open-mode", false);
             $("#footer").toggleClass("menu-open-mode", false);
+        },
+
+        show: function()
+        {
+            if(!_isHiding) return;
+            _isHiding = false;
+
+            $doms.icon.toggleClass("hide-mode", false);
+        },
+
+        hide: function()
+        {
+            if(_isHiding) return;
+            _isHiding = true;
+
+            $doms.icon.toggleClass("hide-mode", true);
+            self.close();
         }
     };
 
@@ -106,6 +134,32 @@
         tl.to($doms.bar1,.4, {rotation: 45});
         tl.to($doms.bar3,.4, {rotation: 45}, "-=.4");
         tl.addLabel("end");
+    }
+
+    function createHideAble($dom, isHiding)
+    {
+        if(isHiding === undefined) isHiding = true;
+
+        $dom.toggleClass("hide-mode", isHiding);
+
+        $dom._show = function()
+        {
+            if(!isHiding) return;
+            isHiding = false;
+
+            console.log("show");
+            $dom.toggleClass("hide-mode", isHiding);
+        };
+
+        $dom._hide = function()
+        {
+            if(isHiding) return;
+            isHiding = true;
+
+            $dom.toggleClass("hide-mode", isHiding);
+        };
+
+        return $dom;
     }
 
 }());

@@ -271,7 +271,6 @@
 
 
         .normal-state{
-            position: absolute;
             .image-bg(@src);
             width: @w*1px;
             height: @h*1px;
@@ -280,11 +279,11 @@
             pointer-events: none;
 
             opacity: 1;
+            visibility:visible;
             transition-delay:0s;
         }
 
         .hover-state{
-            position: absolute;
             .image-bg(@src);
             width: @w*1px;
             height: @h*1px;

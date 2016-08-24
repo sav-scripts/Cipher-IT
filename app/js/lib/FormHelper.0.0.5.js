@@ -227,21 +227,18 @@ FormHelper.getAddressValue = function($county, $zone)
 	var zoneValue = (zoneArray == undefined)? null: zoneArray[zoneIndex];
 	var zipCodeValue = (zipCodeArray == undefined)? null: zipCodeArray[zoneIndex];
 	
-	var obj = 
-	{
-		county: countyValue,
-		zone: zoneValue,
-		zipCode: zipCodeValue
-	};
-	
-	return obj;
+	return {
+        county: countyValue,
+            zone: zoneValue,
+        zipCode: zipCodeValue
+    };
 };
 
 /* date complete */
 
 window.DateCombo = DateCombo;
 
-function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel, dayLabel, yearUnit, monthUnit, dayUnit)
+function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel, dayLabel, yearUnit, monthUnit, dayUnit, date)
 {	
 	var _p = DateCombo.prototype = this;
 	
@@ -268,8 +265,11 @@ function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel
 	$(yearDom).append('<option value="" selected>'+yearLabel+'</option>\n');
 	$(monthDom).append('<option value="" selected>'+monthLabel+'</option>\n');
 	
-	var i, optionDom;
-	var date = new Date();
+	var i;
+
+	if(!date) date = new Date();
+
+
 	for(i=1900;i<=date.getFullYear();i++)
 	{
 		$(yearDom).append('<option value="'+ i +'">'+ i + yearUnit +'</option>\n');
@@ -292,7 +292,7 @@ function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel
 	
 	update();
 	
-	function update(evt)
+	function update()
 	{
 		var year = $(yearDom).val();
 		var month = $(monthDom).val();

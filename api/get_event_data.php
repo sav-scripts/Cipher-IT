@@ -1,5 +1,5 @@
 <?php
-include "db.inc";
+require_once "./_private/common.inc";
 
 $sql = "SELECT * FROM `events`";
 $result = mysqli_query($link, $sql);

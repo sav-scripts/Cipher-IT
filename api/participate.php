@@ -6,8 +6,7 @@
  * Time: 下午 02:26
  */
 
-
-include "./db.inc";
+require_once "./_private/common.inc";
 
 
 $name = checkInput('name');
@@ -135,7 +134,7 @@ function checkInput($fieldName, $fieldType = null)
 
         default:
             if(preg_match("/^\s*$/", $value)) quit("欄位 [$fieldName] 不能是空值");
-    };
+    }
 
     return $value;
 

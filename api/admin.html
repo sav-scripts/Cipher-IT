@@ -4,93 +4,79 @@
     <meta charset="UTF-8">
     <title>admin</title>
 
-    <style>
-
-        body, html{
-            margin: 0;
-            padding: 0;
-            background: white url(./images/grid.jpg);
-        }
-        .login-wrapper{
-            position: absolute;
-            left:50%;
-            top:50%;
-
-            width: 300px;
-            height: 200px;
-            background: #ececec;
-            border: 2px solid white;
-
-            margin: -151px -100px;
-
-            text-align: center;
-        }
-
-        .row{
-            position: relative;
-            width: 200px;
-            height: 40px;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        label[for="user-name"]
-        {
-        }
-
-        label[for="user-password"]
-        {
-        }
-
-        #user-name{
-
-        }
-        #user-password{
-
-        }
-        label[for="user-name"], label[for="user-password"], #user-name, #user-password{
-            width: 100%;
-            text-align: center;
-        }
-        .btn-send{
-            margin-top: 6px;
-            background: white;
-            width: 100px;
-            padding: 5px;
-            display: inline-block;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-
-
-    </style>
+    <link rel="stylesheet" href="styles/main.css">
 
 </head>
 <body onload = AdminMain.init();>
 
-<div class="login-wrapper">
+    <div id="background"></div>
+
+    <div id="login-dialog">
 
 
-    <div class="row">
-        <label for="user-name">User Name</label>
-        <input id="user-name" title="" maxlength="20" type="text"/>
+        <div class="row">
+            <label for="user-name">User Name</label>
+            <input id="user-name" title="" maxlength="20" type="text"/>
+        </div>
+        <div class="row">
+            <label for="user-password">User Password</label>
+            <input id="user-password" title="" maxlength="20" type="password"/>
+        </div>
+
+        <div class="row">
+            <div class="btn-send">SEND</div>
+        </div>
+
     </div>
-    <div class="row">
-        <label for="user-password">User Password</label>
-        <input id="user-password" title="" maxlength="20" type="text"/>
+
+    <div id="invisible-container"></div>
+    <div id="scene-container">
+        <div id="participate">
+
+            <div class="data-container">
+
+                <table class="event-table">
+                    <tr>
+                        <td colspan="5" class="head">testtset</td>
+                    </tr>
+                    <tr>
+                        <th>名稱</th>
+                        <th>性別</th>
+                        <th>手機</th>
+                        <th>信箱</th>
+                        <th>生日</th>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+        <div id="setting"></div>
     </div>
 
-    <div class="row">
-        <div class="btn-send">SEND</div>
+    <div id="command-container">
+
+        <!--<div class="wrapper">-->
+            <div class="button-container">
+
+                <div class="btn-participate btn">報名資料</div>
+                <div class="btn">活動資料</div>
+                <div class="btn-setting btn">設定</div>
+                <div class="btn-logout btn">登出</div>
+
+            </div>
+        <!--</div>-->
+
     </div>
 
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="js/AdminMain.js"></script>
-<script src="js/ApiProxy.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/AdminMain.js"></script>
+    <script src="js/ApiProxy.js"></script>
+    <script src="js/Login.js"></script>
+    <script src="js/Participate.js"></script>
+    <script src="js/SceneHandler.1.0.4.js"></script>
 
 </body>
 </html>

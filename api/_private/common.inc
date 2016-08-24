@@ -1,5 +1,15 @@
 <?php
 
+
+$link = mysqli_connect('localhost', 'ogilvyrw_ciphsql', '13=(1nFtks1R', 'ogilvyrw_cipher');
+mysqli_set_charset($link, "utf8");
+
+if (mysqli_connect_errno())
+{
+    quit('fail to connect data base');
+}
+
+
 function quit($error = '', $outputAsText = false)
 {
     global $link;
@@ -22,6 +32,19 @@ function quit($error = '', $outputAsText = false)
     exit(json_encode($res));
 }
 
+function response($data = '', $responseName = 'data')
+{
+    global $link;
+    if(isset($link))
+    {
+        mysqli_close($link);
+    }
+
+    $res = (object)['error' => '', $responseName => $data];
+    exit(json_encode($res));
+}
+
+
 function start_session($expire = 0)
 {
     if ($expire == 0) {
@@ -38,13 +61,3 @@ function start_session($expire = 0)
         setcookie('PHPSESSID', session_id(), time() + $expire);
     }
 }
-
-
-$link = mysqli_connect('localhost', 'ogilvyrw_ciphsql', '13=(1nFtks1R', 'ogilvyrw_cipher');
-mysqli_set_charset($link, "utf8");
-
-if (mysqli_connect_errno())
-{
-    quit('fail to connect data base');
-}
-?>

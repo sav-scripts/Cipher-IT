@@ -1,6 +1,6 @@
 <?php
 
-require_once "../db.inc";
+require_once "./common.inc";
 
 
 

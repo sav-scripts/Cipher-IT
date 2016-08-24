@@ -86,7 +86,7 @@
         {
             _p.onHashChange(function(hashName)
             {
-                if(hashName == "") hashName = _defaultHash;
+                if(hashName == "") hashName = "/Index";
 
                 hashName = prefixHash(hashName);
 

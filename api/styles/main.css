@@ -1,0 +1,164 @@
+/** common mixins **/
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+#background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/grid.jpg);
+  background-position: 0 0;
+  transition: background-position, 0.5s, ease-out;
+}
+#background.command-mode {
+  background-position: 200px 0;
+}
+#scene-container {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+#invisible-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  visibility: hidden;
+}
+/** common **/
+table,
+td,
+th {
+  border: 1px solid black;
+}
+table {
+  background: rgba(255, 255, 255, 0.7);
+}
+td.head {
+  text-align: center;
+  height: 30px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th {
+  height: 40px;
+}
+td {
+  text-align: center;
+  height: 40px;
+}
+/** login **/
+#login-dialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  width: 300px;
+  height: 0;
+  background: #ececec;
+  border: 2px solid white;
+  margin-left: -151px;
+  text-align: center;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s, height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+}
+#login-dialog.open-mode {
+  height: 200px;
+  margin-top: -150px;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#login-dialog .row {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  display: inline-block;
+  margin-top: 20px;
+}
+#login-dialog .row label[for="user-name"],
+#login-dialog .row label[for="user-password"],
+#login-dialog .row #user-name,
+#login-dialog .row #user-password {
+  width: 100%;
+  text-align: center;
+}
+#login-dialog .row .btn-send {
+  margin-top: 6px;
+  background: white;
+  width: 100px;
+  padding: 5px;
+  display: inline-block;
+  border-radius: 3px;
+  cursor: pointer;
+}
+#command-container {
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  left: -205px;
+  background-color: #dadacb;
+  border-right: 5px solid white;
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.04) inset;
+  transition: left 0.5s ease-out;
+  display: table;
+  overflow: hidden;
+}
+#command-container.open-mode {
+  left: 0;
+}
+#command-container .button-container {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+#command-container .button-container .btn {
+  cursor: pointer;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  height: 30px;
+  line-height: 30px;
+  width: 180px;
+  margin-left: 20px;
+  border-radius: 5px 0 0 5px;
+  text-align: center;
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 18px;
+  color: #babaaa;
+  background: white;
+  transition: width 0.4s ease-out, margin-left 0.4s ease-out;
+}
+#command-container .button-container .btn.focus-mode {
+  color: #407f9a;
+  margin-left: 60px;
+  width: 140px;
+}
+#participate {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  margin-left: 100px;
+  visibility: hidden;
+}
+#participate .data-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0);
+}
+#participate .data-container table {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+#participate .data-container .event-table {
+  visibility: hidden;
+}

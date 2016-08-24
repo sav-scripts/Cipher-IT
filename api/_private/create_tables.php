@@ -1,5 +1,5 @@
 <?php
-require_once "../db.inc";
+require_once "./common.inc";
 
 
 $sql = "DROP TABLE IF EXISTS `events`";

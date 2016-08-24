@@ -87,7 +87,10 @@
 
         $doms.checkbox = $doms.container.find(".participate-checkbox");
 
-        _dateCombo = new DateCombo($doms.year[0], $doms.month[0], $doms.day[0], null, null, null, null, '年', '月', '日');
+        var date = new Date();
+        date.setFullYear(date.getFullYear()-18);
+        _dateCombo = new DateCombo($doms.year[0], $doms.month[0], $doms.day[0], null, null, null, null, '年', '月', '日', date);
+        _dateCombo.to(1998, 1, 1);
 
         $doms.eventTimes =
         [
@@ -114,6 +117,16 @@
         $doms.btnSend = $doms.container.find(".btn-send").on(_CLICK_, function()
         {
             trySend();
+        });
+
+        $doms.btnRule = $doms.container.find(".btn-rule").on(_CLICK_, function()
+        {
+            SceneHandler.toHash("/ParticipateRule");
+        });
+
+        $doms.btnPrivacy = $doms.container.find(".btn-privacy").on(_CLICK_, function()
+        {
+            SceneHandler.toHash("/ParticipateRule");
         });
 
         applyEventData();
@@ -194,6 +207,9 @@
         $("#scene-container").append($doms.container);
 
         self.resize();
+
+        Menu.show();
+        Menu.Logo._hide();
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
@@ -342,7 +358,6 @@
             formObj.birth_month = birthObj.month;
             formObj.birth_day = birthObj.day;
         }
-
 
         return formObj;
 

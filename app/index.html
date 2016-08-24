@@ -37,16 +37,43 @@
     <div id="invisible-container"></div>
     <div id="scene-container">
 
-        <!--<div id="index" resizable="640x320p0x0;1280x640p10x10;1920x1000">-->
-            <!--<div class="my-image"></div>-->
-        <!--</div>-->
 
+    </div>
+
+    <div id="law-page">
+
+        <!--<div class="layout"></div>-->
+        <div class="content">
+
+
+            <div class="birthday-fields">
+                <select class="select-year form_input_select" name="year" title="">
+                    <option>年</option>
+                </select>
+                <select class="select-month form_input_select" name="month" title="">
+                    <option>月</option>
+                </select>
+                <select class="select-day form_input_select" name="day" title="">
+                    <option>日</option>
+                </select>
+            </div>
+
+
+            <div class="btn-send"><div class="normal-state"></div><div class="hover-state"></div></div>
+
+        </div>
+
+    </div>
+
+    <div id="logo">
+
+        <div class="logo-bottom"></div>
     </div>
 
     <div id="menu">
 
 
-        <div class="icon">
+        <div class="icon hide-mode">
             <div class="bar-1"></div>
             <div class="bar-2"></div>
             <div class="bar-3"></div>
@@ -72,10 +99,9 @@
 
     </div>
 
-    <div id="footer"></div>
+    <div class="footer"></div>
 
     <div id="fb-root"></div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
     <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
@@ -92,15 +118,16 @@
 
     <!-- build:js js/optimized.js -->
     <script src="js/lib/FBHelper.1.0.2.js"></script>
-    <script src="js/lib/FormHelper.0.0.4.js"></script>
+    <script src="js/lib/FormHelper.0.0.5.js"></script>
     <script src="js/lib/Helper.1.0.2.js"></script>
-    <script src="js/lib/ScalableContent.1.0.0.js"></script>
     <script src="js/lib/SceneHandler.1.0.4.js"></script>
     <script src="js/ApiProxy.js"></script>
     <script src="js/lib/Utility.0.0.14.js"></script>
     <script src="js/Main.js"></script>
     <script src="js/UI.js"></script>
+    <script src="js/LawPage.js"></script>
     <script src="js/Participate.js"></script>
+    <script src="js/ParticipateRule.js"></script>
     <!-- endbuild -->
 
 </body>

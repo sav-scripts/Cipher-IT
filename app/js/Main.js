@@ -13,6 +13,8 @@
             isiOS: false,
             isLineBrowser: false,
 
+            isBirthValided: false,
+
             deadTime: null,
 
             viewport:
@@ -27,16 +29,18 @@
 
         hashArray:
         [
-            "/Participate"
+            "/LawPage",
+            "/Participate",
+            "/ParticipateRule"
         ],
 
         init: function()
         {
-            //ScalableContent.init([640, 1280]);
-            //ScalableContent.enableFixFullImage = true;
-            //ScalableContent.enableDrawBounds = true;
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
 
-            //return;
+            if(Utility.urlParams.skipLaw == '1') self.settings.isBirthValided = true;
 
             self.settings.isiOS = Utility.isiOS();
 
@@ -58,10 +62,44 @@
                     defaultHash: "/Participate",
                     listeningHashChange: true,
                     loadingClass: Loading,
-                    version: new Date().getTime()
+                    version: new Date().getTime(),
+                    hashChangeTester: function(hashName)
+                    {
+                        if(!self.settings.isBirthValided && hashName != "/LawPage")
+                        {
+                            hashName = null; // cancel content change
+                            SceneHandler.setHash('/LawPage');
+
+                            return null;
+                        }
+
+                        //if(hashName == "/SerialInput")
+                        //{
+                        //    if(new Date().getTime() > self.settings.deadTime)
+                        //    {
+                        //        //console.log("is end");
+                        //        alert("活動已結束，感謝您的參與");
+                        //
+                        //        hashName = null; // cancel content change
+                        //        SceneHandler.setHash('/Index');
+                        //
+                        //        return null;
+                        //    }
+                        //}
+
+
+                        return hashName;
+                    }
                 });
 
-                SceneHandler.toFirstHash();
+                if(Utility.urlParams.skipLaw == '1')
+                {
+                    SceneHandler.toFirstHash();
+                }
+                else
+                {
+                    SceneHandler.toHash("/LawPage");
+                }
             }
 
 

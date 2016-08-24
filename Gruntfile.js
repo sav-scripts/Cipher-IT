@@ -74,19 +74,34 @@ module.exports = function(grunt)
                 src: 'app/styles/main.less',
                 dest: 'app/styles/main.css'
             },
+            admin:{
+                src: 'api/styles/main.less',
+                dest: 'api/styles/main.css'
+            },
             release: {
                 src: 'app/styles/main.less',
                 dest: 'dist/app/styles/main.css',
                 options: {
                     compress: true
                 }
-
             }
         },
         watch: {
             less: {
                 files: ['app/styles/*.less'],
-                tasks: ['less:dev']
+                tasks: ['less:dev'],
+                options:
+                {
+                    atBegin:true
+                }
+            },
+            lessAdmin:{
+                files: ['api/styles/*.less'],
+                tasks: ['less:admin'],
+                options:
+                {
+                    atBegin:true
+                }
             }
         },
         imagemin: {
@@ -108,6 +123,8 @@ module.exports = function(grunt)
 
 
     grunt.registerTask('images', ['newer:imagemin']);
+
+    //grunt.registerTask('watch2', ['watch:lessAdmin']);
 
     grunt.registerTask("default",
     [
