@@ -53,13 +53,12 @@ for ($day = 0; $day < $eventDaysCount; $day ++)
         $participateAble = $numParticipated == 0? 1: 0;
         $eventName = $timeDic[$time];
 
-        $sql = "INSERT INTO `events` (`id`, `event_date`, `event_index`, `event_name`, `num_participated`, `participate_able`) VALUES (NULL, '$date', '$time', '$eventName', '$numParticipated', '$participateAble');";
+        $sql = "INSERT INTO `events` (`id`, `event_date`, `event_index`, `event_name`, `num_participated`, `participate_able`) VALUES (NULL, '$date', '$time', '$eventName', '0', '$participateAble');";
 
         $result = mysqli_query($link, $sql);
 
         echo $sql." success => $result<br/>";
     }
-
 }
 
 //echo json_encode($obj);

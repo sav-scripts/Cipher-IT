@@ -30,7 +30,8 @@
 
         _wireLayerOn: false,
 
-        _cameraBetaLimit: 90,
+        _cameraBetaLimit: 25,
+        _startCameraRadius: 75,
 
         _loadedImageSrc: null,
         _backgroundImageIsDataUrl: false,
@@ -40,7 +41,8 @@
         _textureList:
         [
             "外部載入圖片",
-            '360TEST_03.jpg',
+            "Scene360_0825_01.jpg",
+            'Scene360.jpg',
             '360TEST_02.jpg',
             '360TEST.jpg',
             '360TEST-透明.png',
@@ -129,7 +131,8 @@
 
 
                 camera.upperRadiusLimit = SCENE_SIZE - 10;
-                camera.lowerRadiusLimit = camera.radius = .1;
+                camera.lowerRadiusLimit = .1;
+                camera.radius = self._startCameraRadius;
 
                 camera.alpha = Math.PI *1.90;
 

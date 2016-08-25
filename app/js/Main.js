@@ -29,7 +29,7 @@
 
         hashArray:
         [
-            "/LawPage",
+            "/LandingPage",
             "/Participate",
             "/ParticipateRule"
         ],
@@ -65,10 +65,10 @@
                     version: new Date().getTime(),
                     hashChangeTester: function(hashName)
                     {
-                        if(!self.settings.isBirthValided && hashName != "/LawPage")
+                        if(!self.settings.isBirthValided && hashName != "/LandingPage")
                         {
                             hashName = null; // cancel content change
-                            SceneHandler.setHash('/LawPage');
+                            SceneHandler.setHash('/LandingPage');
 
                             return null;
                         }
@@ -98,7 +98,7 @@
                 }
                 else
                 {
-                    SceneHandler.toHash("/LawPage");
+                    SceneHandler.toHash("/LandingPage");
                 }
             }
 

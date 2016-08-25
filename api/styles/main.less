@@ -96,16 +96,19 @@ td {
 
     overflow: hidden;
 
-    visibility: hidden;
-    transition: visibility 0s linear @duration, height @duration ease-in-out, margin-top @duration ease-in-out;
+//    visibility: hidden;
+    display: none;
+    transition: display 0s linear @duration, height @duration ease-in-out, margin-top @duration ease-in-out;
 
     @duration: .5s;
 
     &.open-mode{
+
+        display: block;
         height: 200px;
         margin-top: -150px;
 
-        visibility: visible;
+//        visibility: visible;
         transition-delay:0s;
     }
 
@@ -206,12 +209,42 @@ td {
 
             background: white;
 
-            transition: width .4s ease-out, margin-left .4s ease-out;
+            transition: width .4s ease-out, margin-left .4s ease-out, top .4s ease-out, margin-top .4s ease-out;
 
             &.focus-mode{
                 color: #407f9a;
                 margin-left: @command-container-width - @w;
                 width: @w;
+            }
+        }
+
+        .sub-btn{
+
+            cursor: pointer;
+
+            @w: 140px;
+
+            margin-bottom: 16px;
+            margin-top: 16px;
+            height: 30px;
+            line-height: 30px;
+
+            width: 120px;
+            margin-left: 80px;
+
+            border-radius: 5px 0 0 5px;
+
+
+            text-align: center;
+            .default-font(18px, #ff92b2);
+            //        width: /*whatever width you want*/;
+
+            background: white;
+
+            display: none;
+
+            &.open-mode{
+                display: block;
             }
         }
     }
@@ -242,5 +275,40 @@ td {
             visibility: hidden;
         }
 
+        .head{
+            line-height: 40px;
+            .patricipate-able{
+                float: right;
+                margin-right: 4px;
+                margin-top: 4px;
+
+                padding: 5px;
+                border-radius: 2px;
+//                background: #eff9eb;
+
+                border: 1px solid rgb(102, 182, 102);
+
+                line-height: 20px;
+
+                cursor: pointer;
+
+                color: rgb(102, 182, 102);
+
+                &::after{
+                    content:"報名開放中";
+                }
+
+                &.close-mode{
+
+                    border: 1px solid rgb(198, 125, 125);
+//                    background: #fbf6f4;
+                    color: rgb(198, 125, 125);
+
+                    &::after{
+                        content:"不開放";
+                    }
+                }
+            }
+        }
     }
 }

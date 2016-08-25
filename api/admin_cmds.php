@@ -44,11 +44,33 @@ switch($cmd)
 
     case "get_all_participate_data": get_all_participate_data(); break;
 
+    case "change_participate_able": change_participate_able(); break;
+
     default: quit("uknown cmd: ['$cmd']");
 }
 
 
 /** methods **/
+function change_participate_able()
+{
+    $id = @$_POST['id'];
+    $participateAble = @$_POST['participate_able'];
+
+    if($id == '' || $participateAble == '')
+    {
+        quit('lack params');
+    }
+    else
+    {
+        global $link;
+        $sql = "UPDATE `events` SET `participate_able` = '$participateAble' WHERE `events`.`id` = $id;";
+        $result = mysqli_query($link, $sql);
+
+        if(!$result) quit(mysqli_error($link));
+        response($participateAble);
+    }
+
+}
 function get_all_participate_data(){
 
     global $link;

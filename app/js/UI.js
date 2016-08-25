@@ -50,11 +50,9 @@
             });
 
             //console.log("check");
-            self.Logo = createHideAble($("#logo"), false);
+            self.Logo = createHideAble($("#logo"), true);
 
             //self.show();
-
-
             //self.open();
         },
 
@@ -67,7 +65,7 @@
 
             $doms.buttonContainer.toggleClass("open-mode", true);
             $("#scene-container").toggleClass("menu-open-mode", true);
-            $("#footer").toggleClass("menu-open-mode", true);
+            $(".footer").toggleClass("menu-open-mode", true);
 
         },
 
@@ -80,7 +78,7 @@
 
             $doms.buttonContainer.toggleClass("open-mode", false);
             $("#scene-container").toggleClass("menu-open-mode", false);
-            $("#footer").toggleClass("menu-open-mode", false);
+            $(".footer").toggleClass("menu-open-mode", false);
         },
 
         show: function()
@@ -119,7 +117,7 @@
 
         var bars = [$doms.bar1[0], $doms.bar2[0], $doms.bar3[0]];
 
-        var tl = _iconTl = new TimelineMax({paused:true});
+        var tl = _iconTl = new TimelineMax();
         tl.addLabel("start");
 
         tl.set($doms.bar1, {marginTop: -9, transformOrigin:"center center"});
@@ -134,6 +132,8 @@
         tl.to($doms.bar1,.4, {rotation: 45});
         tl.to($doms.bar3,.4, {rotation: 45}, "-=.4");
         tl.addLabel("end");
+
+        tl.pause();
     }
 
     function createHideAble($dom, isHiding)
@@ -147,7 +147,6 @@
             if(!isHiding) return;
             isHiding = false;
 
-            console.log("show");
             $dom.toggleClass("hide-mode", isHiding);
         };
 

@@ -4,11 +4,10 @@
     "use strict";
 
     var $doms = {},
-        _dateCombo,
         _isInit = false,
         _isActive = false;
 
-    window.LawPage =
+    window.Setting =
     {
         init: function ()
         {
@@ -31,6 +30,7 @@
 
         resize: function ()
         {
+            if (!_isInit) return;
 
         }
 
@@ -38,37 +38,10 @@
 
     function loadAndBuild(cb)
     {
-        $doms.container = $("#law-page");
-
-        $doms.year = $doms.container.find(".select-year");
-        $doms.month = $doms.container.find(".select-month");
-        $doms.day = $doms.container.find(".select-day");
-
-        var date = new Date();
-        date.setFullYear(date.getFullYear()-18);
-
-        _dateCombo = new DateCombo($doms.year[0], $doms.month[0], $doms.day[0], null, null, null, null, '年', '月', '日', date);
-        _dateCombo.to(1998, 1, 1);
-
-        $doms.btnSend = $doms.container.find(".btn-send").on(_CLICK_, function()
-        {
-            if(_dateCombo.getDateString())
-            {
-                Main.settings.isBirthValided = true;
-                SceneHandler.toHash("/Participate");
-            }
-            else
-            {
-                alert("請先選擇您的生日");
-            }
-        });
+        $doms.container = $("#setting");
 
         $doms.container.css("visibility", "visible").css("display", "none");
-
-
         _isInit = true;
-        Loading.hide();
-
         if (cb) cb.call();
     }
 
@@ -76,7 +49,7 @@
     {
         $doms.container.css("display", "block");
 
-        Menu.Logo._show();
+        AdminMain.changeCommand('setting');
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
@@ -96,7 +69,6 @@
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
         {
-            Menu.show();
             $doms.container.css("display", "none");
             cb.apply();
         });

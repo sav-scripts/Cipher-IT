@@ -269,6 +269,10 @@ function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel
 
 	if(!date) date = new Date();
 
+    var currentYear = date.getFullYear(),
+        currentMonth = date.getMonth()+1,
+        currentDay = date.getDate();
+
 
 	for(i=1900;i<=date.getFullYear();i++)
 	{
@@ -296,6 +300,24 @@ function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel
 	{
 		var year = $(yearDom).val();
 		var month = $(monthDom).val();
+
+        var i;
+
+        var matchCurrentYear = (year != "" && year == currentYear);
+
+        if(matchCurrentYear && month > currentMonth) $(monthDom).prop('selectedIndex', 0);
+
+        //$(monthDom).empty().append('<option value="" selected>'+monthLabel+'</option>\n');
+
+        var targetMonth = matchCurrentYear? currentMonth: 12;
+
+        for(i=1;i<=12;i++)
+        {
+            $($(monthDom).find('option')[i]).css("display", i<=targetMonth? "block": "none");
+        }
+
+
+        //if(year == currentYear) console.log("check: " + currentDay);
 		
 		$(dayDom).find('option').remove();
 		$(dayDom).append('<option value="" selected>'+dayLabel+'</option>\n');
@@ -305,7 +327,10 @@ function DateCombo(yearDom, monthDom, dayDom, cb_onChange, yearLabel, monthLabel
 		var d=new Date(year, month, -1);
 		
 		var maxValue = d.getDate()+1;
-		for(var i=1;i<=maxValue;i++){
+
+        if(matchCurrentYear && month == currentMonth) maxValue = currentDay;
+
+		for(i=1;i<=maxValue;i++){
 			$(dayDom).append('<option value="'+ i +'">'+ i + dayUnit +'</option>\n');
 		}
 		

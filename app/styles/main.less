@@ -50,14 +50,6 @@ body{
     &.menu-open-mode{
         margin-left: -@pc-menu-width;
     }
-
-//    overflow-x: hidden;
-
-//    min-width: 1024px;
-//    overflow-x: hidden;
-//    overflow-y: visible;
-
-//    min-height: 100%;
 }
 #invisible-container{
     position: absolute;
@@ -238,99 +230,110 @@ body{
 
         background-color: #1a1a1a;
 
-        transition: left .5s ease-out;
+        visibility: hidden;
+        transition: visibility .0s, linear, .5s, left .5s ease-out;
 
         &.open-mode{
-//            visibility: visible;
             left: -@w;
+            visibility: visible;
+            transition-delay: 0s;
         }
 
-        .layout('layouts/menu-pc.jpg');
+        .wrapper{
 
-        .button-group{
             position: absolute;
-            left:59px;
-            top:70px;
+            width: 100%;
+            height: 100%;
 
-            .my-mixin(1, 0, 0, 214px, 50px);
-            .my-mixin(2, 0, 50px, 214px, 40px, true);
-            .my-mixin(3, 0, 90px, 214px, 40px, true);
-            .my-mixin(4, 0, 130px, 214px, 40px, true);
-            .my-mixin(5, 0, 180px, 214px, 35px);
-            .my-mixin(6, 0, 218px, 214px, 40px, true);
-            .my-mixin(7, 0, 258px, 214px, 40px, true);
-            .my-mixin(8, 0, 298px, 214px, 40px, true);
-            .my-mixin(9, 0, 348px, 214px, 40px, true);
-            .my-mixin(10, 0, 388px, 214px, 40px, true);
-            .my-mixin(11, 0, 428px, 54px, 54px, true);
+            .layout('layouts/menu-pc.jpg');
 
-            .my-mixin(@index; @left; @top; @width; @height; @button-mode: none;)
-            {
-                .item-@{index}{
+            .button-group{
+                position: absolute;
+                left:59px;
+                top:70px;
 
-                    @src: "menu-buttons.png";
-                    @image-x: @left;
-                    @image-y: @top;
+                .my-mixin(1, 0, 0, 214px, 50px);
+                .my-mixin(2, 0, 50px, 214px, 40px, true);
+                .my-mixin(3, 0, 90px, 214px, 40px, true);
+                .my-mixin(4, 0, 130px, 214px, 40px, true);
+                .my-mixin(5, 0, 180px, 214px, 35px);
+                .my-mixin(6, 0, 218px, 214px, 40px, true);
+                .my-mixin(7, 0, 258px, 214px, 40px, true);
+                .my-mixin(8, 0, 298px, 214px, 40px, true);
+                .my-mixin(9, 0, 348px, 214px, 40px, true);
+                .my-mixin(10, 0, 388px, 214px, 40px, true);
+                .my-mixin(11, 0, 428px, 54px, 54px, true);
 
-                    position: absolute;
-                    left: @left;
-                    top: @top;
-                    width: @width;
-                    height: @height;
+                .my-mixin(@index; @left; @top; @width; @height; @button-mode: none;)
+                {
+                    .item-@{index}{
 
-                    .normal-state{
+                        @src: "menu-buttons.png";
+                        @image-x: @left;
+                        @image-y: @top;
 
                         position: absolute;
-                        .image-bg(@src);
-                        width: 100%;
-                        height: 100%;
-                        background-position: 0 -@image-y;
-                        opacity: 1;
+                        left: @left;
+                        top: @top;
+                        width: @width;
+                        height: @height;
 
-
-                        pointer-events: none;
-                        transition-delay:0s;
-                    }
-
-
-                    & when not (@button-mode = none)
-                    {
-
-                        .hover-state{
+                        .normal-state{
 
                             position: absolute;
                             .image-bg(@src);
                             width: 100%;
                             height: 100%;
-                            background-position: -214px -@image-y;
-                            opacity: 0;
+                            background-position: 0 -@image-y;
+                            opacity: 1;
 
 
                             pointer-events: none;
-
-                            visibility:hidden;
-                            transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+                            transition-delay:0s;
                         }
 
-                        &:hover{
-                            cursor: pointer;
-                            .normal-state{
+
+                        & when not (@button-mode = none)
+                        {
+
+                            .hover-state{
+
+                                position: absolute;
+                                .image-bg(@src);
+                                width: 100%;
+                                height: 100%;
+                                background-position: -214px -@image-y;
                                 opacity: 0;
+
+
+                                pointer-events: none;
+
                                 visibility:hidden;
                                 transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
                             }
 
-                            .hover-state{
-                                opacity: 1;
-                                visibility:visible;
-                                transition-delay:0s;
+                            &:hover{
+                                cursor: pointer;
+                                .normal-state{
+                                    opacity: 0;
+                                    visibility:hidden;
+                                    transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+                                }
+
+                                .hover-state{
+                                    opacity: 1;
+                                    visibility:visible;
+                                    transition-delay:0s;
+                                }
                             }
                         }
                     }
                 }
+
             }
 
         }
+
     }
 }
 
@@ -381,16 +384,31 @@ body{
     }
 }
 
-/** law page **/
-#law-page{
-    position: fixed;
+/** landing page **/
+#landing-page{
+    position: absolute;
     width: 100%;
     height:90%;
     .image-bg("participate-1-background.jpg", cover);
 
-    .layout("layouts/law-page-pc.jpg");
+    .layout("layouts/landing-page-pc.jpg");
 
     visibility: hidden;
+
+
+
+    .logo{
+        position: fixed;
+        left: 25px;
+        top:19px;
+        width: 97px;
+        height: 92px;
+        .image-bg("landing-page-logo.png");
+
+        z-index: 3;
+
+    }
+
 
     .content{
         position: absolute;
@@ -400,7 +418,12 @@ body{
         margin-top: -218px;
         width: 780px;
         height: 445px;
-        .image-bg("law-page-content-0.png");
+        .image-bg("landing-page-content-0.png");
+
+
+        .abs-div-2(gif-1, 70, 338, 93, 56, "g1.gif");
+        .abs-div-2(gif-2, 610, 362, 125, 30, "g2.gif");
+        .abs-div-2(gif-3, 559, 41, 182, 35, "g3.gif");
 
         select{
 
@@ -441,7 +464,7 @@ body{
             }
         }
 
-        .fade-btn-2(btn-send, "law-page-btn-send.png", 279, 313, 223, 52);
+        .fade-btn-2(btn-send, "landing-page-btn-send.png", 279, 313, 223, 52);
 
         .birthday-fields{
             position: absolute;
@@ -649,6 +672,8 @@ body{
                 background-color: rgba(0,0,0,0);
                 background-position: right 9px;
 
+                letter-spacing: 1px;
+
                 height: 24px;
 
                 border: none;
@@ -675,6 +700,10 @@ body{
 
                 &::-ms-expand {
                     display: none;
+                }
+
+                &.white-mode{
+                    color: white;
                 }
             }
 
@@ -741,6 +770,8 @@ body{
                 background: none;
                 height:24px;
                 width: 100px;
+
+                letter-spacing: 1px;
 
                 &.hint-mode{
                     color:#697085;
@@ -893,3 +924,6 @@ body{
 
     }
 }
+
+
+@import "main.mobile.less";

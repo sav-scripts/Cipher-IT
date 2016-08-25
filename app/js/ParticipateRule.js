@@ -25,6 +25,9 @@
                 tl.to($doms.container, .4, {autoAlpha: 1});
                 tl.add(function ()
                 {
+                    $doms.container.on("scroll", updateScrollTop);
+                    $doms.container.trigger("scroll");
+
                     if (cb) cb.apply();
                 });
             }
@@ -32,6 +35,8 @@
 
         hide: function (cb)
         {
+            $doms.container.unbind("scroll", updateScrollTop);
+
             Menu.show();
             $doms.btnClose.toggleClass("showing-mode", false);
 
@@ -50,6 +55,12 @@
 
         }
     };
+
+
+    function updateScrollTop()
+    {
+        $doms.topBar.toggleClass("open-mode", ($doms.container.scrollTop() > 101));
+    }
 
     function loadAndBuild(cb)
     {
@@ -71,6 +82,9 @@
     {
         $("#invisible-container").append(templates[0].dom);
         $doms.container = $("#participate-rule");
+
+        $doms.contentContainer = $doms.container.find(".container");
+        $doms.topBar = $doms.container.find(".top-bar");
 
         $doms.btnClose = $doms.container.find(".btn-close").on(_CLICK_, function()
         {

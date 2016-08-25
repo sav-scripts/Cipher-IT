@@ -11,6 +11,8 @@
 
         init: function()
         {
+            window.Loading = SquareLoading;
+
             setupLoginDialog();
             setupCommands();
 
@@ -39,13 +41,13 @@
 
                     var firstHash = response.data? "/Participate": "/Login";
 
-                    SceneHandler.init(['/Participate', "/Login"],
-                        {
-                            defaultHash: '/Login',
-                            listeningHashChange: true,
-                            //loadingClass: Loading,
-                            version: new Date().getTime()
-                        });
+                    SceneHandler.init(['/Participate', "/Login", "/Setting"],
+                    {
+                        defaultHash: '/Login',
+                        listeningHashChange: true,
+                        //loadingClass: Loading,
+                        version: new Date().getTime()
+                    });
 
                     SceneHandler.toHash(firstHash);
                 }
@@ -98,7 +100,7 @@
 
 
         setupButton('participate', "/Participate");
-        //setupButton('setting', "/Setting");
+        setupButton('setting', "/Setting");
         setupButton('logout', null, function()
         {
             ApiProxy.callApi("admin_cmds", {cmd:'logout'}, null, function(response)

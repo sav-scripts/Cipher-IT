@@ -63,7 +63,10 @@
             {
                 $doms.textCanvas.attr("width", Math.min(vp.width, 1920)).attr("height", Math.min(vp.height, 1080));
             }
-        }
+        },
+
+        reset: resetForm
+
     };
 
 
@@ -71,6 +74,8 @@
     {
         $("#invisible-container").append(templates[0].dom);
         $doms.container = $("#participate");
+
+        $doms.topBar = $doms.container.find(".top-bar");
 
         $doms.part1 = $doms.container.find(".part-1");
         $doms.part2 = $doms.container.find(".part-2");
@@ -90,7 +95,7 @@
         var date = new Date();
         date.setFullYear(date.getFullYear()-18);
         _dateCombo = new DateCombo($doms.year[0], $doms.month[0], $doms.day[0], null, null, null, null, '年', '月', '日', date);
-        _dateCombo.to(1998, 1, 1);
+        //_dateCombo.to(1998, 1, 1);
 
         $doms.eventTimes =
         [
@@ -100,6 +105,10 @@
         ];
 
         $doms.eventSelect = $doms.container.find(".event-select");
+        $doms.genderSelect = $doms.container.find(".gender-select");
+
+        setupSelect($doms.eventSelect);
+        setupSelect($doms.genderSelect);
 
         $doms.fields =
         {
@@ -112,8 +121,6 @@
         MyTools.setupInput($doms.fields.phone, true, 10);
         MyTools.setupInput($doms.fields.email, true, 50);
 
-        $doms.genderSelect = $doms.container.find(".gender-select");
-
         $doms.btnSend = $doms.container.find(".btn-send").on(_CLICK_, function()
         {
             trySend();
@@ -124,16 +131,27 @@
             SceneHandler.toHash("/ParticipateRule");
         });
 
-        $doms.btnPrivacy = $doms.container.find(".btn-privacy").on(_CLICK_, function()
+        $doms.btnPrivacy = $doms.container.find(".btn-privacy").on(_CLICK_, btnPrivacyClick);
+        $doms.btnPrivacy2 = $doms.container.find(".btn-privacy-2").on(_CLICK_, btnPrivacyClick);
+
+        function btnPrivacyClick()
         {
             SceneHandler.toHash("/ParticipateRule");
-        });
+        }
 
         applyEventData();
 
         setupTextAnimation();
 
         $doms.container.detach();
+    }
+
+    function setupSelect($select)
+    {
+        $select.on("change", function()
+        {
+            $select.toggleClass("white-mode", $select[0].selectedIndex != 0);
+        });
     }
 
     function setupTextAnimation()
@@ -202,6 +220,12 @@
         }
     }
 
+    function updateScrollTop()
+    {
+        //console.log("check");
+        $doms.topBar.toggleClass("open-mode", ($(window).scrollTop() > 101));
+    }
+
     function show(cb)
     {
         $("#scene-container").append($doms.container);
@@ -209,19 +233,23 @@
         self.resize();
 
         Menu.show();
-        Menu.Logo._hide();
+        //Menu.Logo._hide();
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
         tl.to($doms.container, .4, {autoAlpha: 1});
         tl.add(function ()
         {
+            $(window).on("scroll", updateScrollTop);
+            $(window).trigger("scroll");
             cb.apply();
         });
     }
 
     function hide(cb)
     {
+        $(window).unbind("scroll", updateScrollTop);
+
         var tl = new TimelineMax;
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
@@ -297,8 +325,8 @@
         $doms.fields.phone.val('').trigger('blur');
         $doms.fields.email.val('').trigger('blur');
 
-        $($doms.eventSelect.find('option')[0]).prop({selected:true});
-        $($doms.genderSelect.find('option')[0]).prop({selected:true});
+        $($doms.eventSelect.find('option')[0]).prop({selected:true}).trigger("change");
+        $($doms.genderSelect.find('option')[0]).prop({selected:true}).trigger("change");
     }
 
     function checkForm()

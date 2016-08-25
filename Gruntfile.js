@@ -18,12 +18,12 @@ module.exports = function(grunt)
         useminPrepare: {
             html: 'app/index.html',
             options: {
-                dest: 'dist/app'
+                dest: 'dist'
             }
         },
         clean: {
             build: [
-                'dist/app/**/*', '!dist/app/images/**'
+                'dist/**/*', '!dist/images/**'
             ],
             release: [".tmp/"]
         },
@@ -36,10 +36,15 @@ module.exports = function(grunt)
                         src: [
                             //'images/*.{png,gif,jpg,svg}',
                             '*.html',
+                            'form_Canvas.js',
+                            'js/Loading.js',
+                            'js/lib/createjs-2015.11.26.min.js',
+                            'js/lib/jquery.waitforimages.min.js',
+                            'js/lib/jquery.mousewheel.min.js',
                             'js/lib/TweenMax.min.js',
                             'js/lib/jquery.min.js'
                         ],
-                        dest: 'dist/app'
+                        dest: 'dist'
                     }
                 ]
             }
@@ -55,18 +60,18 @@ module.exports = function(grunt)
                 // in dist directory
                 files: [{
                     src: [
-                        //'dist/app/images/*.{png,gif,jpg,svg}',
-                        'dist/app/js/*.js',
-                        'dist/app/styles/*.css'
+                        //'dist/images/*.{png,gif,jpg,svg}',
+                        'dist/js/*.js',
+                        'dist/styles/*.css'
                     ]
                 }]
             }
         },
         usemin: {
-            html: ['dist/app/*.html'],
-            css: ['dist/app/styles/*.css'],
+            html: ['dist/*.html'],
+            css: ['dist/styles/*.css'],
             options: {
-                assetsDirs: ['dist/app', 'dist/app/styles']
+                assetsDirs: ['dist', 'dist/styles']
             }
         },
         less: {
@@ -80,7 +85,7 @@ module.exports = function(grunt)
             },
             release: {
                 src: 'app/styles/main.less',
-                dest: 'dist/app/styles/main.css',
+                dest: 'dist/styles/main.css',
                 options: {
                     compress: true
                 }
@@ -113,7 +118,7 @@ module.exports = function(grunt)
                     expand: true,
                     cwd: 'app/images/',
                     src: ['**/*.{png,jpg,gif}', '!layouts/**'],
-                    dest: 'dist/app/images/'
+                    dest: 'dist/images/'
                 }]
             }
         }
