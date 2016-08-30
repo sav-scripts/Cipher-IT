@@ -39,10 +39,12 @@ module.exports = function(grunt)
                             'form_Canvas.js',
                             'js/Loading.js',
                             'js/lib/createjs-2015.11.26.min.js',
+                            'js/lib/jquery.detectmobilebrowser.min.js',
                             'js/lib/jquery.waitforimages.min.js',
                             'js/lib/jquery.mousewheel.min.js',
+                            'js/lib/pep.min.js',
                             'js/lib/TweenMax.min.js',
-                            'js/lib/jquery.min.js'
+                            'js/lib/jquery.1.11.3.min.js'
                         ],
                         dest: 'dist'
                     }

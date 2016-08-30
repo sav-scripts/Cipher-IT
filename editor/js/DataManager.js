@@ -19,7 +19,7 @@
             setupGUI();
         },
 
-        loadFromZip: function(zipPath)
+        loadFromZip: function(zipPath, SceneClass, cb)
         {
             Loading.progress("載入場景資料中").show();
 
@@ -29,13 +29,30 @@
                     throw err; // or handle err
                 }
 
-                JSZip.loadAsync(data).then(handleLoadedZip);
+
+                JSZip.loadAsync(data).then(function(zip)
+                {
+                    handleLoadedZip.call(null, zip, SceneClass, cb)
+                });
             });
         },
 
-        loadFromExtracedZip: function()
+        loadFromExtracedData: function(path, SceneClass, cb)
         {
+            $.ajax(path + "config.json").done(function(response)
+            {
+                //console.log(response);
+                SceneClass.applyBackground(path + 'textures/' + response.backgroundImage, function()
+                {
+                    ShapeEditor.applyImportData(response.shapeData);
+                    LightEditor.applyImportData(response.lightData);
 
+                    BillboardEditor.applyImportData(response.billboardData, path + "textures/billboard/", function()
+                    {
+                        if(cb) cb.call();
+                    });
+                });
+            });
         },
 
         _triggerLoad: function()
@@ -130,7 +147,7 @@
         }
     }
 
-    function handleLoadedZip(zip)
+    function handleLoadedZip(zip, SceneClass, cb)
     {
         var zipData = zip.file("config.json");
         if(zipData)
@@ -167,7 +184,10 @@
 
                         LightEditor.applyImportData(lightData);
 
-                        SphereScene.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
+                        //SphereScene.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
+                        SceneClass.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
+
+                        if(cb) cb.call();
 
                         Loading.hide();
                     });

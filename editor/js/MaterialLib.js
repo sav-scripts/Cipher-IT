@@ -6,8 +6,10 @@
     var _scene,
         _materialDic = {};
 
-    window.MaterialLib =
+    var self = window.MaterialLib =
     {
+        defaultPath: 'textures/',
+
         init: function(scene)
         {
             _scene = scene;
@@ -57,7 +59,7 @@
                 uniforms: ["worldViewProjection"]
             });
 
-        var mainTexture = new BABYLON.Texture("textures/amiga.jpg", _scene);
+        var mainTexture = new BABYLON.Texture(self.defaultPath + "amiga.jpg", _scene);
 
         shaderMaterial.setTexture("textureSampler", mainTexture);
         shaderMaterial.setFloat("time", time);

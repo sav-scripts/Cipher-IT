@@ -43,12 +43,10 @@
             if(self.focusNodeSample) self.focusNodeSample.renderingGroupId = v;
         },
 
-        init: function(scene)
+        init: function(scene, noEdit)
         {
             _scene = scene;
 
-            setupGUI();
-            updateFolderLabel(_hintText);
 
             this.container = new BABYLON.Mesh("shape container", _scene);
             this.container.isPickable = false;
@@ -62,28 +60,34 @@
             this.focusNodeSample.parent = this.container;
             this.focusNodeSample.renderingGroupId = this.editorRenderingGroupId;
 
-            KeyboardControl.add("ShapeEditor complete", KeyCodeDic.space,
+            if(!noEdit)
             {
-                onKeyUp: function()
-                {
-                    if(_isEnabled && _isEditModeOn && _editingObject && _editingObject.getNumPoints() > 2)
+                setupGUI();
+                updateFolderLabel(_hintText);
+
+                KeyboardControl.add("ShapeEditor complete", KeyCodeDic.space,
                     {
-                        self.completeEdit();
-                    }
-                }
-            }).add("ShapeEditor toLastStep", "Z".charCodeAt(0),
-            {
-                onKeyDown: function()
-                {
-                    if(_isEnabled && KeyboardControl.funcKeysDown.ctrl && _editingObject) self.requestToLastStep();
-                }
-            }).add("ShapeEditor delete", KeyCodeDic.delete,
-            {
-                onKeyDown: function()
-                {
-                    if(_isEnabled) self.clearEditingObject();
-                }
-            });
+                        onKeyUp: function()
+                        {
+                            if(_isEnabled && _isEditModeOn && _editingObject && _editingObject.getNumPoints() > 2)
+                            {
+                                self.completeEdit();
+                            }
+                        }
+                    }).add("ShapeEditor toLastStep", "Z".charCodeAt(0),
+                    {
+                        onKeyDown: function()
+                        {
+                            if(_isEnabled && KeyboardControl.funcKeysDown.ctrl && _editingObject) self.requestToLastStep();
+                        }
+                    }).add("ShapeEditor delete", KeyCodeDic.delete,
+                    {
+                        onKeyDown: function()
+                        {
+                            if(_isEnabled) self.clearEditingObject();
+                        }
+                    });
+            }
         },
 
         enable: function()

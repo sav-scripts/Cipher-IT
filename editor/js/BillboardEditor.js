@@ -48,7 +48,7 @@
             if(self.focusNodeSample) self.focusNodeSample.renderingGroupId = v;
         },
 
-        init: function(scene, sceneSize)
+        init: function(scene, sceneSize, noEdit)
         {
             _scene = scene;
             _sceneSize = sceneSize;
@@ -74,26 +74,30 @@
             //createObject("./textures/d4.png", -200, 0, 0);
             //createObject("./textures/char.png", 0, 0, 200);
 
-            setupImageInput();
-            setupGUI();
-
-
-            KeyboardControl.add("BillboardEditor complete", KeyCodeDic.space,
+            if(!noEdit)
             {
-                onKeyUp: function()
+                setupImageInput();
+                setupGUI();
+
+
+                KeyboardControl.add("BillboardEditor complete", KeyCodeDic.space,
                 {
-                    if(_isEditModeOn && _editingObject)
+                    onKeyUp: function()
                     {
-                        self.completeEdit();
+                        if(_isEditModeOn && _editingObject)
+                        {
+                            self.completeEdit();
+                        }
                     }
-                }
-            }).add("BillboardEditor delete", KeyCodeDic.delete,
-            {
-                onKeyDown: function()
+                }).add("BillboardEditor delete", KeyCodeDic.delete,
                 {
-                    if(_isEnabled) self.deleteEditingObject();
-                }
-            });
+                    onKeyDown: function()
+                    {
+                        if(_isEnabled) self.deleteEditingObject();
+                    }
+                });
+            }
+
 
         },
 
@@ -311,14 +315,14 @@
             return {dataArray:dataArray, imageArray: imageArray, lightImageArray: lightImageArray};
         },
 
-        applyImportData: function(dataArray, imageDic)
+        applyImportData: function(dataArray, imageDic, onAllLoaded)
         {
             self.clearAll();
 
             if(!dataArray) dataArray = [];
 
             _serial = 0;
-            var i, obj;
+            var i, obj, needLoadCount = 0;
             for(i=0;i<dataArray.length;i++)
             {
                 obj = dataArray[i];
@@ -330,7 +334,9 @@
 
                 //console.log(imageSrc);
 
-                var newObject = _editorObjectDic[obj.serial] = BillboardObject.CreateFromData(_scene, imageDic, obj);
+                needLoadCount ++;
+
+                var newObject = _editorObjectDic[obj.serial] = BillboardObject.CreateFromData(_scene, imageDic, obj, onLoad);
 
                 //_editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY,
                 //    obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder, obj.name);
@@ -342,6 +348,15 @@
 
             _serial++;
             //console.log("_serial = " + _serial);
+
+            function onLoad()
+            {
+                needLoadCount --;
+                if(needLoadCount <= 0)
+                {
+                    if(onAllLoaded) onAllLoaded.call();
+                }
+            }
         }
 
     };
@@ -522,32 +537,91 @@
 
     window.BillboardObject = BillboardObject;
 
-    BillboardObject.CreateFromData = function(scene, imageDic, obj)
+    BillboardObject.CreateFromData = function(scene, imageDic, obj, onLoaded)
     {
+        var isImageDicString = (typeof imageDic) == 'string';
+
         var serial =obj.serial,
-            imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
             imageHead = obj.imageDataHead,
-            imageSrc = imageHead + imageDic[imagePath],
+            imagePath,
+            imageSrc,
             lightImagePath,
             lightImageHead,
-            lightImageSrc;
+            lightImageSrc,
+            imagesIsDataUrl = !isImageDicString;
+
+        if(imagesIsDataUrl)
+        {
+            imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image;
+            imageSrc = imageHead + imageDic[imagePath];
+        }
+        else
+        {
+            imageSrc = imageDic + obj.image;
+            //console.log("image src = " + imageSrc);
+        }
 
         if(obj.lightImage)
         {
-            lightImagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.lightImage;
-            lightImageHead = obj.lightImageDataHead;
-            lightImageSrc = lightImageHead + imageDic[lightImagePath];
+            if(imagesIsDataUrl)
+            {
+                lightImagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.lightImage;
+                lightImageHead = obj.lightImageDataHead;
+                lightImageSrc = lightImageHead + imageDic[lightImagePath];
+            }
+            else
+            {
+                lightImageSrc = imageDic + obj.lightImage;
+                //console.log('light image src = ' + lightImageSrc);
+            }
+        }
+        
+        var onImageLoaded,
+            onLightImageLoaded,
+            needLoadCount = 0;
+
+                
+        if(onLoaded)
+        {
+            if(imageSrc)
+            {
+                needLoadCount++;
+                onImageLoaded = somethingLoaded;
+            }
+            
+            if(lightImageSrc)
+            {
+                needLoadCount++;
+                onLightImageLoaded = somethingLoaded
+            }
+
+            if(needLoadCount === 0)
+            {
+                onLoaded.call();
+            }
         }
 
-        //console.log(imageSrc);
+
+        function somethingLoaded()
+        {
+            needLoadCount--;
+            if(needLoadCount <= 0)
+            {
+                if(onLoaded) onLoaded.call();
+            }
+        }
 
         return new BillboardObject(serial, scene, new BABYLON.Vector3(obj.targetX, obj.targetY,
-            obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder, lightImageSrc, true, obj.name, obj.linkedLight, obj.emissiveColor);
+                                obj.targetZ), obj.radius, obj.scale, imageSrc, imagesIsDataUrl, obj.offsetX, obj.offsetY, obj.renderingOrder, 
+                                lightImageSrc, imagesIsDataUrl, obj.name, obj.linkedLight, obj.emissiveColor,
+                                onImageLoaded, onLightImageLoaded);
     };
 
     BillboardObject.sceneSize = 200;
 
-    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, imageIsDataUrl, offsetX, offsetY, renderingOrder, lightImageSrc, lightImageIsDataUrl, name, linkedLight, emissiveColor)
+    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, imageIsDataUrl, offsetX, offsetY, renderingOrder, 
+                             lightImageSrc, lightImageIsDataUrl, name, linkedLight, emissiveColor,
+                            onImageLoaded, onLightImageLoaded)
     {
         var self = this;
 
@@ -608,8 +682,8 @@
         this._targetNode.actionManager.registerAction(new BABYLON.Action(BABYLON.ActionManager.OnPointerOverTrigger));
 
 
-        if(imageSrc) self.changeImage(imageSrc, imageIsDataUrl);
-        if(lightImageSrc) self.changeLightImage(lightImageSrc, lightImageIsDataUrl);
+        if(imageSrc) self.changeImage(imageSrc, imageIsDataUrl, onImageLoaded);
+        if(lightImageSrc) self.changeLightImage(lightImageSrc, lightImageIsDataUrl, onLightImageLoaded);
     }
 
     BillboardObject.prototype =

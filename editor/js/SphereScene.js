@@ -343,7 +343,8 @@
             {
                 if(self._backgroundImageIsDataUrl)
                 {
-                    texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
+                    console.log("this should't be executed");
+                    //texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
                 }
                 else
                 {

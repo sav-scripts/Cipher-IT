@@ -5,6 +5,15 @@
     .percent-div(@selector; @left * @ratio; @top * @ratio; @width * @ratio; @height * @ratio; @src;);
 }
 
+.my-layout(@src){
+
+    .layout(@src);
+    .layout{
+        background-position: center center;
+        background-size: contain;
+    }
+}
+
 /** intro **/
 #intro{
 
@@ -16,22 +25,19 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        .image-bg("participate-1-background.jpg", cover);
+        .image-bg("intro-background.jpg", cover);
     }
 
-    .layout("layouts/intro-pc.jpg");
-    .layout{
-        height: 100 / 90 * 100%;
-    }
+    .my-layout("layouts/intro-pc.jpg");
 
     .wrapper{
         .percent-container();
 
-        .my-percent-div(left-content, -471,-165,310,204, "intro-content.png");
+        .percent-div(left-content, -754,-263,496,324, "intro-content.png");
 
         .btn-play{
 
-            .my-percent-div(none, -432,66, 211, 57);
+            .percent-div(none, -689,105, 337, 94);
 
             .normal-state{
 
@@ -91,11 +97,30 @@
     width: 100%;
     height: 100%;
 
+    .my-layout("layouts/story-pc.jpg");
+    .layout{
+        z-index: 2;
+    }
+
     .scene-canvas{
         position: absolute;
         width: 100%;
         height: 100%;
         touch-action: none;
+    }
+
+    .buttons{
+        z-index: 3;
+        position: absolute;
+        right: 279px;
+        top:18px;
+
+        width: 0;
+        height: 0;
+
+        .fade-btn-2(btn-exit, "story-btn-exit.png", 0, 0, 51, 52);
+        .fade-btn-2(btn-help, "story-btn-help.png", 70, 0, 51, 52);
+        .fade-btn-2(btn-evidence, "story-btn-evidence.png", 140, 0, 51, 52);
     }
 
     .wrapper{

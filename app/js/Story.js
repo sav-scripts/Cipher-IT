@@ -24,9 +24,19 @@
                 SceneHandler.loadTemplate(null, templates, function loadComplete()
                 {
                     build(templates);
-                    _isInit = true;
-                    cb.apply(null);
-                }, 0);
+
+                    //console.log($doms.sceneCanvas[0]);
+
+                    //Loading.show();
+
+                    StoryScene.init($doms.sceneCanvas[0], function()
+                    {
+                        _isInit = true;
+                        $doms.container.detach();
+                        cb.call();
+                    });
+                    //cb.apply(null);
+                }, true);
             }
         },
 
@@ -37,7 +47,10 @@
 
         resize: function (width, height, scale)
         {
-
+            if(_isInit)
+            {
+                StoryScene.engine.resize();
+            }
         }
     };
 
@@ -50,7 +63,6 @@
         $doms.sceneCanvas = $doms.container.find(".scene-canvas");
 
 
-        $doms.container.detach();
     }
 
     function show(cb)
@@ -60,10 +72,13 @@
         self.resize();
 
         Menu.show();
+        Menu.Logo._show();
+
+        StoryScene.setActive(true);
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
-        tl.to($doms.container, .4, {autoAlpha: 1});
+        tl.to($doms.container, 1.0, {autoAlpha: 1, ease:Power3.easeIn});
         tl.add(function ()
         {
             cb.apply();
@@ -72,10 +87,14 @@
 
     function hide(cb)
     {
+        Menu.Logo._hide();
+        Menu.hide();
+
         var tl = new TimelineMax;
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
         {
+            StoryScene.setActive(false);
             $doms.container.detach();
             cb.apply();
         });

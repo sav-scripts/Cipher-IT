@@ -37,7 +37,7 @@
             {
                 SphereScene.init(canvas, engine, function()
                 {
-                    DataManager.loadFromZip(self.settings.scenePath);
+                    DataManager.loadFromZip(self.settings.scenePath, SphereScene);
                 });
             });
 

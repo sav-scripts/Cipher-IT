@@ -164,7 +164,7 @@ body.no-scroll-mode {
     overflow-y: auto;
   }
   #scene-container {
-    height: 600px;
+    min-height: 540px;
   }
 }
 @media (max-width: 640px) {
@@ -2826,7 +2826,7 @@ body.no-scroll-mode {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("../images/participate-1-background.jpg");
+  background-image: url("../images/intro-background.jpg");
   background-size: cover;
 }
 #intro .layout {
@@ -2838,7 +2838,8 @@ body.no-scroll-mode {
   opacity: .3;
 }
 #intro .layout {
-  height: 111.11111111%;
+  background-position: center center;
+  background-size: contain;
 }
 #intro .wrapper {
   position: absolute;
@@ -2849,19 +2850,19 @@ body.no-scroll-mode {
 }
 #intro .wrapper .left-content {
   position: absolute;
-  left: -753.6%;
-  top: -264%;
+  left: -754%;
+  top: -263%;
   width: 496%;
-  height: 326.4%;
+  height: 324%;
   background-image: url("../images/intro-content.png");
   background-size: cover;
 }
 #intro .wrapper .btn-play {
   position: absolute;
-  left: -691.2%;
-  top: 105.6%;
-  width: 337.6%;
-  height: 91.2%;
+  left: -689%;
+  top: 105%;
+  width: 337%;
+  height: 94%;
 }
 #intro .wrapper .btn-play .normal-state {
   position: absolute;
@@ -2902,11 +2903,163 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
 }
+#story .layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/layouts/story-pc.jpg");
+  background-size: auto;
+  opacity: .3;
+}
+#story .layout {
+  background-position: center center;
+  background-size: contain;
+}
+#story .layout {
+  z-index: 2;
+}
 #story .scene-canvas {
   position: absolute;
   width: 100%;
   height: 100%;
   touch-action: none;
+}
+#story .buttons {
+  z-index: 3;
+  position: absolute;
+  right: 279px;
+  top: 18px;
+  width: 0;
+  height: 0;
+}
+#story .buttons .btn-exit {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 51px;
+  height: 52px;
+}
+#story .buttons .btn-exit .normal-state {
+  position: absolute;
+  background-image: url("../images/story-btn-exit.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition-delay: 0s;
+}
+#story .buttons .btn-exit .hover-state {
+  position: absolute;
+  background-image: url("../images/story-btn-exit.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-exit:hover {
+  cursor: pointer;
+}
+#story .buttons .btn-exit:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-exit:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#story .buttons .btn-help {
+  position: absolute;
+  left: 70px;
+  top: 0px;
+  width: 51px;
+  height: 52px;
+}
+#story .buttons .btn-help .normal-state {
+  position: absolute;
+  background-image: url("../images/story-btn-help.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition-delay: 0s;
+}
+#story .buttons .btn-help .hover-state {
+  position: absolute;
+  background-image: url("../images/story-btn-help.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-help:hover {
+  cursor: pointer;
+}
+#story .buttons .btn-help:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-help:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#story .buttons .btn-evidence {
+  position: absolute;
+  left: 140px;
+  top: 0px;
+  width: 51px;
+  height: 52px;
+}
+#story .buttons .btn-evidence .normal-state {
+  position: absolute;
+  background-image: url("../images/story-btn-evidence.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition-delay: 0s;
+}
+#story .buttons .btn-evidence .hover-state {
+  position: absolute;
+  background-image: url("../images/story-btn-evidence.png");
+  background-size: auto;
+  width: 51px;
+  height: 52px;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-evidence:hover {
+  cursor: pointer;
+}
+#story .buttons .btn-evidence:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-evidence:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 #story .wrapper {
   position: absolute;

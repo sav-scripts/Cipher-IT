@@ -110,7 +110,7 @@
 
     </div>
 
-    <div id="logo hide-mode">
+    <div id="logo" class="hide-mode">
 
         <div class="logo-bottom"></div>
     </div>
@@ -156,29 +156,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/lib/jquery.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script src="js/lib/jquery.1.11.3.min.js"><\/script>')</script>
+
+    <script src="js/lib/pep.min.js"></script>
     <script src="js/lib/jquery.waitforimages.min.js"></script>
     <script src="js/lib/jquery.mousewheel.min.js"></script>
+    <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
 
     <script src="js/lib/createjs-2015.11.26.min.js"></script>
     <script src="form_Canvas.js"></script>
 
+    <script src="../editor/js/lib/babylon.2.4.max.js"></script>
+
 
     <!-- build:js js/optimized.js -->
+    <script src="js/lib/modernizr-custom.js"></script>
     <script src="js/lib/FBHelper.1.0.2.js"></script>
     <script src="js/lib/FormHelper.0.0.5.js"></script>
     <script src="js/lib/Helper.1.0.2.js"></script>
     <script src="js/lib/SceneHandler.1.0.5.js"></script>
+    <script src="js/lib/Logger.js"></script>
     <script src="js/ApiProxy.js"></script>
     <script src="js/lib/Utility.0.0.14.js"></script>
     <script src="js/lib/ScalableContent.1.0.0.js"></script>
-    <script src="js/Wave2Main.js"></script>
+    <script src="js/Phase2Main.js"></script>
     <script src="js/UI.js"></script>
     <script src="js/LandingPage.js"></script>
     <script src="js/Intro.js"></script>
     <script src="js/Story.js"></script>
+    <script src="js/StoryScene.js"></script>
     <script src="js/Participate.js"></script>
     <script src="js/ParticipateRule.js"></script>
+    <script src="js/CustomCamera.js"></script>
+    <script src="../editor/js/DataManager.js"></script>
+    <script src="../editor/js/ShaderLoader.js"></script>
+    <script src="../editor/js/MaterialLib.js"></script>
+    <script src="../editor/js/PostProcessLib.js"></script>
+    <script src="../editor/js/ShapeEditor.js"></script>
+    <script src="../editor/js/BillboardEditor.js"></script>
+    <script src="../editor/js/LightEditor.js"></script>
+    <script src="../editor/js/Tools.js"></script>
+    <script src="../editor/js/lib/FileSaver.min.js"></script>
+    <script src="../editor/js/lib/pnltri.js"></script>
+    <script src="../editor/js/lib/jszip.js"></script>
+    <script src="../editor/js/lib/jszip-utils.min.js"></script>
     <!-- endbuild -->
 
 </body>

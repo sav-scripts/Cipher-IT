@@ -24,10 +24,9 @@
         container: null,
         nodeContainer: null,
 
-        init: function(scene)
+        init: function(scene, noEdit)
         {
             _scene = scene;
-
 
             this.container = new BABYLON.Mesh("light container", _scene);
             this.container.isPickable = false;
@@ -39,27 +38,30 @@
             this.lightNodeSample = Tools.createNodeSample(scene, new BABYLON.Color3.Yellow(), 5, null, 'sphere');
             this.lightNodeSample.renderingGroupId = 3;
 
-            setupGUI();
-
-            //this.createLight(new BABYLON.Vector3(-150, 0, 20), false);
-            //createLightAt(new BABYLON.Vector3(0, 50, -50));
-
-            KeyboardControl.add("LightEditor complete", KeyCodeDic.space,
+            if(!noEdit)
             {
-                onKeyUp: function()
-                {
-                    if(_isEditModeOn && _editingObject)
+                setupGUI();
+
+                //this.createLight(new BABYLON.Vector3(-150, 0, 20), false);
+                //createLightAt(new BABYLON.Vector3(0, 50, -50));
+
+                KeyboardControl.add("LightEditor complete", KeyCodeDic.space,
                     {
-                        self.completeEdit();
-                    }
-                }
-            }).add("LightEditor delete", KeyCodeDic.delete,
-            {
-                onKeyDown: function()
-                {
-                    if(_isEnabled) self.deleteEditingObject();
-                }
-            });
+                        onKeyUp: function()
+                        {
+                            if(_isEditModeOn && _editingObject)
+                            {
+                                self.completeEdit();
+                            }
+                        }
+                    }).add("LightEditor delete", KeyCodeDic.delete,
+                    {
+                        onKeyDown: function()
+                        {
+                            if(_isEnabled) self.deleteEditingObject();
+                        }
+                    });
+            }
         },
 
         enable: function()

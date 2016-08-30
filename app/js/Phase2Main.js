@@ -46,9 +46,11 @@
                 history.scrollRestoration = 'manual';
             }
 
+            if(Modernizr.touchevents && Utility.urlParams.debug == '1') Logger.init(true).show();
+
             ScalableContent.init([640, 1920]);
             ScalableContent.enableFixFullImage = false;
-            ScalableContent.enableDrawBounds = true;
+            ScalableContent.enableDrawBounds = Utility.urlParams.drawbound == '1';
 
             if(Utility.urlParams.skipLaw == '1') self.settings.isBirthValided = true;
 
@@ -57,11 +59,6 @@
             window._CLICK_ = (self.settings.isiOS)? "touchend": "click";
 
             Menu.init();
-
-            //ApiProxy.callApi("get_event_data", null, null, function(response)
-            //{
-            //    console.log(response);
-            //});
 
             startApp();
 
@@ -73,6 +70,12 @@
                     listeningHashChange: true,
                     loadingClass: Loading,
                     version: new Date().getTime(),
+
+                    cbBeforeChange: function()
+                    {
+                        Menu.close();
+                    },
+
                     hashChangeTester: function(hashName)
                     {
                         if(!self.settings.isBirthValided && hashName != "/LandingPage")
@@ -82,20 +85,6 @@
 
                             return null;
                         }
-
-                        //if(hashName == "/SerialInput")
-                        //{
-                        //    if(new Date().getTime() > self.settings.deadTime)
-                        //    {
-                        //        //console.log("is end");
-                        //        alert("活動已結束，感謝您的參與");
-                        //
-                        //        hashName = null; // cancel content change
-                        //        SceneHandler.setHash('/Index');
-                        //
-                        //        return null;
-                        //    }
-                        //}
 
 
                         return hashName;
@@ -144,8 +133,9 @@
         }
 
         var $dom = $("#scene-container");
-
         ScalableContent.updateView($dom.width(), $dom.height());
+
+        //ScalableContent.updateView(width, height);
     }
 
 }());

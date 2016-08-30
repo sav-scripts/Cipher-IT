@@ -41,7 +41,7 @@
 
                 return _p;
             },
-            hide: function()
+            hide: function(cb)
             {
                 if(!_isInit) init();
 
@@ -51,7 +51,7 @@
                 if(window.TweenMax)
                 {
                     TweenMax.killTweensOf(_container);
-                    TweenMax.to(_container,.3, {opacity: 0, onComplete: removeSelf});
+                    TweenMax.to(_container,.5, {opacity: 0, onComplete: removeSelf});
                 }
                 else
                 {
@@ -62,6 +62,8 @@
                 {
                     if(_container.parentNode) _container.parentNode.removeChild(_container);
                     clearTimeout(_timeout);
+
+                    if(cb) cb.call();
                 }
 
                 return _p;

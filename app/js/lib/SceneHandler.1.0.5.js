@@ -408,7 +408,7 @@
     }
 
 
-    _p.loadTemplate = function(imageSetting, templates, cb)
+    _p.loadTemplate = function(imageSetting, templates, cb, keepLoading)
     {
         if(_Loading) _Loading.show();
 
@@ -472,7 +472,7 @@
                 index ++;
                 if(index >= templates.length)
                 {
-                    if(_Loading) _Loading.hide();
+                    if(_Loading && !keepLoading) _Loading.hide();
                     cb.apply(null);
                 }
                 else loadOne(index);
