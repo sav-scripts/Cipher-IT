@@ -135,7 +135,7 @@
 
                     if(_editingObject._mesh) _editingObject._mesh.isPickable = false;
 
-                    _editorObjectDic[_editingObject.getSerial()] = _editingObject;
+                    _editorObjectDic[_editingObject._serial] = _editingObject;
 
                     //updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
                     updateGUIItems(_editingObject);
@@ -168,7 +168,7 @@
                     {
                         _editingObject.clear();
                         _editorObjectCache.push(_editingObject);
-                        delete _editorObjectDic[_editingObject.getSerial()];
+                        delete _editorObjectDic[_editingObject._serial];
                     }
 
                 }
@@ -217,27 +217,48 @@
                 if(_editingObject._mesh) _editingObject._mesh.isPickable = true;
                 _editingObject.setEnabled(false);
 
-                //if(putEditingObjectIntoCache)
                 if(_editingObject._points.length < 3)
                 {
                     _editorObjectCache.push(_editingObject);
-                    delete _editorObjectDic[_editingObject.getSerial()];
+                    delete _editorObjectDic[_editingObject._serial];
                 }
 
                 _editingObject = null;
             }
 
-            //var key, object;
-            //for(key in _editorObjectDic)
-            //{
-            //    object = _editorObjectDic[key];
-            //    if(object._mesh) object._mesh.isPickable = true;
-            //}
-
             updateGUIItems();
             updateFolderLabel(_hintText);
 
             self.update();
+        },
+
+        triggerChangeName: function()
+        {
+            if(_editingObject)
+            {
+                var newName = prompt("請輸入新的名稱", _editingObject._name);
+                if(newName !== null && newName !== '')
+                {
+                    var check = false;
+                    for(var key in _editorObjectDic)
+                    {
+                        var eo = _editorObjectDic[key];
+                        if(eo._name === newName)
+                        {
+                            alert("這個名稱已經被使用了");
+                            check = true;
+                            break;
+                        }
+                    }
+
+                    if(!check)
+                    {
+                        _editingObject._name = newName;
+                        updateEditingObjectLabel();
+                    }
+                }
+                //console.log("newName = " + newName);
+            }
         },
 
         update: function()
@@ -343,7 +364,7 @@
         {
             self.clearAll();
 
-            //return;
+            if(!dataArray) dataArray = [];
 
             _serial = 0;
             var i, k, obj;
@@ -363,7 +384,7 @@
 
                 //continue;
 
-                var newObj = _editorObjectDic[serial] = new ShapeObject(serial, _scene, obj.renderingOrder);
+                var newObj = _editorObjectDic[serial] = new ShapeObject(serial, _scene, obj.renderingOrder, obj.name);
 
                 for(k=0;k<numPoints;k++)
                 {
@@ -413,10 +434,11 @@
 
         if(editingObject)
         {
-            updateFolderLabel("編輯中形狀: #" + _editingObject._serial);
+            updateEditingObjectLabel();
 
             _guiItems =
             {
+                name: _guiFolder.add(self, "triggerChangeName").name("改變名稱"),
                 renderingOrder: _guiFolder.add(_editingObject, "_renderingOrder")
             };
 
@@ -434,6 +456,11 @@
             _guiFolder.open();
         }
     }
+    
+    function updateEditingObjectLabel()
+    {
+        updateFolderLabel("編輯中形狀: " + _editingObject._name);
+    }
 
     function updateFolderLabel(hintText)
     {
@@ -446,9 +473,10 @@
 
     window.ShapeObject = ShapeObject;
 
-    function ShapeObject(serial, scene, renderingOrder)
+    function ShapeObject(serial, scene, renderingOrder, name)
     {
         this._serial = serial;
+        this._name = name || ("#"+this._serial);
         this._scene = scene;
 
         this._renderingOrder = renderingOrder === undefined? 0: renderingOrder;
@@ -464,6 +492,9 @@
     ShapeObject.prototype =
     {
         _scene: null,
+
+        _serial: 0,
+        _name: null,
 
         _points: null,
         _uvs: null,
@@ -488,9 +519,7 @@
         _isEnabled: false,
 
         _mesh: null,
-
-        _serial: 0,
-        getSerial: function(){ return this._serial },
+        
 
         toString: function()
         {
@@ -797,6 +826,7 @@
                 data:
                 {
                     serial: this._serial,
+                    name: this._name,
                     vertices: this._meshVertices,
                     uvs: this._meshUVs,
                     renderingOrder: this._renderingOrder

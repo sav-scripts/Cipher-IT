@@ -18,6 +18,7 @@
         _editorObjectDic = {},
 
         $imageInput = null,
+        $lightImageInput = null,
 
         _isEnabled = false;
 
@@ -140,6 +141,7 @@
             if(!_editingObject) return;
 
             _editingObject.updatePosition(targetPosition);
+            self.updateEditingObjectLabel();
         },
 
         _changeEditTarget: function(targetObject)
@@ -169,10 +171,81 @@
             updateFolderLabel(_hintText);
         },
 
+        triggerChangeName: function()
+        {
+            if(_editingObject)
+            {
+                var newName = prompt("請輸入新的名稱", _editingObject._name);
+                if(newName !== null && newName !== '')
+                {
+                    var check = false;
+                    for(var key in _editorObjectDic)
+                    {
+                        var eo = _editorObjectDic[key];
+                        if(eo._name === newName)
+                        {
+                            alert("這個名稱已經被使用了");
+                            check = true;
+                            break;
+                        }
+                    }
+
+                    if(!check)
+                    {
+                        _editingObject._name = newName;
+                        updateEditingObjectLabel();
+                    }
+                }
+                //console.log("newName = " + newName);
+            }
+        },
+
         triggerChangeImage: function()
         {
             $imageInput[0].value = null;
             $imageInput[0].click();
+        },
+
+        triggerChangeLightImage: function()
+        {
+            $lightImageInput[0].value = null;
+            $lightImageInput[0].click();
+        },
+
+        triggerDeleteLightImage: function()
+        {
+            if(_editingObject) _editingObject.removeLightImage();
+            updateGUIItems();
+        },
+
+        changeLinkedLight: function()
+        {
+
+            if(_editingObject)
+            {
+                var newName = prompt("請輸入 Light 物件的名稱");
+                if(newName !== null && newName !== '')
+                {
+                    _editingObject._linkedLight = newName;
+                }
+                else
+                {
+                    _editingObject._linkedLight = null;
+                }
+
+                this.updateAllVisibility();
+
+                updateGUIItems();
+                //console.log("newName = " + newName);
+            }
+        },
+
+        updateAllVisibility: function()
+        {
+            for(var key in _editorObjectDic)
+            {
+                _editorObjectDic[key].updateVisibility();
+            }
         },
 
         deleteEditingObject: function()
@@ -201,6 +274,8 @@
             self._editModeOff();
         },
 
+        updateEditingObjectLabel: updateEditingObjectLabel,
+
         clearAll: function()
         {
             var key, obj;
@@ -217,25 +292,30 @@
 
         getExportData: function()
         {
-            var key, out, dataArray = [], imageArray = [];
+            var key, out, dataArray = [], imageArray = [], lightImageArray = [];
 
             for(key in _editorObjectDic)
             {
-                if(_editorObjectDic[key]._imageSrc)
+                var eo = _editorObjectDic[key];
+                if(eo._imageSrc)
                 {
-                    out = _editorObjectDic[key].getExportData();
+                    out = eo.getExportData();
                     dataArray.push(out.data);
                     imageArray.push(out.image);
+
+                    if(out.lightImage) lightImageArray.push(out.lightImage);
                 }
             }
 
 
-            return {dataArray:dataArray, imageArray: imageArray};
+            return {dataArray:dataArray, imageArray: imageArray, lightImageArray: lightImageArray};
         },
 
         applyImportData: function(dataArray, imageDic)
         {
             self.clearAll();
+
+            if(!dataArray) dataArray = [];
 
             _serial = 0;
             var i, obj;
@@ -243,16 +323,19 @@
             {
                 obj = dataArray[i];
 
-                var serial =obj.serial,
-                    imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
-                    imageHead = obj.imageDataHead,
-                    imageSrc = imageHead + imageDic[imagePath];
+                //var serial =obj.serial,
+                //    imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
+                //    imageHead = obj.imageDataHead,
+                //    imageSrc = imageHead + imageDic[imagePath];
 
                 //console.log(imageSrc);
 
-                _editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY, obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder);
+                var newObject = _editorObjectDic[obj.serial] = BillboardObject.CreateFromData(_scene, imageDic, obj);
 
-                _serial = Math.max(_serial, serial);
+                //_editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY,
+                //    obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder, obj.name);
+
+                _serial = Math.max(_serial, newObject._serial);
 
             }
 
@@ -276,12 +359,21 @@
     function setupImageInput()
     {
         $imageInput = $("#billboard-image-input");
+        $lightImageInput = $("#billboard-light-image-input");
 
         Tools.setupImageInput($imageInput[0], function(imageSrcBase64)
         {
             if(_editingObject)
             {
-                _editingObject.changeImage(imageSrcBase64, true);
+                _editingObject.changeImage(imageSrcBase64, true, updateGUIItems);
+            }
+        });
+
+        Tools.setupImageInput($lightImageInput[0], function(imageSrcBase64)
+        {
+            if(_editingObject)
+            {
+                _editingObject.changeLightImage(imageSrcBase64, true, updateGUIItems);
             }
         });
     }
@@ -291,25 +383,21 @@
 
         if(_guiItems)
         {
-            _guiItems.offsetX.remove();
-            _guiItems.offsetY.remove();
-            _guiItems.radius.remove();
-            _guiItems.scale.remove();
-            _guiItems.billboardMode.remove();
-            _guiItems.changeImageBuggon.remove();
-            _guiItems.deleteButton.remove();
-            _guiItems.completeButton.remove();
-            _guiItems.renderingOrder.remove();
+            for(var key in _guiItems)
+            {
+                _guiItems[key].remove();
+            }
 
             _guiItems = null;
         }
 
         if(_editingObject)
         {
-            updateFolderLabel("編輯目標: #" + _editingObject._serial);
+            updateEditingObjectLabel();
 
             _guiItems =
             {
+                name: _guiFolder.add(self, "triggerChangeName").name("改變名稱"),
                 offsetX: _guiFolder.add(_editingObject, "_offsetX"),
                 offsetY: _guiFolder.add(_editingObject, "_offsetY"),
                 radius: _guiFolder.add(_editingObject, "_radius"),
@@ -334,6 +422,7 @@
             _guiItems.radius.onChange(function()
             {
                 _editingObject.updatePosition();
+                self.updateEditingObjectLabel();
             });
 
             _guiItems.renderingOrder = _guiItems.renderingOrder.min(-10).max(10).step(1).name("圖層深度");
@@ -350,7 +439,43 @@
                 _editingObject.updateBillboardMode();
             });
 
-            _guiItems.changeImageBuggon = _guiFolder.add(self, "triggerChangeImage").name("改變圖片");
+            _guiItems.changeImageButton = _guiFolder.add(self, "triggerChangeImage").name("改變圖片");
+
+
+            _guiItems.emissiveColor =  _guiFolder.addColor(_editingObject, "_emissiveColor").name('自體發光顏色').onChange(function()
+            {
+                _editingObject.updateEmissiveColor.call(_editingObject);
+            });
+
+            if(_editingObject._lightImageSrc)
+            {
+                _guiItems.changeLightImageButton = _guiFolder.add(self, "triggerChangeLightImage").name("改變高光圖片");
+                _guiItems.deleteLightImageButton = _guiFolder.add(self, "triggerDeleteLightImage").name("移除高光圖片");
+            }
+            else
+            {
+                _guiItems.changeLightImageButton = _guiFolder.add(self, "triggerChangeLightImage").name("設定高光圖片");
+            }
+
+            var lightNames = LightEditor.getLightNames();
+            lightNames.unshift(null);
+
+            _guiItems.changeLinkedLight = _guiFolder.add(_editingObject, "_linkedLight", lightNames).name("透明度關聯 Light").onChange(function()
+            {
+                _editingObject.updateVisibility.call(_editingObject);
+            });
+
+            /*
+            if(_editingObject._linkedLight)
+            {
+                _guiItems.changeLinkedLight = _guiFolder.add(self, "changeLinkedLight").name("改變透明度關聯Light");
+            }
+            else
+            {
+                _guiItems.changeLinkedLight = _guiFolder.add(self, "changeLinkedLight").name("設定透明度關聯Light");
+            }
+            */
+
             _guiItems.deleteButton = _guiFolder.add(self, "deleteEditingObject").name("刪除 (Delete)");
             _guiItems.completeButton = _guiFolder.add(self, "completeEdit").name("完成 (SPACEBAR)");
 
@@ -374,9 +499,19 @@
     //    _editorObjectDic[_serial] = new BillboardObject(_serial, _scene, new BABYLON.Vector3(x, y, z), _sceneSize, scale, imageSrc);
     //}
 
+    function updateEditingObjectLabel()
+    {
+        var p = _editingObject._targetPosition,
+            x = parseInt(p.x),
+            y = parseInt(p.y),
+            z = parseInt(p.z);
+        updateFolderLabel("Billboard: " + _editingObject._name + " at (" + x + ", " + y + ", " + z + ")");
+    }
+
     function updateFolderLabel(label)
     {
         _gui.resetFolderLabel(_guiFolder.name, label);
+
     }
 
 }());
@@ -387,14 +522,41 @@
 
     window.BillboardObject = BillboardObject;
 
+    BillboardObject.CreateFromData = function(scene, imageDic, obj)
+    {
+        var serial =obj.serial,
+            imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
+            imageHead = obj.imageDataHead,
+            imageSrc = imageHead + imageDic[imagePath],
+            lightImagePath,
+            lightImageHead,
+            lightImageSrc;
+
+        if(obj.lightImage)
+        {
+            lightImagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.lightImage;
+            lightImageHead = obj.lightImageDataHead;
+            lightImageSrc = lightImageHead + imageDic[lightImagePath];
+        }
+
+        //console.log(imageSrc);
+
+        return new BillboardObject(serial, scene, new BABYLON.Vector3(obj.targetX, obj.targetY,
+            obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder, lightImageSrc, true, obj.name, obj.linkedLight, obj.emissiveColor);
+    };
+
     BillboardObject.sceneSize = 200;
 
-    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, isDataUrl, offsetX, offsetY, renderingOrder)
+    function BillboardObject(serial, scene, targetVector, radius, scale, imageSrc, imageIsDataUrl, offsetX, offsetY, renderingOrder, lightImageSrc, lightImageIsDataUrl, name, linkedLight, emissiveColor)
     {
         var self = this;
 
         this._scene = scene;
         this._serial = serial;
+        this._name = name || ("#" + this._serial);
+        this._emissiveColor = emissiveColor || {r: 128, g: 128, b: 128};
+
+        this._linkedLight = linkedLight || null;
 
         this._scale = scale || 1;
 
@@ -420,7 +582,13 @@
 
 
         var material = self._material = new BABYLON.StandardMaterial("material1", scene);
-        material.emissiveColor = new BABYLON.Color3(1,1,1);
+
+        //material.bumpTexture = new BABYLON.Texture('textures/char_normalmap.png', self._scene, false, true, null);
+
+        //material.specularTexture = new BABYLON.Texture('textures/char_lightmap.png', self._scene, false, true, null);
+        //material.specularColor = BABYLON.Color3.Black();
+
+        material.specularColor = BABYLON.Color3.Black();
 
         material.backFaceCulling = false;
 
@@ -434,12 +602,14 @@
         this._targetNode._editSerial = this._serial;
 
         self.updatePosition(targetVector, radius);
+        self.updateEmissiveColor();
 
         this._targetNode.actionManager = new BABYLON.ActionManager(scene);
         this._targetNode.actionManager.registerAction(new BABYLON.Action(BABYLON.ActionManager.OnPointerOverTrigger));
 
 
-        if(imageSrc) self.changeImage(imageSrc, isDataUrl);
+        if(imageSrc) self.changeImage(imageSrc, imageIsDataUrl);
+        if(lightImageSrc) self.changeLightImage(lightImageSrc, lightImageIsDataUrl);
     }
 
     BillboardObject.prototype =
@@ -447,15 +617,28 @@
         _scene: null,
 
         _serial: 0,
+        _name: null,
 
         _mesh: null,
 
+
+        _imageSrc: null,
+        _imageIsDataUrl : false,
         _texture: null,
+
+        _lightImageSrc: null,
+        _lightImageIsDataUrl : false,
+        _lightTexture: null,
+
         _material: null,
 
         _scale: 1,
         _imageWidth: 0,
         _imageHeight: 0,
+
+        _linkedLight: null,
+
+        _emissiveLight:.5,
 
         _renderingOrder: 0,
         updateRenderingOrder: function()
@@ -481,8 +664,9 @@
         _targetPosition: null,
         _centerPosition: null,
 
-        _imageSrc: null,
-        _imageIsDataUrl : false,
+        //_visibility:.99999,
+
+        _emissiveColor: {r: 128, g: 128, b: 128},
 
         _isDisposed: false,
 
@@ -521,7 +705,63 @@
             }
         },
 
-        changeImage: function(imageSrc, isDataURL)
+        changeLightImage: function(imageSrc, isDataURL, onComplete)
+        {
+            var self = this;
+
+            if(this._lightTexture)
+            {
+                this._lightTexture.dispose();
+                this._lightTexture = null;
+            }
+
+            this._lightImageSrc = imageSrc;
+            this._lightImageIsDataUrl = Boolean(isDataURL);
+
+
+            var texture;
+
+            if(isDataURL)
+            {
+                // BABYLON.Texture.TRILINEAR_SAMPLINGMODE make more smooth result when texture scaled down
+                //texture = self._texture = new BABYLON.Texture("data:billboard-" + self._serial + "-" + new Date().getTime(), self._scene, false, true, BABYLON.Texture.TRILINEAR_SAMPLINGMODE, onload, null, imageSrc, true);
+
+                texture = new BABYLON.Texture("data:billboard-light-" + self._serial + "-" + new Date().getTime(), self._scene, false, true, null, onload, null, imageSrc, true);
+            }
+            else
+            {
+                texture = new BABYLON.Texture(imageSrc, self._scene, false, true, null, onload);
+            }
+
+            function onload()
+            {
+                if(self._isDisposed) return;
+
+                //var size = texture.getBaseSize();
+                //self._imageWidth = size.width;
+                //self._imageHeight = size.height;
+
+                self._lightTexture = texture;
+
+                self._material.specularTexture = texture;
+
+                if(onComplete) onComplete.call();
+            }
+        },
+
+        removeLightImage: function()
+        {
+            this._lightImageSrc = null;
+
+            if(this._lightTexture)
+            {
+                this._material.specularTexture = null;
+                this._lightTexture.dispose();
+                this._lightTexture = null;
+            }
+        },
+
+        changeImage: function(imageSrc, isDataURL, onComplete)
         {
             var self = this;
 
@@ -566,8 +806,34 @@
 
                 self._updateGeom();
 
-                self._mesh.visibility = .99999;
+                self.updateVisibility();
+
+                if(onComplete) onComplete.call();
             }
+        },
+
+        updateEmissiveColor: function()
+        {
+            var c = this._emissiveColor;
+            if(this._material)
+            {
+                this._material.emissiveColor = new BABYLON.Color3(c.r/255, c.g/255, c.b/255);
+            }
+        },
+
+        updateVisibility: function()
+        {
+            var v = 1;
+            if(this._linkedLight)
+            {
+                var light = LightEditor.find(this._linkedLight);
+                if(light) v = light._intensity;
+            }
+
+            if(v >= 1) v = .99999;
+
+
+            if(this._mesh) this._mesh.visibility = v;
         },
 
         updatePosition: function(targetVector, radius)
@@ -678,14 +944,16 @@
 
         getExportData: function()
         {
-            var imageName = "billboard."+this._serial+".png";
+            var imageName = "billboard."+this._serial+".png",
+                obj = ImageObject.HandleImageSrc(this._imageSrc, this._imageIsDataUrl);
 
-            var obj = ImageObject.HandleImageSrc(this._imageSrc, this._imageIsDataUrl);
-
-            return {
+            var res = {
                 data:
                 {
                     serial: this._serial,
+                    name: this._name,
+                    linkedLight: this._linkedLight,
+                    emissiveColor: this._emissiveColor,
                     offsetX: this._offsetX,
                     offsetY: this._offsetY,
                     radius: this._radius,
@@ -699,6 +967,18 @@
                 },
                 image: new ImageObject(imageName, DataManager.BILLBOARD_FOLDER_PATH, obj.imageSrc, this._imageIsDataUrl, obj.imageHead)
             };
+
+            if(this._lightImageSrc)
+            {
+                imageName = "billboard.lightmap." + this._serial + ".png";
+                obj = ImageObject.HandleImageSrc(this._lightImageSrc, this._lightImageIsDataUrl);
+
+                res.data.lightImage = imageName;
+                res.data.lightImageDataHead = obj.imageHead;
+                res.lightImage = new ImageObject(imageName, DataManager.BILLBOARD_FOLDER_PATH, obj.imageSrc, this._lightImageIsDataUrl, obj.imageHead);
+            }
+
+            return res;
 
         }
 

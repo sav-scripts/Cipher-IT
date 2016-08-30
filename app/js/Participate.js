@@ -3,7 +3,6 @@
     var $doms = {},
         _dateCombo,
         _eventData,
-        _isDataSent = false,
         _isInit = false;
 
     var self = window.Participate =
@@ -14,7 +13,17 @@
             function execute(isFromLoad)
             {
                 if (isFromLoad && options.cbContentLoaded) options.cbContentLoaded.call();
-                show(cb);
+                show(function()
+                {
+                    if(options.contentHash)
+                    {
+                        self.toContent(options.contentHash, cb);
+                    }
+                    else
+                    {
+                        cb.call();
+                    }
+                });
             }
 
             function loadAndBuild(cb)
@@ -45,13 +54,15 @@
             hide(cb);
         },
 
-        toContent: function(contentName)
+        toContent: function(contentHash, cb)
         {
             if(!_isInit) return;
 
-            var $content = $doms[contentName];
+            if(!contentHash) contentHash = "/Logo";
+
+            var $content = $doms[contentHash];
             var targetTop = $content.offset().top;
-            TweenLite.to(window,.8, {scrollTo: targetTop, ease:Power1.easeInOut});
+            TweenLite.to(window,.8, {scrollTo: targetTop, ease:Power1.easeInOut, onComplete: cb});
         },
 
         resize: function ()
@@ -77,13 +88,14 @@
 
         $doms.topBar = $doms.container.find(".top-bar");
 
-        $doms.part1 = $doms.container.find(".part-1");
-        $doms.part2 = $doms.container.find(".part-2");
-        $doms.part3 = $doms.container.find(".part-3");
+        $doms['/Logo'] = $doms.container.find(".part-1");
+        $doms['/Product'] = $doms.container.find(".part-2");
+        $doms['/Form'] = $doms.container.find(".part-3");
 
         $doms.arrowDown = $doms.container.find(".arrow-down").on(_CLICK_, function()
         {
-            self.toContent('part2');
+            //self.toContent('/Product');
+            SceneHandler.toHash("/Participate/Product");
         });
 
         $doms.year = $doms.container.find("#select-year");

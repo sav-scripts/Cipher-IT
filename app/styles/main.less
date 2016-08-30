@@ -6,6 +6,8 @@
 @background-color: black;
 
 @pc-width: 1024px;
+@pc-height: 600px;
+
 @mobile-width: 640px;
 
 
@@ -91,6 +93,15 @@ body{
     }
 }
 
+
+@media (max-height: @pc-height) {
+    body{
+        overflow-y: auto;
+    }
+    #scene-container{
+        height: @pc-height;
+    }
+}
 
 @media (max-width: @mobile-width) {
     body{
@@ -927,3 +938,6 @@ body{
 
 
 @import "main.mobile.less";
+
+
+@import "wave2-main.less";

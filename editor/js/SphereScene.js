@@ -67,9 +67,10 @@
         _toolIndexTemp: 0,
         _toolList:
         {
-            "none": 0,
+            "檢視": 0,
             "shape":1,
-            "billboard":2
+            "billboard":2,
+            "light": 3
         },
 
         _shapeDisplaying: true,
@@ -99,6 +100,7 @@
 
             ShapeEditor.init(_scene);
             BillboardEditor.init(_scene, SCENE_SIZE);
+            LightEditor.init(_scene);
 
             self.setTool(self._firstToolIndex);
 
@@ -178,6 +180,10 @@
                                 {
                                     ShapeEditor.editAtPoint(backgrounPickinfo.pickedPoint, backgrounPickinfo.getTextureCoordinates());
                                 }
+                                else if(self._toolIndex == 3)
+                                {
+                                    LightEditor.createLight(backgrounPickinfo.pickedPoint, true);
+                                }
                             }
                         }
                         else
@@ -200,8 +206,9 @@
 
                                 var objectPickinfo = scene.pick(event.clientX, event.clientY, function(mesh)
                                 {
-                                    return (mesh.isPickable && (mesh.name == 'billboard' || mesh.name == 'shape'));
+                                    return (mesh.isPickable && (mesh.name == 'billboard' || mesh.name == 'shape' || mesh.name == 'lightNode'));
                                 });
+
 
                                 var pickedMesh = objectPickinfo.pickedMesh;
 
@@ -216,6 +223,11 @@
                                     {
                                         self.setTool(1);
                                         ShapeEditor.edit(pickedMesh._editSerial);
+                                    }
+                                    else if(pickedMesh.name == 'lightNode')
+                                    {
+                                        self.setTool(3);
+                                        LightEditor.edit(pickedMesh._editSerial);
                                     }
                                 }
                             }
@@ -398,19 +410,30 @@
             {
                 BillboardEditor.disable();
             }
+            else if(oldIndex == 3)
+            {
+                LightEditor.disable();
+            }
 
             if(self._toolIndex == 0)
             {
                 //_arcCamera.attachControl(_canvas, true, false);
+                LightEditor.nodeContainer.setEnabled(false);
             }
             if(self._toolIndex == 1)
             {
                 ShapeEditor.enable();
-
+                LightEditor.nodeContainer.setEnabled(true);
             }
             else if(self._toolIndex == 2)
             {
                 BillboardEditor.enable();
+                LightEditor.nodeContainer.setEnabled(true);
+            }
+            else if(self._toolIndex == 3)
+            {
+                LightEditor.enable();
+                LightEditor.nodeContainer.setEnabled(true);
             }
         },
 

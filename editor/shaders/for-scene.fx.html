@@ -37,6 +37,9 @@
         const float MOTION_BLUR_POWER = .3;
         const float MOTION_BLUR_POWERx2 = MOTION_BLUR_POWER * 2.;
 
+        const float NOISE_POWER = .5;
+        const float COLOR_BALANCE = 1. / (NOISE_POWER*.5 + 1.);
+
         varying vec2 vUV;
 //        varying float vTime;
 
@@ -97,13 +100,12 @@
             //if(gl_FragColor.x < .8) return;
 
 //            float noiseFactor = (gl_FragColor.r + gl_FragColor.g + gl_FragColor.b) / 3. * .5;
-            float noiseFactor = .5;
 
-            float r2 = rand(vUV*time) * noiseFactor;
+            float r2 = rand(vUV*time) * NOISE_POWER;
 
             //if(r2 > .5) r2 = .0;
 
-            gl_FragColor.xyz *= 1. + r2;
+            gl_FragColor.xyz *= (1. + r2) * COLOR_BALANCE;
         }
 
 

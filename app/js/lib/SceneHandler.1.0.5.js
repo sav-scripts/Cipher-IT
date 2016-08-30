@@ -72,12 +72,34 @@
         for(i=0;i<scenes.length;i++)
         {
             hash = scenes[i];
-            obj = {hash:hash, index:i, stageClass: window[hash.replace("/", "")]};
 
-            if(!obj.stageClass)
+
+            var array = hash.split("/"),
+                stageClassName = array[1],
+                contentHash;
+
+            if(array.length == 2)
             {
-                console.error("class for: "+hash+" is not exist");
             }
+            else if(array.length == 3)
+            {
+                contentHash = "/" + array[2];
+            }
+            else
+            {
+                console.error("illegal hash: " + hash);
+                continue;
+            }
+
+            if(!window[stageClassName])
+            {
+                console.error("class for: "+stageClassName+" is not exist");
+                continue;
+            }
+
+            //console.log("contentHash: " + contentHash);
+
+            obj = {hash:hash, index:i, stageClass: window[stageClassName], contentHash: contentHash};
 
             _hashDic[hash] = obj;
         }
@@ -231,10 +253,6 @@
     {
         if(!hashName) hashName = _defaultHash;
 
-
-
-
-
         if(_listeningHashChange)
         {
             if(_p.getHash() != hashName)
@@ -257,11 +275,12 @@
         if(_isPlaying) return;
 
 
-
         if(hashName == "") hashName = _defaultHash;
         if(_currentHash == hashName) return;
 
+
         var targetObj, currentObj;
+
 
         if(!options) options = {};
         options.firstIn = false;
@@ -281,6 +300,10 @@
             _currentHash = hashName;
             targetObj = _hashDic[hashName];
 
+            options.contentHash = targetObj.contentHash;
+
+            //console.log("target contentHash: " + targetObj.contentHash);
+
             _p.currentScene = targetObj.stageClass;
 
             if(!_p.currentScene._isPopup) _lastNonPopupHash = _currentHash;
@@ -295,59 +318,80 @@
             currentObj = _hashDic[_currentHash];
             targetObj = _hashDic[hashName];
 
-            _p.currentScene = targetObj.stageClass;
-
             _lastHash = _currentHash;
             _currentHash = hashName;
 
-            var currentClass = currentObj.stageClass,
-                targetClass = targetObj.stageClass,
-                oldNonPopupHash = _lastNonPopupHash;
+            //console.log(currentObj.contentHash);
+            //console.log(targetObj.contentHash);
 
-            if(!_p.currentScene._isPopup) _lastNonPopupHash = _currentHash;
-
-
-            //console.log(!currentClass);
-            //console.log(targetClass);
-
-            if(currentClass._isPopup == true && !targetClass._isPopup)
+            if(currentObj.stageClass === targetObj.stageClass && targetObj.contentHash !== currentObj.contentHash)
             {
-                if(oldNonPopupHash && oldNonPopupHash !== _currentHash)
+                //console.log("check");
+                currentObj.stageClass.toContent(targetObj.contentHash, function()
                 {
-                    currentClass.hide();
+                    toContentComplete();
+                });
+            }
+            else
+            {
+                //console.error("unexpected error");
+                //return;
 
-                    _hashDic[oldNonPopupHash].stageClass.stageOut(options, function()
+                _p.currentScene = targetObj.stageClass;
+
+                var currentClass = currentObj.stageClass,
+                    targetClass = targetObj.stageClass,
+                    oldNonPopupHash = _lastNonPopupHash;
+
+                options.contentHash = targetObj.contentHash;
+
+                if(!_p.currentScene._isPopup) _lastNonPopupHash = _currentHash;
+
+                //console.log(!currentClass);
+                //console.log(targetClass);
+
+                if(currentClass._isPopup == true && !targetClass._isPopup)
+                {
+                    if(oldNonPopupHash && oldNonPopupHash !== _currentHash)
                     {
-                        targetObj.stageClass.stageIn(options, toContentComplete);
-                    });
+                        currentClass.hide();
+
+
+                        _hashDic[oldNonPopupHash].stageClass.stageOut(options, function()
+                        {
+                            targetObj.stageClass.stageIn(options, toContentComplete);
+                        });
+
+                    }
+                    else
+                    {
+                        currentClass.hide(toContentComplete);
+                    }
+                }
+                else if(!currentClass._isPopup && targetClass._isPopup == true)
+                {
+                    targetClass.show(toContentComplete);
+                }
+                else if(currentClass._isPopup == true && targetClass._isPopup == true)
+                {
+                    //currentClass.hide(function()
+                    //{
+                    //    targetClass.show(toContentComplete);
+                    //});
+                    currentClass.hide();
+                    targetClass.show(toContentComplete);
 
                 }
                 else
                 {
-                    currentClass.hide(toContentComplete);
+                    currentObj.stageClass.stageOut(options, function()
+                    {
+                        targetObj.stageClass.stageIn(options, toContentComplete);
+                    });
                 }
             }
-            else if(!currentClass._isPopup && targetClass._isPopup == true)
-            {
-                targetClass.show(toContentComplete);
-            }
-            else if(currentClass._isPopup == true && targetClass._isPopup == true)
-            {
-                //currentClass.hide(function()
-                //{
-                //    targetClass.show(toContentComplete);
-                //});
-                currentClass.hide();
-                targetClass.show(toContentComplete);
 
-            }
-            else
-            {
-                currentObj.stageClass.stageOut(options, function()
-                {
-                    targetObj.stageClass.stageIn(options, toContentComplete);
-                });
-            }
+
         }
     };
 

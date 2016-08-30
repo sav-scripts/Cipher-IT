@@ -34,14 +34,21 @@
 
             setupIconTL();
 
+            setupButton(2, 'story', function()
+            {
+                SceneHandler.toHash("/Story");
+            });
+
             setupButton(6, 'participate to part2', function()
             {
-                Participate.toContent('part2');
+                //Participate.toContent('part2');
+                SceneHandler.toHash("/Participate/Product");
             });
 
             setupButton(7, 'participate to part3', function()
             {
-                Participate.toContent('part3');
+                //Participate.toContent('part3');
+                SceneHandler.toHash("/Participate/Form");
             });
 
             setupButton(8, 'participate rule', function()

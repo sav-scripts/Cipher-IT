@@ -1,0 +1,106 @@
+.my-percent-div(@selector; @left; @top; @width; @height; @src: none;){
+
+    @ratio: 1920 / 1200;
+
+    .percent-div(@selector; @left * @ratio; @top * @ratio; @width * @ratio; @height * @ratio; @src;);
+}
+
+/** intro **/
+#intro{
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .background{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .image-bg("participate-1-background.jpg", cover);
+    }
+
+    .layout("layouts/intro-pc.jpg");
+    .layout{
+        height: 100 / 90 * 100%;
+    }
+
+    .wrapper{
+        .percent-container();
+
+        .my-percent-div(left-content, -471,-165,310,204, "intro-content.png");
+
+        .btn-play{
+
+            .my-percent-div(none, -432,66, 211, 57);
+
+            .normal-state{
+
+                position: absolute;
+                .image-bg("intro-btn-play.png", cover);
+                width: 100%;
+                height: 100%;
+                opacity: 1;
+
+
+                pointer-events: none;
+                transition-delay:0s;
+            }
+
+
+            .hover-state{
+
+                position: absolute;
+//                .image-bg("intro-btn-play.png", cover);
+                background-color: blue;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+
+
+                pointer-events: none;
+
+                visibility:hidden;
+                transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+            }
+
+            &:hover{
+                cursor: pointer;
+                .normal-state{
+                    opacity: 0;
+                    visibility:hidden;
+                    transition:visibility 0s linear 0.4s,opacity 0.4s ease-out;
+                }
+
+                .hover-state{
+                    opacity: 1;
+                    visibility:visible;
+                    transition-delay:0s;
+                }
+            }
+        }
+
+    }
+
+}
+
+
+/** story **/
+#story{
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .scene-canvas{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+    }
+
+    .wrapper{
+        .percent-container();
+
+    }
+
+}

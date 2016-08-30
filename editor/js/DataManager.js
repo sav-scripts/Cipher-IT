@@ -29,7 +29,7 @@
                     throw err; // or handle err
                 }
 
-                JSZip.loadAsync(data).then(handleZip);
+                JSZip.loadAsync(data).then(handleLoadedZip);
             });
         },
 
@@ -70,10 +70,12 @@
         }
         else
         {
-            var billboardData = BillboardEditor.getExportData();
-            var shapeData = ShapeEditor.getExportData();
+            var billboardData = BillboardEditor.getExportData(),
+                shapeData = ShapeEditor.getExportData(),
+                lightData = LightEditor.getExportData(),
+                imageArray = [backgroundImageData].concat(billboardData.imageArray).concat(billboardData.lightImageArray);
 
-            var imageArray = [backgroundImageData].concat(billboardData.imageArray);
+            console.log(imageArray);
 
             var out =
             {
@@ -81,7 +83,8 @@
                 backgroundImage: backgroundImageData.name,
                 backgroundImageHead: backgroundImageData.imageHead,
                 billboardData: billboardData.dataArray,
-                shapeData: shapeData.dataArray
+                shapeData: shapeData.dataArray,
+                lightData: lightData.dataArray
             };
 
 
@@ -122,12 +125,12 @@
             if (inputDom.files && inputDom.files[0])
             {
                 var f = inputDom.files[0];
-                JSZip.loadAsync(f).then(handleZip);
+                JSZip.loadAsync(f).then(handleLoadedZip);
             }
         }
     }
 
-    function handleZip(zip)
+    function handleLoadedZip(zip)
     {
         var zipData = zip.file("config.json");
         if(zipData)
@@ -153,13 +156,16 @@
                     Loading.progress('資料分析中').show();
 
                     var billbaordData = data.billboardData,
-                        shapeData = data.shapeData;
+                        shapeData = data.shapeData,
+                        lightData = data.lightData;
 
                     extractImages(zip, function(imageDic)
                     {
                         BillboardEditor.applyImportData(billbaordData, imageDic);
 
                         ShapeEditor.applyImportData(shapeData);
+
+                        LightEditor.applyImportData(lightData);
 
                         SphereScene.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
 

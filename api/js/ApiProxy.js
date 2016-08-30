@@ -33,7 +33,10 @@
 
             function complete(response)
             {
-                if(cb) cb.call(null, response);
+                if(response.error && response.error == AdminMain.timeoutMessage)
+                {
+                    window.location.reload();
+                }else if(cb) cb.call(null, response);
             }
         }
     };

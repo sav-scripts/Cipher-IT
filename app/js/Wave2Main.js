@@ -30,17 +30,25 @@
         hashArray:
         [
             "/LandingPage",
+            "/Intro",
+            "/Story",
             "/Participate",
             "/Participate/Product",
             "/Participate/Form",
             "/ParticipateRule"
         ],
 
+        defaultHash: '/Intro',
+
         init: function()
         {
             if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'manual';
             }
+
+            ScalableContent.init([640, 1920]);
+            ScalableContent.enableFixFullImage = false;
+            ScalableContent.enableDrawBounds = true;
 
             if(Utility.urlParams.skipLaw == '1') self.settings.isBirthValided = true;
 
@@ -61,7 +69,7 @@
             {
                 SceneHandler.init(Main.hashArray,
                 {
-                    defaultHash: "/Participate",
+                    defaultHash: self.defaultHash,
                     listeningHashChange: true,
                     loadingClass: Loading,
                     version: new Date().getTime(),
@@ -134,6 +142,10 @@
         {
             SceneHandler.currentScene.resize();
         }
+
+        var $dom = $("#scene-container");
+
+        ScalableContent.updateView($dom.width(), $dom.height());
     }
 
 }());

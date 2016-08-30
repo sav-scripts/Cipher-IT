@@ -53,14 +53,22 @@
 
         },
 
-        createNodeSample: function(scene, color, size)
+        createNodeSample: function(scene, color, size, name, type)
         {
-            color = color || new BABYLON.Color3.Blue();
+            color = color || BABYLON.Color3.Blue();
             size = size || 1;
+
 
             var node, boxmat;
 
-            node = BABYLON.Mesh.CreateBox("nodeSample", size, scene);
+            if(type == "sphere")
+            {
+                node = new BABYLON.Mesh.CreateSphere("wire sphere", 4, size, scene);
+            }
+            else
+            {
+                node = BABYLON.Mesh.CreateBox(name || "nodeSample", size, scene);
+            }
 
             boxmat = new BABYLON.StandardMaterial("boxmat", scene);
 
