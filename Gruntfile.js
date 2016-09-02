@@ -44,7 +44,8 @@ module.exports = function(grunt)
                             'js/lib/jquery.mousewheel.min.js',
                             'js/lib/pep.min.js',
                             'js/lib/TweenMax.min.js',
-                            'js/lib/jquery.1.11.3.min.js'
+                            'js/lib/jquery.1.11.3.min.js',
+                            'styles/phase1-only.css'
                         ],
                         dest: 'dist'
                     }

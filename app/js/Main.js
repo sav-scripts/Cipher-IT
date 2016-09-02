@@ -36,6 +36,9 @@
             "/ParticipateRule"
         ],
 
+        firstHash: '',
+        defaultHash: '/Participate',
+
         init: function()
         {
             if ('scrollRestoration' in history) {
@@ -61,7 +64,7 @@
             {
                 SceneHandler.init(Main.hashArray,
                 {
-                    defaultHash: "/Participate",
+                    defaultHash: self.defaultHash,
                     listeningHashChange: true,
                     loadingClass: Loading,
                     version: new Date().getTime(),
@@ -75,24 +78,12 @@
                             return null;
                         }
 
-                        //if(hashName == "/SerialInput")
-                        //{
-                        //    if(new Date().getTime() > self.settings.deadTime)
-                        //    {
-                        //        //console.log("is end");
-                        //        alert("活動已結束，感謝您的參與");
-                        //
-                        //        hashName = null; // cancel content change
-                        //        SceneHandler.setHash('/Index');
-                        //
-                        //        return null;
-                        //    }
-                        //}
-
 
                         return hashName;
                     }
                 });
+
+                self.firstHash = SceneHandler.getHash();
 
                 if(Utility.urlParams.skipLaw == '1')
                 {

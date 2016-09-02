@@ -26,7 +26,11 @@
 
     var self = window.SphereScene =
     {
+        _gui: null,
+
         _debugLayerOn: false,
+
+        _rotationY: 0,
 
         _wireLayerOn: false,
 
@@ -343,8 +347,8 @@
             {
                 if(self._backgroundImageIsDataUrl)
                 {
-                    console.log("this should't be executed");
-                    //texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
+                    //console.log("this should't be executed");
+                    texture = _textureDic[textureName] = new BABYLON.Texture(null, _scene);
                 }
                 else
                 {
@@ -476,7 +480,9 @@
             var ext = obj.imageHead == DataManager.PNG_HEAD? '.png': '.jpg';
 
             return new ImageObject('background'+ext, 'textures/', obj.imageSrc, self._backgroundImageIsDataUrl, obj.imageHead);
-        }
+        },
+
+        updateSeceneRotation: updateSeceneRotation
 
     };
 
@@ -492,6 +498,7 @@
         {
             folder: folder,
             triggerChangeImage: folder.add(self, "triggerChangeImage").name('載入場景圖片'),
+            rotationY: folder.add(self, "_rotationY").min(0).max(360).name('場景旋轉角度').listen().onChange(updateSeceneRotation),
             map: folder.add(self, '_textureFileName', self._textureList).name("貼圖").onChange(self.textureUpdate),
             shader: folder.add(self, '_sceneMaterial', self._sceneMaterialList).name("著色器").onChange(self.materialUpdate),
             cameraBetaLimit: folder.add(self, '_cameraBetaLimit').min(0).max(90).step(1).name('鏡頭角度限制').onChange(self.cameraBetaLimitUpdate),
@@ -502,6 +509,8 @@
             debugLayer: folder.add(self, '_debugLayerOn').name("DebugLayer").onChange(self.debugLayerUpdate),
             tool: folder.add(self, '_toolIndexTemp', self._toolList).name("編輯模式").onChange(self.toolUpdate)
         };
+
+        self._gui = _gui;
 
         folder.open();
     }
@@ -537,6 +546,12 @@
         //sphere.alphaIndex = 0;
 
         return sphere;
+    }
+
+    function updateSeceneRotation()
+    {
+        var deg = self._rotationY;
+        _mainSphere.rotation.y = deg/180*Math.PI;
     }
 
     function applySkybox(scene)

@@ -101,6 +101,26 @@
 
         },
 
+        setAllUnPickable: function()
+        {
+            for(var key in _editorObjectDic)
+            {
+                _editorObjectDic[key]._mesh.isPickable = false;
+            }
+        },
+
+        getDicByName: function()
+        {
+            var dic = {};
+            for(var key in _editorObjectDic)
+            {
+                var obj = _editorObjectDic[key];
+                dic[obj._name] = obj;
+            }
+
+            return dic;
+        },
+
         enable: function()
         {
             if(_isEnabled) return;
@@ -459,6 +479,12 @@
 
             _guiItems.emissiveColor =  _guiFolder.addColor(_editingObject, "_emissiveColor").name('自體發光顏色').onChange(function()
             {
+                var c = _editingObject._emissiveColor;
+                if(typeof c == 'string')
+                {
+                    _editingObject._emissiveColor = Tools.hexToRgb(c);
+                }
+
                 _editingObject.updateEmissiveColor.call(_editingObject);
             });
 
@@ -624,6 +650,10 @@
                             onImageLoaded, onLightImageLoaded)
     {
         var self = this;
+
+
+
+        if(typeof emissiveColor == 'string') emissiveColor = Tools.hexToRgb(emissiveColor);
 
         this._scene = scene;
         this._serial = serial;
@@ -889,6 +919,7 @@
         updateEmissiveColor: function()
         {
             var c = this._emissiveColor;
+
             if(this._material)
             {
                 this._material.emissiveColor = new BABYLON.Color3(c.r/255, c.g/255, c.b/255);
@@ -1020,6 +1051,9 @@
         {
             var imageName = "billboard."+this._serial+".png",
                 obj = ImageObject.HandleImageSrc(this._imageSrc, this._imageIsDataUrl);
+
+
+            if(typeof this._emissiveColor == 'string') this._emissiveColor = Tools.hexToRgb(this._emissiveColor);
 
             var res = {
                 data:

@@ -56,6 +56,16 @@
                 SceneHandler.toHash("/ParticipateRule");
             });
 
+            setupButton(10, 'to offical site', function()
+            {
+                window.open('http://www.theglenlivet.com.tw/');
+            });
+
+            setupButton(11, 'to FB', function()
+            {
+                window.open('https://www.facebook.com/TheGlenlivetTW/');
+            });
+
             //console.log("check");
             self.Logo = createHideAble($("#logo"), true);
 

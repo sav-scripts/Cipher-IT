@@ -62,6 +62,9 @@
 
             var $content = $doms[contentHash];
             var targetTop = $content.offset().top;
+
+            if(contentHash != "/Logo" && Main.settings.viewport.width <= 640) targetTop -= 101;
+
             TweenLite.to(window,.8, {scrollTo: targetTop, ease:Power1.easeInOut, onComplete: cb});
         },
 
@@ -92,10 +95,16 @@
         $doms['/Product'] = $doms.container.find(".part-2");
         $doms['/Form'] = $doms.container.find(".part-3");
 
-        $doms.arrowDown = $doms.container.find(".arrow-down").on(_CLICK_, function()
+        $doms.arrowDown1 = $doms['/Logo'].find(".arrow-down").on(_CLICK_, function()
         {
-            //self.toContent('/Product');
-            SceneHandler.toHash("/Participate/Product");
+            self.toContent('/Product');
+            //SceneHandler.toHash("/Participate/Product");
+        });
+
+        $doms.arrowDown2 = $doms['/Product'].find(".arrow-down").on(_CLICK_, function()
+        {
+            self.toContent('/Form');
+            //SceneHandler.toHash("/Participate/Product");
         });
 
         $doms.year = $doms.container.find("#select-year");

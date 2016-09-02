@@ -14,12 +14,14 @@
         {
             _scene = scene;
 
+            _materialDic['normal'] = createNormal();
             createWireframe();
-            createNormal();
             createFlashShape();
             createNoise();
 
         },
+
+        createNormal: createNormal,
 
         getMaterial: function(name)
         {
@@ -44,7 +46,7 @@
         material.backFaceCulling = false;
         //material.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 
-        _materialDic['normal'] = material;
+        return material;
     }
 
     function createFlashShape()

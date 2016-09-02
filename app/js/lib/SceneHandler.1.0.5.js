@@ -69,14 +69,16 @@
             }
         }
 
+        var array, stageClassName, contentHash;
+
         for(i=0;i<scenes.length;i++)
         {
             hash = scenes[i];
 
 
-            var array = hash.split("/"),
-                stageClassName = array[1],
-                contentHash;
+            array = hash.split("/");
+            stageClassName = array[1];
+            contentHash = null;
 
             if(array.length == 2)
             {
@@ -97,7 +99,7 @@
                 continue;
             }
 
-            //console.log("contentHash: " + contentHash);
+            //console.log("stageClassName: " + stageClassName + ", contentHash: " + contentHash);
 
             obj = {hash:hash, index:i, stageClass: window[stageClassName], contentHash: contentHash};
 

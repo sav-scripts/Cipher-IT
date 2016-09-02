@@ -55,7 +55,16 @@
             if(_dateCombo.getDateString())
             {
                 Main.settings.isBirthValided = true;
-                SceneHandler.toHash("/Participate");
+
+                if(Main.firstHash)
+                {
+                    SceneHandler.toHash(Main.firstHash);
+                    Main.firstHash = null;
+                }
+                else
+                {
+                    SceneHandler.toHash(Main.defaultHash);
+                }
             }
             else
             {
@@ -75,6 +84,8 @@
     function show(cb)
     {
         $doms.container.css("display", "block");
+
+        Menu.hide();
 
         //Menu.Logo._show();
 

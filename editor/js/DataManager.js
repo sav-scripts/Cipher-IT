@@ -39,7 +39,7 @@
 
         loadFromExtracedData: function(path, SceneClass, cb)
         {
-            $.ajax(path + "config.json").done(function(response)
+            $.ajax(path + "config.json?v=" + Main.version).done(function(response)
             {
                 //console.log(response);
                 SceneClass.applyBackground(path + 'textures/' + response.backgroundImage, function()
@@ -92,13 +92,12 @@
                 lightData = LightEditor.getExportData(),
                 imageArray = [backgroundImageData].concat(billboardData.imageArray).concat(billboardData.lightImageArray);
 
-            console.log(imageArray);
-
             var out =
             {
                 version: _version,
                 backgroundImage: backgroundImageData.name,
                 backgroundImageHead: backgroundImageData.imageHead,
+                backgroundRotationY: SphereScene._rotationY,
                 billboardData: billboardData.dataArray,
                 shapeData: shapeData.dataArray,
                 lightData: lightData.dataArray
@@ -111,7 +110,7 @@
 
             processImages(zip, imageArray, function()
             {
-                console.log("image process complete");
+                //console.log("image process complete");
 
                 zip.generateAsync({type:"blob"}).then(function(content)
                 {
@@ -142,7 +141,11 @@
             if (inputDom.files && inputDom.files[0])
             {
                 var f = inputDom.files[0];
-                JSZip.loadAsync(f).then(handleLoadedZip);
+                JSZip.loadAsync(f).then(function(zip)
+                {
+                    handleLoadedZip.call(null, zip, SphereScene);
+                });
+
             }
         }
     }
@@ -186,6 +189,13 @@
 
                         //SphereScene.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
                         SceneClass.applyBase64Background(data.backgroundImageHead + imageDic['textures/'+data.backgroundImage]);
+                        if(data.backgroundRotationY !== undefined)
+                        {
+                            SphereScene._rotationY = data.backgroundRotationY;
+                            SphereScene.updateSeceneRotation();
+
+                            //SphereScene._gui.rotationY.update();
+                        }
 
                         if(cb) cb.call();
 

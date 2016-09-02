@@ -326,6 +326,17 @@
                 BillboardEditor.updateAllVisibility();
             });
 
+            _guiItems.specularColor =  _guiFolder.addColor(_editingObject, "_specularColor").name('顏色').onChange(function()
+            {
+                var c = _editingObject._specularColor;
+                if(typeof c == 'string')
+                {
+                    _editingObject._specularColor = Tools.hexToRgb(c);
+                }
+
+                _editingObject.updateSpecularColor.call(_editingObject);
+            });
+
             _guiItems.range = _guiItems.range.min(10).max(1000).step(1).name("範圍");
             _guiItems.range.onChange(function(){ _editingObject.update.call(_editingObject);});
 
@@ -349,14 +360,21 @@
 
     LightObject.CreateFromData = function(scene, data)
     {
-        return new LightObject(scene, data.serial, data.x, data.y, data.z, data.range, data.intensity, data.name);
+        return new LightObject(scene, data.serial, data.x, data.y, data.z, data.range, data.intensity, data.name, data.specularColor);
     };
 
-    function LightObject(scene, serial, x, y, z, range, intensity, name)
+    function LightObject(scene, serial, x, y, z, range, intensity, name, specularColor)
     {
         this._scene = scene;
         this._serial = serial;
         this._name = name || ("#" + this._serial);
+
+
+
+
+        if(typeof specularColor == 'string') specularColor = Tools.hexToRgb(specularColor);
+
+        if(specularColor) this._specularColor = specularColor;
 
         this._x = x;
         this._y = y;
@@ -379,6 +397,10 @@
         //light.specular = new BABYLON.Color3(1, 1, 1);
         light.range = this._range;
 
+        //light.specular = new BABYLON.Color3(1, 0, 0);
+
+        this.updateSpecularColor();
+
         //var tl = new TimelineMax({repeat:-1});
         //tl.to(light, 1, {range:300, ease:Power1.easeIn});
         //tl.to(light, 1, {range:400, ease:Power1.easeOut});
@@ -400,6 +422,8 @@
 
         _range: 0,
         _intensity: 1,
+
+        _specularColor: {r:255, g:255, b:255},
         
         _nodeMesh: null,
         _light: null,
@@ -419,6 +443,16 @@
             this._enabled = b;
         },
 
+        updateSpecularColor: function()
+        {
+            var c = this._specularColor;
+
+            if(this._light)
+            {
+                this._light.specular = this._light.diffuse = new BABYLON.Color3(c.r/255, c.g/255, c.b/255);
+            }
+        },
+
         dispose: function()
         {
             if(this._nodeMesh) this._nodeMesh.dispose();
@@ -427,6 +461,9 @@
 
         getExportData: function()
         {
+
+            if(typeof this._specularColor == 'string') this._specularColor = Tools.hexToRgb(this._specularColor);
+
             return {
                 data:
                 {
@@ -435,6 +472,7 @@
                     x: this._x,
                     y: this._y,
                     z: this._z,
+                    specularColor: this._specularColor,
                     range: this._range,
                     intensity: this._intensity
                 }

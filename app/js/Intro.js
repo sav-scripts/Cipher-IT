@@ -1,6 +1,7 @@
 (function ()
 {
     var $doms = {},
+        _isBtnStoryClicked = false,
         _isInit = false;
 
     var self = window.Intro =
@@ -37,7 +38,6 @@
 
         resize: function ()
         {
-            ScalableContent.updateResizeAble();
         }
     };
 
@@ -49,7 +49,16 @@
 
         $doms.btnPlay = $doms.container.find(".btn-play").on(_CLICK_, function()
         {
-            SceneHandler.toHash("/Story");
+            if(_isBtnStoryClicked)
+            {
+                SceneHandler.toHash("/Story");
+            }
+            else
+            {
+                SceneHandler.toHash("/Story/Key");
+            }
+
+            _isBtnStoryClicked = true;
         });
 
 
@@ -61,6 +70,7 @@
         $("#scene-container").append($doms.container);
 
         self.resize();
+        ScalableContent.updateResizeAble();
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});

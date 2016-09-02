@@ -3,6 +3,7 @@
     "use strict";
     var self = window.Main =
     {
+        version: "0.0.0",
         settings:
         {
             isLocal: false,
@@ -31,17 +32,39 @@
         [
             "/LandingPage",
             "/Intro",
+
             "/Story",
+
+            "/Story/Evidences",
+            "/Story/TattooMan",
+            "/Story/Backpacker",
+            "/Story/Bartender",
+            "/Story/SportGirl",
+            "/Story/Businessman",
+            "/Story/Door",
+
+            "/Story/Key",
+            "/Story/Phone",
+            "/Story/Poster",
+            "/Story/Photos",
+            "/Story/Billboard",
+            "/Story/Fingerprint",
+
             "/Participate",
             "/Participate/Product",
             "/Participate/Form",
             "/ParticipateRule"
         ],
 
+        firstHash: '',
         defaultHash: '/Intro',
 
         init: function()
         {
+            CSSPlugin.defaultTransformPerspective = 400;
+
+            self.version = new Date().getTime();
+
             if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'manual';
             }
@@ -91,6 +114,8 @@
                     }
                 });
 
+                self.firstHash = SceneHandler.getHash();
+
                 if(Utility.urlParams.skipLaw == '1')
                 {
                     SceneHandler.toFirstHash();
@@ -136,6 +161,7 @@
         ScalableContent.updateView($dom.width(), $dom.height());
 
         //ScalableContent.updateView(width, height);
+        ScalableContent.updateResizeAble();
     }
 
 }());

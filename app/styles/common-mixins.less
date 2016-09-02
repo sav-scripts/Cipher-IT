@@ -1,6 +1,8 @@
 /** common mixins **/
 .default-font(@font-size: 14px, @font-color: #000){
-    font-family: '微軟正黑體', "Heiti TC", serif;
+
+//    font-family: '微軟正黑體', "Heiti TC", serif;
+    font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
     font-size: @font-size;
     color: @font-color;
 }
@@ -67,6 +69,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    -webkit-user-drag: none;
 }
 
 .percent-container(@position: absolute; @width: 100px; @height: 100px; @left: 50%; @top: 50%;){
@@ -310,5 +314,19 @@
                 transition-delay:0s;
             }
         }
+    }
+}
+
+.enable-hide(@duration: .4s; @show-ease: ease-out; @hide-ease: ease-out;)
+{
+    transition: opacity @duration @show-ease;
+    transition-delay: 0s;
+    opacity: 1;
+
+    &.hide-mode{
+        opacity: 0;
+        visibility: hidden;
+
+        transition: opacity @duration @hide-ease, visibility 0s linear @duration;
     }
 }

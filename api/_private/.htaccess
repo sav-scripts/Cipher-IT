@@ -1,4 +1,4 @@
-AuthName "bla"
+AuthName "secure"
 AuthType Basic
 <Limit GET POST>
 order deny,allow

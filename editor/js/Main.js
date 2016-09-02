@@ -5,6 +5,7 @@
 
     var self = window.Main =
     {
+        version: "0.0.0",
         settings:
         {
             scenePath: "zips/scenedata.zip?v=" + new Date().getTime()
@@ -15,6 +16,8 @@
 
         init: function()
         {
+            self.version = new Date().getTime();
+
             KeyboardControl.init(false, false);
 
             window.Loading = SquareLoading;

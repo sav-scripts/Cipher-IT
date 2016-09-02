@@ -180,14 +180,7 @@
             }
 
             .logo{
-                position: absolute;
-                left: 225px;
-                top:90px;
-                width: 133px;
-                height: 126px;
-                .image-bg("landing-page-logo.m.png");
-
-                z-index: 3;
+                display: none;
 
             }
 
@@ -355,10 +348,10 @@
 
 
                 .content{
-                    width: percentage(504 / @cw);
-                    height: percentage(373 / @ch);
+                    width: percentage(526 / @cw);
+                    height: percentage(326 / @ch);
 
-                    left: 10.638%;
+                    left: 10.238%;
                     top: 5.462%;
 
                     .image-bg("participate-2-content.m.png", cover);
@@ -367,7 +360,7 @@
         }
 
         .part-3{
-            @ch: 2617px;
+            @ch: 2517px;
             //        @ch: 1148px;
 
             position: relative;
@@ -383,200 +376,19 @@
             .wrapper{
                 .percent-container();
 
-                margin-top: 0;
-
+                margin-top: 50px;
 
                 .percent-div(title, -252, -1225, 501, 47, "participate-3-title.m.png");
-                .percent-div(content, -246, -1138, 498, 1150, "participate-3-content.m.png");
-                .percent-div(dates, -256, 66, 531, 31, "participate-3-dates.m.png");
-                .percent-div(form, -255, 475, 521, 410, "participate-3-form.m.png");
+                .percent-div(content, -246, -1138, 498, 1017, "participate-3-content.m.png");
+                .percent-div(dates, -256, -64px, 531, 31, "participate-3-dates.m.png");
 
-                .fade-btn-2(btn-send,"participate-3-btn-send.m.png",-254,1059,521,94);
-
-                .percent-div(eula-text, -154, 942, 406, 63, "participate-3-eula.m.png");
-
-
-                .percent-div(btn-rule, 24, 935, 96, 33);
-                .percent-div(btn-privacy, 138, 935, 119, 33);
-                .percent-div(btn-privacy-2, -159, 978, 146, 33);
-
-                .btn-rule, .btn-privacy, .btn-privacy-2{
-                    cursor: pointer;
-//                    background: rgba(0,0,0,.5);
-                }
-
-                .checkbox{
-                    position: absolute;
-                    left: -255px;
-                    top:943px;
-
-                    width: 59px;
-                    height: 59px;
-
-                    label {
-
-                        width: 100%;
-                        height: 100%;
-
-                        &:after {
-
-                            content: '';
-                            width: 26px;
-                            height: 10px;
-                            position: absolute;
-                            top: 16px;
-                            left: 14px;
-                            border: 8px solid #43ac8c;
-                            border-top: none;
-                            border-right: none;
-                            background: transparent;
-//                            opacity: 0;
-                            -webkit-transform: rotate(-45deg);
-                            transform: rotate(-45deg);
-                        }
-                    }
-
-
-                }
-
-
-                select{
-
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    appearance: none;
-
-                    background: url("../images/select-arrow.m.png") no-repeat;
-                    background-color: rgba(0,0,0,0);
-//                    background-color: rgba(0,0,0,.3);
-                    background-position: right 9px;
-
-                    height: 34px;
-
-                    border: none;
-
-                    cursor: pointer;
-
-                    text-align: left;
-                    text-align-last:left;
-
-                    .default-font(21px, #697085);
-
-                    option{
-                        .default-font(14px, black);
-                        background:white;
-                        text-align: left;
-                        text-align-last:left;
-                    }
-                    optgroup{
-                        .default-font(14px, black);
-                        background:white;
-                        text-align: left;
-                        text-align-last:left;
-                    }
-
-                    &::-ms-expand {
-                        display: none;
-                    }
-                }
-
-                .birthday-fields{
-                    position: absolute;
-                    left: -115px;
-                    top:825px;
-//                    width: 600px;
-
-                    #select-year, #select-month, #select-day{
-                        position: absolute;
-                        width: 112px;
-                        color: white;
-                    }
-
-                    #select-month{
-                        left: 132px;
-                    }
-
-
-                    #select-day{
-                        left: 263px;
-                    }
-
-
-                }
-
-                .event-select{
-                    position: absolute;
-                    left: -137px;
-                    top: 580px;
-                    width: 402px;
-                    text-align: left;
-                    text-align-last:left;
-
-
-                    option{
-                        .default-font(14px, black);
-                        background:white;
-                        text-align: left;
-                        text-align-last:left;
-                        text-indent: 0;
-                    }
-                    optgroup{
-                        .default-font(14px, black);
-                        background:white;
-                        text-align: left;
-                        text-align-last:left;
-                    }
-                }
-
-                .gender-select{
-                    position: absolute;
-                    left: 112px;
-                    top: 499px;
-                    width: 154px;
-                }
-
-                input{
-                    .default-font(21px, white);
-
-                    border: none;
-//                    background:rgba(0,0,0,.3);
-                    background: none;
-                    height:36px;
-                    width: 100px;
-
-                    &.hint-mode{
-                        color:#697085;
-                    }
-                }
-
-                .user-name{
-                    position: absolute;
-                    left: -133px;
-                    top:497px;
-                    width: 130px;
-                }
-
-                .user-email{
-                    position: absolute;
-                    left: -133px;
-                    top: 740px;
-                    width: 390px;
-                }
-
-                .user-phone{
-                    position: absolute;
-                    left: -133px;
-                    top: 660px;
-                    width: 160px;
-                    text-align: left;
-                }
 
                 .time-group-1, .time-group-2, .time-group-3{
 
                     position: absolute;
                     width: 366px;
                     height: 63px;
-                    top: 126px;
+                    top: -4px;
                     //                .image-bg("participate-3-times.png");
 
                     @dh: 45px;
@@ -622,6 +434,193 @@
 
                 .time-group-3{
                     left:113px;
+                }
+
+
+                .form-wrapper {
+
+                    position: absolute;
+                    left: 0;
+                    top: -130px;
+                    width: 100%;
+                    height: 100%;
+
+                    .percent-div(form, -255, 475, 521, 410, "participate-3-form.m.png");
+
+                    .fade-btn-2(btn-send, "participate-3-btn-send.m.png", -254, 1059, 521, 94);
+
+                    .percent-div(eula-text, -154, 942, 406, 63, "participate-3-eula.m.png");
+
+                    .percent-div(btn-rule, 24, 935, 96, 33);
+                    .percent-div(btn-privacy, 138, 935, 119, 33);
+                    .percent-div(btn-privacy-2, -159, 978, 146, 33);
+
+                    .btn-rule, .btn-privacy, .btn-privacy-2 {
+                        cursor: pointer;
+                        //                    background: rgba(0,0,0,.5);
+                    }
+
+                    .checkbox {
+                        position: absolute;
+                        left: -255px;
+                        top: 943px;
+
+                        width: 59px;
+                        height: 59px;
+
+                        label {
+
+                            width: 100%;
+                            height: 100%;
+
+                            &:after {
+
+                                content: '';
+                                width: 26px;
+                                height: 10px;
+                                position: absolute;
+                                top: 16px;
+                                left: 14px;
+                                border: 8px solid #43ac8c;
+                                border-top: none;
+                                border-right: none;
+                                background: transparent;
+                                //                            opacity: 0;
+                                -webkit-transform: rotate(-45deg);
+                                transform: rotate(-45deg);
+                            }
+                        }
+
+                    }
+
+                    select {
+
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+
+                        background: url("../images/select-arrow.m.png") no-repeat;
+                        background-color: rgba(0, 0, 0, 0);
+                        //                    background-color: rgba(0,0,0,.3);
+                        background-position: right 9px;
+
+                        height: 34px;
+
+                        border: none;
+
+                        cursor: pointer;
+
+                        text-align: left;
+                        text-align-last: left;
+
+                        .default-font(21px, #697085);
+
+                        option {
+                            .default-font(14px, black);
+                            background: white;
+                            text-align: left;
+                            text-align-last: left;
+                        }
+                        optgroup {
+                            .default-font(14px, black);
+                            background: white;
+                            text-align: left;
+                            text-align-last: left;
+                        }
+
+                        &::-ms-expand {
+                            display: none;
+                        }
+                    }
+
+                    .birthday-fields {
+                        position: absolute;
+                        left: -115px;
+                        top: 825px;
+                        //                    width: 600px;
+
+                        #select-year, #select-month, #select-day {
+                            position: absolute;
+                            width: 112px;
+                            color: white;
+                        }
+
+                        #select-month {
+                            left: 132px;
+                        }
+
+                        #select-day {
+                            left: 263px;
+                        }
+
+                    }
+
+                    .event-select {
+                        position: absolute;
+                        left: -137px;
+                        top: 580px;
+                        width: 402px;
+                        text-align: left;
+                        text-align-last: left;
+
+                        option {
+                            .default-font(14px, black);
+                            background: white;
+                            text-align: left;
+                            text-align-last: left;
+                            text-indent: 0;
+                        }
+                        optgroup {
+                            .default-font(14px, black);
+                            background: white;
+                            text-align: left;
+                            text-align-last: left;
+                        }
+                    }
+
+                    .gender-select {
+                        position: absolute;
+                        left: 112px;
+                        top: 499px;
+                        width: 154px;
+                    }
+
+                    input {
+                        .default-font(21px, white);
+
+                        border: none;
+                        //                    background:rgba(0,0,0,.3);
+                        background: none;
+                        height: 36px;
+                        width: 100px;
+
+                        &.hint-mode {
+                            color: #697085;
+                        }
+                    }
+
+                    .user-name {
+                        position: absolute;
+                        left: -133px;
+                        top: 497px;
+                        width: 130px;
+                    }
+
+                    .user-email {
+                        position: absolute;
+                        left: -133px;
+                        top: 740px;
+                        width: 390px;
+                    }
+
+                    .user-phone {
+                        position: absolute;
+                        left: -133px;
+                        top: 660px;
+                        width: 160px;
+                        text-align: left;
+                    }
+
                 }
 
             }
@@ -676,7 +675,7 @@
                 left: 62px;
                 top: 101px;
                 width: 492px;
-                height: 4677px;
+                height: 4667px;
                 .image-bg("participate-rule-content.m.png");
 
             }

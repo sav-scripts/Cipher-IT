@@ -6,45 +6,6 @@
 
     <meta id="myViewport" name="viewport" content="width=640,user-scalable=0">
 
-    <!--<script>-->
-
-        <!--var wasUsedLandscape = false;-->
-        <!--var rewrited = false;-->
-
-        <!--updateViewport();-->
-        <!--function updateViewport()-->
-        <!--{-->
-            <!--var portraitModeMinWidth = 640;-->
-<!--//            var landscapeModeMinWidth = 1200;-->
-            <!--var landscapeModeMinWidth = 'device-width';-->
-
-            <!--var divString, scaleRate, targetWidth;-->
-
-            <!--if (wasUsedLandscape || (screen.width < portraitModeMinWidth && screen.width < screen.height))-->
-            <!--{-->
-
-                <!--targetWidth = portraitModeMinWidth;-->
-            <!--}-->
-            <!--else if(screen.width < landscapeModeMinWidth && screen.width > screen.height)-->
-            <!--{-->
-                <!--wasUsedLandscape = true;-->
-                <!--targetWidth = landscapeModeMinWidth-->
-            <!--}-->
-
-            <!--if(targetWidth != null)-->
-            <!--{-->
-                <!--scaleRate =  screen.width/targetWidth;-->
-                <!--var contentString = 'width='+targetWidth+'px,initial-scale='+scaleRate;-->
-                <!--divString = '<meta id="myViewport" name="viewport" content="'+contentString+'">';-->
-                <!--document.write(divString);-->
-
-                <!--rewrited = true;-->
-            <!--}-->
-        <!--}-->
-
-    <!--</script>-->
-
-
     <meta property="fb:app_id" content="xxx"/>
     <meta property="og:title" content="xxx" />
     <meta property="og:type" content="activity" />
@@ -53,9 +14,20 @@
     <meta property="og:image" content="xxx" />
 
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/phase1-only.css">
 
 </head>
 <body onload="Main.init();">
+
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PV2D26"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PV2D26');</script>
+    <!-- End Google Tag Manager -->
 
     <div id="loading">
 
@@ -111,8 +83,6 @@
     </div>
 
     <div id="logo" class="hide-mode">
-
-        <div class="logo-bottom"></div>
     </div>
 
     <div id="menu">
