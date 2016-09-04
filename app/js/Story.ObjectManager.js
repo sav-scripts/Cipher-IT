@@ -50,7 +50,7 @@
                 name: "sport-girl",
                 isNpc: true,
                 dialogs: [  "<span>沒有證據請不要碰我，小心我告你性騷擾！</span>",
-                            '<span>這裡的</span><span class="green">RAEP Bar</span><span>是我們社區鄰居喜歡聚集的地方，但最近好像有個不認識的人常進出這裡…</span>'],
+                            '<span>這裡的</span><span class="green">&nbsp;RAEP&nbsp;Bar&nbsp;</span><span>是我們社區鄰居喜歡聚集的地方，但最近好像有個不認識的人常進出這裡…</span>'],
                 changePhaseAfterDialog: null,
                 y: 10
             },
@@ -61,7 +61,7 @@
                 nameHead: 'trigger',
                 name: "businessman",
                 isNpc: true,
-                dialogs: ["<span>我只是個商人，請問我什麼時候可以離開，我還得去趕飛機去參加名酒拍賣會啊！</span>"],
+                dialogs: ["<span>我只是個商人，請問我什麼時候可以離開，我還得去趕飛機去參加名酒拍賣會啊！</span>", "<span>...</span>"],
                 dialogEvent: null,
                 y: 10
             },
@@ -94,6 +94,20 @@
             {
                 type: 'hint',
                 name: "billboard",
+                disableInStart: true
+            },
+
+            "/Medal":
+            {
+                type: 'hint',
+                name: "medal",
+                disableInStart: true
+            },
+
+            "/Briefcase":
+            {
+                type: 'hint',
+                name: "briefcase",
                 disableInStart: true
             }
         };
@@ -141,7 +155,14 @@
 
             if(obj)
             {
-                if(obj.editorObject) obj.editorObject.dispose();
+                if(obj.editorObject)
+                {
+                    obj.editorObject._mesh.setEnabled(false);
+                    TweenMax.delayedCall(5, function()
+                    {
+                        obj.editorObject.dispose();
+                    });
+                }
                 delete _objectDic[hash];
             }
         },
@@ -154,7 +175,7 @@
             updateEnabled();
         },
 
-        setObjectDialog: function(hash, index, changePhaseAfterDialog, changeActionWhenDialoging, changeHashAfterDialog)
+        setObjectDialog: function(hash, index, changePhaseAfterDialog, changeActionWhenDialoging, changeHashAfterDialog, changePhaseAfterActionChange)
         {
             var obj = _objectDic[hash];
             if(obj && obj.dialogs)
@@ -163,11 +184,14 @@
                 obj.changePhaseAfterDialog = changePhaseAfterDialog;
                 obj.changeActionWhenDialoging = changeActionWhenDialoging;
                 obj.changeHashAfterDialog = changeHashAfterDialog;
+                obj.changePhaseAfterActionChange = changePhaseAfterActionChange;
             }
         },
 
-        changeNpcAction: function(hash, toIndex)
+        changeNpcAction: function(hash, toIndex, duration, cb)
         {
+            if(!duration && duration != 0) duration = .8;
+
             var obj = _objectDic[hash];
             if(obj && obj.npcArray)
             {
@@ -180,16 +204,19 @@
                 }
                 var oldNpcObject = obj.npcArray[obj.currentAction];
 
+                obj.currentAction = toIndex;
+
                 newNpcObject._mesh.setEnabled(true);
 
                 var tl = new TimelineMax();
                 tl.set(newNpcObject._mesh, {visibility: 0});
-                tl.to(newNpcObject._mesh,.8, {visibility: 1, ease:Power2.easeInOut});
-                tl.to(oldNpcObject._mesh,.8, {visibility: 0, ease:Power2.easeInOut}, 0);
+                tl.to(newNpcObject._mesh,duration, {visibility: 1, ease:Power2.easeInOut});
+                tl.to(oldNpcObject._mesh,duration, {visibility: 0, ease:Power2.easeInOut}, 0);
 
                 tl.add(function()
                 {
                     oldNpcObject._mesh.setEnabled(false);
+                    if(cb) cb.call();
                 });
 
 
@@ -298,9 +325,8 @@
         mesh.isPickable = true;
 
         mesh.actionManager = new BABYLON.ActionManager(_scene);
-        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function(event)
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
         {
-            //console.log(obj.name);
             SceneHandler.toHash("/Story" + obj.hash);
         }));
 

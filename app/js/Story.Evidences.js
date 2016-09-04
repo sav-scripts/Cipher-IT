@@ -6,6 +6,7 @@
         _firstClipIndex = 0,
         _visableCount = 0,
         _numClips = 0,
+        _lastUnlockedIndex = null,
         _clipGeom =
         {
             width: 0,
@@ -17,10 +18,11 @@
     {
         needHideUI: true,
 
-        init: function ($container)
+        init: function ($container, $triggerButton)
         {
             $doms.container = $container;
             $doms.parent = $container.parent();
+            $doms.triggerButton = $triggerButton;
 
             $doms.btnClose = $doms.container.find(".btn-close").on(_CLICK_, function()
             {
@@ -93,11 +95,20 @@
             if (!_isHiding) return;
             _isHiding = false;
 
+            $doms.triggerButton.toggleClass("news-mode", false);
+
             $doms.parent.append($doms.container);
 
             $doms.btnClose.toggleClass("showing-mode", true);
 
             self.resize();
+
+            if(_lastUnlockedIndex !== null)
+            {
+                var newIndex = _lastUnlockedIndex - _visableCount + 1;
+                changeFirstIndexTo(newIndex);
+                _lastUnlockedIndex = null;
+            }
 
             var tl = new TimelineMax;
             tl.set($doms.container, {autoAlpha: 0});
@@ -130,8 +141,20 @@
         {
             if($doms.clips[hash])
             {
-                setClipUnlocked(hash, true);
+
+                var wasUnlocked = setClipUnlocked(hash, true);
+
+                if(!wasUnlocked)
+                {
+                    $doms.triggerButton.toggleClass("news-mode", true);
+                    _lastUnlockedIndex = $doms.clips[hash]._index;
+                }
             }
+        },
+
+        isEvidenceUnlocked: function(hash)
+        {
+            return Boolean($doms.clips[hash]._unlocked);
         },
 
         resize: function()
@@ -147,13 +170,16 @@
     {
         var $clip = $doms.clips[hash];
 
+        var wasUnlocked = $clip._unlocked;
+
         $clip._unlocked = Boolean(unlocked);
         $clip.toggleClass('lock-mode', !$clip._unlocked);
+
+        return wasUnlocked;
     }
 
     function changeFirstIndexTo(newIndex)
     {
-        var oldIndex = _firstClipIndex;
         _firstClipIndex = newIndex;
 
         if(_firstClipIndex <= 0) _firstClipIndex = 0;
@@ -206,9 +232,9 @@
     {
         var offsetX = -_firstClipIndex * _clipGeom.gapX;
 
-        var dOffsetX = parseInt($doms.clipContainer.css("margin-left")) - offsetX;
-
-        var duration = Math.abs(dOffsetX / 300);
+        //var dOffsetX = parseInt($doms.clipContainer.css("margin-left")) - offsetX;
+        //var duration = Math.abs(dOffsetX / 300);
+        var duration = .9;
 
         TweenMax.to($doms.clipContainer, duration, {marginLeft: offsetX, ease:Power3.easeInOut});
 

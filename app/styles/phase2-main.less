@@ -154,6 +154,19 @@
         .fade-btn-2(btn-help, "story-btn-help.png", 70, 0, 51, 52);
         .fade-btn-2(btn-evidence, "story-btn-evidence.png", 140, 0, 51, 52);
 
+        .btn-evidence{
+            .news-hint{
+                .abs-div-2(none, 0, 47, 51, 15, "story-btn-evidence-hint.png");
+                visibility: hidden;
+            }
+
+            &.news-mode{
+                .news-hint{
+                    visibility: visible;
+                }
+            }
+        }
+
         transition: top .5s ease-out;
 
         &.hide-mode{
@@ -240,6 +253,22 @@
             .my-mixin(briefcase, 7);
             .my-mixin(locked, 8);
 
+            .clip-locked{
+                .icon{
+                    .image-bg("evidence-icon-locked.gif");
+                    width: 151px;
+                    height: 209px;
+                    left: 32px;
+                    top: 27px;
+                }
+            }
+
+//            .ciip-wineglass{
+//                .icon{
+//                    width: 149px;
+//                    height: 171px;
+//                }
+//            }
 
             .my-mixin(@type; @index)
             {
@@ -269,7 +298,13 @@
                         cursor: default;
 
                         .icon{
-                            .image-bg("evidence-icon-locked.png");
+                            //.image-bg("evidence-icon-locked.png");
+
+                            .image-bg("evidence-icon-locked.gif");
+                            width: 151px;
+                            height: 209px;
+                            left: 32px;
+                            top: 27px;
                         }
                     }
 
@@ -344,7 +379,7 @@
             .percent-container();
 
             .phone-basement{
-                .percent-div(none, -823, -468, 1644, 1040, "story-phone-mailbox.png");
+                .percent-div(none, -818, -722, 1634, 1394, "story-phone-mailbox.jpg");
                 .unselectable();
                 touch-action: none;
             }
@@ -509,13 +544,491 @@
 
     .fingerprint-popup{
 
-        .story-popup-container("layouts/story-fingerprint-1.jpg");
+        overflow: hidden;
+
+        .system-background{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .image-bg("story-fingerprint-background.jpg", cover);
+            background-position: center center;
+        }
+
+        .story-popup-container("layouts/story-fingerprint-6.jpg");
+
 
         .content{
             .percent-container();
-            .percent-div(wineglass, -229, -358, 461, 603, "story-fingerprint-wineglass.png");
+            .wineglass{
+                .percent-div(none, -229, -358, 461, 603, "story-fingerprint-wineglass.png");
+                visibility: hidden;
+            }
+            .big-badge{
+                .percent-div(none, -450, -520, 916, 1040, "story-fingerprint-badge.png");
+                visibility: hidden;
+            }
+            .system{
+                .percent-container(absolute, 100%, 100%, 0, 0);
+                .percent-div(badge, -371, -153, 86, 102, "story-fingerprint-small-badge.png");
+                .percent-div(content, -259, -152, 414, 93, "story-fingerprint-content-1.png");
+                .fade-btn-2(btn-share, "story-fingerprint-btn-share.png", 182, -111, 163, 52);
+
+                .percent-div(raw-sample, -387, -14, 151, 254, "story-fingerprint-sample-1.png");
+
+                .raw-sample-match-circle{
+                    @w: 105;
+                    @h: 197;
+                    .percent-div(none, -311, 93, 105, 197);
+                    margin-left: (-@w * .5) * 1%;
+                    margin-top: (-@h * .5) * 1%;
+
+                    .my-mixin(1, 48, 0);
+                    .my-mixin(2, 34, 176);
+                    .my-mixin(3, 0, 79);
+                    .my-mixin(4, 47, 98);
+                    .my-mixin(5, 84, 69);
+
+                    .my-mixin(@index; @raw-left; @raw-top;){
+                        .circle:nth-child(@{index}){
+                            @circle-width: 22;
+                            @circle-height: 22;
+
+
+                            @left: @raw-left / @w * 100;
+                            @top: @raw-top / @h * 100;
+
+                            @width: @circle-width / @w * 100;
+                            @height: @circle-height / @h * 100;
+
+                            .percent-div(none, @left, @top,@width,@height,"story-fingerprint-identy-circle.png");
+
+                            background-size: 100% 100%;
+                        }
+                    }
+                }
+
+                .arrow-up{
+                    .percent-div(none, 349, -43, 80, 80, "story-fingerprint-arrow-up.png");
+                    cursor: pointer;
+                    &:active{
+                        margin-top: -1px;
+                    }
+                }
+                .arrow-down{
+                    .percent-div(none, 349, 185, 80, 80, "story-fingerprint-arrow-down.png");
+                    cursor: pointer;
+                    &:active{
+                        margin-top: 1px;
+                    }
+                }
+
+                .sample-layout{
+
+                    .percent-div(none, -180, -18, 500, 1620, "story-fingerprint-fingerprints-1.png");
+                    opacity: .4;
+                }
+                .fingerprints{
+                    .percent-container(absolute, 100%, 100%, -180%, -18%);
+
+                    @texture-width:500;
+                    @texture-height:1620;
+                    @texture-gap-x: 100;
+                    @texture-gap-y: 135;
+
+                    @texture-scale: @texture-width / @texture-gap-x;
+
+                    @w: @texture-gap-x;
+                    @h: @texture-gap-y;
+
+                    @sample-width: @w - 0;
+                    @sample-height: @h - 0;
+
+                    @clip-width: (@w / @sample-width) * 100%;
+                    @clip-height: (@h / @sample-height) * 100%;
+
+                    @num-cols: 5;
+                    @num-rows: 6;
+
+                    @texture-gap-x-percent: 100 / (@num-cols - 1) * 1%;
+                    @texture-gap-y-percent: 100 / (@num-rows * 2 - 1) * 1%;
+
+                    .wrapper{
+                        .percent-container(absolute, 100%, 100%, 0%, 0%);
+
+                        .my-loop (1);
+                        .my-loop (@i) when (@i <= 30) {
+                            .my-mixin(@i);
+                            .my-loop(@i + 1);
+                        }
+
+                        .my-mixin(@index){
+                            .sample:nth-child(@{index}){
+                                position: absolute;
+
+                                @row: `parseInt((@{index} - 1) / @{num-cols})`;
+                                @col: @index - (@row * @num-cols) - 1;
+
+                                width:@sample-width * 1%;
+                                height:@sample-height * 1%;
+
+                                @left: @w * @col * 1%;
+                                @top: @h * @row * 1%;
+                                left: @left * 1%;
+                                top: @top * 1%;
+
+                                cursor: pointer;
+
+                                overflow: hidden;
+
+                                .normal-state{
+                                    position: absolute;
+                                    width: @clip-width;
+                                    height: @clip-height;
+
+                                    opacity: .5;
+
+                                    .image-bg("story-fingerprint-fingerprints-1.png");
+                                    background-repeat: no-repeat;
+                                    background-position: (@col * @texture-gap-x-percent) (@row * @texture-gap-y-percent);
+
+                                    background-size: @texture-scale * 100%;
+
+                                }
+
+                                .hover-state{
+                                    position: absolute;
+                                    width: @clip-width;
+                                    height: @clip-height;
+
+                                    .image-bg("story-fingerprint-fingerprints-1.png");
+                                    background-repeat: no-repeat;
+                                    background-position: (@col * @texture-gap-x-percent) ((@row + @num-rows) * @texture-gap-y-percent);
+
+                                    background-size: @texture-scale * 100%;
+
+                                    visibility: hidden;
+                                    opacity: 0;
+                                }
+
+
+                                .enable-hide(.5s);
+
+                                &.selected{
+                                    .normal-state{
+                                        opacity: 0;
+                                        visibility: hidden;
+                                    }
+                                    .hover-state{
+                                        opacity: 1;
+                                        visibility: visible;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                .fingerprints-2{
+
+                    .percent-container(absolute, 100%, 100%, -207%, -27%);
+
+                    visibility: hidden;
+                    opacity: 0;
+
+
+                    @texture-width:570;
+                    @texture-height:480;
+                    @texture-gap-x: 190;
+                    @texture-gap-y: 240;
+
+                    @texture-scale: @texture-width / @texture-gap-x;
+
+                    @w: @texture-gap-x;
+                    @h: @texture-gap-y;
+
+                    @sample-width: @w - 0;
+                    @sample-height: @h - 0;
+
+                    @clip-width: (@w / @sample-width) * 100%;
+                    @clip-height: (@h / @sample-height) * 100%;
+
+                    @num-cols: 3;
+                    @num-rows: 1;
+
+                    @texture-gap-x-percent: 100 / (@num-cols - 1) * 1%;
+                    @texture-gap-y-percent: 100 / (@num-rows * 2 - 1) * 1%;
+
+                    .my-loop (1);
+                    .my-loop (@i) when (@i <= 3) {
+                        .my-mixin(@i);
+                        .my-loop(@i + 1);
+                    }
+
+                    .my-mixin(@index){
+                        .sample:nth-child(@{index}){
+                            position: absolute;
+
+                            @row: `parseInt((@{index} - 1) / @{num-cols})`;
+                            @col: @index - (@row * @num-cols) - 1;
+
+                            width:@sample-width * 1%;
+                            height:@sample-height * 1%;
+
+                            @left: @w * @col * 1%;
+                            @top: @h * @row * 1%;
+                            left: @left * 1%;
+                            top: @top * 1%;
+
+                            cursor: pointer;
+
+                            overflow: hidden;
+
+                            .normal-state{
+                                position: absolute;
+                                width: @clip-width;
+                                height: @clip-height;
+
+                                opacity: .5;
+
+                                .image-bg("story-fingerprint-fingerprints-2.png");
+                                background-repeat: no-repeat;
+                                background-position: (@col * @texture-gap-x-percent) (@row * @texture-gap-y-percent);
+
+                                background-size: @texture-scale * 100%;
+
+                            }
+
+                            .hover-state{
+                                position: absolute;
+                                width: @clip-width;
+                                height: @clip-height;
+
+                                .image-bg("story-fingerprint-fingerprints-2.png");
+                                background-repeat: no-repeat;
+                                background-position: (@col * @texture-gap-x-percent) ((@row + @num-rows) * @texture-gap-y-percent);
+
+                                background-size: @texture-scale * 100%;
+
+                                visibility: hidden;
+                                opacity: 0;
+                            }
+
+
+                            .enable-hide(.5s);
+
+                            &.selected{
+                                .normal-state{
+                                    opacity: 0;
+                                    visibility: hidden;
+                                }
+                                .hover-state{
+                                    opacity: 1;
+                                    visibility: visible;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+
+                &.shared-mode{
+
+                    .btn-share, .arrow-down, .arrow-up, .fingerprints{
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: opacity .5s ease-out, visibility 0s linear .5s;
+                    }
+
+                    .fingerprints-2{
+                        opacity: 1;
+                        visibility: visible;
+                        transition: opacity .5s ease-out;
+                    }
+                }
+            }
+        }
+
+
+        .results{
+
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.66);
+
+            left:0;
+            top:0;
+
+            .wrapper{
+
+                .percent-container();
+
+                .mis-match{
+
+                    .percent-div(none, -238, -215,472,475,"story-phone-bingo.png");
+                    .icon{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        .image-bg("story-fingerprint-mismatch.png");
+                    }
+                }
+
+                .bingo{
+                    .percent-container(absolute, 100%, 100%, 0%, 0%);
+                    .percent-div(basement, -375, -171,738,423,"story-fingerprint-matched-base.png");
+                    .fade-btn-2(btn-ask, "story-fingerprint-btn-ask.png", -84, 102, 163, 52);
+                }
+            }
         }
     }
 
+
+
+    .medal-popup{
+
+        .story-popup-container("layouts/story-medal-pc.jpg");
+
+        .content{
+            .percent-container();
+            .percent-div(medal-pic, -328, -352, 651, 643, "story-medal-pic.png");
+        }
+    }
+
+
+
+    .briefcase-popup{
+
+        .story-popup-container("layouts/story-briefcase-pc.jpg");
+
+        .content{
+            .percent-container();
+            .percent-div(briefcase-case, -744, -209, 1502, 427, "story-briefcase-case.png");
+
+            .password-pad{
+                .percent-container(absolute, 100%, 100%, 0%, 0%);
+                .percent-div(pad-base, -280, -280, 554, 554, "story-briefcase-pad-base.png");
+
+                .my-mixin(1);
+                .my-mixin(2);
+                .my-mixin(3);
+                .my-mixin(4);
+
+                .my-mixin(@index){
+
+                    @start-left: -231;
+                    @start-top: -75;
+                    @gap-x: 119;
+                    @w: 98;
+                    @h: 122;
+
+                    @left: @start-left + (@index - 1) * @gap-x;
+                    @top: @start-top;
+
+                    .slot-cover-@{index}{
+
+                        .percent-div(none, @left, @top, @w, @h, "story-briefcase-pad-base-number-base.png");
+                    }
+
+                    @w2: 97;
+                    @h2: 110;
+                    @left2: @start-left + (@index - 1) * @gap-x;
+                    @top2: @start-top + (@h - @h2) * .5;
+
+                    .slot-@{index}{
+
+                        .percent-div(none, @left2, @top2, @w2, @h2);
+                        overflow: hidden;
+
+                        .number-clip{
+
+                            @h3: 86;
+
+                            @top4: (@h2 - @h3) / @h2 * 50% - (@h3 / @h2 * 100%);
+                            @h4: (@h3 / @h2 * 300%);
+
+                            .percent-div(none,0, @top4, 100%, @h4, "story-briefcase-numbers.png");
+                            background-size: 100% (100/30)*100%;
+                            background-position: 0 0%;
+
+                        }
+                    }
+
+                    @w5: 98;
+                    @h5: 40;
+                    @top5: @top - 35;
+                    @top6: @top + @h - 5;
+
+                    .arrow-up-@{index}{
+                        .fade-btn-2(none; "story-briefcase-arrow-up.png"; @left; @top5; @w5; @h5; @unit: 1%);
+                    }
+
+                    .arrow-down-@{index} {
+                        .fade-btn-2(none; "story-briefcase-arrow-down.png"; @left; @top6; @w5; @h5; @unit: 1%);
+                    }
+                }
+            }
+
+            .btn-unlock{
+                .percent-div(none, -237, 91, 469, 79, "story-briefcase-btn-unlock-base.png");
+
+                cursor: pointer;
+
+                >div{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .btn-state{
+                    .image-bg("story-briefcase-btn-unlock.png", cover);
+                }
+                .error-state{
+                    .image-bg("story-briefcase-btn-unlock-error.png", cover);
+                    visibility: hidden;
+                    opacity: 0;
+                }
+                .correct-state{
+                    .image-bg("story-briefcase-btn-unlock-correct.png", cover);
+                    visibility: hidden;
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+
+}
+
+
+/** intro **/
+#happy-end{
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .background{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .image-bg("happy-end-background.jpg", cover);
+    }
+
+    .my-layout("layouts/happy-end-pc.jpg");
+
+    .wrapper{
+        position: absolute;
+        left:50%;
+        top:50%;
+
+        .abs-div-2(open-case, -686,-214,705,579,"happy-end-open-case.png");
+        .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
+        .fade-btn-2(btn-to-form,"happy-end-btn-to-form.png", 61,124,223,52);
+
+
+    }
 
 }

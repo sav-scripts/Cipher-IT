@@ -61,7 +61,15 @@
                     var toIndex = _currentObject.changeActionWhenDialoging;
                     _currentObject.changeActionWhenDialoging = null;
 
-                    Story.ObjectManager.changeNpcAction(_currentObject.hash, toIndex);
+                    Story.ObjectManager.changeNpcAction(_currentObject.hash, toIndex, null, function()
+                    {
+                        if(_currentObject.changePhaseAfterActionChange)
+                        {
+                            Story.setPhaseTo(_currentObject.changePhaseAfterActionChange);
+                        }
+                    });
+
+
                 }
 
 
@@ -97,13 +105,30 @@
             if (_isHiding) return;
             _isHiding = true;
 
-            Story.DialogText.hide();
+            //console.log(_currentObject.changeHashAfterDialog);
 
-            Story.Scene.customCamera.recover(function()
+            if(_currentObject.changeHashAfterDialog)
             {
-                TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 1});
                 if(cb) cb.call();
-            });
+                Story.DialogText.hide();
+                Story.Scene.customCamera.recover(function()
+                {
+                    TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 1});
+                });
+
+                SceneHandler.toHash(_currentObject.changeHashAfterDialog);
+            }
+            else
+            {
+
+                Story.DialogText.hide();
+
+                Story.Scene.customCamera.recover(function()
+                {
+                    TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 1});
+                    if(cb) cb.call();
+                });
+            }
         }
     };
 

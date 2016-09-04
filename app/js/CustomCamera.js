@@ -171,6 +171,7 @@
             });
 
             tl.to(this._camera, 1, {alpha: this._oldAlpha, beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
+            //tl.to(this._camera, 1, {beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
             tl.add(cb);
 
         },
@@ -219,6 +220,8 @@
         {
             $(this._canvas).unbind("pointerdown", onPointerDown);
             $(window).unbind("pointermove", onPointerMove).unbind("pointerup", onPointerUp);
+
+            this._tweenObj.pointerDownPosition = null;
         }
     }
 

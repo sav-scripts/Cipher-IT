@@ -11,7 +11,8 @@
             2: "poster unlocked, billboard enabled, backpacker dialog changed",
             3: "billboard unlocked, sport girl dialog changed",
             4: "bartender dialog changed",
-            5: "fingerprint unlocked"
+            5: "fingerprint unlocked",
+            6: "medal unlocked, briefcase unlocked, businessman dialog changed"
         };
 
     var self = window.Story =
@@ -55,7 +56,7 @@
 
                         if(Utility.urlParams.startPhase && _phaseDic[Utility.urlParams.startPhase])
                         {
-                            self.setPhaseTo(parseInt(Utility.urlParams.startPhase));
+                            self.setPhaseTo(parseInt(Utility.urlParams.startPhase), true);
                         }
 
                         $doms.container.detach();
@@ -136,7 +137,7 @@
             }
         },
         
-        setPhaseTo: function(phaseIndex)
+        setPhaseTo: function(phaseIndex, isHardSet)
         {
             if(self._phaseIndex >= phaseIndex) return;
 
@@ -151,7 +152,7 @@
 
             function update()
             {
-                console.log("new index: " + self._phaseIndex);
+                console.log("story progress to => " + self._phaseIndex);
 
                 if(oldPhaseIndex == 0)
                 {
@@ -187,11 +188,20 @@
                 }
                 else if(self._phaseIndex == 4)
                 {
-                    Story.ObjectManager.setObjectDialog("/Bartender", 1, 5, 1);
+                    Story.ObjectManager.setObjectDialog("/Bartender", 1, null, 1, "/Story/Fingerprint", 5);
                 }
                 else if(self._phaseIndex == 5)
                 {
+                    Story.ObjectManager.changeNpcAction("/Bartender", 1, 0);
                     Story.Evidences.unlockEvidence("/Fingerprint");
+                }
+                else if(self._phaseIndex == 6)
+                {
+                    Story.ObjectManager.setObjectDialog("/Businessman", 1);
+                    if(isHardSet) Story.Fingerprint.toCompleteMode();
+
+                    Story.ObjectManager.setObjectEnabled("/Medal", true);
+                    Story.ObjectManager.setObjectEnabled("/Briefcase", true);
                 }
 
             }
@@ -213,19 +223,6 @@
         $("#invisible-container").append(templates[0].dom);
         $doms.container = $("#story");
 
-        _contentDic =
-        {
-            "/Evidences": self.Evidences.init($doms.container.find(".evidences")),
-            "/Key": self.Key.init($doms.container.find(".key-popup")),
-            "/Phone": self.Phone.init($doms.container.find(".phone-popup")),
-            "/Poster": self.Poster.init($doms.container.find(".poster-popup")),
-            "/Photos": self.Photos.init($doms.container.find(".photos-popup")),
-            "/Billboard": self.Billboard.init($doms.container.find(".billboard-popup")),
-            "/Fingerprint": self.Fingerprint.init($doms.container.find(".fingerprint-popup"))
-        };
-
-        self.DialogText.init($doms.container.find(".dialog"));
-        self.DialogTrigger.init();
 
         $doms.buttons =
         {
@@ -238,6 +235,22 @@
                 SceneHandler.toHash("/Story/Evidences");
             })
         };
+
+        _contentDic =
+        {
+            "/Evidences": self.Evidences.init($doms.container.find(".evidences"), $doms.buttons.evidences),
+            "/Key": self.Key.init($doms.container.find(".key-popup")),
+            "/Phone": self.Phone.init($doms.container.find(".phone-popup")),
+            "/Poster": self.Poster.init($doms.container.find(".poster-popup")),
+            "/Photos": self.Photos.init($doms.container.find(".photos-popup")),
+            "/Billboard": self.Billboard.init($doms.container.find(".billboard-popup")),
+            "/Fingerprint": self.Fingerprint.init($doms.container.find(".fingerprint-popup")),
+            "/Medal": self.Medal.init($doms.container.find(".medal-popup")),
+            "/Briefcase": self.Briefcase.init($doms.container.find(".briefcase-popup"))
+        };
+
+        self.DialogText.init($doms.container.find(".dialog"));
+        self.DialogTrigger.init();
 
         $doms.sceneCanvas = $doms.container.find(".scene-canvas");
     }
@@ -275,7 +288,7 @@
         
 
         var tl = new TimelineMax;
-        tl.to($doms.container, .4, {autoAlpha: 0});
+        tl.to($doms.container, 1, {autoAlpha: 0, ease:Power3.easeOut});
         tl.add(function ()
         {
             Story.Scene.setActive(false);

@@ -49,6 +49,10 @@
             "/Story/Photos",
             "/Story/Billboard",
             "/Story/Fingerprint",
+            "/Story/Medal",
+            "/Story/Briefcase",
+
+            "/HappyEnd",
 
             "/Participate",
             "/Participate/Product",
