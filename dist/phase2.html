@@ -6,45 +6,6 @@
 
     <meta id="myViewport" name="viewport" content="width=640,user-scalable=0">
 
-    <!--<script>-->
-
-        <!--var wasUsedLandscape = false;-->
-        <!--var rewrited = false;-->
-
-        <!--updateViewport();-->
-        <!--function updateViewport()-->
-        <!--{-->
-            <!--var portraitModeMinWidth = 640;-->
-<!--//            var landscapeModeMinWidth = 1200;-->
-            <!--var landscapeModeMinWidth = 'device-width';-->
-
-            <!--var divString, scaleRate, targetWidth;-->
-
-            <!--if (wasUsedLandscape || (screen.width < portraitModeMinWidth && screen.width < screen.height))-->
-            <!--{-->
-
-                <!--targetWidth = portraitModeMinWidth;-->
-            <!--}-->
-            <!--else if(screen.width < landscapeModeMinWidth && screen.width > screen.height)-->
-            <!--{-->
-                <!--wasUsedLandscape = true;-->
-                <!--targetWidth = landscapeModeMinWidth-->
-            <!--}-->
-
-            <!--if(targetWidth != null)-->
-            <!--{-->
-                <!--scaleRate =  screen.width/targetWidth;-->
-                <!--var contentString = 'width='+targetWidth+'px,initial-scale='+scaleRate;-->
-                <!--divString = '<meta id="myViewport" name="viewport" content="'+contentString+'">';-->
-                <!--document.write(divString);-->
-
-                <!--rewrited = true;-->
-            <!--}-->
-        <!--}-->
-
-    <!--</script>-->
-
-
     <meta property="fb:app_id" content="xxx"/>
     <meta property="og:title" content="xxx" />
     <meta property="og:type" content="activity" />
@@ -52,10 +13,20 @@
     <meta property="og:description" content="xxx" />
     <meta property="og:image" content="xxx" />
 
-    <link rel="stylesheet" href="styles/main.4130ca046938c40763f5.css">
+    <link rel="stylesheet" href="styles/main.79ce3dd0ab7f36007729.css">
 
 </head>
 <body onload="Main.init();">
+
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PV2D26"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PV2D26');</script>
+    <!-- End Google Tag Manager -->
 
     <div id="loading">
 
@@ -151,6 +122,8 @@
 
     <div id="fb-root"></div>
 
+    <script src="js/lib/LAB.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ModifiersPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
@@ -164,13 +137,25 @@
     <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
     <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/lib/createjs-2015.11.26.min.js"></script>
-    <script src="form_Canvas.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.combined.js"></script>
+    <!--<script src="js/lib/createjs-2015.11.26.min.js"></script>-->
+    <script src="js/lib/CreatejsExtend.js"></script>
+    <!--<script src="form_Canvas.js"></script>-->
+    <!--<script src="intro.js"></script>-->
 
     <script src="../editor/js/lib/babylon.2.4.max.js"></script>
 
 
-    <script src="js/optimized.b6c3ad6ef970e688eb89.js"></script>
+    <script src="js/optimized.b76594ae37be90e2996e.js"></script>
 
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PV2D26"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PV2D26');</script>
+    <!-- End Google Tag Manager -->
 </body>
 </html>

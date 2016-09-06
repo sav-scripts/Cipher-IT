@@ -43,6 +43,19 @@
 
     .my-layout("layouts/intro-pc.jpg");
 
+
+    .intro-video{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .intro-animation{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
     .wrapper{
         .percent-container();
 
@@ -50,12 +63,13 @@
 
         .btn-play{
 
-            .percent-div(none, -689,105, 337, 94);
+//            .percent-div(none, -689,105, 337, 94);
+            .percent-div(none, -701,103, 361, 99);
 
             .normal-state{
 
                 position: absolute;
-                .image-bg("intro-btn-play.png", cover);
+                .image-bg("intro-btn-play.gif", cover);
                 width: 100%;
                 height: 100%;
                 opacity: 1;
@@ -69,8 +83,8 @@
             .hover-state{
 
                 position: absolute;
-//                .image-bg("intro-btn-play.png", cover);
-                background-color: blue;
+                .image-bg("intro-btn-play-hover.png", cover);
+//                background-color: blue;
                 width: 100%;
                 height: 100%;
                 opacity: 0;
@@ -413,7 +427,7 @@
                             position: absolute;
                             width: 100%;
                             height: 100%;
-                            .image-bg(@src);
+                            .image-bg(@src, cover);
                             background-position: bottom;
 
 
@@ -466,7 +480,7 @@
                             position: absolute;
                             width: 100%;
                             height: 100%;
-                            .image-bg(@src);
+                            .image-bg(@src, cover);
                             background-position: bottom;
 
 

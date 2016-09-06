@@ -56,8 +56,17 @@
             _sceneSphere.isPickable = false;
 
             _sceneSphere.material = MaterialLib.createNormal();
-            _sceneSphere.disableLighting = true;
+            _sceneSphere.material.disableLighting = true;
             //disableLighting
+
+
+            //if(Utility.urlParams.fog == 1)
+            //{
+                scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+                scene.fogDensity = 0.0018;
+                scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
+            //}
+
 
             ShaderLoader.defaultPath = "../editor/shaders/";
 
@@ -67,7 +76,14 @@
                 {
                     BillboardEditor.setAllUnPickable();
 
+                    setupLights();
+
                     Story.ObjectManager.init(_scene);
+
+                    RainMaker.init(_scene);
+
+                    //PostProcessLib.init(_engine, _scene, _customCamera._camera, true);
+                    //PostProcessLib.enableEffect("noise");
 
                     Loading.hide(onReady);
                 });
@@ -135,6 +151,18 @@
             });
         }
     };
+
+    function setupLights()
+    {
+        var dic = LightEditor.getEditorObjectDic();
+        for(var key in dic)
+        {
+            var light = dic[key]._light;
+            //console.log(light.position);
+        }
+
+        //BillboardEditor.updateAllVisibility();
+    }
 
     function renderFunction()
     {

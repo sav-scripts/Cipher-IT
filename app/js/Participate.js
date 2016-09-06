@@ -30,22 +30,24 @@
             {
                 var templates =
                     [
-                        {url: "_participate.html", startWeight: 0, weight: 100, dom: null}
+                        {url: "_participate.html", startWeight: 0, weight: 99, dom: null}
                     ];
 
 
                 SceneHandler.loadTemplate(null, templates, function loadComplete()
                 {
-                    //return;
-                    ApiProxy.callApi("get_event_data", null, null, function(response)
+                    loadCanvasAnimation(function()
                     {
-                        _eventData = response.data;
+                        ApiProxy.callApi("get_event_data", null, null, function(response)
+                        {
+                            _eventData = response.data;
 
-                        build(templates);
-                        _isInit = true;
-                        cb.apply(null);
+                            build(templates);
+                            _isInit = true;
+                            cb.apply(null);
+                        });
                     });
-                }, 0);
+                }, true);
             }
         },
 
@@ -165,6 +167,29 @@
         setupTextAnimation();
 
         $doms.container.detach();
+    }
+
+    function loadCanvasAnimation(cb)
+    {
+        var numScripts = 1, numScriptLoaded = 0, animeScript= 'form_Canvas.js';
+
+        $LAB.script(animeScript).wait(scriptLoaded);
+
+        function scriptLoaded()
+        {
+            numScriptLoaded ++;
+
+            //Loading.updateProgress(numScriptLoaded / numScripts*100, 0, 20, false);
+
+            if(numScriptLoaded < numScripts)
+            {
+
+            }
+            else
+            {
+                cb.call();
+            }
+        }
     }
 
     function setupSelect($select)

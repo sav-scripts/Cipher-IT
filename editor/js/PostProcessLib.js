@@ -20,7 +20,7 @@
 
     var self = window.PostProcessLib =
     {
-        init: function(engine, scene, camera)
+        init: function(engine, scene, camera, noEdit)
         {
             _engine = engine;
             _scene = scene;
@@ -29,8 +29,8 @@
             _pipeline = new BABYLON.PostProcessRenderPipeline(engine, SCENE_PIPELINE_NAME);
 
             buildNoise();
-            buildDrunk();
-            buildFogWave();
+            //buildDrunk();
+            //buildFogWave();
 
             _scene.postProcessRenderPipelineManager.addPipeline(_pipeline);
             _scene.postProcessRenderPipelineManager.attachCamerasToRenderPipeline(SCENE_PIPELINE_NAME, camera);
@@ -43,7 +43,7 @@
                 }
             }
 
-            setupGUI();
+            if(!noEdit) setupGUI();
 
         },
 

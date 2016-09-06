@@ -2887,6 +2887,16 @@ body.no-scroll-mode {
   background-position: center center;
   background-size: contain;
 }
+#intro .intro-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#intro .intro-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 #intro .wrapper {
   position: absolute;
   width: 100px;
@@ -2905,14 +2915,14 @@ body.no-scroll-mode {
 }
 #intro .wrapper .btn-play {
   position: absolute;
-  left: -689%;
-  top: 105%;
-  width: 337%;
-  height: 94%;
+  left: -701%;
+  top: 103%;
+  width: 361%;
+  height: 99%;
 }
 #intro .wrapper .btn-play .normal-state {
   position: absolute;
-  background-image: url("../images/intro-btn-play.png");
+  background-image: url("../images/intro-btn-play.gif");
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -2922,7 +2932,8 @@ body.no-scroll-mode {
 }
 #intro .wrapper .btn-play .hover-state {
   position: absolute;
-  background-color: blue;
+  background-image: url("../images/intro-btn-play-hover.png");
+  background-size: cover;
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -3721,7 +3732,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3746,7 +3757,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3771,7 +3782,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3796,7 +3807,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3821,7 +3832,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3846,7 +3857,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3871,7 +3882,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-node.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3910,7 +3921,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-1.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3942,7 +3953,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-2.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -3974,7 +3985,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-3.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4006,7 +4017,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-4.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4038,7 +4049,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-5.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4070,7 +4081,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-6.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4102,7 +4113,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-7.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4134,7 +4145,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-8.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4166,7 +4177,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-9.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
@@ -4198,7 +4209,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/phone-number-0.png");
-  background-size: auto;
+  background-size: cover;
   background-position: bottom;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;

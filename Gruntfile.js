@@ -37,6 +37,7 @@ module.exports = function(grunt)
                             //'images/*.{png,gif,jpg,svg}',
                             '*.html',
                             'form_Canvas.js',
+                            'intro.js',
                             'js/Loading.js',
                             'js/lib/createjs-2015.11.26.min.js',
                             'js/lib/jquery.detectmobilebrowser.min.js',
@@ -45,6 +46,7 @@ module.exports = function(grunt)
                             'js/lib/pep.min.js',
                             'js/lib/TweenMax.min.js',
                             'js/lib/jquery.1.11.3.min.js',
+                            'js/lib/LAB.min.js',
                             'styles/phase1-only.css'
                         ],
                         dest: 'dist'

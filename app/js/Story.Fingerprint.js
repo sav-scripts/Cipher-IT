@@ -334,7 +334,7 @@
             if(isMatched)
             {
                 _isCompleted = true;
-                Story.setPhaseTo(6);
+                Story.setPhaseTo(StoryPhases.MEDAL_AND_BRIEFCASE);
 
                 var gap = .3, t=tl.duration();
                 tl.set($rawSampleMatchCircle, {autoAlpha: 0}, t);

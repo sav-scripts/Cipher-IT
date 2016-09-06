@@ -34,7 +34,7 @@
             if (!_isHiding) return;
             _isHiding = false;
 
-            Story.setPhaseTo(3);
+            Story.setPhaseTo(StoryPhases.SPORT_GIRL);
 
             $doms.parent.append($doms.container);
 

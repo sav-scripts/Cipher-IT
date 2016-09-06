@@ -25,8 +25,8 @@
         },
         _dialogTexts =
         [
-            '<span>Bingo！阿..有隻手機！解鎖瞧瞧是否有更多線索，密碼可能跟</span><span class="green">英文的Ｃ</span><span>有些關聯</span>',
-            '<span>恩...</span><span class="green">Honey</span><span>！　看來我知道下個該找的線索了</span>'
+            '<span>Bingo！啊..有隻手機！解鎖瞧瞧是否有更多線索，密碼可能跟</span><span class="green">英文的Ｃ</span><span>有些關聯</span>',
+            '<span>嗯...</span><span class="green">Honey</span><span>！　看來我知道下個該找的線索了</span>'
         ];
 
     var self = window.Story.Phone=
@@ -68,7 +68,7 @@
             _btnCloseClicked = false;
             _isLocking = false;
 
-            Story.ObjectManager.clearObject("/Phone");
+            //Story.ObjectManager.clearObject("/Phone");
             Story.Evidences.unlockEvidence("/Phone");
 
             $doms.parent.append($doms.container);
@@ -107,6 +107,15 @@
                 $doms.container.detach();
                 if (cb) cb.apply();
             });
+        },
+
+        toCompleteMode: function()
+        {
+            if(_isDetectComplete) return;
+
+            _myPhase = 1;
+            _isDetectComplete = true;
+            $doms.bingo._toCompleteMode();
         }
 
     };
@@ -162,6 +171,14 @@
 
             }, "-=.6");
         };
+
+        $doms.bingo._toCompleteMode = function()
+        {
+            $doms.quez.detach();
+            $doms.bingo.detach();
+
+            $doms.content.append($honey);
+        }
     }
 
     function setupQuez()
@@ -276,7 +293,7 @@
 
             if(_matchCount >= 7)
             {
-                Story.setPhaseTo(1);
+                Story.setPhaseTo(StoryPhases.POSTER);
                 _myPhase = 1;
                 $doms.bingo._play();
                 _isDetectComplete = true;

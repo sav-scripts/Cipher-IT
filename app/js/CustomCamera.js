@@ -3,6 +3,8 @@
  */
 (function(){
 
+    var _self;
+
     window.CustomCamera = CustomCamera;
 
     function CustomCamera(canvas, scene, sceneSize, startCameraRadius, dBetaLimitDeg)
@@ -78,6 +80,40 @@
             {
                 unbindControl.call(this);
             }
+        },
+
+        getAlpha: function()
+        {
+            return this._camera.alpha;
+        },
+
+        lookAt: function(position, cb)
+        {
+            var self = this;
+
+            this._camera.alpha %= Math.PI*2;
+
+            this._oldAlpha = this._camera.alpha;
+            this._oldBeta = this._camera.beta;
+
+            var newAlpha = Math.atan2(-position.z, -position.x),
+                length = Math.sqrt(position.x * position.x + position.z*position.z),
+                newBeta = Math.atan2(-position.y, -length) - Math.PI*.5;
+
+            if(newBeta < 0) newBeta += Math.PI*2;
+
+            if(Math.abs(this._oldAlpha - newAlpha) > Math.PI)
+            {
+                (newAlpha > this._oldAlpha)? newAlpha -= Math.PI*2: newAlpha += Math.PI*2;
+            }
+
+            var tl = new TimelineMax;
+
+
+            tl.to(this._camera, 1, {alpha: newAlpha, beta: newBeta, ease:Power1.easeInOut});
+
+            tl.add(cb);
+
         },
 
         focusOn: function(position, cb)
@@ -170,8 +206,8 @@
 
             });
 
-            tl.to(this._camera, 1, {alpha: this._oldAlpha, beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
-            //tl.to(this._camera, 1, {beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
+            //tl.to(this._camera, 1, {alpha: this._oldAlpha, beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
+            tl.to(this._camera, 1, {beta: Math.PI *.5, radius: 75, fov:.8, ease:Power1.easeInOut});
             tl.add(cb);
 
         },
@@ -197,15 +233,49 @@
     function bindControl()
     {
         //console.log(this._useDeviceOrientation);
+        var self = this;
 
         if(this._useDeviceOrientation)
         {
+            this.handleOrientation = handleOrientation;
+            window.addEventListener("deviceorientation", handleOrientation);
 
         }
         else
         {
+
             $(this._canvas).on("pointerdown", {self:this}, onPointerDown);
             $(window).on("pointermove", {self:this}, onPointerMove).on("pointerup", {self:this}, onPointerUp);
+        }
+
+
+
+        function handleOrientation(event)
+        {
+
+            //if((targetAlpha - self._tweenObj.alpha) > Math.PI) self._tweenObj.alpha += Math.PI * 2;
+            //if((targetAlpha - self._tweenObj.alpha) < -Math.PI*2) self._tweenObj.alpha -= Math.PI * 2;
+
+            var alpha = event.alpha,
+                beta = event.beta;
+
+
+            if(Math.abs(alpha - self._tweenObj.alpha) > 180)
+            {
+                (alpha > self._tweenObj.alpha)? self._tweenObj.alpha += 360: self._tweenObj.alpha -= 360;
+            }
+
+            beta = 90 - (beta - 60) * .5;
+
+            //var targetAlpha = alpha/180*Math.PI;
+            //self._tweenObj.targetAlpha = targetAlpha;
+
+            console.log(event.alpha + ", " + event.beta + ", " + event.gamma + " => " + alpha);
+
+            TweenMax.killTweensOf(self._tweenObj);
+            TweenMax.to(self._tweenObj,.5,{alpha: alpha, beta: beta, onUpdate:updateCamera, onUpdateParams:[self]});
+            //self._camera.alpha = targetAlpha;
+
         }
 
     }
@@ -214,7 +284,7 @@
     {
         if(this._useDeviceOrientation)
         {
-
+            window.removeEventListener("deviceorientation", this.handleOrientation);
         }
         else
         {
@@ -228,10 +298,7 @@
     function onPointerDown(event)
     {
         var self = event.data.self;
-        //console.log(self);
         self._tweenObj.pointerDownPosition = {x: event.clientX, y: event.clientY};
-        //console.log(event);
-        //self.setEnabled(false);
     }
 
     function onPointerMove(event)
@@ -278,7 +345,11 @@
 
     function updateCamera(self)
     {
-        self._camera.alpha = self._tweenObj.alpha;
+        self._camera.alpha = self._tweenObj.alpha/180*Math.PI;
+        var beta = self._tweenObj.beta/180*Math.PI;
+        if(beta > self._camera.upperBetaLimit) beta = self._camera.upperBetaLimit;
+        if(beta < self._camera.lowerBetaLimit) beta = self._camera.lowerBetaLimit;
+        self._camera.beta = beta;
     }
 
 

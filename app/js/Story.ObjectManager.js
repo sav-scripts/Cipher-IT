@@ -5,6 +5,9 @@
 
     var _scene,
         _isInteractiveEnabled = false,
+        _pointFingerMesh,
+        _pointFingerMeshContainer,
+        _currentPointFingerHash,
         _objectDic =
         {
             "/TattooMan":
@@ -61,7 +64,10 @@
                 nameHead: 'trigger',
                 name: "businessman",
                 isNpc: true,
-                dialogs: ["<span>我只是個商人，請問我什麼時候可以離開，我還得去趕飛機去參加名酒拍賣會啊！</span>", "<span>...</span>"],
+                dialogs: [
+                            "<span>我只是個商人，請問我什麼時候可以離開，我還得去趕飛機去參加名酒拍賣會啊！</span>",
+                            ["<span>...</span>", "<span>不回答！想必是心虛…他的公事包真的非常可疑！</span>"]
+                        ],
                 dialogEvent: null,
                 y: 10
             },
@@ -112,7 +118,7 @@
             }
         };
 
-    window.Story.ObjectManager =
+    var self = window.Story.ObjectManager =
     {
         getObjectDic: function(){ return _objectDic; },
 
@@ -122,9 +128,7 @@
 
             var dic = BillboardEditor.getDicByName(),
                 hash,
-                objectName,
-                obj,
-                editorObject;
+                obj;
 
             for(hash in _objectDic)
             {
@@ -134,6 +138,7 @@
             }
 
             updateEnabled();
+            createPointFinger();
         },
 
         getObject: function(hash)
@@ -155,6 +160,8 @@
 
             if(obj)
             {
+                if(obj.flashTriggerTl) obj.flashTriggerTl.kill();
+
                 if(obj.editorObject)
                 {
                     obj.editorObject._mesh.setEnabled(false);
@@ -222,8 +229,123 @@
 
 
             }
+        },
+
+        hideObject: function(hash)
+        {
+            var obj = _objectDic[hash],
+                mesh = obj.editorObject._mesh;
+
+            obj.isHiding = true;
+
+            if(obj.flashTriggerTl) obj.flashTriggerTl.pause();
+
+            TweenMax.to(mesh,.5, {visibility: 0});
+        },
+
+        showObject: function(hash)
+        {
+            var obj = _objectDic[hash],
+                mesh = obj.editorObject._mesh;
+
+            obj.isHiding = false;
+
+            if(obj.flashTriggerTl) obj.flashTriggerTl.resume();
+
+            TweenMax.to(mesh,.5, {visibility: 1});
+        },
+
+        showPointFingerAt: function(hash, offsetY)
+        {
+            if(offsetY == undefined) offsetY = 3;
+
+            var obj = _objectDic[hash],
+                position = obj.editorObject._mesh.position.clone();
+
+            position.y += offsetY;
+
+            _pointFingerMeshContainer.position = position;
+            //_pointFingerMesh.position
+            _pointFingerMesh.setEnabled(true);
+
+            TweenMax.to(_pointFingerMesh,.5, {visibility: 1});
+
+            _currentPointFingerHash = hash;
+        },
+
+        hidePointerFinger: function()
+        {
+            _currentPointFingerHash = null;
+            TweenMax.to(_pointFingerMesh,.5, {visibility: 0, onComplete: function()
+            {
+                _pointFingerMesh.setEnabled(false);
+            }});
         }
     };
+
+    function createPointFinger()
+    {
+        var imageWidth = 64, imageHeight = 95;
+
+        var container = _pointFingerMeshContainer = new BABYLON.Mesh("pointfinger container", _scene);
+        container.isPickable = false;
+
+        var mesh = _pointFingerMesh = BABYLON.MeshBuilder.CreatePlane("point-finger", {width:6.4, height:9.5, updatable: true}, _scene);
+        mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+        mesh.renderingGroupId = 3;
+        mesh.parent = container;
+        mesh.isPickable = false;
+
+        var texture = new BABYLON.Texture("textures/finger.png", _scene);
+        var mat = MaterialLib.createNormal();
+        mesh.material = mat;
+
+        mat.specularColor = BABYLON.Color3.Black();
+
+        //mat.emissiveColor = BABYLON.Color3.White();
+        mat.opacityTexture = mat.diffuseTexture = texture;
+
+        mesh.visibility = 0;
+
+        updateGeom(mesh, imageWidth, imageHeight,.17,.65, 0);
+
+
+        var position = mesh.position;
+        var tl = new TimelineMax({repeat:-1});
+        tl.set(position, {y: 0});
+        tl.to(position,.6, {y: -1, ease:Power2.easeIn});
+        tl.to(position,.6, {y: 0, ease:Power2.easeOut});
+
+        mesh.setEnabled(false);
+    }
+
+
+    function updateGeom(mesh, imageWidth, imageHeight, scale, offsetX, offsetY)
+    {
+        var data = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind),
+            width = imageWidth * scale,
+            height = imageHeight * scale;
+
+        var left = -width*offsetX,
+            right = width*(1-offsetX),
+            top = -height*offsetY,
+            bottom = height*(1-offsetY);
+
+        data[0] = left;
+        data[1] = top;
+
+        data[3] = right;
+        data[4] = top;
+
+        data[6] = right;
+        data[7] = bottom;
+
+        data[9] = left;
+        data[10] = bottom;
+
+        mesh.updateVerticesData(BABYLON.VertexBuffer.PositionKind, data, true);
+        //self._mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, data, true);
+    }
 
     function updateEnabled()
     {
@@ -253,12 +375,16 @@
 
     function setupObject(dic, hash, obj)
     {
+        var lightTexture = new BABYLON.Texture("textures/lightdemo.png", _scene);
+
         var objectName, editorObject;
 
         objectName = obj.name;
 
         var nameHead = obj.nameHead? obj.nameHead: obj.type,
             fullName = nameHead + "-" + objectName;
+
+        obj.nameHead = nameHead;
 
         editorObject = dic[fullName];
 
@@ -324,15 +450,68 @@
         var mesh = obj.editorObject._mesh;
         mesh.isPickable = true;
 
-        mesh.actionManager = new BABYLON.ActionManager(_scene);
-        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
+        if(obj.nameHead == 'hint')
         {
+            obj.editorObject._imageWidth = 139;
+            obj.editorObject._imageHeight = 141;
+            obj.editorObject._updateGeom();
+
+            mesh.material.diffuseTexture = mesh.material.opacityTexture = lightTexture;
+            mesh.visibility = 0;
+
+            var flashMesh = mesh.clone("myFlash");
+            flashMesh.parent = mesh;
+            flashMesh.position = BABYLON.Vector3.Zero();
+            flashMesh.isPickable = false;
+            obj.flashMesh = flashMesh;
+
+            mesh.material = null;
+
+            var tl = obj.flashTriggerTl =  new TimelineMax();
+            tl.to(obj, 0, {onComplete: triggerFlash, onCompleteParams:[obj]},.1);
+            //tl.set(rotation, {z: 0});
+            //tl.to(rotation, 1, {z: Math.PI*2});
+        }
+
+        mesh.actionManager = new BABYLON.ActionManager(_scene);
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function()
+        {
+            //self.setPointFingerAt(hash);
+            if(_currentPointFingerHash)
+            {
+                self.hidePointerFinger();
+            }
             SceneHandler.toHash("/Story" + obj.hash);
         }));
 
         mesh.actionManager.__actions = mesh.actionManager.actions;
         mesh.actionManager.actions = [];
 
+    }
+
+
+    function triggerFlash(obj)
+    {
+        if(!obj.isHiding)
+        {
+            var mesh = obj.flashMesh,
+                rotation = mesh.rotation,
+                tl = new TimelineMax;
+
+            tl.set(mesh, {visibility: 0, scalingDeterminant: 0});
+            tl.set(rotation, {z: 0});
+            tl.to(mesh,.3, {visibility: 1, scalingDeterminant:1, ease:Power2.easeIn});
+            tl.to(mesh,.3, {visibility: 0, scalingDeterminant:0, ease:Power2.easeOut});
+
+            tl.to(rotation,.6, {z:1, ease:Power2.easeInOut}, "-=.6");
+            tl.set(mesh, {scalingDeterminant: 1});
+        }
+
+        var delay = 1 + Math.random()*2;
+        TweenMax.delayedCall(delay, function()
+        {
+            obj.flashTriggerTl.restart();
+        });
     }
 
 }());

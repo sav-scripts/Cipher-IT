@@ -41,7 +41,7 @@
             _isHiding = false;
 
             //Story.setPhaseTo(3);
-            Story.ObjectManager.clearObject("/Briefcase");
+            //Story.ObjectManager.clearObject("/Briefcase");
             Story.Evidences.unlockEvidence("/Briefcase");
 
             $doms.parent.append($doms.container);

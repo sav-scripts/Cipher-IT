@@ -30,6 +30,42 @@
             _isInit = true;
         },
 
+        playDialogs: function(textOrArray, animeType, cb)
+        {
+            var array;
+
+            if(typeof textOrArray == 'string')
+            {
+                self.show(textOrArray, animeType, cb);
+            }
+            else
+            {
+                array = textOrArray.concat([]);
+                playText();
+            }
+
+            function playText()
+            {
+                var text = array.shift();
+
+                self.show(text, animeType, function()
+                {
+                    if(array.length)
+                    {
+                        TweenMax.delayedCall(2, function()
+                        {
+                            self.hide(null);
+                            playText();
+                        });
+                    }
+                    else
+                    {
+                        cb.call();
+                    }
+                });
+            }
+        },
+
         show: function(text, animeType, cb)
         {
             if (!_isHiding) return;

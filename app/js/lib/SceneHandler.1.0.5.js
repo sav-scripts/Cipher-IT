@@ -414,6 +414,8 @@
     {
         if(_Loading) _Loading.show();
 
+        var startWeight = 0, weight = 100;
+
         if(imageSetting != null)
         {
             Utility.preloadImages(imageSetting.list, loadOne ,function(progress)
@@ -432,27 +434,31 @@
             }
             if(index == null) index = 0;
 
-            var url = templates[index].url,
+            var templateSetting = templates[index],
+                url = templateSetting.url,
                 frameDom;
+
+            if(templateSetting.startWeight) startWeight = templateSetting.startWeight;
+            if(templateSetting.weight) weight = templateSetting.weight;
             
             if(_loadedTemplates[url])
             {
-                templates[index].dom = _loadedTemplates[url];
+                templateSetting.dom = _loadedTemplates[url];
                 loadComplete();
             }
             else
             {
-                if(_Loading) _Loading.progress(0);
+                if(_Loading) _Loading.progress(startWeight);
 
                 frameDom = document.createElement("div");
 
-                $(frameDom).load(templates[index].url + "?v=" + _version, function()
+                $(frameDom).load(url + "?v=" + _version, function()
                 {
                     _loadedTemplates[url] = frameDom;
 
                     var extractClass= templates.extractClass;
                     if(!extractClass) extractClass = "extract-point";
-                    var extractDom = templates[index].dom = $(frameDom).find("." + extractClass)[0];
+                    var extractDom = templateSetting.dom = $(frameDom).find("." + extractClass)[0];
                     $(extractDom).toggleClass(extractClass, false);
 
                     $("#invisible-container").append(extractDom);
@@ -460,11 +466,22 @@
                     $(extractDom).waitForImages(function()
                     {
                         if(extractDom.parentNode) extractDom.parentNode.removeChild(extractDom);
+
+                        if(_Loading)
+                        {
+                            var progress = (startWeight + weight) / 100;
+                            _Loading.progress(progress);
+                        }
+
                         loadComplete();
                     }, function(loaded, count)
                     {
-                        var progress = loaded/count;
-                        if(_Loading) _Loading.progress(progress);
+
+                        if(_Loading)
+                        {
+                            var progress = (startWeight + loaded/count * weight) / 100;
+                            _Loading.progress(progress);
+                        }
                     }, true);
                 });
             }

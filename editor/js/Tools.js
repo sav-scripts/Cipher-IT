@@ -71,6 +71,7 @@
             }
 
             boxmat = new BABYLON.StandardMaterial("boxmat", scene);
+            node.isPickable = false;
 
             boxmat.emissiveColor = color;
 

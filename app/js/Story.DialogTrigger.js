@@ -42,16 +42,12 @@
             if (!_isHiding) return;
             _isHiding = false;
 
-            TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 0});
+            //TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 0});
+            Story.ObjectManager.hideObject(_currentObject.hash);
 
             if(_currentObject.clearAble)
             {
                 Story.ObjectManager.clearObject(_currentObject.hash);
-            }
-
-            if(_currentObject.changePhaseAfterDialog)
-            {
-                Story.setPhaseTo(_currentObject.changePhaseAfterDialog);
             }
 
             Story.Scene.customCamera.focusOn(_currentObject.position, function()
@@ -68,8 +64,6 @@
                             Story.setPhaseTo(_currentObject.changePhaseAfterActionChange);
                         }
                     });
-
-
                 }
 
 
@@ -77,11 +71,11 @@
 
                 if(dialogText)
                 {
-                    var heldDuration = Story.DialogText.show(dialogText, _currentObject.dialogAnimeType, function()
+                    Story.DialogText.playDialogs(dialogText, _currentObject.dialogAnimeType, function()
                     {
-                        if(cb) cb.call();
+                        complete();
 
-                        TweenMax.delayedCall(heldDuration, function()
+                        TweenMax.delayedCall(2.5, function()
                         {
                             if(!_isHiding)
                             {
@@ -94,10 +88,20 @@
                 }
                 else
                 {
-                    if(cb) cb.call();
+                    complete();
                 }
 
             });
+
+            function complete()
+            {
+                if(_currentObject.changePhaseAfterDialog)
+                {
+                    Story.setPhaseTo(_currentObject.changePhaseAfterDialog);
+                }
+
+                if(cb) cb.call();
+            }
 
         },
         hide: function (cb)
@@ -113,7 +117,8 @@
                 Story.DialogText.hide();
                 Story.Scene.customCamera.recover(function()
                 {
-                    TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 1});
+                    //TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 1});
+                    Story.ObjectManager.showObject(_currentObject.hash);
                 });
 
                 SceneHandler.toHash(_currentObject.changeHashAfterDialog);

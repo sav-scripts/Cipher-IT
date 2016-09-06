@@ -35,8 +35,10 @@
             _isHiding = false;
 
             //Story.setPhaseTo(3);
-            Story.ObjectManager.clearObject("/Medal");
+            //Story.ObjectManager.clearObject("/Medal");
             Story.Evidences.unlockEvidence("/Medal");
+
+            Story.changePhaseHelpHash(StoryPhases.MEDAL_AND_BRIEFCASE, "/Briefcase");
 
             $doms.parent.append($doms.container);
 

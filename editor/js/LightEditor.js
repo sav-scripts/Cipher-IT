@@ -24,6 +24,10 @@
         container: null,
         nodeContainer: null,
 
+        nodeEdit: false,
+
+        getEditorObjectDic: function(){ return _editorObjectDic; },
+
         init: function(scene, noEdit)
         {
             _scene = scene;
@@ -32,11 +36,12 @@
             this.container.isPickable = false;
 
             this.nodeContainer = new BABYLON.Mesh("light node container", _scene);
-            this.nodeContainer.isPickable = false;
             this.nodeContainer.setEnabled(false);
 
             this.lightNodeSample = Tools.createNodeSample(scene, new BABYLON.Color3.Yellow(), 5, null, 'sphere');
             this.lightNodeSample.renderingGroupId = 3;
+
+            this.nodeEdit = noEdit;
 
             if(!noEdit)
             {
@@ -383,12 +388,17 @@
         this._range = range || 200;
         this._intensity = intensity || 1;
 
-        var mesh = this._nodeMesh = LightEditor.lightNodeSample.clone();
-        mesh.parent = LightEditor.nodeContainer;
-        mesh._editSerial = this._serial;
-        mesh.setEnabled(true);
 
-        mesh.name = 'lightNode';
+        if(!LightEditor.nodeEdit)
+        {
+            var mesh = this._nodeMesh = LightEditor.lightNodeSample.clone();
+            mesh.isPickable = true;
+            mesh.parent = LightEditor.nodeContainer;
+            mesh._editSerial = this._serial;
+            mesh.setEnabled(true);
+
+            mesh.name = 'lightNode';
+        }
 
         //console.log(mesh.name);
 
@@ -430,9 +440,18 @@
 
         update: function()
         {
-            this._nodeMesh.position.x = this._light.position.x = this._x;
-            this._nodeMesh.position.y = this._light.position.y = this._y;
-            this._nodeMesh.position.z = this._light.position.z = this._z;
+            if(this._nodeMesh)
+            {
+                this._nodeMesh.position.x = this._light.position.x = this._x;
+                this._nodeMesh.position.y = this._light.position.y = this._y;
+                this._nodeMesh.position.z = this._light.position.z = this._z;
+            }
+            else
+            {
+                this._light.position.x = this._x;
+                this._light.position.y = this._y;
+                this._light.position.z = this._z;
+            }
             
             this._light.range = this._range;
             this._light.intensity = this._intensity;

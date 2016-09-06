@@ -4,22 +4,33 @@
         _isInit = false,
         _currentContent,
         _contentDic,
+        _phaseIndex = 0,
         _phaseDic =
         {
-            0: "start",
-            1: "phone unlocked, poster enabled",
-            2: "poster unlocked, billboard enabled, backpacker dialog changed",
-            3: "billboard unlocked, sport girl dialog changed",
-            4: "bartender dialog changed",
-            5: "fingerprint unlocked",
-            6: "medal unlocked, briefcase unlocked, businessman dialog changed"
+            0: {description: "start", type:"", helpObjectHash:"/Phone"},
+            1: {description: "phone enabled", type:"", helpObjectHash:"/Phone"},
+            2: {description: "poster enabled (phone puzzle complete)", type:"", helpObjectHash:"/Poster"},
+            3: {description: "billboard enabled", type:"", helpObjectHash:"/Billboard"},
+            4: {description: "sport girl key dialog enabled", type:"", helpObjectHash:"/SportGirl"},
+            5: {description: "bartender key dialog enabled", type:"", helpObjectHash:"/Bartender"},
+            6: {description: "fingerprint enabled", type:"", helpObjectHash:"/Bartender"},
+            7: {description: "medal enabled, briefcase enabled (fingerprint puzzle complete)", type:"", helpObjectHash:"/Medal"}
         };
+
+    window.StoryPhases =
+    {
+        START: 0,
+        PHONE: 1,
+        POSTER: 2,
+        BILLBOARD: 3,
+        SPORT_GIRL: 4,
+        BARTENDER: 5,
+        FINGERPRINT: 6,
+        MEDAL_AND_BRIEFCASE: 7
+    };
 
     var self = window.Story =
     {
-        _phaseIndex: 0,
-        //getCurrentPhase: function(){ return _phaseList[self._phaseIndex]; },
-
         stageIn: function (options, cb)
         {
             (!_isInit) ? loadAndBuild(execute) : execute();
@@ -56,7 +67,16 @@
 
                         if(Utility.urlParams.startPhase && _phaseDic[Utility.urlParams.startPhase])
                         {
-                            self.setPhaseTo(parseInt(Utility.urlParams.startPhase), true);
+                            var index = parseInt(Utility.urlParams.startPhase);
+                            for(var key in StoryPhases)
+                            {
+                                if(StoryPhases[key] == index)
+                                {
+                                    self.setPhaseTo(index, true);
+                                    break;
+                                }
+                            }
+                            //self.setPhaseTo(), true);
                         }
 
                         $doms.container.detach();
@@ -136,75 +156,91 @@
                 }
             }
         },
-        
+
         setPhaseTo: function(phaseIndex, isHardSet)
         {
-            if(self._phaseIndex >= phaseIndex) return;
+            if(_phaseIndex >= phaseIndex) return;
 
             var oldPhaseIndex;
 
-            while(self._phaseIndex < phaseIndex)
+            while(_phaseIndex < phaseIndex)
             {
-                oldPhaseIndex = self._phaseIndex;
-                self._phaseIndex ++;
+                oldPhaseIndex = _phaseIndex;
+                _phaseIndex ++;
                 update();
             }
 
             function update()
             {
-                console.log("story progress to => " + self._phaseIndex);
+                console.log("story progress to "+_phaseIndex +" => " + _phaseDic[_phaseIndex].description);
 
-                if(oldPhaseIndex == 0)
+                if(_phaseIndex == 0)
                 {
 
                 }
-
-                if(self._phaseIndex == 0)
+                else if(_phaseIndex == 1)
                 {
-
-                }
-                else if(self._phaseIndex == 1)
-                {
-                    Story.ObjectManager.clearObject("/Phone");
                     Story.Evidences.unlockEvidence("/Phone");
+                }
+                else if(_phaseIndex == 2)
+                {
+                    Story.Phone.toCompleteMode();
 
                     Story.ObjectManager.setObjectEnabled("/Poster", true);
                 }
-                else if(self._phaseIndex == 2)
+                else if(_phaseIndex == 3)
                 {
-                    Story.ObjectManager.clearObject("/Poster");
                     Story.Evidences.unlockEvidence("/Poster");
 
                     Story.ObjectManager.getObject("/Backpacker").contentClass = _contentDic["/Photos"];
 
                     Story.ObjectManager.setObjectEnabled("/Billboard", true);
                 }
-                else if(self._phaseIndex == 3)
+                else if(_phaseIndex == 4)
                 {
-                    Story.ObjectManager.clearObject("/Billboard");
                     Story.Evidences.unlockEvidence("/Billboard");
 
-                    Story.ObjectManager.setObjectDialog("/SportGirl", 1, 4);
+                    Story.ObjectManager.setObjectDialog("/SportGirl", 1, StoryPhases.BARTENDER);
                 }
-                else if(self._phaseIndex == 4)
-                {
-                    Story.ObjectManager.setObjectDialog("/Bartender", 1, null, 1, "/Story/Fingerprint", 5);
-                }
-                else if(self._phaseIndex == 5)
+                else if(_phaseIndex == 5)
                 {
                     Story.ObjectManager.changeNpcAction("/Bartender", 1, 0);
+                    Story.ObjectManager.setObjectDialog("/Bartender", 1, StoryPhases.FINGERPRINT, null, "/Story/Fingerprint", null);
+                }
+                else if(_phaseIndex == 6)
+                {
                     Story.Evidences.unlockEvidence("/Fingerprint");
                 }
-                else if(self._phaseIndex == 6)
+                else if(_phaseIndex == 7)
                 {
-                    Story.ObjectManager.setObjectDialog("/Businessman", 1);
                     if(isHardSet) Story.Fingerprint.toCompleteMode();
+
+                    Story.ObjectManager.setObjectDialog("/Businessman", 1);
 
                     Story.ObjectManager.setObjectEnabled("/Medal", true);
                     Story.ObjectManager.setObjectEnabled("/Briefcase", true);
                 }
 
             }
+        },
+
+        changePhaseHelpHash: function(phaseIndex, newHelpHash)
+        {
+            var phaseObj = _phaseDic[phaseIndex];
+            phaseObj.helpObjectHash = newHelpHash;
+        },
+
+        triggerHelp: function()
+        {
+            var phaseData = _phaseDic[_phaseIndex],
+                hash = phaseData.helpObjectHash,
+                obj = Story.ObjectManager.getObject(hash),
+                position = obj.editorObject._mesh.position.clone();
+
+            Story.Scene.customCamera.lookAt(position, function()
+            {
+                Story.ObjectManager.showPointFingerAt(hash);
+            });
         },
 
         resize: function ()
@@ -228,7 +264,10 @@
         {
             container: $doms.container.find(".buttons"),
             exit: $doms.container.find(".btn-exit"),
-            help: $doms.container.find(".btn-help"),
+            help: $doms.container.find(".btn-help").on(_CLICK_, function()
+            {
+                self.triggerHelp();
+            }),
             evidences: $doms.container.find(".btn-evidence").on(_CLICK_, function()
             {
                 //self.Evidences.show();

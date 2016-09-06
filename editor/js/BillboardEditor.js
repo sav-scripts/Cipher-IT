@@ -845,6 +845,7 @@
                 //self._imageWidth = size.width;
                 //self._imageHeight = size.height;
 
+
                 self._lightTexture = texture;
 
                 self._material.specularTexture = texture;

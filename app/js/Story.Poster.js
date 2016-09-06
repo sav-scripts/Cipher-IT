@@ -35,7 +35,7 @@
             _isHiding = false;
 
 
-            Story.setPhaseTo(2);
+            Story.setPhaseTo(StoryPhases.BILLBOARD);
 
             $doms.parent.append($doms.container);
 
