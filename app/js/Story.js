@@ -65,9 +65,10 @@
                     {
                         _isInit = true;
 
-                        if(Utility.urlParams.startPhase && _phaseDic[Utility.urlParams.startPhase])
+                        if(Main.settings.startPhase && _phaseDic[Main.settings.startPhase])
                         {
-                            var index = parseInt(Utility.urlParams.startPhase);
+
+                            var index = parseInt(Main.settings.startPhase);
                             for(var key in StoryPhases)
                             {
                                 if(StoryPhases[key] == index)
@@ -185,6 +186,7 @@
                 else if(_phaseIndex == 2)
                 {
                     Story.Phone.toCompleteMode();
+                    Story.ObjectManager.disableFlash("/Phone");
 
                     Story.ObjectManager.setObjectEnabled("/Poster", true);
                 }
@@ -192,20 +194,26 @@
                 {
                     Story.Evidences.unlockEvidence("/Poster");
 
+                    Story.ObjectManager.disableFlash("/Poster");
+
                     Story.ObjectManager.getObject("/Backpacker").contentClass = _contentDic["/Photos"];
+                    Story.ObjectManager.setDialogToNew("/Backpacker");
 
                     Story.ObjectManager.setObjectEnabled("/Billboard", true);
                 }
                 else if(_phaseIndex == 4)
                 {
                     Story.Evidences.unlockEvidence("/Billboard");
+                    Story.ObjectManager.disableFlash("/Billboard");
 
                     Story.ObjectManager.setObjectDialog("/SportGirl", 1, StoryPhases.BARTENDER);
+                    Story.ObjectManager.setDialogToNew("/SportGirl");
                 }
                 else if(_phaseIndex == 5)
                 {
                     Story.ObjectManager.changeNpcAction("/Bartender", 1, 0);
                     Story.ObjectManager.setObjectDialog("/Bartender", 1, StoryPhases.FINGERPRINT, null, "/Story/Fingerprint", null);
+                    Story.ObjectManager.setDialogToNew("/Bartender");
                 }
                 else if(_phaseIndex == 6)
                 {
@@ -216,6 +224,7 @@
                     if(isHardSet) Story.Fingerprint.toCompleteMode();
 
                     Story.ObjectManager.setObjectDialog("/Businessman", 1);
+                    Story.ObjectManager.setDialogToNew("/Businessman");
 
                     Story.ObjectManager.setObjectEnabled("/Medal", true);
                     Story.ObjectManager.setObjectEnabled("/Briefcase", true);
@@ -263,7 +272,10 @@
         $doms.buttons =
         {
             container: $doms.container.find(".buttons"),
-            exit: $doms.container.find(".btn-exit"),
+            exit: $doms.container.find(".btn-exit").on(_CLICK_, function()
+            {
+                SceneHandler.toHash("/HappyEnd");
+            }),
             help: $doms.container.find(".btn-help").on(_CLICK_, function()
             {
                 self.triggerHelp();

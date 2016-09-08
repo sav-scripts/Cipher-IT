@@ -30,7 +30,6 @@
 
         resize: function ()
         {
-            if (!_isInit) return;
 
         }
 
@@ -65,13 +64,8 @@
     {
         _isActive = false;
 
-        var tl = new TimelineMax;
-        tl.to($doms.container, .4, {autoAlpha: 0});
-        tl.add(function ()
-        {
-            $doms.container.css("display", "none");
-            cb.apply();
-        });
+        $doms.container.css("display", "none");
+        cb.apply();
     }
 
 }());

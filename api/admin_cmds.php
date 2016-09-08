@@ -44,6 +44,8 @@ switch($cmd)
 
     case "get_all_participate_data": get_all_participate_data(); break;
 
+    case "get_lottery_data": get_lottery_data(); break;
+
     case "change_participate_able": change_participate_able(); break;
 
     default: quit("uknown cmd: ['$cmd']");
@@ -51,6 +53,38 @@ switch($cmd)
 
 
 /** methods **/
+function get_lottery_data()
+{
+    $pageIndex = getInput('page_index');
+    $pageSize = getInput('page_size');
+
+    $firstIndex = $pageIndex * $pageSize;
+
+    $limit = "";
+
+    if($pageSize != 0) $limit = "LIMIT $firstIndex,$pageSize";
+
+    global $link;
+
+    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` ".$limit;
+    $result = mysqli_query($link, $sql);
+
+    $NORResult=mysqli_query($link,"Select FOUND_ROWS()");
+    $NORRow=mysqli_fetch_array($NORResult);
+    $NOR=$NORRow["FOUND_ROWS()"];
+
+
+
+    $rows = array();
+    while($r = mysqli_fetch_assoc($result)) {
+        $rows[] = $r;
+    }
+
+    $response = (object)["data" => $rows, "num_entries" => $NOR];
+
+    response($response);
+}
+
 function change_participate_able()
 {
     $id = @$_POST['id'];
@@ -178,4 +212,14 @@ function login()
             quit("帳號或密碼不正確");
         }
     }
+}
+
+
+function getInput($fieldName)
+{
+    if (!isset($_POST[$fieldName])) {
+        quit("lack field: [$fieldName]");
+    }
+
+    return $_POST[$fieldName];
 }

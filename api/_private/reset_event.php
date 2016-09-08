@@ -36,15 +36,20 @@ if(!$result) quit(mysqli_error($link), true);
 $eventDays = (array) [
     0 => (object)
     [
-        'date' => '9/29(四)',
+        'date' => '9/28(三)',
         'num_participated' => [ 15, 15, 15, 15, 0, 15, 0 ]
     ],
     1 => (object)
     [
+        'date' => '9/29(四)',
+        'num_participated' => [ 15, 15, 15, 15, 0, 15, 0 ]
+    ],
+    2 => (object)
+    [
         'date' => '9/30(五)',
         'num_participated' => [ 15, 15, 15, 0, 0, 0, 0 ]
     ],
-    2 => (object)
+    3 => (object)
     [
         'date' => '10/01(六)',
         'num_participated' => [ 0, 0, 0, 0, 0, 0, 0 ]

@@ -47,7 +47,8 @@ module.exports = function(grunt)
                             'js/lib/TweenMax.min.js',
                             'js/lib/jquery.1.11.3.min.js',
                             'js/lib/LAB.min.js',
-                            'styles/phase1-only.css'
+                            'styles/phase1-only.css',
+                            'misc/**'
                         ],
                         dest: 'dist'
                     }

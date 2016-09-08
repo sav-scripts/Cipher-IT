@@ -40,6 +40,7 @@
                     {
                         ApiProxy.callApi("get_event_data", null, null, function(response)
                         {
+                            Loading.hide();
                             _eventData = response.data;
 
                             build(templates);
@@ -124,7 +125,8 @@
         [
             $doms.container.find(".time-group-1"),
             $doms.container.find(".time-group-2"),
-            $doms.container.find(".time-group-3")
+            $doms.container.find(".time-group-3"),
+            $doms.container.find(".time-group-4")
         ];
 
         $doms.eventSelect = $doms.container.find(".event-select");

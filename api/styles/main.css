@@ -205,3 +205,96 @@ td {
 #participate .data-container .head .patricipate-able.close-mode::after {
   content: "不開放";
 }
+#lottery {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  margin-left: 100px;
+  visibility: hidden;
+}
+#lottery .data-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 800px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0);
+}
+#lottery .data-container table {
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+#lottery .data-container .event-table {
+  visibility: hidden;
+}
+#lottery .data-container .head {
+  line-height: 40px;
+}
+#lottery .data-container .head .patricipate-able {
+  float: right;
+  margin-right: 4px;
+  margin-top: 4px;
+  padding: 5px;
+  border-radius: 2px;
+  border: 1px solid #66b666;
+  line-height: 20px;
+  cursor: pointer;
+  color: #66b666;
+}
+#lottery .data-container .head .patricipate-able::after {
+  content: "報名開放中";
+}
+#lottery .data-container .head .patricipate-able.close-mode {
+  border: 1px solid #c67d7d;
+  color: #c67d7d;
+}
+#lottery .data-container .head .patricipate-able.close-mode::after {
+  content: "不開放";
+}
+#lottery .page-index-container {
+  position: absolute;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  top: 30px;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  height: 28px;
+  cursor: default;
+}
+#lottery .page-index-container .word,
+#lottery .page-index-container .word-prev-block,
+#lottery .page-index-container .word-next-block,
+#lottery .page-index-container .word-prev-page,
+#lottery .page-index-container .word-next-page {
+  display: inline-block;
+  height: 26px;
+  line-height: 25px;
+  border-radius: 30px;
+  font-family: '微軟正黑體', "Heiti TC", serif;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+#lottery .page-index-container .word {
+  width: 26px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+#lottery .page-index-container .word.activated {
+  color: white;
+  background: #ff9c00;
+}
+#lottery .page-index-container .word-prev-block,
+#lottery .page-index-container .word-next-block {
+  width: 30px;
+  letter-spacing: 2px;
+}
+#lottery .page-index-container .word-prev-page,
+#lottery .page-index-container .word-next-page {
+  width: 54px;
+  letter-spacing: 2px;
+}

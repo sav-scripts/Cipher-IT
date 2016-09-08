@@ -8,6 +8,11 @@
         _pointFingerMesh,
         _pointFingerMeshContainer,
         _currentPointFingerHash,
+
+        _lightTexture,
+
+        _newDialogTexture,
+
         _objectDic =
         {
             "/TattooMan":
@@ -16,7 +21,7 @@
                 nameHead: 'trigger',
                 name: "tattoo-man",
                 isNpc: true,
-                dialogs: ['<span>我喜歡跟朋友參加派對，</span><span class="green">格蘭利威威士忌</span><span>是我的最愛！</span>'],
+                dialogs: ['<span>我喜歡跟朋友參加派對，</span><span class="green">格蘭利威威士忌</span><span>是我的最愛！</span>', '<span>新對話</span>'],
                 dialogEvent: null,
                 triggerPhase: null,
                 y: 20
@@ -125,6 +130,11 @@
         init: function(scene)
         {
             _scene = scene;
+
+            _lightTexture = new BABYLON.Texture("textures/lightdemo.png", _scene);
+
+            _newDialogTexture = new BABYLON.Texture("textures/information_icon_new.png", _scene);
+
 
             var dic = BillboardEditor.getDicByName(),
                 hash,
@@ -280,6 +290,29 @@
             {
                 _pointFingerMesh.setEnabled(false);
             }});
+        },
+
+        setDialogToNew: function(hash)
+        {
+            var obj = _objectDic[hash];
+            obj.newDialogMesh.setEnabled(true);
+            //self.changeObjectTexture(hash, 'new');
+            obj.newDialogMeshTl.restart();
+        },
+
+        setDialogToNormal: function(hash)
+        {
+            //console.log("set to normal: " + hash);
+            var obj = _objectDic[hash];
+            obj.newDialogMesh.setEnabled(false);
+
+            obj.newDialogMeshTl.pause();
+            //self.changeObjectTexture(hash, 'normal');
+        },
+
+        disableFlash: function(hash)
+        {
+            _objectDic[hash].flashDisabled = true;
         }
     };
 
@@ -375,7 +408,6 @@
 
     function setupObject(dic, hash, obj)
     {
-        var lightTexture = new BABYLON.Texture("textures/lightdemo.png", _scene);
 
         var objectName, editorObject;
 
@@ -456,7 +488,7 @@
             obj.editorObject._imageHeight = 141;
             obj.editorObject._updateGeom();
 
-            mesh.material.diffuseTexture = mesh.material.opacityTexture = lightTexture;
+            mesh.material.diffuseTexture = mesh.material.opacityTexture = _lightTexture;
             mesh.visibility = 0;
 
             var flashMesh = mesh.clone("myFlash");
@@ -471,6 +503,55 @@
             tl.to(obj, 0, {onComplete: triggerFlash, onCompleteParams:[obj]},.1);
             //tl.set(rotation, {z: 0});
             //tl.to(rotation, 1, {z: Math.PI*2});
+        }
+
+        if(obj.nameHead == 'trigger')
+        {
+            var newMesh = obj.newDialogMesh = mesh.clone();
+
+            var mat = MaterialLib.createNormal();
+            mat.opacityTexture = mat.diffuseTexture = _newDialogTexture;
+            mat.specularColor = BABYLON.Color3.Black();
+            newMesh.material = mat;
+            newMesh.position = BABYLON.Vector3.Zero();
+            newMesh.parent = mesh;
+            newMesh.alphaIndex = mesh.alphaIndex + 1;
+            newMesh.isPickable = false;
+
+            mesh.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+
+
+            var tl2 = obj.newDialogMeshTl = new TimelineMax({repeat:-1, paused: true});
+
+            //var d = "+=.1";
+            //var position = newMesh.position;
+            //tl2.set(position, {x: -0}, 0);
+            //tl2.set(position, {x: -.5}, 3);
+            //tl2.set(position, {x: .5}, d);
+            //tl2.set(position, {x: -.5}, d);
+            //tl2.set(position, {x: .5}, d);
+
+            //tl2.to(position,1, {x: 0, ease: Elastic.easeOut.config(1.0, 0.2)});
+            //tl2.set(position, {x: 0}, 3);
+
+            //tl2.set(newMesh, {visibility: 1});
+            //tl2.set(newMesh, {visibility: 0}, 2);
+            //tl2.set(newMesh, {visibility: 1}, "+=.1");
+            //tl2.set(newMesh, {visibility: 0}, "+=.1");
+            //tl2.set(newMesh, {visibility: 1}, "+=.1");
+
+            tl2.to(newMesh,.5, {visibility:.2, ease:Linear.easeNone},0);
+            tl2.to(newMesh,.5, {visibility:1, ease:Linear.easeNone});
+
+
+            //tl2.set(newMesh, {visibility: 0}, 0);
+            //tl2.set(newMesh, {visibility: 1},.1);
+            //tl2.set(newMesh, {visibility: 0},.2);
+            //tl2.set(newMesh, {visibility: 1},.3);
+            //tl2.set(newMesh, {visibility: 0}, 2);
+
+
+            self.setDialogToNew(hash);
         }
 
         mesh.actionManager = new BABYLON.ActionManager(_scene);
@@ -492,6 +573,8 @@
 
     function triggerFlash(obj)
     {
+        if(obj.flashDisabled) return;
+
         if(!obj.isHiding)
         {
             var mesh = obj.flashMesh,

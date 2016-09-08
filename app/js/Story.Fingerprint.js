@@ -203,7 +203,38 @@
 
         $doms.btnShare = $doms.container.find(".btn-share").on(_CLICK_, function()
         {
-            if(!isLocking) toSharedMode();
+            if(!isLocking)
+            {
+
+                //alert("_shareEntrySerial = " + _shareEntrySerial);
+                Main.loginFB('/Story/Fingerprint', function()
+                {
+                    var picture = Utility.getPath() + "misc/share_site.jpg";
+                    FB.ui
+                    (
+                        {
+                            method:"share",
+                            display: "iframe",
+                            href: Utility.getPathWithFilename(),
+                            title: "指紋辨識系統分享 title",
+                            description: '指紋辨識系統分享 description',
+                            picture: picture
+                        },function(response)
+                        {
+                            if(!response.error && !response.error_code)
+                            {
+                                //ga("send", "event", "artworks", "fb_share_success");
+                                //alert('分享成功');
+                                //self.hide();
+                                //Entries.toStep("list");
+                            }
+                            toSharedMode();
+                        }
+                    );
+                });
+
+
+            }
         });
 
         var $rawSampleMatchCircle = $doms.container.find(".raw-sample-match-circle"),

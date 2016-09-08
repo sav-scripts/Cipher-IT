@@ -38,6 +38,9 @@
 
             $doms.btnClose.toggleClass("showing-mode", true);
 
+
+            Story.ObjectManager.setDialogToNormal("/Backpacker");
+
             ScalableContent.updateResizeAble();
 
             Story.DialogText.show(_dialogText, null, cb);

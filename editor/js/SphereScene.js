@@ -142,11 +142,6 @@
 
                 camera.alpha = Math.PI *1.90;
 
-
-                scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-                scene.fogDensity = 0.0018;
-                scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.85);
-
                 //console.log(camera.zoomOnFactor);
 
                 self.setCameraControlOn(true);

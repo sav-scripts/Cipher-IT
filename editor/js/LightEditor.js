@@ -28,6 +28,18 @@
 
         getEditorObjectDic: function(){ return _editorObjectDic; },
 
+        getDicByName: function()
+        {
+            var dic = {};
+            for(var key in _editorObjectDic)
+            {
+                var obj = _editorObjectDic[key];
+                dic[obj._name] = obj;
+            }
+
+            return dic;
+        },
+
         init: function(scene, noEdit)
         {
             _scene = scene;

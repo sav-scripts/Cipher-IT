@@ -41,7 +41,7 @@
 
                     var firstHash = response.data? "/Participate": "/Login";
 
-                    SceneHandler.init(['/Participate', "/Login", "/Setting"],
+                    SceneHandler.init(['/Participate', "/Login", "/Lottery", "/Setting"],
                     {
                         defaultHash: '/Login',
                         listeningHashChange: true,
@@ -54,27 +54,23 @@
             });
         },
 
-        toLogin: function()
-        {
-        },
-
-        toSystem: function()
-        {
-            $doms.loginDialog.toggleClass("open-mode", false);
-            $doms.commandContainer.toggleClass("open-mode", true);
-            $doms.background.toggleClass("command-mode", true);
-
-            SceneHandler.init(['/Participate'],
-            {
-                defaultHash: "/Participate",
-                listeningHashChange: true,
-                //loadingClass: Loading,
-                version: new Date().getTime()
-            });
-
-            SceneHandler.toFirstHash();
-
-        },
+        //toSystem: function()
+        //{
+        //    $doms.loginDialog.toggleClass("open-mode", false);
+        //    $doms.commandContainer.toggleClass("open-mode", true);
+        //    $doms.background.toggleClass("command-mode", true);
+        //
+        //    SceneHandler.init(['/Participate'],
+        //    {
+        //        defaultHash: "/Participate",
+        //        listeningHashChange: true,
+        //        //loadingClass: Loading,
+        //        version: new Date().getTime()
+        //    });
+        //
+        //    SceneHandler.toFirstHash();
+        //
+        //},
 
         changeCommand: function(commandName)
         {
@@ -85,6 +81,10 @@
 
             _currentCommand = commandName;
             $doms.cmds[commandName].toggleClass("focus-mode", true);
+
+
+            AdminMain.$doms.commandContainer.toggleClass("open-mode", true);
+            AdminMain.$doms.background.toggleClass("command-mode", true);
         }
     };
 
@@ -100,6 +100,7 @@
 
 
         setupButton('participate', "/Participate");
+        setupButton('lottery', "/Lottery");
         setupButton('setting', "/Setting");
         setupButton('logout', null, function()
         {

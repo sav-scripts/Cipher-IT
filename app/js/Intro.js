@@ -3,6 +3,8 @@
     var $doms = {},
         _isBtnStoryClicked = false,
         _movieclipRoot = null,
+        _introPlaying = false,
+        _introTl,
         _isInit = false;
 
     var self = window.Intro =
@@ -88,6 +90,11 @@
 
         $doms.video = $doms.container.find(".intro-video");
 
+        $doms.btnSkip = $doms.container.find(".btn-skip").on(_CLICK_, function()
+        {
+            skipIntro();
+        });
+
         setupIntroAnimation();
 
         $doms.container.detach();
@@ -109,6 +116,17 @@
         {
             cb.apply();
         });
+    }
+
+    function skipIntro()
+    {
+        if(_introPlaying)
+        {
+            _introPlaying = false;
+            _movieclipRoot.killPlayTo();
+            _movieclipRoot.gotoAndStop(_movieclipRoot.totalFrames-1);
+            if(_introTl) _introTl.progress(1);
+        }
     }
 
 
@@ -180,7 +198,11 @@
 
     function play(cb)
     {
-        var tl = new TimelineMax();
+        _introPlaying = true;
+
+        $doms.btnSkip.toggleClass("hide-mode", false);
+
+        var tl = _introTl = new TimelineMax();
         tl.set([$doms.leftContent[0], $doms.btnPlay[0]], {autoAlpha:0, x:200});
 
         _movieclipRoot.gotoAndStop(1);
@@ -188,13 +210,19 @@
         {
             //tl.resume();
             //if(cb) cb.call();
+
         });
 
         t-=.3;
 
         tl.to($doms.leftContent,.8, {autoAlpha:1, x:0, ease:Back.easeOut}, t);
         tl.to($doms.btnPlay,.8, {autoAlpha:1, x:0, ease:Back.easeOut}, t + .3);
-        tl.add(cb);
+        tl.add(function()
+        {
+            $doms.btnSkip.toggleClass("hide-mode", true);
+            _introPlaying = false;
+            if(cb) cb.call();
+        });
     }
 
     function hide(cb)

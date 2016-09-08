@@ -312,3 +312,122 @@ td {
         }
     }
 }
+
+#lottery{
+
+    position: absolute;
+    width: 100%;
+    height: auto;
+    margin-left: 100px;
+
+    visibility: hidden;
+
+    .data-container{
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        width: 800px;
+        height: 300px;
+        background:rgba(255,255,255,.0);
+
+        table{
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+
+        .event-table{
+            visibility: hidden;
+        }
+
+        .head{
+            line-height: 40px;
+            .patricipate-able{
+                float: right;
+                margin-right: 4px;
+                margin-top: 4px;
+
+                padding: 5px;
+                border-radius: 2px;
+                //                background: #eff9eb;
+
+                border: 1px solid rgb(102, 182, 102);
+
+                line-height: 20px;
+
+                cursor: pointer;
+
+                color: rgb(102, 182, 102);
+
+                &::after{
+                    content:"報名開放中";
+                }
+
+                &.close-mode{
+
+                    border: 1px solid rgb(198, 125, 125);
+                    //                    background: #fbf6f4;
+                    color: rgb(198, 125, 125);
+
+                    &::after{
+                        content:"不開放";
+                    }
+                }
+            }
+        }
+    }
+
+    .page-index-container{
+        position: absolute;
+
+        .unselectable();
+
+        top:30px;
+        left:0;
+
+        text-align: center;
+
+        width: 100%;
+        height: 28px;
+
+        cursor: default;
+
+        //                background:rgba(0,0,0,.3);
+
+        .word, .word-prev-block, .word-next-block, .word-prev-page, .word-next-page{
+            display:inline-block;
+            height: 26px;
+
+            line-height: 25px;
+
+            border-radius: 30px;
+
+            .default-font(16px);
+
+            cursor: pointer;
+        }
+
+        .word{
+
+            width: 26px;
+
+            margin-left: 4px;
+            margin-right: 4px;
+
+            &.activated{
+                color:white;
+                background: #ff9c00;
+            }
+        }
+
+        .word-prev-block, .word-next-block{
+            width: 30px;
+            letter-spacing: 2px;
+        }
+
+        .word-prev-page, .word-next-page{
+            width: 54px;
+            letter-spacing: 2px;
+        }
+
+    }
+}

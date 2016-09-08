@@ -27,7 +27,7 @@
                 {
                     _iconTl.tweenTo('start');
                 }
-            }).on(_CLICK_, function()
+            }).on("mousedown", function()
             {
                 _isOpen? self.close(): self.open();
             });

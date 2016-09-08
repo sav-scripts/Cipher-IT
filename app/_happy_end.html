@@ -5,10 +5,61 @@
         <div class="background"></div>
         <!--<div class="layout"></div>-->
 
-        <div class="wrapper">
+        <div class="first-step">
             <div class="open-case"></div>
             <div class="content"></div>
             <div class="btn-to-form"><div class="normal-state"></div><div class="hover-state"></div></div>
+
+        </div>
+
+        <div class="form-step">
+
+            <div class="form-title"></div>
+            <div class="form-body">
+
+                <div class="birthday-fields">
+                    <select class="form_input_select" name="year" id="select-year" title="">
+                        <option>年</option>
+                    </select>
+                    <select class="form_input_select" name="month" id="select-month" title="">
+                        <option>月</option>
+                    </select>
+                    <select class="form_input_select" name="day" id="select-day" title="">
+                        <option>日</option>
+                    </select>
+                </div>
+
+                <select class="gender-select" title="">
+                    <option value="">選擇性別</option>
+                    <option value="female">女士</option>
+                    <option value="male">先生</option>
+                </select>
+
+                <select class="address-county" title="">
+                    <option value="">縣市</option>
+                </select>
+
+                <select class="address-zone" title="">
+                    <option value="">區</option>
+                </select>
+
+                <input class="family-name hint-mode" title="" maxlength="20" type="text" value="輸入姓氏"/>
+                <input class="user-name hint-mode" title="" maxlength="20" type="text" value="輸入名字"/>
+                <input class="user-phone hint-mode" title="" maxlength="10" type="text" value="輸入聯絡手機"/>
+                <input class="user-email hint-mode" title="" maxlength="50" type="text" value="輸入電子信箱"/>
+                <input class="address-detail hint-mode" title="" maxlength="100" type="text" value="輸入地址"/>
+
+            </div>
+
+            <div class="eula-text">
+                <div class="checkbox custom-checkbox">
+                    <input type="checkbox" id="upload-checkbox" class="participate-checkbox" checked />
+                    <label for="upload-checkbox"></label>
+                </div>
+                <div class="btn-rule"></div>
+                <div class="btn-privacy"></div>
+            </div>
+            <div class="btn-send"><div class="normal-state"></div><div class="hover-state"></div></div>
 
         </div>
 

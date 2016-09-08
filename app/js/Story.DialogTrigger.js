@@ -45,6 +45,11 @@
             //TweenMax.to(_currentObject.editorObject._mesh,.5, {visibility: 0});
             Story.ObjectManager.hideObject(_currentObject.hash);
 
+            if(_currentObject.nameHead == 'trigger')
+            {
+                Story.ObjectManager.setDialogToNormal(_currentObject.hash);
+            }
+
             if(_currentObject.clearAble)
             {
                 Story.ObjectManager.clearObject(_currentObject.hash);

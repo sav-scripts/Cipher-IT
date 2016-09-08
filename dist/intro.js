@@ -9,36 +9,36 @@ lib.properties = {
 	fps: 30,
 	color: "#000000",
 	manifest: [
-		{src:"images/intro/box.png?1473164015460", id:"box"},
-		{src:"images/intro/bto.png?1473164015460", id:"bto"},
-		{src:"images/intro/btobg.png?1473164015460", id:"btobg"},
-		{src:"images/intro/cl1.png?1473164015460", id:"cl1"},
-		{src:"images/intro/cl2.png?1473164015460", id:"cl2"},
-		{src:"images/intro/cl3.png?1473164015460", id:"cl3"},
-		{src:"images/intro/g1.png?1473164015460", id:"g1"},
-		{src:"images/intro/g2.png?1473164015460", id:"g2"},
-		{src:"images/intro/g3.png?1473164015460", id:"g3"},
-		{src:"images/intro/g4.png?1473164015460", id:"g4"},
-		{src:"images/intro/g5.png?1473164015460", id:"g5"},
-		{src:"images/intro/g6.png?1473164015460", id:"g6"},
-		{src:"images/intro/g7.png?1473164015460", id:"g7"},
-		{src:"images/intro/g8.png?1473164015460", id:"g8"},
-		{src:"images/intro/girlglass.png?1473164015460", id:"girlglass"},
-		{src:"images/intro/glass2.png?1473164015460", id:"glass2"},
-		{src:"images/intro/glass3.png?1473164015460", id:"glass3"},
-		{src:"images/intro/glass4.png?1473164015460", id:"glass4"},
-		{src:"images/intro/glass6.png?1473164015460", id:"glass6"},
-		{src:"images/intro/glass_sequence_00002.png?1473164015460", id:"glass_sequence_00002"},
-		{src:"images/intro/glass_sequence_00009.png?1473164015460", id:"glass_sequence_00009"},
-		{src:"images/intro/glass_sequence_00013.png?1473164015460", id:"glass_sequence_00013"},
-		{src:"images/intro/glass_sequence_00021.png?1473164015460", id:"glass_sequence_00021"},
-		{src:"images/intro/introimg1.png?1473164015460", id:"introimg1"},
-		{src:"images/intro/map.png?1473164015460", id:"map"},
-		{src:"images/intro/policelinedonotcross.png?1473164015460", id:"policelinedonotcross"},
-		{src:"images/intro/policecar.png?1473164015460", id:"policecar"},
-		{src:"images/intro/round.png?1473164015460", id:"round"},
-		{src:"images/intro/txt.png?1473164015460", id:"txt"},
-		{src:"images/intro/txt2.png?1473164015460", id:"txt2"}
+		{src:"images/intro/box.png?1473218000019", id:"box"},
+		{src:"images/intro/bto.png?1473218000019", id:"bto"},
+		{src:"images/intro/btobg.png?1473218000019", id:"btobg"},
+		{src:"images/intro/cl1.png?1473218000019", id:"cl1"},
+		{src:"images/intro/cl2.png?1473218000019", id:"cl2"},
+		{src:"images/intro/cl3.png?1473218000019", id:"cl3"},
+		{src:"images/intro/g1.png?1473218000019", id:"g1"},
+		{src:"images/intro/g2.png?1473218000019", id:"g2"},
+		{src:"images/intro/g3.png?1473218000019", id:"g3"},
+		{src:"images/intro/g4.png?1473218000019", id:"g4"},
+		{src:"images/intro/g5.png?1473218000019", id:"g5"},
+		{src:"images/intro/g6.png?1473218000019", id:"g6"},
+		{src:"images/intro/g7.png?1473218000019", id:"g7"},
+		{src:"images/intro/g8.png?1473218000019", id:"g8"},
+		{src:"images/intro/girlglass.png?1473218000019", id:"girlglass"},
+		{src:"images/intro/glass2.png?1473218000019", id:"glass2"},
+		{src:"images/intro/glass3.png?1473218000019", id:"glass3"},
+		{src:"images/intro/glass4.png?1473218000019", id:"glass4"},
+		{src:"images/intro/glass6.png?1473218000019", id:"glass6"},
+		{src:"images/intro/glass_sequence_00002.png?1473218000019", id:"glass_sequence_00002"},
+		{src:"images/intro/glass_sequence_00009.png?1473218000019", id:"glass_sequence_00009"},
+		{src:"images/intro/glass_sequence_00013.png?1473218000019", id:"glass_sequence_00013"},
+		{src:"images/intro/glass_sequence_00021.png?1473218000019", id:"glass_sequence_00021"},
+		{src:"images/intro/introimg1.png?1473218000019", id:"introimg1"},
+		{src:"images/intro/map.png?1473218000019", id:"map"},
+		{src:"images/intro/policelinedonotcross.png?1473218000019", id:"policelinedonotcross"},
+		{src:"images/intro/policecar.png?1473218000019", id:"policecar"},
+		{src:"images/intro/round.png?1473218000019", id:"round"},
+		{src:"images/intro/txt.png?1473218000019", id:"txt"},
+		{src:"images/intro/txt2.png?1473218000019", id:"txt2"}
 	]
 };
 
@@ -4324,42 +4324,42 @@ p.nominalBounds = new cjs.Rectangle(930.8,88.2,117.7,45.1);
 
 	// txt3
 	this.instance_5 = new lib.txt3();
-	this.instance_5.setTransform(761.1,699.8,1,1,0,0,0,134.1,0);
+	this.instance_5.setTransform(761.1,739.8,1,1,0,0,0,134.1,0);
 	this.instance_5._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_5).wait(205).to({_off:false},0).wait(92).to({alpha:0},8).to({_off:true},1).wait(19));
 
 	// txt2
 	this.instance_6 = new lib.txt2_1();
-	this.instance_6.setTransform(960,699.8,1,1,0,0,0,134.1,0);
+	this.instance_6.setTransform(960,739.8,1,1,0,0,0,134.1,0);
 	this.instance_6._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_6).wait(104).to({_off:false},0).wait(92).to({alpha:0},8).to({_off:true},1).wait(120));
 
 	// txt1
 	this.instance_7 = new lib.txt1();
-	this.instance_7.setTransform(891.7,699.8,1,1,0,0,0,134.1,0);
+	this.instance_7.setTransform(891.7,739.8,1,1,0,0,0,134.1,0);
 	this.instance_7._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_7).wait(3).to({_off:false},0).wait(92).to({alpha:0},8).to({_off:true},1).wait(221));
 
 	// main_animate1
 	this.instance_8 = new lib.main_anima3();
-	this.instance_8.setTransform(793.7,360.7,1,1,0,0,0,796,0);
+	this.instance_8.setTransform(793.7,400.7,1,1,0,0,0,796,0);
 	this.instance_8._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_8).wait(205).to({_off:false},0).to({x:891.7},114,cjs.Ease.get(1)).to({_off:true},1).wait(5));
 
 	// main_animate2
 	this.instance_9 = new lib.main_anima2();
-	this.instance_9.setTransform(793.7,360.7,1,1,0,0,0,796,0);
+	this.instance_9.setTransform(793.7,400.7,1,1,0,0,0,796,0);
 	this.instance_9._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_9).wait(104).to({_off:false},0).to({x:891.7},114,cjs.Ease.get(1)).to({_off:true},1).wait(106));
 
 	// main_animate1
 	this.instance_10 = new lib.main_anima1("synched",0,false);
-	this.instance_10.setTransform(897.8,360.7,1,1,0,0,0,796,0);
+	this.instance_10.setTransform(897.8,400.7,1,1,0,0,0,796,0);
 	this.instance_10._off = true;
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_10).wait(3).to({_off:false},0).to({scaleX:1.06,scaleY:1.06,startPosition:114},114,cjs.Ease.get(1)).to({_off:true},1).wait(207));

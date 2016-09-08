@@ -1,6 +1,9 @@
 <?php
 require_once "./common.inc";
 
+$sql = "DROP TABLE IF EXISTS `participate`";
+$result = mysqli_query($link, $sql);
+if(!$result) quit("clear participate table fail => ".mysqli_error($link), true);
 
 $sql = " 	CREATE TABLE `participate` (
  `id` int(11) NOT NULL AUTO_INCREMENT,

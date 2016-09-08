@@ -7,7 +7,7 @@
 
     window.CustomCamera = CustomCamera;
 
-    function CustomCamera(canvas, scene, sceneSize, startCameraRadius, dBetaLimitDeg)
+    function CustomCamera(canvas, scene, sceneSize, startCameraRadius, dUpperBetaLimitDeg, dLowerBetaLimitDeg)
     {
         this._canvas = canvas;
         this._scene = scene;
@@ -25,9 +25,9 @@
         camera.radius = this._defaultCameraRadius = startCameraRadius;
 
 
-        var dArc = this._dBetaLimitArc = Math.PI*dBetaLimitDeg/180;
-        camera.upperBetaLimit = Math.PI*.5 + dArc;
-        camera.lowerBetaLimit = Math.PI*.5 - dArc;
+        //var dArc = this._dBetaLimitArc = Math.PI*dBetaLimitDeg/180;
+        camera.upperBetaLimit = Math.PI*.5 + Math.PI*dUpperBetaLimitDeg/180;
+        camera.lowerBetaLimit = Math.PI*.5 - Math.PI*dLowerBetaLimitDeg/180;
 
         this._tweenObj.alpha = this._tweenObj.targetAlpha = camera.alpha = Math.PI *1.90 - Math.PI * 2;
         this._tweenObj.beta = this._tweenObj.targetBeta = camera.beta;

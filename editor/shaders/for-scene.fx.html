@@ -23,7 +23,7 @@
         {
             gl_Position = worldViewProjection * vec4(position, 1.0);
             vUV = uv;
-            vTime = rand(vec2(position.y, position.y));
+//            vTime = rand(vec2(position.y, position.y));
         }
 
     </script>
@@ -34,10 +34,13 @@
 
         const float PIx2 = M_PI *2.0;
 
-        const float MOTION_BLUR_POWER = .3;
+
+        const float MOTION_BLUR_RANGE = .01;
+
+        const float MOTION_BLUR_POWER = .15;
         const float MOTION_BLUR_POWERx2 = MOTION_BLUR_POWER * 2.;
 
-        const float NOISE_POWER = .5;
+        const float NOISE_POWER = .2;
         const float COLOR_BALANCE = 1. / (NOISE_POWER*.5 + 1.);
 
         varying vec2 vUV;
@@ -56,15 +59,14 @@
 
         void main(void)
         {
-
             gl_FragColor = texture2D(textureSampler, vUV);
 
             float motionPower = .0;
 
             if(motion.x != 0. || motion.y != 0.)
             {
-                float dx = .02 * motion.x;
-                float dy = -.02 * motion.y;
+                float dx = -MOTION_BLUR_RANGE * motion.x;
+                float dy = MOTION_BLUR_RANGE * motion.y;
 
                 gl_FragColor += texture2D(textureSampler, vec2(vUV.x+dx, vUV.y+dy)) * MOTION_BLUR_POWER;
                 motionPower += MOTION_BLUR_POWER;

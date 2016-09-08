@@ -59,12 +59,12 @@
     .wrapper{
         .percent-container();
 
-        .percent-div(left-content, -754,-263,496,324, "intro-content.png");
+        .percent-div(left-content, -768,-240,496,324, "intro-content.png");
 
         .btn-play{
 
 //            .percent-div(none, -689,105, 337, 94);
-            .percent-div(none, -701,103, 361, 99);
+            .percent-div(none, -716,125, 361, 99);
 
             .normal-state{
 
@@ -114,6 +114,22 @@
 
     }
 
+    .btn-skip{
+        position: absolute;
+        right: 70px;
+        bottom: 40px;
+        width: 77px;
+        height: 20px;
+
+        .image-bg("intro-btn-skip.png");
+        cursor: pointer;
+        &:active{
+            margin-right: -1px;
+        }
+
+        .enable-hide();
+    }
+
 }
 
 
@@ -136,6 +152,9 @@
         position: absolute;
         width: 100%;
         height: 100%;
+
+        overflow: hidden;
+
 
         background: rgba(0,0,0,.85);
 
@@ -627,6 +646,7 @@
                     &:active{
                         margin-top: -1px;
                     }
+                    .enable-hide();
                 }
                 .arrow-down{
                     .percent-div(none, 349, 185, 80, 80, "story-fingerprint-arrow-down.png");
@@ -634,6 +654,7 @@
                     &:active{
                         margin-top: 1px;
                     }
+                    .enable-hide();
                 }
 
                 .sample-layout{
@@ -965,7 +986,7 @@
 
                             .percent-div(none,0, @top4, 100%, @h4, "story-briefcase-numbers.png");
                             background-size: 100% (100/30)*100%;
-                            background-position: 0 0%;
+                            background-position: 0 0;
 
                         }
                     }
@@ -977,10 +998,12 @@
 
                     .arrow-up-@{index}{
                         .fade-btn-2(none; "story-briefcase-arrow-up.png"; @left; @top5; @w5; @h5; @unit: 1%);
+                        background-size: cover;
                     }
 
                     .arrow-down-@{index} {
                         .fade-btn-2(none; "story-briefcase-arrow-down.png"; @left; @top6; @w5; @h5; @unit: 1%);
+                        background-size: cover;
                     }
                 }
             }
@@ -1029,11 +1052,12 @@
         width: 100%;
         height: 100%;
         .image-bg("happy-end-background.jpg", cover);
+        background-position: center center;
     }
 
-    .my-layout("layouts/happy-end-pc.jpg");
+    .my-layout("layouts/happy-end-form-pc.jpg");
 
-    .wrapper{
+    .first-step{
         position: absolute;
         left:50%;
         top:50%;
@@ -1042,7 +1066,181 @@
         .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
         .fade-btn-2(btn-to-form,"happy-end-btn-to-form.png", 61,124,223,52);
 
-
+//        display:none;
     }
 
+    .form-step{
+        position: absolute;
+        left:50%;
+        top:50%;
+
+        .abs-div-2(form-title, -102,-199,204,40,"happy-end-form-title.png");
+        .fade-btn-2(btn-send,"happy-end-form-btn-send.png", 276,169,223,52);
+
+        .eula-text{
+            .abs-div-2(none, -468,171,353,13,"happy-end-form-eula-text.png");
+
+            .checkbox{
+                position: absolute;
+                left: -34px;
+                top:-3px;
+            }
+
+            .abs-div-2(btn-rule, 117, -5, 62, 21);
+            .abs-div-2(btn-privacy, 190,-5, 165, 21);
+        }
+
+        .form-body{
+
+            @fade-font-color: #8a8a8a;
+
+            .abs-div-2(none, -501,-112,1000,233,"happy-end-form-body.png");
+
+            select{
+
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+
+                background: url("../images/select-arrow.png") no-repeat;
+                background-color: rgba(0,0,0,0);
+                background-position: right 9px;
+
+                letter-spacing: 1px;
+
+                height: 24px;
+
+                border: none;
+
+                cursor: pointer;
+
+                text-align: center;
+                text-align-last:center;
+
+                .default-font(14px, @fade-font-color);
+
+                option{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: center;
+                    text-align-last:center;
+                }
+                optgroup{
+                    .default-font(14px, black);
+                    background:white;
+                    text-align: center;
+                    text-align-last:center;
+                }
+
+                &::-ms-expand {
+                    display: none;
+                }
+
+                &.white-mode{
+                    color: white;
+                }
+            }
+
+            .birthday-fields{
+                position: absolute;
+                left: 110px;
+                top:134px;
+//                width: 600px;
+
+                #select-year, #select-month, #select-day{
+                    position: absolute;
+                    width: 264px;
+                    color: white;
+                }
+
+                #select-year{
+                    left: 8px;
+                }
+
+                #select-month{
+                    left: 309px;
+                }
+
+
+                #select-day{
+                    left: 603px;
+                }
+            }
+
+            .gender-select{
+                position: absolute;
+                left: 735px;
+                top: 16px;
+                width: 257px;
+            }
+
+            .address-county{position: absolute;
+                left: 114px;
+                top: 194px;
+                width: 167px;
+                color: white;
+            }
+
+            .address-zone{position: absolute;
+                left: 314px;
+                top: 194px;
+                width: 167px;
+                color: white;
+            }
+
+            input{
+                .default-font(14px, white);
+
+                border: none;
+                //                background:rgba(0,0,0,.3);
+                background: none;
+                height:24px;
+                width: 100px;
+
+                letter-spacing: 1px;
+
+                &.hint-mode{
+                    color:@fade-font-color;
+                }
+            }
+
+            .family-name{
+                position: absolute;
+                left: 104px;
+                top: 16px;
+                width: 100px;
+            }
+
+            .user-name{
+                position: absolute;
+                left: 323px;
+                top: 16px;
+                width: 330px;
+            }
+
+            .user-email{
+                position: absolute;
+                left: 101px;
+                top: 75px;
+                width: 570px;
+            }
+
+            .user-phone{
+                position: absolute;
+                left: 804px;
+                top: 77px;
+                width: 140px;
+                text-align: center;
+            }
+
+            .address-detail{
+                position: absolute;
+                left: 535px;
+                top: 193px;
+                width: 450px;
+            }
+
+        }
+
+    }
 }

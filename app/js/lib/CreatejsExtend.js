@@ -52,7 +52,7 @@ createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, of
 
         if(fixDuration != null) duration = fixDuration;
 
-        var tl = new TimelineMax;
+        var tl = clip.__tl = new TimelineMax;
         tl.to(tweenObj, duration, {ease:ease, frame:targetFrame, onUpdate:function()
         {
             //_clip.currentFrame = tweenObj.frame;
@@ -71,7 +71,7 @@ createjs.MovieClip.prototype.playTo = function(frameOrLabel, fixDuration, cb, of
 createjs.MovieClip.prototype.killPlayTo = function()
 {
     var clip = this;
-    if(clip.__tl) clip.__tl.clear();
+    if(clip.__tl) clip.__tl.kill();
 };
 
 createjs.MovieClip.prototype.addRollOver = function()

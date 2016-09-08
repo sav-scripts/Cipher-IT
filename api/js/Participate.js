@@ -213,9 +213,6 @@
 
         updateData();
 
-        AdminMain.$doms.commandContainer.toggleClass("open-mode", true);
-        AdminMain.$doms.background.toggleClass("command-mode", true);
-
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
         tl.to($doms.container, .4, {autoAlpha: 1});
@@ -232,13 +229,8 @@
 
         $doms.exportButton.toggleClass("open-mode", false);
 
-        var tl = new TimelineMax;
-        tl.to($doms.container, .4, {autoAlpha: 0});
-        tl.add(function ()
-        {
-            $doms.container.css("display", "none");
-            cb.apply();
-        });
+        $doms.container.css("display", "none");
+        cb.apply();
     }
 
 }());

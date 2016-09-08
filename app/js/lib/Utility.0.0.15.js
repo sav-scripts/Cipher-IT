@@ -78,6 +78,11 @@
         return _testedUrls[url];
     };
 
+    Utility.getPathWithFilename = function()
+    {
+        return window.location.href.replace(window.location.search, '').replace(window.location.hash, '').replace("?", '');
+    };
+
     Utility.getPath = function(url)
     {
         if(!url) url = window.location.href;

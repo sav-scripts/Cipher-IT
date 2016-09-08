@@ -360,7 +360,7 @@
         }
 
         .part-3{
-            @ch: 2517px;
+            @ch: 2900px;
             //        @ch: 1148px;
 
             position: relative;
@@ -368,40 +368,47 @@
             height: @ch;
             min-height: 111.1111%;
 
-            .centeralized-layout("layouts/participate-3-m.jpg", 640, 2619);
+            .centeralized-layout("layouts/participate-3-m.jpg", 640, 2909);
 
-            .image-bg("participate-3-background.m.jpg", cover);
-            background-position: center center;
+            .layout{
+                top:0;
+                margin-top: 0;
+            }
+
+
+//            .image-bg("participate-3-background.m.jpg", cover);
+//            background-position: center center;
 
             .wrapper{
                 .percent-container();
 
-                margin-top: 50px;
+                top:1310px;
+                margin-top: 0;
 
-                .percent-div(title, -252, -1225, 501, 47, "participate-3-title.m.png");
-                .percent-div(content, -246, -1138, 498, 1017, "participate-3-content.m.png");
-                .percent-div(dates, -256, -64px, 531, 31, "participate-3-dates.m.png");
+                .percent-div(title, -252, -1274, 501, 47, "participate-3-title.m.png");
+                .percent-div(content, -246, -1186, 498, 1017, "participate-3-content.m.png");
+                .percent-div(dates, -260, -113, 162, 657, "participate-3-dates.m.png");
 
 
-                .time-group-1, .time-group-2, .time-group-3{
+                .time-group-1, .time-group-2, .time-group-3, .time-group-4{
 
                     position: absolute;
                     width: 366px;
                     height: 63px;
-                    top: -4px;
+                    left:-257px;
                     //                .image-bg("participate-3-times.png");
 
                     @dh: 45px;
 
-                    .my-mixin(1, 0,0,160,18);
-                    .my-mixin(2, 0,@dh * 1,160,18);
-                    .my-mixin(3, 0,@dh * 2,160,18);
+                    .my-mixin(1, 0,0,160,30);
+                    .my-mixin(2, 160,0,180,30);
+                    .my-mixin(3, 340,0,180,30);
 
-                    .my-mixin(4, 0,@dh * 3,160,18);
-                    .my-mixin(5, 0,@dh * 4,160,18);
-                    .my-mixin(6, 0,@dh * 5,160,18);
+                    .my-mixin(4, 0,40,160,30);
+                    .my-mixin(5, 160,40,180,30);
+                    .my-mixin(6, 340,40,180,30);
 
-                    .my-mixin(7, 0,@dh * 6,160,18);
+                    .my-mixin(7, 0,80,160,30);
 
                     .my-mixin(@index; @left; @top; @width; @height: 24px;)
                     {
@@ -425,23 +432,26 @@
                 }
 
                 .time-group-1{
-                    left:-256px;
+                    top:-60px;
                 }
 
                 .time-group-2{
-                    left:-70px;
+                    top:150px;
                 }
 
                 .time-group-3{
-                    left:113px;
+                    top:358px;
                 }
 
+                .time-group-4{
+                    top:566px;
+                }
 
                 .form-wrapper {
 
                     position: absolute;
                     left: 0;
-                    top: -130px;
+                    top: 265px;
                     width: 100%;
                     height: 100%;
 
