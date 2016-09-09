@@ -280,7 +280,7 @@
 
         tl.add(function()
         {
-            triggerFlash(light, meshArray);
+            Math.random() > .5? triggerFlash(light, meshArray): triggerFlash2(light, meshArray);
 
             if(_isActive)
             {
@@ -319,6 +319,28 @@
 
             t += Math.random()*.1;
         }
+    }
+
+    function triggerFlash2(light, meshArray)
+    {
+        var tl = new TimelineMax();
+        var d = Math.random()*.5 + .5,
+            t = 0;
+
+        if(Math.random() > .5)
+        {
+            tl.set(light, {intensity:.3}, 0);
+            tl.set(meshArray, {visibility:.8}, 0);
+            t+=.1;
+            tl.set(light, {intensity:.6}, t);
+            tl.set(meshArray,  {visibility: 1}, t);
+            t+=.1;
+        }
+
+        tl.set(light, {intensity:.3}, t);
+        tl.set(meshArray, {visibility:.8}, t);
+        tl.set(light, {intensity:.6}, t+d);
+        tl.set(meshArray,  {visibility: 1}, t+d);
     }
 
     function renderFunction()

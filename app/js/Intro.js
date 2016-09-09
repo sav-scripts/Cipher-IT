@@ -47,6 +47,8 @@
         {
             if(_isInit)
             {
+                var vp = Main.settings.viewport;
+
                 var canvasWidth = 1920,
                     canvasHeight = 936;
 

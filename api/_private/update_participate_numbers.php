@@ -1,7 +1,7 @@
 <?php
 require_once "./common.inc";
 
-for($i=1;$i<=21;$i++)
+for($i=1;$i<=28;$i++)
 {
     updateEventNumParticipated($i);
 }

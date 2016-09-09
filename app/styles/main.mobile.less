@@ -8,8 +8,35 @@
     #scene-container{
 
         width: 640px;
+//        min-height: 855px;
         &.menu-open-mode{
             margin-left: -100%;
+        }
+    }
+
+    /** loading **/
+    #loading{
+        #loading-icon{
+
+            width: 300px;
+            height: 169px;
+
+            margin-left: -136px;
+            margin-top: -84px;
+
+            .image-bg("loading.m.gif");
+        }
+
+        #loading-text{
+
+            .default-font(18px, #43ac8d);
+            font-weight: bold;
+
+            width: 60px;
+            height: 30px;
+            margin-left: -27px;
+            margin-top: -27px;
+            text-align: center;
         }
     }
 
@@ -272,6 +299,7 @@
         bottom: 0;
         width: 100%;
         height: 10%;
+        min-height: 95px;
         .image-bg("footer.m.png", contain);
         background-position: center center;
         background-repeat: no-repeat;
@@ -425,7 +453,7 @@
                             background-repeat: no-repeat;
 
                             &.filled{
-                                opacity: .3;
+                                opacity: .17;
                             }
                         }
                     }

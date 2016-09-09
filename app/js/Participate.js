@@ -255,7 +255,7 @@
 
                 var $dom = $doms.eventTimes[i].find(".time:nth-child("+(k+1)+")");
 
-                if(obj.participate_able == '1' && parseInt(obj.num_participated) < 15)
+                if(obj.participate_able == '1' && parseInt(obj.num_participated) < 10)
                 {
                     $dom.toggleClass("filled", false);
                     $group.append("<option value='"+obj.id+"'>"+obj.event_name+"</option>");

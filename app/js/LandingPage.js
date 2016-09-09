@@ -45,15 +45,36 @@
         $doms.day = $doms.container.find(".select-day");
 
         var date = new Date();
-        date.setFullYear(date.getFullYear()-18);
+        //date.setFullYear(date.getFullYear()-18);
 
         _dateCombo = new DateCombo($doms.year[0], $doms.month[0], $doms.day[0], null, null, null, null, '年', '月', '日', date);
         _dateCombo.to(1998, 1, 1);
+
+
 
         $doms.btnSend = $doms.container.find(".btn-send").on(_CLICK_, function()
         {
             if(_dateCombo.getDateString())
             {
+                var value = _dateCombo.getDateValue();
+
+                //console.log(value);
+
+                var checkDate = new Date();
+                checkDate.setFullYear(value.year);
+                checkDate.setMonth(value.month-1);
+                checkDate.setDate(value.day);
+
+                var compareDate = new Date();
+                compareDate.setFullYear(compareDate.getFullYear()-18);
+
+                if(checkDate.getTime() > compareDate.getTime())
+                {
+                    alert("很抱歉，您必須滿 18 歲才能參加活動");
+                    return;
+                }
+
+
                 Main.settings.isBirthValided = true;
 
                 if(Main.firstHash)

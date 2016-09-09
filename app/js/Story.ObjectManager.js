@@ -21,7 +21,7 @@
                 nameHead: 'trigger',
                 name: "tattoo-man",
                 isNpc: true,
-                dialogs: ['<span>我喜歡跟朋友參加派對，</span><span class="green">格蘭利威威士忌</span><span>是我的最愛！</span>', '<span>新對話</span>'],
+                dialogs: ['<span>我喜歡跟朋友參加派對，</span><span class="green">格蘭利威威士忌</span><span>是我的最愛！</span>', '<span>找到那瓶失踪的威士忌了沒？嘖！你真的破的了案嗎？</span>'],
                 dialogEvent: null,
                 triggerPhase: null,
                 y: 20
@@ -267,7 +267,7 @@
 
         showPointFingerAt: function(hash, offsetY)
         {
-            if(offsetY == undefined) offsetY = 3;
+            if(offsetY == undefined) offsetY = 6;
 
             var obj = _objectDic[hash],
                 position = obj.editorObject._mesh.position.clone();

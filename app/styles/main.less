@@ -147,6 +147,8 @@ body{
         top: 16px;
         background-color: #3b3b3b;
 
+        z-index: 100;
+
         & when (@fixposition = true){
 
             position: fixed;
@@ -180,6 +182,40 @@ body{
 
             .btn-close-x{
                 transform: rotate(90deg);
+            }
+        }
+
+
+        @media (max-width: 640px)
+        {
+            position: fixed;
+
+            width: 71px;
+            height: 71px;
+            right: 14px;
+            top: 14px;
+
+            &.showing-mode{
+                opacity: 1;
+            }
+
+            .btn-close-x{
+                width: 21px;
+                height:21px;
+                .image-bg("btn-close-x.png", cover);
+                left:50%;
+                top:50%;
+                margin-left: -10.5px;
+                margin-top: -10.5px;
+            }
+
+            &:hover{
+
+                cursor: pointer;
+
+                .btn-close-x{
+                    transform: rotate(90deg);
+                }
             }
         }
 
@@ -770,7 +806,7 @@ body{
                         background-repeat: no-repeat;
 
                         &.filled{
-                            opacity: .3;
+                            opacity: .17;
                         }
                     }
                 }
@@ -1006,3 +1042,4 @@ body{
 
 
 @import "phase2-main.less";
+@import "phase2-main.mobile.less";

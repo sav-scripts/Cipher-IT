@@ -188,6 +188,9 @@
                     Story.Phone.toCompleteMode();
                     Story.ObjectManager.disableFlash("/Phone");
 
+                    Story.ObjectManager.setObjectDialog("/TattooMan", 1);
+                    Story.ObjectManager.setDialogToNew("/TattooMan");
+
                     Story.ObjectManager.setObjectEnabled("/Poster", true);
                 }
                 else if(_phaseIndex == 3)
@@ -258,6 +261,7 @@
             {
                 Story.Scene.engine.resize();
                 self.Evidences.resize();
+                self.Fingerprint.resize();
             }
         }
     };

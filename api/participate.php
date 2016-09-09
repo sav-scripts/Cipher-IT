@@ -73,7 +73,7 @@ function checkIfUserParticipated($phone)
 function checkIfEventOk($eventId)
 {
     global $link;
-    $sql = "SELECT * FROM `events` WHERE id = '$eventId' and participate_able = 1 and num_participated < 15 ";
+    $sql = "SELECT * FROM `events` WHERE id = '$eventId' and participate_able = 1 and num_participated < 10 ";
     $result = mysqli_query($link, $sql);
 
     if(!$result) quit(mysqli_error($link));

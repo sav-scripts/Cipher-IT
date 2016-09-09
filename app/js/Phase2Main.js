@@ -186,7 +186,8 @@
                     }
                 });
 
-                self.firstHash = SceneHandler.getHash();
+                var currentHash = SceneHandler.getHash();
+                if(currentHash != "/LandingPage") self.firstHash = SceneHandler.getHash();
 
                 if(self.settings.isBirthValided)
                 {

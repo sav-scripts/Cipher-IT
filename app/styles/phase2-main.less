@@ -33,6 +33,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 
     .background{
         position: absolute;
@@ -174,6 +175,7 @@
         touch-action: none;
     }
 
+    /** story buttons **/
     .buttons{
         z-index: 3;
         position: absolute;
@@ -209,6 +211,7 @@
         }
     }
 
+    /** story evidences **/
     .evidences{
 
         @size: 1760px;
@@ -348,6 +351,7 @@
         }
     }
 
+    /** story dialog **/
     .dialog{
         position: absolute;
         left:50%;
@@ -391,6 +395,7 @@
 
     }
 
+    /** story key **/
     .key-popup{
 
         .story-popup-container("layouts/story-key-pc.jpg");
@@ -404,6 +409,7 @@
 
     }
 
+    /** story phone **/
     .phone-popup{
 
         .story-popup-container("layouts/story-phone-bingo-pc.jpg");
@@ -421,105 +427,111 @@
                 .percent-container(absolute, 100%, 100%, 0, 0);
 
                 .percent-div(title, -54, -375, 106, 25, "phone-number-title.png");
-            }
-
-            .nodes{
-                .percent-container(absolute, 100%, 100%,-155%, -321%);
-
-                .my-mixin(1);
-                .my-mixin(2);
-                .my-mixin(3);
-                .my-mixin(4);
-                .my-mixin(5);
-                .my-mixin(6);
-                .my-mixin(7);
-
-                .my-mixin(@index;)
-                {
-                    @src: 'phone-number-node.png';
-                    @gap: 48;
-
-                    .node:nth-child(@{index}){
-                        .percent-div(none, @gap * (@index - 1), 0, 18, 19, @src);
-
-                        .hover-state{
-                            position: absolute;
-                            width: 100%;
-                            height: 100%;
-                            .image-bg(@src, cover);
-                            background-position: bottom;
 
 
-                            transition: opacity .3s ease-out;
-                            transition-delay: 0s;
-                            opacity: 1;
+                .nodes{
+                    .percent-container(absolute, 100%, 100%,-155%, -321%);
 
-                        }
+                    .my-mixin(1);
+                    .my-mixin(2);
+                    .my-mixin(3);
+                    .my-mixin(4);
+                    .my-mixin(5);
+                    .my-mixin(6);
+                    .my-mixin(7);
 
-                        &.hide-mode{
+                    .my-mixin(@index;)
+                    {
+                        @src: 'phone-number-node.png';
+                        @gap: 48;
+
+                        .node:nth-child(@{index}){
+                            .percent-div(none, @gap * (@index - 1), 0, 18, 19, @src);
+
                             .hover-state{
-                                opacity: 0;
-                                visibility: hidden;
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                .image-bg(@src, cover);
+                                background-position: bottom;
 
-                                transition: opacity .3s ease-out, visibility 0s linear .3s;
+
+                                transition: opacity .3s ease-out;
+                                transition-delay: 0s;
+                                opacity: 1;
+
+                            }
+
+                            &.hide-mode{
+                                .hover-state{
+                                    opacity: 0;
+                                    visibility: hidden;
+
+                                    transition: opacity .3s ease-out, visibility 0s linear .3s;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            .numbers{
-                .percent-container(absolute, 100%, 100%,-195%, -224%);
+                .numbers{
+                    .percent-container(absolute, 100%, 100%,-195%, -224%);
 
-                .my-mixin(1, 0, 0);
-                .my-mixin(2, 147, 0);
-                .my-mixin(3, 294, 0);
+                    .my-mixin(1, 0, 0);
+                    .my-mixin(2, 147, 0);
+                    .my-mixin(3, 294, 0);
 
-                .my-mixin(4, 0, 129);
-                .my-mixin(5, 147, 129);
-                .my-mixin(6, 294, 129);
+                    .my-mixin(4, 0, 129);
+                    .my-mixin(5, 147, 129);
+                    .my-mixin(6, 294, 129);
 
-                .my-mixin(7, 0, 258);
-                .my-mixin(8, 147, 258);
-                .my-mixin(9, 294, 258);
+                    .my-mixin(7, 0, 258);
+                    .my-mixin(8, 147, 258);
+                    .my-mixin(9, 294, 258);
 
-                .my-mixin(0, 147, 387);
+                    .my-mixin(0, 147, 387);
 
-                .my-mixin(@index;@left: 0; @top: 0;)
-                {
-                    @src: 'phone-number-@{index}.png';
-                    .number-@{index}{
-                        .percent-div(none, @left, @top, 108, 108, @src);
+                    .my-mixin(@index;@left: 0; @top: 0;)
+                    {
+                        @src: 'phone-number-@{index}.png';
+                        .number-@{index}{
+                            .percent-div(none, @left, @top, 108, 108, @src);
 
-                        .unselectable();
+                            .unselectable();
 
-                        cursor: pointer;
+                            cursor: pointer;
 
-                        .hover-state{
-                            position: absolute;
-                            width: 100%;
-                            height: 100%;
-                            .image-bg(@src, cover);
-                            background-position: bottom;
-
-
-                            transition: opacity .3s ease-out;
-                            transition-delay: 0s;
-                            opacity: 1;
-
-                        }
-
-                        &.hide-mode{
                             .hover-state{
-                                opacity: 0;
-                                visibility: hidden;
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                .image-bg(@src, cover);
+                                background-position: bottom;
 
-                                transition: opacity .3s ease-out, visibility 0s linear .3s;
+
+                                transition: opacity .3s ease-out;
+                                transition-delay: 0s;
+                                opacity: 1;
+
+                            }
+
+                            &.hide-mode{
+                                .hover-state{
+                                    opacity: 0;
+                                    visibility: hidden;
+
+                                    transition: opacity .3s ease-out, visibility 0s linear .3s;
+                                }
                             }
                         }
                     }
                 }
+
+
+
             }
+
+
 
             .bingo{
                 .percent-div(none, -238, -215,472,475,"story-phone-bingo.png");
@@ -539,6 +551,7 @@
 
     }
 
+    /** story poster **/
     .poster-popup{
 
         .story-popup-container("layouts/story-poster-pc.jpg");
@@ -550,6 +563,7 @@
         }
     }
 
+    /** story photos **/
     .photos-popup{
 
         .story-popup-container("layouts/story-photos-pc.jpg");
@@ -563,7 +577,7 @@
             .percent-div(photo-4, -281,-397, 472, 383, "story-photos-photo-4.png");
         }
     }
-
+    /** story billboard **/
     .billboard-popup{
 
         .story-popup-container("layouts/story-billboard-pc.jpg");
@@ -574,7 +588,7 @@
         }
     }
 
-
+    /** story fingerprint **/
     .fingerprint-popup{
 
         overflow: hidden;
@@ -866,10 +880,14 @@
                         }
                     }
                 }
+            }
 
 
-                &.shared-mode{
 
+
+            &.shared-mode{
+
+                .system{
                     .btn-share, .arrow-down, .arrow-up, .fingerprints{
                         opacity: 0;
                         visibility: hidden;
@@ -892,6 +910,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,.66);
+
+            z-index: 2;
 
             left:0;
             top:0;
@@ -921,7 +941,7 @@
     }
 
 
-
+    /** story medal **/
     .medal-popup{
 
         .story-popup-container("layouts/story-medal-pc.jpg");
@@ -933,7 +953,7 @@
     }
 
 
-
+    /** story briefcase **/
     .briefcase-popup{
 
         .story-popup-container("layouts/story-briefcase-pc.jpg");
@@ -998,12 +1018,16 @@
 
                     .arrow-up-@{index}{
                         .fade-btn-2(none; "story-briefcase-arrow-up.png"; @left; @top5; @w5; @h5; @unit: 1%);
-                        background-size: cover;
+                        .normal-state, .hover-state{
+                            background-size: cover;
+                        }
                     }
 
                     .arrow-down-@{index} {
                         .fade-btn-2(none; "story-briefcase-arrow-down.png"; @left; @top6; @w5; @h5; @unit: 1%);
-                        background-size: cover;
+                        .normal-state, .hover-state{
+                            background-size: cover;
+                        }
                     }
                 }
             }

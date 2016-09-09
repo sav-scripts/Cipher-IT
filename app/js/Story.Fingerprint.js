@@ -19,7 +19,7 @@
             $doms.container = $container;
             $doms.parent = $container.parent();
 
-            $doms.content = $doms.container.find(".content");
+            $doms.content = $doms.container.children(".content");
 
             $doms.btnClose = $doms.container.find(".btn-close").on(_CLICK_, function()
             {
@@ -55,6 +55,8 @@
 
             ScalableContent.updateResizeAble();
 
+            self.resize();
+
             //Story.DialogText.show(_dialogText, null, cb);
 
             var tl = new TimelineMax;
@@ -85,6 +87,7 @@
         {
             _isCompleted = true;
             self.toSystem();
+            TweenMax.set($doms.systemContainer, {autoAlpha:0});
             TweenMax.set([$doms.results[0], $doms.bingo[0]], {autoAlpha:1});
         },
 
@@ -104,7 +107,15 @@
                 $doms.container.detach();
                 if (cb) cb.apply();
             });
-        }
+        },
+
+        resize: function()
+        {
+            $doms.container.scrollTop(0);
+            self.updateFingerprint(0);
+        },
+
+        updateFingerprint: null
 
     };
 
@@ -123,7 +134,11 @@
         tl.to($doms.systemBackground,.6,{autoAlpha:1, ease:Power1.easeIn}, "-=.4");
         tl.to($doms.systemContainer,.6,{autoAlpha:1}, "-=.3");
 
-        tl.add(cb);
+        tl.add(function()
+        {
+            $doms.container.toggleClass("scrollable-mode", true);
+            if(cb) cb.call();
+        });
     }
 
     function setupResults()
@@ -166,7 +181,8 @@
 
         var tl = new TimelineMax;
         tl.set($target, {autoAlpha:1});
-        tl.to($doms.results,.8, {autoAlpha:1, ease:Power3.easeIn});
+        tl.to($doms.systemContainer,.5, {autoAlpha: 0}, 0);
+        tl.to($doms.results,.8, {autoAlpha:1, ease:Power3.easeIn}, 0);
         tl.add(cb);
     }
 
@@ -273,6 +289,7 @@
             update();
         }
 
+        self.updateFingerprint = update;
         update();
 
 
@@ -408,7 +425,12 @@
         function toSharedMode()
         {
             isLocking = true;
-            $doms.systemContainer.toggleClass("shared-mode", true);
+            //$doms.systemContainer.toggleClass("shared-mode", true);
+            $doms.content.toggleClass("shared-mode", true);
+
+            $doms.container.scrollTop(0);
+
+            $doms.container.toggleClass("scrollable-mode", false);
 
             isShared = true;
             matchIndex = sharedMatchIndex;
@@ -420,41 +442,60 @@
 
         }
 
-        function update()
+        function update(duration)
         {
             //console.log($samples.length);
+
+            if(duration === null || duration === undefined) duration = .4;
+
             var i, $sample;
-            for(i=0;i<$samples.length;i++)
+
+            if(Main.settings.viewport.index == 0)
             {
-                $sample = $samples[i];
 
-                var dRow = $sample._row - currentRow;
-
-                if(dRow < 0)
+                for(i=0;i<$samples.length;i++)
                 {
-                    $sample.toggleClass("hide-mode", true);
-                }
-                else if(dRow >= visableRows)
-                {
-                    $sample.toggleClass("hide-mode", true);
-                }
-                else
-                {
+                    $sample = $samples[i];
                     $sample.toggleClass("hide-mode", false);
                 }
+
+                TweenMax.set($sampleContainer, {marginTop: 0});
+            }
+            else
+            {
+                for(i=0;i<$samples.length;i++)
+                {
+                    $sample = $samples[i];
+
+                    var dRow = $sample._row - currentRow;
+
+                    if(dRow < 0)
+                    {
+                        $sample.toggleClass("hide-mode", true);
+                    }
+                    else if(dRow >= visableRows)
+                    {
+                        $sample.toggleClass("hide-mode", true);
+                    }
+                    else
+                    {
+                        $sample.toggleClass("hide-mode", false);
+                    }
+                }
+
+                var offset = String(-currentRow * rowGapY) + "%";
+
+                isLocking = true;
+
+                if(tlRowShift) tlRowShift.kill();
+                tlRowShift = new TimelineMax;
+                tlRowShift.to($sampleContainer,duration, {marginTop: offset, ease:Power2.easeOut});
+                tlRowShift.add(function()
+                {
+                    isLocking = false;
+                });
             }
 
-            var offset = String(-currentRow * rowGapY) + "%";
-
-            isLocking = true;
-
-            if(tlRowShift) tlRowShift.kill();
-            tlRowShift = new TimelineMax;
-            tlRowShift.to($sampleContainer,.4, {top: offset, ease:Power2.easeOut});
-            tlRowShift.add(function()
-            {
-                isLocking = false;
-            });
 
         }
     }

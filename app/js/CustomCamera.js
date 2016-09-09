@@ -29,7 +29,7 @@
         camera.upperBetaLimit = Math.PI*.5 + Math.PI*dUpperBetaLimitDeg/180;
         camera.lowerBetaLimit = Math.PI*.5 - Math.PI*dLowerBetaLimitDeg/180;
 
-        this._tweenObj.alpha = this._tweenObj.targetAlpha = camera.alpha = Math.PI *1.90 - Math.PI * 2;
+        this._tweenObj.alpha = this._tweenObj.targetAlpha = camera.alpha = 0;
         this._tweenObj.beta = this._tweenObj.targetBeta = camera.beta;
 
         this._useDeviceOrientation = ($.browser.mobile && Modernizr.deviceorientation);
