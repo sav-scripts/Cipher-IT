@@ -883,7 +883,7 @@ body.no-scroll-mode {
 #landing-page .content .btn-send .hover-state {
   position: absolute;
   background-image: url("../images/landing-page-btn-send.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -925,7 +925,7 @@ body.no-scroll-mode {
 }
 /** participate **/
 #participate {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -1359,7 +1359,7 @@ body.no-scroll-mode {
 #participate .part-3 .wrapper .form-wrapper .btn-send .hover-state {
   position: absolute;
   background-image: url("../images/participate-3-btn-send.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -1657,7 +1657,9 @@ body.no-scroll-mode {
   /** menu **/
   #menu .icon {
     transform-origin: right top;
-    transform: scale(1.351);
+    transform: scale(1.3396);
+    right: 14px;
+    top: 14px;
   }
   #menu .container {
     position: absolute;
@@ -2254,7 +2256,7 @@ body.no-scroll-mode {
   #landing-page .content .btn-send .hover-state {
     position: absolute;
     background-image: url("../images/landing-page-btn-send.m.png");
-    background-size: auto;
+    background-size: cover;
     width: 100%;
     height: 100%;
     background-position: 0 -100%;
@@ -2673,7 +2675,7 @@ body.no-scroll-mode {
   #participate .part-3 .wrapper .form-wrapper .btn-send .hover-state {
     position: absolute;
     background-image: url("../images/participate-3-btn-send.m.png");
-    background-size: auto;
+    background-size: cover;
     width: 100%;
     height: 100%;
     background-position: 0 -100%;
@@ -3083,6 +3085,7 @@ body.no-scroll-mode {
   /** story fingerprint **/
   /** story medal **/
   /** story briefcase **/
+  /** story exit-confirm **/
 }
 #story .scene-canvas {
   position: absolute;
@@ -3093,7 +3096,7 @@ body.no-scroll-mode {
 #story .buttons {
   z-index: 3;
   position: absolute;
-  right: 279px;
+  right: 419px;
   top: 18px;
   width: 0;
   height: 0;
@@ -3121,7 +3124,7 @@ body.no-scroll-mode {
 #story .buttons .btn-exit .hover-state {
   position: absolute;
   background-image: url("../images/story-btn-exit.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -3143,9 +3146,97 @@ body.no-scroll-mode {
   visibility: visible;
   transition-delay: 0s;
 }
-#story .buttons .btn-help {
+#story .buttons .btn-fullscreen {
   position: absolute;
   left: 70px;
+  top: 0px;
+  width: 51px;
+  height: 52px;
+}
+#story .buttons .btn-fullscreen .normal-state {
+  position: absolute;
+  background-image: url("../images/story-btn-fullscreen.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#story .buttons .btn-fullscreen .hover-state {
+  position: absolute;
+  background-image: url("../images/story-btn-fullscreen.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-fullscreen:hover {
+  cursor: pointer;
+}
+#story .buttons .btn-fullscreen:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-fullscreen:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#story .buttons .btn-sound {
+  position: absolute;
+  left: 140px;
+  top: 0px;
+  width: 51px;
+  height: 52px;
+}
+#story .buttons .btn-sound .normal-state {
+  position: absolute;
+  background-image: url("../images/story-btn-sound.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#story .buttons .btn-sound .hover-state {
+  position: absolute;
+  background-image: url("../images/story-btn-sound.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-sound:hover {
+  cursor: pointer;
+}
+#story .buttons .btn-sound:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .buttons .btn-sound:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#story .buttons .btn-help {
+  position: absolute;
+  left: 210px;
   top: 0px;
   width: 51px;
   height: 52px;
@@ -3165,7 +3256,7 @@ body.no-scroll-mode {
 #story .buttons .btn-help .hover-state {
   position: absolute;
   background-image: url("../images/story-btn-help.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -3189,7 +3280,7 @@ body.no-scroll-mode {
 }
 #story .buttons .btn-evidence {
   position: absolute;
-  left: 140px;
+  left: 280px;
   top: 0px;
   width: 51px;
   height: 52px;
@@ -3209,7 +3300,7 @@ body.no-scroll-mode {
 #story .buttons .btn-evidence .hover-state {
   position: absolute;
   background-image: url("../images/story-btn-evidence.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -3230,6 +3321,16 @@ body.no-scroll-mode {
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
+}
+#story .buttons .btn-sound .normal-state,
+#story .buttons .btn-sound .hover-state {
+  background-size: auto;
+}
+#story .buttons .btn-sound.off-mode .normal-state {
+  background-position: right top;
+}
+#story .buttons .btn-sound.off-mode .hover-state {
+  background-position: right bottom;
 }
 #story .buttons .btn-evidence .news-hint {
   position: absolute;
@@ -4920,7 +5021,7 @@ body.no-scroll-mode {
 #story .fingerprint-popup .content .system .btn-share .hover-state {
   position: absolute;
   background-image: url("../images/story-fingerprint-btn-share.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -6752,7 +6853,7 @@ body.no-scroll-mode {
 #story .fingerprint-popup .results .wrapper .bingo .btn-ask .hover-state {
   position: absolute;
   background-image: url("../images/story-fingerprint-btn-ask.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7024,7 +7125,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-up-1 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-up.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7072,7 +7173,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-down-1 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-down.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7148,7 +7249,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-up-2 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-up.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7196,7 +7297,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-down-2 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-down.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7272,7 +7373,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-up-3 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-up.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7320,7 +7421,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-down-3 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-down.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7396,7 +7497,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-up-4 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-up.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7444,7 +7545,7 @@ body.no-scroll-mode {
 #story .briefcase-popup .content .password-pad .arrow-down-4 .hover-state {
   position: absolute;
   background-image: url("../images/story-briefcase-arrow-down.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7501,6 +7602,186 @@ body.no-scroll-mode {
   visibility: hidden;
   opacity: 0;
 }
+#story .exit-confirm-popup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.85);
+}
+#story .exit-confirm-popup .layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/layouts/story-exit-confirm-pc.jpg");
+  background-size: auto;
+  opacity: .4;
+}
+#story .exit-confirm-popup .btn-close {
+  position: absolute;
+  width: 53px;
+  height: 53px;
+  right: 16px;
+  top: 16px;
+  background-color: #3b3b3b;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+#story .exit-confirm-popup .btn-close.showing-mode {
+  opacity: 1;
+}
+#story .exit-confirm-popup .btn-close .btn-close-x {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  background-image: url("../images/btn-close-x.png");
+  background-size: auto;
+  left: 50%;
+  top: 50%;
+  margin-left: -8.5px;
+  margin-top: -8.5px;
+  transform-origin: center center;
+  transition: transform 0.4s ease-out;
+}
+#story .exit-confirm-popup .btn-close:hover {
+  cursor: pointer;
+}
+#story .exit-confirm-popup .btn-close:hover .btn-close-x {
+  transform: rotate(90deg);
+}
+@media (max-width: 640px) {
+  #story .exit-confirm-popup .btn-close {
+    position: fixed;
+    width: 71px;
+    height: 71px;
+    right: 14px;
+    top: 14px;
+  }
+  #story .exit-confirm-popup .btn-close.showing-mode {
+    opacity: 1;
+  }
+  #story .exit-confirm-popup .btn-close .btn-close-x {
+    width: 21px;
+    height: 21px;
+    background-image: url("../images/btn-close-x.png");
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-left: -10.5px;
+    margin-top: -10.5px;
+  }
+  #story .exit-confirm-popup .btn-close:hover {
+    cursor: pointer;
+  }
+  #story .exit-confirm-popup .btn-close:hover .btn-close-x {
+    transform: rotate(90deg);
+  }
+}
+#story .exit-confirm-popup .content {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 50%;
+  top: 50%;
+}
+#story .exit-confirm-popup .content .basement {
+  position: absolute;
+  left: -411%;
+  top: -270%;
+  width: 818%;
+  height: 602%;
+  background-image: url("../images/story-exit-confirm-basement.png");
+  background-size: cover;
+}
+#story .exit-confirm-popup .content .btn-yes {
+  position: absolute;
+  left: -168px;
+  top: 20px;
+  width: 130px;
+  height: 55px;
+}
+#story .exit-confirm-popup .content .btn-yes .normal-state {
+  position: absolute;
+  background-image: url("../images/story-exit-confirm-btn-yes.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#story .exit-confirm-popup .content .btn-yes .hover-state {
+  position: absolute;
+  background-image: url("../images/story-exit-confirm-btn-yes.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .exit-confirm-popup .content .btn-yes:hover {
+  cursor: pointer;
+}
+#story .exit-confirm-popup .content .btn-yes:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .exit-confirm-popup .content .btn-yes:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#story .exit-confirm-popup .content .btn-no {
+  position: absolute;
+  left: 46px;
+  top: 20px;
+  width: 104px;
+  height: 55px;
+}
+#story .exit-confirm-popup .content .btn-no .normal-state {
+  position: absolute;
+  background-image: url("../images/story-exit-confirm-btn-no.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#story .exit-confirm-popup .content .btn-no .hover-state {
+  position: absolute;
+  background-image: url("../images/story-exit-confirm-btn-no.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .exit-confirm-popup .content .btn-no:hover {
+  cursor: pointer;
+}
+#story .exit-confirm-popup .content .btn-no:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#story .exit-confirm-popup .content .btn-no:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
 /** intro **/
 #happy-end {
   position: absolute;
@@ -7519,13 +7800,84 @@ body.no-scroll-mode {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("../images/layouts/happy-end-form-pc.jpg");
+  background-image: url("../images/layouts/happy-end-not-really-pc.jpg");
   background-size: auto;
   opacity: .4;
 }
 #happy-end .layout {
   background-position: center center;
   background-size: contain;
+}
+#happy-end .not-really {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+#happy-end .not-really .exit-pic {
+  position: absolute;
+  left: -950px;
+  top: -424px;
+  width: 1382px;
+  height: 896px;
+  margin-left: 0px;
+  margin-top: 0px;
+  background-image: url("../images/happy-end-exit.png");
+  background-size: auto;
+}
+#happy-end .not-really .content {
+  position: absolute;
+  left: 75px;
+  top: -153px;
+  width: 376px;
+  height: 232px;
+  margin-left: 0px;
+  margin-top: 0px;
+  background-image: url("../images/happy-end-content-2.png");
+  background-size: auto;
+}
+#happy-end .not-really .btn-to-form-2 {
+  position: absolute;
+  left: 101px;
+  top: 124px;
+  width: 223px;
+  height: 52px;
+}
+#happy-end .not-really .btn-to-form-2 .normal-state {
+  position: absolute;
+  background-image: url("../images/happy-end-btn-to-form-2.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#happy-end .not-really .btn-to-form-2 .hover-state {
+  position: absolute;
+  background-image: url("../images/happy-end-btn-to-form-2.png");
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-position: 0 -100%;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#happy-end .not-really .btn-to-form-2:hover {
+  cursor: pointer;
+}
+#happy-end .not-really .btn-to-form-2:hover .normal-state {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#happy-end .not-really .btn-to-form-2:hover .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 #happy-end .first-step {
   position: absolute;
@@ -7576,7 +7928,7 @@ body.no-scroll-mode {
 #happy-end .first-step .btn-to-form .hover-state {
   position: absolute;
   background-image: url("../images/happy-end-btn-to-form.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7636,7 +7988,7 @@ body.no-scroll-mode {
 #happy-end .form-step .btn-send .hover-state {
   position: absolute;
   background-image: url("../images/happy-end-form-btn-send.png");
-  background-size: auto;
+  background-size: cover;
   width: 100%;
   height: 100%;
   background-position: 0 -100%;
@@ -7662,7 +8014,7 @@ body.no-scroll-mode {
   position: absolute;
   left: -468px;
   top: 171px;
-  width: 353px;
+  width: 369px;
   height: 13px;
   margin-left: 0px;
   margin-top: 0px;
@@ -7676,7 +8028,7 @@ body.no-scroll-mode {
 }
 #happy-end .form-step .eula-text .btn-rule {
   position: absolute;
-  left: 117px;
+  left: 146px;
   top: -5px;
   width: 62px;
   height: 21px;
@@ -7685,12 +8037,16 @@ body.no-scroll-mode {
 }
 #happy-end .form-step .eula-text .btn-privacy {
   position: absolute;
-  left: 190px;
+  left: 219px;
   top: -5px;
-  width: 165px;
+  width: 154px;
   height: 21px;
   margin-left: 0px;
   margin-top: 0px;
+}
+#happy-end .form-step .eula-text .btn-rule,
+#happy-end .form-step .eula-text .btn-privacy {
+  cursor: pointer;
 }
 #happy-end .form-step .form-body {
   position: absolute;
@@ -7828,6 +8184,9 @@ body.no-scroll-mode {
   width: 450px;
 }
 @media (max-width: 640px) {
+  #scene-container {
+    overflow-x: hidden;
+  }
   #logo {
     left: 18px;
     top: 15px;
@@ -7934,110 +8293,22 @@ body.no-scroll-mode {
   #story .buttons {
     z-index: 3;
     position: absolute;
-    right: 279px;
-    top: 18px;
+    right: 86px;
+    top: 125px;
     width: 0;
     height: 0;
-    transition: top 0.5s ease-out;
-  }
-  #story .buttons .btn-exit {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 51px;
-    height: 52px;
-  }
-  #story .buttons .btn-exit .normal-state {
-    position: absolute;
-    background-image: url("../images/story-btn-exit.png");
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    background-position: 0 0;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.4s ease-out;
-    transition-delay: 0s;
-  }
-  #story .buttons .btn-exit .hover-state {
-    position: absolute;
-    background-image: url("../images/story-btn-exit.png");
-    background-size: auto;
-    width: 100%;
-    height: 100%;
-    background-position: 0 -100%;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-exit:hover {
-    cursor: pointer;
-  }
-  #story .buttons .btn-exit:hover .normal-state {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-exit:hover .hover-state {
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
-  }
-  #story .buttons .btn-help {
-    position: absolute;
-    left: 70px;
-    top: 0px;
-    width: 51px;
-    height: 52px;
-  }
-  #story .buttons .btn-help .normal-state {
-    position: absolute;
-    background-image: url("../images/story-btn-help.png");
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    background-position: 0 0;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.4s ease-out;
-    transition-delay: 0s;
-  }
-  #story .buttons .btn-help .hover-state {
-    position: absolute;
-    background-image: url("../images/story-btn-help.png");
-    background-size: auto;
-    width: 100%;
-    height: 100%;
-    background-position: 0 -100%;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-help:hover {
-    cursor: pointer;
-  }
-  #story .buttons .btn-help:hover .normal-state {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-help:hover .hover-state {
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
+    transition: right 0.5s ease-in;
   }
   #story .buttons .btn-evidence {
     position: absolute;
-    left: 140px;
+    left: 0px;
     top: 0px;
-    width: 51px;
-    height: 52px;
+    width: 75px;
+    height: 75px;
   }
   #story .buttons .btn-evidence .normal-state {
     position: absolute;
-    background-image: url("../images/story-btn-evidence.png");
+    background-image: url("../images/story-btn-evidence.m.png");
     background-size: cover;
     width: 100%;
     height: 100%;
@@ -8049,8 +8320,8 @@ body.no-scroll-mode {
   }
   #story .buttons .btn-evidence .hover-state {
     position: absolute;
-    background-image: url("../images/story-btn-evidence.png");
-    background-size: auto;
+    background-image: url("../images/story-btn-evidence.m.png");
+    background-size: cover;
     width: 100%;
     height: 100%;
     background-position: 0 -100%;
@@ -8072,15 +8343,201 @@ body.no-scroll-mode {
     visibility: visible;
     transition-delay: 0s;
   }
+  #story .buttons .btn-help {
+    position: absolute;
+    left: 0px;
+    top: 88px;
+    width: 75px;
+    height: 75px;
+  }
+  #story .buttons .btn-help .normal-state {
+    position: absolute;
+    background-image: url("../images/story-btn-help.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-help .hover-state {
+    position: absolute;
+    background-image: url("../images/story-btn-help.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-help:hover {
+    cursor: pointer;
+  }
+  #story .buttons .btn-help:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-help:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-sound {
+    position: absolute;
+    left: 0px;
+    top: 176px;
+    width: 75px;
+    height: 75px;
+  }
+  #story .buttons .btn-sound .normal-state {
+    position: absolute;
+    background-image: url("../images/story-btn-sound.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-sound .hover-state {
+    position: absolute;
+    background-image: url("../images/story-btn-sound.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-sound:hover {
+    cursor: pointer;
+  }
+  #story .buttons .btn-sound:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-sound:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-fullscreen {
+    position: absolute;
+    left: 0px;
+    top: 264px;
+    width: 75px;
+    height: 75px;
+  }
+  #story .buttons .btn-fullscreen .normal-state {
+    position: absolute;
+    background-image: url("../images/story-btn-fullscreen.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-fullscreen .hover-state {
+    position: absolute;
+    background-image: url("../images/story-btn-fullscreen.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-fullscreen:hover {
+    cursor: pointer;
+  }
+  #story .buttons .btn-fullscreen:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-fullscreen:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-exit {
+    position: absolute;
+    left: 0px;
+    top: 352px;
+    width: 75px;
+    height: 75px;
+  }
+  #story .buttons .btn-exit .normal-state {
+    position: absolute;
+    background-image: url("../images/story-btn-exit.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-exit .hover-state {
+    position: absolute;
+    background-image: url("../images/story-btn-exit.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-exit:hover {
+    cursor: pointer;
+  }
+  #story .buttons .btn-exit:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #story .buttons .btn-exit:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #story .buttons .btn-sound .normal-state,
+  #story .buttons .btn-sound .hover-state {
+    background-size: auto;
+  }
+  #story .buttons .btn-sound.off-mode .normal-state {
+    background-position: right top;
+  }
+  #story .buttons .btn-sound.off-mode .hover-state {
+    background-position: right bottom;
+  }
   #story .buttons .btn-evidence .news-hint {
     position: absolute;
     left: 0px;
-    top: 47px;
-    width: 51px;
-    height: 15px;
+    top: 62px;
+    width: 75px;
+    height: 16px;
     margin-left: 0px;
     margin-top: 0px;
-    background-image: url("../images/story-btn-evidence-hint.png");
+    background-image: url("../images/story-btn-evidence-hint.m.png");
     background-size: auto;
     visibility: hidden;
   }
@@ -8088,8 +8545,9 @@ body.no-scroll-mode {
     visibility: visible;
   }
   #story .buttons.hide-mode {
-    top: -65px;
-    transition: top 0.5s ease-in;
+    top: 125px;
+    right: -80px;
+    transition: right 0.5s ease-in;
   }
   #story .evidences {
     position: absolute;
@@ -8102,7 +8560,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/layouts/story-evidences-pc.jpg");
+    background-image: url("../images/layouts/story-evidences-m.jpg");
     background-size: auto;
     opacity: .4;
   }
@@ -8145,38 +8603,37 @@ body.no-scroll-mode {
     top: 50%;
     width: 1760px;
     margin-left: -880px;
-    margin-top: 60px;
+    margin-top: 13px;
   }
   #story .evidences .arrow-left {
     position: absolute;
-    background-image: url("../images/evidence-arrow-left.png");
+    background-image: url("../images/evidence-arrow-left.m.png");
     background-size: auto;
-    width: 60px;
-    height: 100px;
-    margin-left: -30px;
-    margin-top: -50px;
+    width: 46px;
+    height: 88px;
+    margin-left: -80px;
     left: 0;
     cursor: pointer;
   }
   #story .evidences .arrow-left:active {
-    margin-left: -31px;
+    margin-left: -81px;
   }
   #story .evidences .arrow-right {
     position: absolute;
-    background-image: url("../images/evidence-arrow-right.png");
+    background-image: url("../images/evidence-arrow-right.m.png");
     background-size: auto;
-    width: 60px;
-    height: 100px;
-    margin-right: -30px;
-    margin-top: -50px;
+    width: 46px;
+    height: 88px;
+    margin-right: -80px;
     right: 0;
     cursor: pointer;
   }
   #story .evidences .arrow-right:active {
-    margin-right: -31px;
+    margin-right: -81px;
   }
   #story .evidences .arrow-left,
   #story .evidences .arrow-right {
+    margin-top: -46px;
     z-index: 10;
     transition: opacity 0.4s ease-out;
     transition-delay: 0s;
@@ -8195,11 +8652,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-key {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 0px;
     cursor: pointer;
@@ -8211,7 +8668,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-key.png");
+    background-image: url("../images/evidence-icon-key.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-key.lock-mode {
@@ -8219,11 +8676,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-key.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-key.hide-mode {
     opacity: 0;
@@ -8232,11 +8689,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-phone {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 270px;
     cursor: pointer;
@@ -8248,7 +8705,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-phone.png");
+    background-image: url("../images/evidence-icon-phone.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-phone.lock-mode {
@@ -8256,11 +8713,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-phone.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-phone.hide-mode {
     opacity: 0;
@@ -8269,11 +8726,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-map {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 540px;
     cursor: pointer;
@@ -8285,7 +8742,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-map.png");
+    background-image: url("../images/evidence-icon-map.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-map.lock-mode {
@@ -8293,11 +8750,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-map.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-map.hide-mode {
     opacity: 0;
@@ -8306,11 +8763,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-billboard {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 810px;
     cursor: pointer;
@@ -8322,7 +8779,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-billboard.png");
+    background-image: url("../images/evidence-icon-billboard.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-billboard.lock-mode {
@@ -8330,11 +8787,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-billboard.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-billboard.hide-mode {
     opacity: 0;
@@ -8343,11 +8800,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-wineglass {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 1080px;
     cursor: pointer;
@@ -8359,7 +8816,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-wineglass.png");
+    background-image: url("../images/evidence-icon-wineglass.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-wineglass.lock-mode {
@@ -8367,11 +8824,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-wineglass.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-wineglass.hide-mode {
     opacity: 0;
@@ -8380,11 +8837,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-medal {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 1350px;
     cursor: pointer;
@@ -8396,7 +8853,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-medal.png");
+    background-image: url("../images/evidence-icon-medal.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-medal.lock-mode {
@@ -8404,11 +8861,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-medal.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-medal.hide-mode {
     opacity: 0;
@@ -8417,11 +8874,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-briefcase {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 1620px;
     cursor: pointer;
@@ -8433,7 +8890,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-briefcase.png");
+    background-image: url("../images/evidence-icon-briefcase.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-briefcase.lock-mode {
@@ -8441,11 +8898,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-briefcase.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-briefcase.hide-mode {
     opacity: 0;
@@ -8454,11 +8911,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-locked {
     position: absolute;
-    width: 215px;
-    height: 263px;
-    margin-left: -107.5px;
-    margin-top: -131.5px;
-    background-image: url("../images/evidence-clip.png");
+    width: 325px;
+    height: 400px;
+    margin-left: -162.5px;
+    margin-top: -200px;
+    background-image: url("../images/evidence-clip.m.png");
     background-size: auto;
     left: 1890px;
     cursor: pointer;
@@ -8470,7 +8927,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/evidence-icon-locked.png");
+    background-image: url("../images/evidence-icon-locked.m.png");
     background-size: auto;
   }
   #story .evidences .clips .clip-locked.lock-mode {
@@ -8478,11 +8935,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-locked.lock-mode .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .evidences .clips .clip-locked.hide-mode {
     opacity: 0;
@@ -8491,11 +8948,11 @@ body.no-scroll-mode {
   }
   #story .evidences .clips .clip-locked .icon {
     background-image: url("../images/evidence-icon-locked.gif");
-    background-size: auto;
-    width: 151px;
-    height: 209px;
-    left: 32px;
-    top: 27px;
+    background-size: cover;
+    width: 200px;
+    height: 276.82px;
+    left: 64px;
+    top: 67px;
   }
   #story .dialog {
     font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
@@ -8570,9 +9027,9 @@ body.no-scroll-mode {
   #story .phone-popup .content .phone-basement {
     position: absolute;
     left: -320%;
-    top: -535%;
+    top: -817%;
     width: 640%;
-    height: 1017%;
+    height: 1450%;
     background-image: url("../images/story-phone-mailbox.m.jpg");
     background-size: cover;
     -webkit-touch-callout: none;
@@ -8949,7 +9406,7 @@ body.no-scroll-mode {
   #story .fingerprint-popup .content .system .btn-share .hover-state {
     position: absolute;
     background-image: url("../images/story-fingerprint-btn-share.m.png");
-    background-size: auto;
+    background-size: cover;
     width: 100%;
     height: 100%;
     background-position: 0 -100%;
@@ -9090,7 +9547,7 @@ body.no-scroll-mode {
   #story .fingerprint-popup .results .wrapper .bingo .btn-ask .hover-state {
     position: absolute;
     background-image: url("../images/story-fingerprint-btn-ask.m.png");
-    background-size: auto;
+    background-size: cover;
     width: 100%;
     height: 100%;
     background-position: 0 -100%;
@@ -9255,6 +9712,422 @@ body.no-scroll-mode {
     height: 67.94%;
     background-image: url("../images/story-briefcase-btn-unlock-base.png");
     background-size: cover;
+  }
+  /** intro **/
+  #happy-end .background {
+    background-image: url("../images/happy-end-background.m.jpg");
+    background-size: cover;
+    background-position: center center;
+    position: fixed;
+  }
+  #happy-end .layout {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/layouts/happy-end-form-m.jpg");
+    background-size: auto;
+    opacity: .4;
+  }
+  #happy-end .layout {
+    background-position: center center;
+    background-size: contain;
+  }
+  #happy-end .not-really {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+  #happy-end .not-really .exit-pic {
+    position: absolute;
+    left: -320px;
+    top: -429px;
+    width: 640px;
+    height: 597px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-exit.m.png");
+    background-size: auto;
+  }
+  #happy-end .not-really .content {
+    position: absolute;
+    left: -257px;
+    top: -59px;
+    width: 456px;
+    height: 233px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-content-2.m.png");
+    background-size: auto;
+  }
+  #happy-end .not-really .btn-to-form-2 {
+    position: absolute;
+    left: -262px;
+    top: 228px;
+    width: 521px;
+    height: 94px;
+  }
+  #happy-end .not-really .btn-to-form-2 .normal-state {
+    position: absolute;
+    background-image: url("../images/happy-end-btn-to-form-2.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #happy-end .not-really .btn-to-form-2 .hover-state {
+    position: absolute;
+    background-image: url("../images/happy-end-btn-to-form-2.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .not-really .btn-to-form-2:hover {
+    cursor: pointer;
+  }
+  #happy-end .not-really .btn-to-form-2:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .not-really .btn-to-form-2:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #happy-end .first-step {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+  #happy-end .first-step .open-case {
+    position: absolute;
+    left: -320px;
+    top: -397px;
+    width: 524px;
+    height: 493px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-open-case.m.png");
+    background-size: auto;
+  }
+  #happy-end .first-step .content {
+    position: absolute;
+    left: -310px;
+    top: -184px;
+    width: 568px;
+    height: 405px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-content.m.png");
+    background-size: auto;
+  }
+  #happy-end .first-step .btn-to-form {
+    position: absolute;
+    left: -262px;
+    top: 266px;
+    width: 521px;
+    height: 94px;
+  }
+  #happy-end .first-step .btn-to-form .normal-state {
+    position: absolute;
+    background-image: url("../images/happy-end-btn-to-form.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #happy-end .first-step .btn-to-form .hover-state {
+    position: absolute;
+    background-image: url("../images/happy-end-btn-to-form.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .first-step .btn-to-form:hover {
+    cursor: pointer;
+  }
+  #happy-end .first-step .btn-to-form:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .first-step .btn-to-form:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #happy-end .form-step {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+  #happy-end .form-step .form-title {
+    display: none;
+  }
+  #happy-end .form-step .btn-send {
+    position: absolute;
+    left: -263px;
+    top: 265px;
+    width: 521px;
+    height: 94px;
+  }
+  #happy-end .form-step .btn-send .normal-state {
+    position: absolute;
+    background-image: url("../images/happy-end-form-btn-send.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 0;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+  }
+  #happy-end .form-step .btn-send .hover-state {
+    position: absolute;
+    background-image: url("../images/happy-end-form-btn-send.m.png");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: 0 -100%;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .form-step .btn-send:hover {
+    cursor: pointer;
+  }
+  #happy-end .form-step .btn-send:hover .normal-state {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #happy-end .form-step .btn-send:hover .hover-state {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  #happy-end .form-step .eula-text {
+    position: absolute;
+    left: -162px;
+    top: 162px;
+    width: 405px;
+    height: 63px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-form-eula-text.m.png");
+    background-size: auto;
+  }
+  #happy-end .form-step .eula-text .checkbox {
+    position: absolute;
+    left: -101px;
+    top: 1px;
+    width: 59px;
+    height: 59px;
+  }
+  #happy-end .form-step .eula-text .checkbox label {
+    width: 100%;
+    height: 100%;
+  }
+  #happy-end .form-step .eula-text .checkbox label:after {
+    content: '';
+    width: 26px;
+    height: 10px;
+    position: absolute;
+    top: 16px;
+    left: 14px;
+    border: 8px solid #43ac8c;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  #happy-end .form-step .eula-text .btn-rule {
+    position: absolute;
+    left: 226px;
+    top: -5px;
+    width: 94px;
+    height: 28px;
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+  #happy-end .form-step .eula-text .btn-privacy {
+    position: absolute;
+    left: 337px;
+    top: -5px;
+    width: 74px;
+    height: 28px;
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+  #happy-end .form-step .eula-text .btn-privacy-2 {
+    position: absolute;
+    left: -2px;
+    top: 38px;
+    width: 186px;
+    height: 28px;
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+  #happy-end .form-step .eula-text .btn-rule,
+  #happy-end .form-step .eula-text .btn-privacy,
+  #happy-end .form-step .eula-text .btn-privacy-2 {
+    cursor: pointer;
+  }
+  #happy-end .form-step .form-body {
+    position: absolute;
+    left: -264px;
+    top: -283px;
+    width: 521px;
+    height: 410px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-form-body.m.png");
+    background-size: auto;
+  }
+  #happy-end .form-step .form-body select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/select-arrow.m.png") no-repeat;
+    background-color: rgba(0, 0, 0, 0);
+    background-position: right 8px;
+    letter-spacing: 1px;
+    height: 34px;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    text-align-last: left;
+    font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
+    font-size: 20px;
+    color: #8a8a8a;
+  }
+  #happy-end .form-step .form-body select option {
+    font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
+    font-size: 14px;
+    color: black;
+    background: white;
+    text-align: center;
+    text-align-last: center;
+  }
+  #happy-end .form-step .form-body select optgroup {
+    font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
+    font-size: 20px;
+    color: black;
+    background: white;
+    text-align: center;
+    text-align-last: center;
+  }
+  #happy-end .form-step .form-body select::-ms-expand {
+    display: none;
+  }
+  #happy-end .form-step .form-body select.white-mode {
+    color: white;
+  }
+  #happy-end .form-step .form-body .birthday-fields {
+    position: absolute;
+    left: 108px;
+    top: 270px;
+  }
+  #happy-end .form-step .form-body .birthday-fields #select-year,
+  #happy-end .form-step .form-body .birthday-fields #select-month,
+  #happy-end .form-step .form-body .birthday-fields #select-day {
+    position: absolute;
+    width: 124px;
+    color: white;
+  }
+  #happy-end .form-step .form-body .birthday-fields #select-year {
+    left: 8px;
+  }
+  #happy-end .form-step .form-body .birthday-fields #select-month {
+    left: 144px;
+  }
+  #happy-end .form-step .form-body .birthday-fields #select-day {
+    left: 280px;
+  }
+  #happy-end .form-step .form-body .gender-select {
+    position: absolute;
+    left: 433px;
+    top: 26px;
+    width: 89px;
+  }
+  #happy-end .form-step .form-body .address-county {
+    position: absolute;
+    left: 118px;
+    top: 351px;
+    width: 100px;
+    color: white;
+  }
+  #happy-end .form-step .form-body .address-zone {
+    position: absolute;
+    left: 227px;
+    top: 351px;
+    width: 100px;
+    color: white;
+  }
+  #happy-end .form-step .form-body input {
+    font-family: 'Meiryo', '微軟正黑體', "Heiti TC", serif;
+    font-size: 20px;
+    color: white;
+    border: none;
+    background: none;
+    height: 24px;
+    width: 100px;
+    letter-spacing: 1px;
+  }
+  #happy-end .form-step .form-body input.hint-mode {
+    color: #8a8a8a;
+  }
+  #happy-end .form-step .form-body .family-name {
+    position: absolute;
+    left: 108px;
+    top: 30px;
+    width: 60px;
+  }
+  #happy-end .form-step .form-body .user-name {
+    position: absolute;
+    left: 271px;
+    top: 30px;
+    width: 60px;
+  }
+  #happy-end .form-step .form-body .user-email {
+    position: absolute;
+    left: 109px;
+    top: 112px;
+    width: 410px;
+  }
+  #happy-end .form-step .form-body .user-phone {
+    position: absolute;
+    left: 109px;
+    top: 193px;
+    width: 410px;
+    text-align: left;
+  }
+  #happy-end .form-step .form-body .address-detail {
+    position: absolute;
+    left: 349px;
+    top: 356px;
+    width: 160px;
   }
 }
 @media (max-width: 640px) and (max-width: 640px) {

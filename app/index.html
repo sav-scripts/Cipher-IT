@@ -5,7 +5,12 @@
     <link rel="icon" href="misc/icon.png" type="image/x-icon"/>
     <meta charset="UTF-8">
 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta id="myViewport" name="viewport" content="width=640,user-scalable=0">
+    <!--<meta id="myViewport" name="viewport" content="width=device-width">-->
 
     <meta property="fb:app_id" content="917311835080159"/>
     <meta property="og:title" content="探索秘酩之謎" />
@@ -26,9 +31,9 @@
     <!--<meta property="og:image" content="http://demo.ogilvyrw.com/website/theglenlivet-Cipher/app/misc/share_site.jpg" />-->
 
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/phase1-only.css">
 
 </head>
+
 <body onload="Main.init();">
 
     <!-- Google Tag Manager -->
@@ -50,13 +55,10 @@
 
     <script src="js/Loading.js"></script>
     <script>
-
-//        window.Loading = SquareLoading;
-//        Loading.progress(0).show();
-
-    Loading.progress('').show();
-
+        Loading.progress('').show();
     </script>
+
+    <!--<div class="test">中文字測試</div>-->
 
     <div id="invisible-container"></div>
     <div id="scene-container">
@@ -135,32 +137,75 @@
 
     <script src="js/lib/LAB.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-    <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ModifiersPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery.1.11.3.min.js"><\/script>')</script>
+
+    <script src="js/lib/pep.min.js"></script>
     <script src="js/lib/jquery.waitforimages.min.js"></script>
     <script src="js/lib/jquery.mousewheel.min.js"></script>
+    <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
+    <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/lib/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.combined.js"></script>
+    <!--<script src="js/lib/createjs-2015.11.26.min.js"></script>-->
+    <script src="js/lib/CreatejsExtend.js"></script>
     <!--<script src="form_Canvas.js"></script>-->
+    <!--<script src="intro.js"></script>-->
+
+    <script src="../editor/js/lib/babylon.2.4.max.js"></script>
 
 
     <!-- build:js js/optimized.js -->
+    <script src="js/lib/modernizr-custom.js"></script>
     <script src="js/lib/FBHelper.1.0.2.js"></script>
     <script src="js/lib/FormHelper.0.0.5.js"></script>
     <script src="js/lib/Helper.1.0.4.js"></script>
     <script src="js/lib/SceneHandler.1.0.5.js"></script>
+    <script src="js/lib/Logger.js"></script>
     <script src="js/ApiProxy.js"></script>
     <script src="js/lib/Utility.0.0.15.js"></script>
+    <script src="js/lib/ScalableContent.1.0.1.js"></script>
     <script src="js/Main.js"></script>
+    <script src="js/MyTools.js"></script>
     <script src="js/UI.js"></script>
     <script src="js/LandingPage.js"></script>
+    <script src="js/Intro.js"></script>
+    <script src="js/Story.js"></script>
+    <script src="js/Story.Scene.js"></script>
+    <script src="js/Story.ExitConfirm.js"></script>
+    <script src="js/Story.Key.js"></script>
+    <script src="js/Story.Phone.js"></script>
+    <script src="js/Story.Poster.js"></script>
+    <script src="js/Story.Photos.js"></script>
+    <script src="js/Story.Billboard.js"></script>
+    <script src="js/Story.Fingerprint.js"></script>
+    <script src="js/Story.Medal.js"></script>
+    <script src="js/Story.Briefcase.js"></script>
+    <script src="js/Story.DialogTrigger.js"></script>
+    <script src="js/Story.DialogText.js"></script>
+    <script src="js/Story.ObjectManager.js"></script>
+    <script src="js/Story.Evidences.js"></script>
+    <script src="js/HappyEnd.js"></script>
     <script src="js/Participate.js"></script>
     <script src="js/ParticipateRule.js"></script>
+    <script src="js/CustomCamera.js"></script>
+    <script src="js/RainMaker.js"></script>
+    <script src="../editor/js/DataManager.js"></script>
+    <script src="../editor/js/ShaderLoader.js"></script>
+    <script src="../editor/js/MaterialLib.js"></script>
+    <script src="../editor/js/PostProcessLib.js"></script>
+    <script src="../editor/js/ShapeEditor.js"></script>
+    <script src="../editor/js/BillboardEditor.js"></script>
+    <script src="../editor/js/LightEditor.js"></script>
+    <script src="../editor/js/Tools.js"></script>
+    <script src="../editor/js/lib/FileSaver.min.js"></script>
+    <script src="../editor/js/lib/pnltri.js"></script>
+    <script src="../editor/js/lib/jszip.js"></script>
+    <script src="../editor/js/lib/jszip-utils.min.js"></script>
     <!-- endbuild -->
-
 </body>
 </html>

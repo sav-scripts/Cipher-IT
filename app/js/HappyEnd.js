@@ -2,6 +2,13 @@
 {
     var $doms = {},
         _dateCombo,
+        _contentDic =
+        {
+            "/NotReally": true,
+            "/Yes": true,
+            "/Form": true
+        },
+        _$currentContent,
         _isInit = false;
 
     var self = window.HappyEnd =
@@ -12,7 +19,17 @@
             function execute(isFromLoad)
             {
                 if (isFromLoad && options.cbContentLoaded) options.cbContentLoaded.call();
-                show(cb);
+                show(function()
+                {
+                    if(options.contentHash)
+                    {
+                        self.toContent(options.contentHash, cb);
+                    }
+                    else
+                    {
+                        cb.call();
+                    }
+                });
             }
 
             function loadAndBuild(cb)
@@ -36,6 +53,28 @@
             hide(cb);
         },
 
+        toContent: function(contentHash, cb)
+        {
+            if(!_isInit) return;
+
+            if(!contentHash) contentHash = "/NotReally";
+
+
+            var $content = _contentDic[contentHash];
+            if(!$content) return;
+
+            var tl = new TimelineMax;
+
+            if(_$currentContent)
+            {
+                tl.to(_$currentContent,.5,{autoAlpha:0});
+            }
+
+            _$currentContent = $content;
+            tl.to(_$currentContent,.5,{autoAlpha:1});
+            tl.add(cb);
+        },
+
         resize: function ()
         {
 
@@ -48,6 +87,7 @@
         $("#invisible-container").append(templates[0].dom);
         $doms.container = $("#happy-end");
 
+        setupNotReally();
         setupFirstStep();
         setupFormStep();
 
@@ -60,11 +100,22 @@
 
         self.resize();
 
-        toStep(true);
+        //toStep('none');
 
         Menu.show();
         Menu.Logo._show();
 
+        TweenMax.set($doms.firstStepContainer, {autoAlpha:0});
+        TweenMax.set($doms.notReallyContainer, {autoAlpha:0});
+        TweenMax.set($doms.formStepContainer, {autoAlpha:0});
+
+        TweenMax.set($doms.container, {autoAlpha:1});
+
+        _$currentContent = null;
+
+        cb.call();
+
+        /*
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
         tl.to($doms.container, 1, {autoAlpha: 1, ease:Power3.easeIn});
@@ -72,6 +123,7 @@
         {
             cb.apply();
         });
+        */
     }
 
     function hide(cb)
@@ -88,54 +140,54 @@
         });
     }
 
-    function toStep(isFirstStep)
+    function setupNotReally()
     {
-        if(isFirstStep)
+        $doms.notReallyContainer = _contentDic["/NotReally"] = $doms.container.find(".not-really");
+
+        $doms.container.find(".btn-to-form-2").on(_CLICK_, function()
         {
-            TweenMax.set($doms.firstStepContainer, {autoAlpha:1});
-            TweenMax.set($doms.formStepContainer, {autoAlpha:0});
-        }
-        else
-        {
-            var tl = new TimelineMax;
-            tl.to($doms.firstStepContainer,.4, {autoAlpha:0});
-            tl.to($doms.formStepContainer,.4, {autoAlpha:1});
-        }
-    }
-
-    function setupFirstStep()
-    {
-        $doms.firstStepContainer = $doms.container.find(".first-step");
-
-        $doms.container.find(".btn-to-form").on(_CLICK_, function()
-        {
-            //toStep(false);
-
-
-            //alert("_shareEntrySerial = " + _shareEntrySerial);
-            Main.loginFB('/HappyEnd', function()
+            Main.loginFB('/HappyEnd/NotReally', function()
             {
-                var picture = Utility.getPath() + "misc/share_site.jpg";
+                var picture = Utility.getPath() + "misc/share_fail.jpg";
                 FB.ui
                 (
                     {
                         method:"share",
                         display: "iframe",
                         href: Utility.getPathWithFilename(),
-                        title: "破案分享 title",
-                        description: '破案分享 description',
+                        title: "你要放棄破案了嗎？",
+                        description: '真可惜，你離真相只差一點了！沒關係！只要留下報名資料，也能參加抽獎。歡迎再來挑戰，並號召好友一起加入破案喔～',
                         picture: picture
-                    },function(response)
+                    },function()
                     {
-                        if(!response.error && !response.error_code)
-                        {
-                            //ga("send", "event", "artworks", "fb_share_success");
-                            //alert('分享成功');
-                            //self.hide();
-                            //Entries.toStep("list");
-                        }
+                        SceneHandler.toHash("/HappyEnd/Form");
+                    }
+                );
+            });
+        });
+    }
 
-                        toStep(false);
+    function setupFirstStep()
+    {
+        $doms.firstStepContainer = _contentDic["/Yes"] = $doms.container.find(".first-step");
+
+        $doms.container.find(".btn-to-form").on(_CLICK_, function()
+        {
+            Main.loginFB('/HappyEnd/Yes', function()
+            {
+                var picture = Utility.getPath() + "misc/share_success.jpg";
+                FB.ui
+                (
+                    {
+                        method:"share",
+                        display: "iframe",
+                        href: Utility.getPathWithFilename(),
+                        title: "尋獲失蹤的神秘Cipher祕酩黑!",
+                        description: '尋獲失蹤的Cipher 秘酩黑！在這麼短的時間內能偵破這宗懸案，絕不簡單！想知道誰才是真正的劫犯？立刻加入偵辦行列吧！',
+                        picture: picture
+                    },function()
+                    {
+                        SceneHandler.toHash("/HappyEnd/Form");
                     }
                 );
             });
@@ -144,7 +196,7 @@
 
     function setupFormStep()
     {
-        $doms.formStepContainer = $doms.container.find(".form-step");
+        $doms.formStepContainer = _contentDic["/Form"] = $doms.container.find(".form-step");
 
         $doms.genderSelect = $doms.container.find(".gender-select");
         setupSelect($doms.genderSelect);
@@ -159,6 +211,12 @@
             email: $doms.container.find(".user-email"),
             addressDetail: $doms.container.find(".address-detail")
         };
+
+        if(Main.settings.viewport.index == 0)
+        {
+            $doms.fields.familyName.val('姓氏');
+            $doms.fields.name.val('名字');
+        }
 
         MyTools.setupInput($doms.fields.familyName, true, 20);
         MyTools.setupInput($doms.fields.name, true, 20);
@@ -180,6 +238,18 @@
         $doms.addressZone = $doms.container.find(".address-zone");
 
         FormHelper.completeCounty($doms.addressCounty, $doms.addressZone);
+
+        $doms.btnRule = $doms.container.find(".btn-rule").on(_CLICK_, function()
+        {
+           SceneHandler.toHash('/StoryRule');
+        });
+
+
+        $doms.btnPrivacy = $doms.container.find(".btn-privacy").add('.btn-privacy-2').on(_CLICK_, function()
+        {
+            console.log("check");
+            //SceneHandler.toHash('/StoryRule');
+        });
 
         $doms.btnSend = $doms.container.find(".btn-send").on(_CLICK_, function()
         {

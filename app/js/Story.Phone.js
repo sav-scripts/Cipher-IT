@@ -26,7 +26,7 @@
         _dialogTexts =
         [
             '<span>Bingo！啊..有隻手機！解鎖瞧瞧是否有更多線索，密碼可能跟</span><span class="green">英文的Ｃ</span><span>有些關聯</span>',
-            '<span>嗯...</span><span class="green">Honey</span><span>！　看來我知道下個該找的線索了</span>'
+            '<span>嗯...</span><span class="green">Honey</span><span>！</span><br/><span>　看來我知道下個該找的線索了</span>'
         ];
 
     var self = window.Story.Phone=

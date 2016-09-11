@@ -6,6 +6,7 @@
 (function ()
 {
     var $doms = {},
+        _ba,
         _isHiding = true,
         _dialogText = '<span>這是海報的一角！</span><span class="green">地圖</span><span>似乎在哪裡看過，這絕對不是巧合</span>';
 
@@ -24,6 +25,8 @@
             {
                 SceneHandler.toHash("/Story");
             });
+
+            _ba = new BackgroundAnimation($doms.container);
 
             $doms.container.detach();
 
@@ -45,14 +48,13 @@
 
             Story.DialogText.show(_dialogText, null, cb);
 
-            var tl = new TimelineMax;
-            tl.set([$doms.container, $doms.content], {autoAlpha: 0});
-            tl.to($doms.container, .4, {autoAlpha: 1});
-            tl.to($doms.content, 1, {autoAlpha: 1, ease:Linear.easeNone}, 0);
-            //tl.add(function ()
-            //{
-            //    if (cb) cb.apply();
-            //});
+            TweenMax.set($doms.container, {autoAlpha: 1});
+            TweenMax.set($doms.content, {autoAlpha: 0});
+
+            _ba.show(function()
+            {
+                TweenMax.to($doms.content, 1, {autoAlpha: 1, ease:Linear.easeNone});
+            });
 
         },
         hide: function (cb)
@@ -64,9 +66,9 @@
 
             Story.DialogText.hide();
 
-            var tl = new TimelineMax;
-            tl.to($doms.container, .4, {autoAlpha: 0});
-            tl.add(function ()
+            TweenMax.to($doms.content,.4, {autoAlpha: 0, ease:Linear.easeNone});
+
+            _ba.hide(function()
             {
                 $doms.container.detach();
                 if (cb) cb.apply();

@@ -270,11 +270,13 @@
             //var targetAlpha = alpha/180*Math.PI;
             //self._tweenObj.targetAlpha = targetAlpha;
 
-            console.log(event.alpha + ", " + event.beta + ", " + event.gamma + " => " + alpha);
+            //console.log(event.alpha + ", " + event.beta + ", " + event.gamma + " => " + alpha);
 
             TweenMax.killTweensOf(self._tweenObj);
             TweenMax.to(self._tweenObj,.5,{alpha: alpha, beta: beta, onUpdate:updateCamera, onUpdateParams:[self]});
-            //self._camera.alpha = targetAlpha;
+
+            //self._camera.alpha = alpha/180*Math.PI;
+            //self._camera.beta = beta/180*Math.PI;
 
         }
 

@@ -7,6 +7,7 @@
 {
     var $doms = {},
         _isHiding = true,
+        _ba,
         _dialogText = '<span>嫌犯棄車匆匆逃逸，在現場掉了一把刻有</span><span class="green">Ｃ的鑰匙</span><span>，這也許是某種線索</span>';
 
     var self = window.Story.Key=
@@ -25,6 +26,8 @@
                 SceneHandler.toHash("/Story");
             });
 
+            _ba = new BackgroundAnimation($doms.container);
+
             $doms.container.detach();
 
             return self;
@@ -42,10 +45,14 @@
 
             Story.DialogText.show(_dialogText, null, cb);
 
-            var tl = new TimelineMax;
-            tl.set([$doms.container, $doms.content], {autoAlpha: 0});
-            tl.to($doms.container, .4, {autoAlpha: 1});
-            tl.to($doms.content, 1, {autoAlpha: 1, ease:Linear.easeNone}, 0);
+            TweenMax.set($doms.container, {autoAlpha: 1});
+            TweenMax.set($doms.content, {autoAlpha: 0});
+
+            _ba.show(function()
+            {
+                TweenMax.to($doms.content, 1, {autoAlpha: 1, ease:Linear.easeNone});
+            });
+
             //tl.add(function ()
             //{
             //    if (cb) cb.apply();
@@ -61,9 +68,9 @@
 
             Story.DialogText.hide();
 
-            var tl = new TimelineMax;
-            tl.to($doms.container, .4, {autoAlpha: 0});
-            tl.add(function ()
+            TweenMax.to($doms.content,.4, {autoAlpha: 0, ease:Linear.easeNone});
+
+            _ba.hide(function()
             {
                 $doms.container.detach();
                 if (cb) cb.apply();

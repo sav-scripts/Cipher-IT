@@ -80,6 +80,8 @@
             {
                 $doms.textCanvas.attr("width", Math.min(vp.width, 1920)).attr("height", Math.min(vp.height, 1080));
             }
+
+            $doms['/Logo'].css("height", vp.height *.9);
         },
 
         reset: resetForm
@@ -173,7 +175,7 @@
 
     function loadCanvasAnimation(cb)
     {
-        var numScripts = 1, numScriptLoaded = 0, animeScript= 'form_Canvas.js';
+        var numScripts = 1, numScriptLoaded = 0, animeScript= 'js/animes/form_Canvas.js';
 
         $LAB.script(animeScript).wait(scriptLoaded);
 
@@ -270,7 +272,6 @@
 
     function updateScrollTop()
     {
-        //console.log("check");
         $doms.topBar.toggleClass("open-mode", ($(window).scrollTop() > 101));
     }
 
@@ -285,7 +286,7 @@
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
-        tl.to($doms.container, .4, {autoAlpha: 1});
+        tl.to($doms.container, 1.0, {autoAlpha: 1, ease:Power3.easeIn});
         tl.add(function ()
         {
             $(window).on("scroll", updateScrollTop);

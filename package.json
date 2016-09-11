@@ -18,6 +18,7 @@
     "grunt-contrib-cssmin": "",
     "grunt-filerev": "",
     "grunt-contrib-imagemin": "",
+    "grunt-responsive-images": "",
     "imagemin-pngquant": "~4.0.0",
     "grunt-newer": ""
   }

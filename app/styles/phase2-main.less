@@ -179,15 +179,31 @@
     .buttons{
         z-index: 3;
         position: absolute;
-        right: 279px;
+        right: 419px;
         top:18px;
 
         width: 0;
         height: 0;
 
         .fade-btn-2(btn-exit, "story-btn-exit.png", 0, 0, 51, 52);
-        .fade-btn-2(btn-help, "story-btn-help.png", 70, 0, 51, 52);
-        .fade-btn-2(btn-evidence, "story-btn-evidence.png", 140, 0, 51, 52);
+        .fade-btn-2(btn-fullscreen, "story-btn-fullscreen.png", 70, 0, 51, 52);
+        .fade-btn-2(btn-sound, "story-btn-sound.png", 140, 0, 51, 52);
+        .fade-btn-2(btn-help, "story-btn-help.png", 210, 0, 51, 52);
+        .fade-btn-2(btn-evidence, "story-btn-evidence.png", 280, 0, 51, 52);
+
+        .btn-sound{
+            .normal-state, .hover-state{
+                background-size:auto;
+            }
+            &.off-mode{
+                .normal-state{
+                    background-position: right top;
+                }
+                .hover-state{
+                    background-position: right bottom;
+                }
+            }
+        }
 
         .btn-evidence{
             .news-hint{
@@ -1060,7 +1076,22 @@
         }
     }
 
+    /** story exit-confirm **/
+    .exit-confirm-popup{
 
+        .story-popup-container("layouts/story-exit-confirm-pc.jpg");
+
+        .content{
+            .percent-container();
+
+            .percent-div(basement, -411, -270, 818, 602, "story-exit-confirm-basement.png");
+
+            .fade-btn-2(btn-yes, "story-exit-confirm-btn-yes.png", -168, 20, 130, 55);
+            .fade-btn-2(btn-no, "story-exit-confirm-btn-no.png", 46, 20, 104, 55);
+        }
+
+
+    }
 }
 
 
@@ -1079,7 +1110,20 @@
         background-position: center center;
     }
 
-    .my-layout("layouts/happy-end-form-pc.jpg");
+    .my-layout("layouts/happy-end-not-really-pc.jpg");
+
+
+    .not-really{
+        position: absolute;
+        left:50%;
+        top:50%;
+
+        .abs-div-2(exit-pic, -950,-424,1382,896,"happy-end-exit.png");
+        .abs-div-2(content, 75,-153,376,232,"happy-end-content-2.png");
+        .fade-btn-2(btn-to-form-2,"happy-end-btn-to-form-2.png", 101,124,223,52);
+
+        //        display:none;
+    }
 
     .first-step{
         position: absolute;
@@ -1102,7 +1146,7 @@
         .fade-btn-2(btn-send,"happy-end-form-btn-send.png", 276,169,223,52);
 
         .eula-text{
-            .abs-div-2(none, -468,171,353,13,"happy-end-form-eula-text.png");
+            .abs-div-2(none, -468,171,369,13,"happy-end-form-eula-text.png");
 
             .checkbox{
                 position: absolute;
@@ -1110,8 +1154,12 @@
                 top:-3px;
             }
 
-            .abs-div-2(btn-rule, 117, -5, 62, 21);
-            .abs-div-2(btn-privacy, 190,-5, 165, 21);
+            .abs-div-2(btn-rule, 146, -5, 62, 21);
+            .abs-div-2(btn-privacy, 219,-5, 154, 21);
+
+            .btn-rule, .btn-privacy{
+                cursor: pointer;
+            }
         }
 
         .form-body{

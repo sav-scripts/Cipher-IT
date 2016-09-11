@@ -36,19 +36,13 @@ module.exports = function(grunt)
                         src: [
                             //'images/*.{png,gif,jpg,svg}',
                             '*.html',
-                            'form_Canvas.js',
-                            'intro.js',
+                            'js/animes/**',
+                            'js/lib/**',
                             'js/Loading.js',
-                            'js/lib/createjs-2015.11.26.min.js',
-                            'js/lib/jquery.detectmobilebrowser.min.js',
-                            'js/lib/jquery.waitforimages.min.js',
-                            'js/lib/jquery.mousewheel.min.js',
-                            'js/lib/pep.min.js',
-                            'js/lib/TweenMax.min.js',
-                            'js/lib/jquery.1.11.3.min.js',
-                            'js/lib/LAB.min.js',
                             'styles/phase1-only.css',
-                            'misc/**'
+                            'scenedata/config.json',
+                            'misc/**',
+                            'textures/**'
                         ],
                         dest: 'dist'
                     }
@@ -122,9 +116,23 @@ module.exports = function(grunt)
             dynamic: {
                 files: [{
                     expand: true,
-                    cwd: 'app/images/',
-                    src: ['**/*.{png,jpg,gif}', '!layouts/**'],
-                    dest: 'dist/images/'
+                    cwd: 'app/',
+                    src: ['images/**/*.{png,jpg,gif}', '!images/layouts/**', 'scenedata/**/*.{png,jpg,gif}'],
+                    dest: 'dist/'
+                }]
+            }
+        },
+        responsive_images: {
+            myTask: {
+                options: {
+                    newFilesOnly: false,
+                    sizes:[{rename: false, width: "50%"}]
+                },
+                files: [{
+                    expand: true,
+                    src: ['**/*.{jpg,gif,png}'],
+                    cwd: 'app/scenedata/textures/',
+                    dest: 'app/scenedata/textures_m/'
                 }]
             }
         }
@@ -132,8 +140,9 @@ module.exports = function(grunt)
 
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-
     grunt.registerTask('images', ['newer:imagemin']);
+
+    grunt.registerTask('resize', ['newer:responsive_images']);
 
     //grunt.registerTask('watch2', ['watch:lessAdmin']);
 
@@ -146,6 +155,7 @@ module.exports = function(grunt)
         'concat',
         'uglify',
         'copy',
+        //'responsive_images',
         'images',
         'filerev',
         'usemin',

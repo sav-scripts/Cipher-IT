@@ -39,10 +39,10 @@
         engine: null,
         customCamera: null,
 
-        init: function(canvas, onReady)
+        init: function(canvas, useSmallTextures, onReady)
         {
             _canvas = canvas;
-            _engine = this.engine = new BABYLON.Engine(_canvas, true);
+            _engine = this.engine = new BABYLON.Engine(_canvas, false);
 
             $(_canvas).on("pointerdown", function(event)
             {
@@ -88,7 +88,8 @@
 
             ShaderLoader.loadFiles(["shape", "for-scene"],function()
             {
-                DataManager.loadFromExtracedData(_sceneDataPath, self, function ()
+                //DataManager.loadFromExtractedData(_sceneDataPath, self, null, function ()
+                DataManager.loadFromExtractedData(_sceneDataPath, self, useSmallTextures, function ()
                 {
                     BillboardEditor.setAllUnPickable();
 

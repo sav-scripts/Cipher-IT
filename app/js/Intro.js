@@ -1,6 +1,7 @@
 (function ()
 {
     var $doms = {},
+        _canvasStage = null,
         _isBtnStoryClicked = false,
         _movieclipRoot = null,
         _introPlaying = false,
@@ -47,21 +48,33 @@
         {
             if(_isInit)
             {
-                var vp = Main.settings.viewport;
-
-                var canvasWidth = 1920,
-                    canvasHeight = 936;
-
-                var containerWidth = $doms.container.width(),
-                    containerHeight = $doms.container.height();
-
-                var bound = Helper.getSize_cover(containerWidth, containerHeight, canvasWidth, canvasHeight);
 
                 if($doms.introCanvas)
                 {
+                    var vp = Main.settings.viewport;
+
+                    var canvasWidth = 1920,
+                        canvasHeight = 936;
+
+                    if(vp.index == 0)
+                    {
+                        canvasWidth = 640;
+                        canvasHeight = 855;
+                    }
+
+                    var containerWidth = $doms.container.width(),
+                        containerHeight = $doms.container.height();
+
+                    var bound = Helper.getSize_cover(containerWidth, containerHeight, canvasWidth, canvasHeight);
+
                     var offsetX = (containerWidth - bound.width)*.5,
                         offsetY = (containerHeight - bound.height)*.5;
-                    $doms.introCanvas.css("width", bound.width).css("height", bound.height).css("left", offsetX).css("top", offsetY);
+                    //$doms.introCanvas.css("width", bound.width).css("height", bound.height).css("left", offsetX).css("top", offsetY).attr('width', bound.width + "px").attr("height", bound.height + "px");
+                    $doms.introCanvas.css("width", bound.width).css("height", bound.height).css("left", offsetX).css("top", offsetY).attr('width', bound.width).attr("height", bound.height);
+
+
+                    _canvasStage.scaleX = bound.width / canvasWidth;
+                    _canvasStage.scaleY = bound.height / canvasHeight;
                 }
             }
         }
@@ -141,7 +154,7 @@
         canvas = $canvas[0];
         _movieclipRoot = exportRoot = new lib.intro();
 
-        stage = new createjs.Stage(canvas);
+        stage = _canvasStage = new createjs.Stage(canvas);
         stage.addChild(exportRoot);
         stage.update();
 
@@ -153,15 +166,15 @@
 
     function loadCanvasAnimation(cb)
     {
-        var numScripts = 1, numScriptLoaded = 0, animeScript= 'intro.js';
+        var numScripts = 1,
+            numScriptLoaded = 0,
+            animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js': 'js/animes/intro.js';
 
         $LAB.script(animeScript).wait(scriptLoaded);
 
         function scriptLoaded()
         {
             numScriptLoaded ++;
-
-            //Loading.updateProgress(numScriptLoaded / numScripts*100, 0, 20, false);
 
             if(numScriptLoaded < numScripts)
             {

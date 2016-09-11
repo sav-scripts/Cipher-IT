@@ -5,7 +5,12 @@
     <link rel="icon" href="misc/icon.png" type="image/x-icon"/>
     <meta charset="UTF-8">
 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <meta id="myViewport" name="viewport" content="width=640,user-scalable=0">
+    <!--<meta id="myViewport" name="viewport" content="width=device-width">-->
 
     <meta property="fb:app_id" content="917311835080159"/>
     <meta property="og:title" content="探索秘酩之謎" />
@@ -25,10 +30,10 @@
     <!--<meta property="og:image" content="http://local.savorks.com/projects/hogarth-ogilvy/Cipher-IT/app/misc/share_site.jpg" />-->
     <!--<meta property="og:image" content="http://demo.ogilvyrw.com/website/theglenlivet-Cipher/app/misc/share_site.jpg" />-->
 
-    <link rel="stylesheet" href="styles/main.d9a5f064332bdbf0ecb4.css">
-    <link rel="stylesheet" href="styles/phase1-only.0113a3c5c692e0d766e4.css">
+    <link rel="stylesheet" href="styles/main.8744c2e12553c3c5e19c.css">
 
 </head>
+
 <body onload="Main.init();">
 
     <!-- Google Tag Manager -->
@@ -50,13 +55,10 @@
 
     <script src="js/Loading.daa764a32ceb082d2807.js"></script>
     <script>
-
-//        window.Loading = SquareLoading;
-//        Loading.progress(0).show();
-
-    Loading.progress('').show();
-
+        Loading.progress('').show();
     </script>
+
+    <!--<div class="test">中文字測試</div>-->
 
     <div id="invisible-container"></div>
     <div id="scene-container">
@@ -135,20 +137,28 @@
 
     <script src="js/lib/LAB.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-    <script>window.TweenMax || document.write('<script src="js/lib/TweenMax.min.js"><\/script>')</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ModifiersPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/ScrollToPlugin.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/lib/jquery.1.11.3.min.js"><\/script>')</script>
+
+    <script src="js/lib/pep.min.js"></script>
     <script src="js/lib/jquery.waitforimages.min.js"></script>
     <script src="js/lib/jquery.mousewheel.min.js"></script>
+    <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
+    <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/lib/createjs-2015.11.26.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.combined.js"></script>
+    <!--<script src="js/lib/createjs-2015.11.26.min.js"></script>-->
+    <script src="js/lib/CreatejsExtend.js"></script>
     <!--<script src="form_Canvas.js"></script>-->
+    <!--<script src="intro.js"></script>-->
+
+    <script src="../editor/js/lib/babylon.2.4.max.js"></script>
 
 
-    <script src="js/optimized.3eb071602d7a5fe6fa01.js"></script>
-
+    <script src="js/optimized.d0e8763865c9bc549705.js"></script>
 </body>
 </html>

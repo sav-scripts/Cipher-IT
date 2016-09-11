@@ -225,25 +225,18 @@
                 //alert("_shareEntrySerial = " + _shareEntrySerial);
                 Main.loginFB('/Story/Fingerprint', function()
                 {
-                    var picture = Utility.getPath() + "misc/share_site.jpg";
+                    var picture = Utility.getPath() + "misc/share_fail.jpg";
                     FB.ui
                     (
                         {
                             method:"share",
                             display: "iframe",
                             href: Utility.getPathWithFilename(),
-                            title: "指紋辨識系統分享 title",
-                            description: '指紋辨識系統分享 description',
+                            title: "失蹤的Cipher 秘酩黑仍下落不明",
+                            description: '世紀最大劫案 Cipher 秘酩黑，至今仍下落不明，神祕的指紋會是竊賊的嗎?如果你自稱破案高手，歡迎來挑戰！',
                             picture: picture
-                        },function(response)
+                        },function()
                         {
-                            if(!response.error && !response.error_code)
-                            {
-                                //ga("send", "event", "artworks", "fb_share_success");
-                                //alert('分享成功');
-                                //self.hide();
-                                //Entries.toStep("list");
-                            }
                             toSharedMode();
                         }
                     );

@@ -56,10 +56,6 @@
             tl.set([$doms.container, $doms.content], {autoAlpha: 0});
             tl.to($doms.container, .4, {autoAlpha: 1});
             tl.to($doms.content, 1, {autoAlpha: 1, ease:Linear.easeNone}, 0);
-            //tl.add(function ()
-            //{
-            //    if (cb) cb.apply();
-            //});
 
         },
         hide: function (cb)
@@ -97,7 +93,7 @@
 
             if(_isCompleted)
             {
-                SceneHandler.toHash("/HappyEnd");
+                SceneHandler.toHash("/HappyEnd/Yes");
                 return;
             }
 
@@ -158,9 +154,9 @@
             tl.add(function()
             {
                 _isLocking = false;
-                SceneHandler.toHash("/HappyEnd");
+                SceneHandler.toHash("/HappyEnd/Yes");
 
-            }, "+=2");
+            }, "+=1");
         }
 
     }

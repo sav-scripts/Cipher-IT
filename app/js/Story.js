@@ -61,7 +61,10 @@
                 {
                     build(templates);
 
-                    Story.Scene.init($doms.sceneCanvas[0], function()
+                    var useSmallTextures = (Main.settings.viewport.index == 0);
+                    //var useSmallTextures = true;
+
+                    Story.Scene.init($doms.sceneCanvas[0], useSmallTextures, function()
                     {
                         _isInit = true;
 
@@ -255,6 +258,19 @@
             });
         },
 
+        changeFullScreen: function()
+        {
+            var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+            if(!fullscreenElement)
+            {
+                requestFullScreen();
+            }
+            else
+            {
+                exitFullScreen();
+            }
+        },
+
         resize: function ()
         {
             if(_isInit)
@@ -278,16 +294,27 @@
             container: $doms.container.find(".buttons"),
             exit: $doms.container.find(".btn-exit").on(_CLICK_, function()
             {
-                SceneHandler.toHash("/HappyEnd");
+                SceneHandler.toHash("/Story/ExitConfirm");
             }),
+
+            fullscreen: $doms.container.find(".btn-fullscreen").on(_CLICK_, function()
+            {
+                self.changeFullScreen();
+            }),
+
+            soundSwitch: $doms.container.find(".btn-sound").on(_CLICK_, function()
+            {
+            }),
+
             help: $doms.container.find(".btn-help").on(_CLICK_, function()
             {
                 self.triggerHelp();
             }),
+
             evidences: $doms.container.find(".btn-evidence").on(_CLICK_, function()
             {
-                //self.Evidences.show();
                 SceneHandler.toHash("/Story/Evidences");
+
             })
         };
 
@@ -301,7 +328,8 @@
             "/Billboard": self.Billboard.init($doms.container.find(".billboard-popup")),
             "/Fingerprint": self.Fingerprint.init($doms.container.find(".fingerprint-popup")),
             "/Medal": self.Medal.init($doms.container.find(".medal-popup")),
-            "/Briefcase": self.Briefcase.init($doms.container.find(".briefcase-popup"))
+            "/Briefcase": self.Briefcase.init($doms.container.find(".briefcase-popup")),
+            "/ExitConfirm": self.ExitConfirm.init($doms.container.find(".exit-confirm-popup"))
         };
 
         self.DialogText.init($doms.container.find(".dialog"));
@@ -350,6 +378,35 @@
             $doms.container.detach();
             cb.apply();
         });
+    }
+
+    function requestFullScreen()
+    {
+        //var element = document.body;
+        var element = document.getElementById("scene-container");
+
+        var func = element.requestFullscreen ||
+            element.mozRequestFullScreen ||
+            element.webkitRequestFullscreen ||
+            element.msRequestFullscreen || null;
+
+
+        if(func) func.call(document.body);
+        TweenMax.delayedCall(1, function()
+        {
+
+            console.log($(window).width(640));
+        });
+    }
+
+    function exitFullScreen()
+    {
+        var func = document.exitFullscreen ||
+            document.mozCancelFullScreen ||
+            document.webkitExitFullscreen ||
+            document.msCancelFullScreen || null;
+
+        if(func) func.call(document);
     }
 
 }());

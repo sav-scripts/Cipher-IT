@@ -37,17 +37,29 @@
             });
         },
 
-        loadFromExtracedData: function(path, SceneClass, cb)
+        loadFromExtractedData: function(path, SceneClass, useSmallTextures, cb)
         {
+            var textureFolderName = (useSmallTextures)? "textures_m": "textures";
+
             $.ajax(path + "config.json?v=" + Main.version).done(function(response)
             {
+                if(useSmallTextures)
+                {
+                    var array = response.billboardData,
+                        i, data;
+                    for(i=0;i<array.length;i++)
+                    {
+                        data = array[i];
+                        data.scale = Number(data.scale) * 2;
+                    }
+                }
                 //console.log(response);
                 SceneClass.applyBackground(path + 'textures/' + response.backgroundImage, function()
                 {
                     ShapeEditor.applyImportData(response.shapeData);
                     LightEditor.applyImportData(response.lightData);
 
-                    BillboardEditor.applyImportData(response.billboardData, path + "textures/billboard/", function()
+                    BillboardEditor.applyImportData(response.billboardData, path + textureFolderName + "/billboard/", function()
                     {
                         if(cb) cb.call();
                     });
