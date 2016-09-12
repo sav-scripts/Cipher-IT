@@ -31,7 +31,7 @@ $loginUser = __check_login();
 
 if($cmd != "check_login" && $cmd != "login" && $loginUser == '')
 {
-    quit("尚未登入或連線迂時");
+    quit("尚未登入或連線逾時");
 }
 
 switch($cmd)

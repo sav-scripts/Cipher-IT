@@ -23,7 +23,7 @@ module.exports = function(grunt)
         },
         clean: {
             build: [
-                'dist/**/*', '!dist/images/**'
+                'dist/**/*', '!dist/images/**', '!dist/scenedata/textures/**'
             ],
             release: [".tmp/"]
         },
@@ -42,6 +42,7 @@ module.exports = function(grunt)
                             'styles/phase1-only.css',
                             'scenedata/config.json',
                             'misc/**',
+                            'shaders/**',
                             'textures/**'
                         ],
                         dest: 'dist'

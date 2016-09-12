@@ -1,0 +1,156 @@
+<shader id="scene">
+
+
+    <script type="x-shader/x-vertex">
+
+        // Attributes
+        attribute vec3 position;
+        attribute vec2 uv;
+        attribute vec2 uv2;
+
+        // Uniforms
+        uniform mat4 worldViewProjection;
+
+        // Varying
+        varying vec2 vUV;
+        varying float vTime;
+
+        float rand(vec2 co){
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+        void main()
+        {
+            gl_Position = worldViewProjection * vec4(position, 1.0);
+            vUV = uv;
+//            vTime = rand(vec2(position.y, position.y));
+        }
+
+    </script>
+
+    <script type="x-shader/x-fragment">
+
+        #define M_PI 3.1415926535897932384626433832795
+
+        const float PIx2 = M_PI *2.0;
+
+
+        const float MOTION_BLUR_RANGE = .01;
+
+        const float MOTION_BLUR_POWER = .15;
+        const float MOTION_BLUR_POWERx2 = MOTION_BLUR_POWER * 2.;
+
+        const float NOISE_POWER = .2;
+        const float COLOR_BALANCE = 1. / (NOISE_POWER*.5 + 1.);
+
+        const float focus_power = .0;
+
+        varying vec2 vUV;
+//        varying float vTime;
+
+        uniform sampler2D textureSampler;
+        uniform sampler2D noiseSampler;
+        uniform float time;
+        uniform vec2 motion;
+
+        float rand(vec2 co){
+            return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        }
+
+        uniform float radialMotionPower;
+
+        const float sampleDist = .1;
+        const float sampleStrength = 30.2;
+
+        void applyRadialBlur()
+        {
+            float power = radialMotionPower;
+
+            float samples[10];
+            samples[0] = 0.01;
+            samples[1] = 0.02;
+            samples[2] = 0.03;
+            samples[3] = 0.04;
+            samples[4] = 0.05;
+            samples[5] = 0.06;
+            samples[6] = 0.07;
+            samples[7] = 0.08;
+            samples[8] = 0.09;
+            samples[9] = 0.10;
+
+            vec2 dir = 0.5 - vUV;
+            float dist = sqrt(dir.x*dir.x + dir.y*dir.y);
+
+            if(dist < .05) dist = .05;
+
+            dir = dir/dist;
+
+            vec4 color = texture2D(textureSampler,vUV);
+
+            vec4 sum = vec4(.0);
+
+            float fSum = .0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                fSum += samples[i];
+                sum += texture2D( textureSampler, vUV + dir * samples[i] * sampleDist * power*20.) * (.11 - samples[i]);
+            }
+
+            gl_FragColor = color * .2 + sum / fSum * .8;
+
+            /*
+            vec4 sum = color;
+
+            for (int i = 0; i < 10; i++)
+                sum += texture2D( textureSampler, vUV + dir * samples[i] * sampleDist * power*10.);
+
+            sum *= 1.0/11.0;
+            float t = dist * sampleStrength;
+            t = clamp( t ,0.0,1.0);
+
+            gl_FragColor = mix( color, sum, t );
+            */
+        }
+
+        void applyMotionBlur()
+        {
+            if(motion.x != 0. || motion.y != 0.)
+            {
+                float dx = -MOTION_BLUR_RANGE * motion.x;
+                float dy = MOTION_BLUR_RANGE * motion.y;
+
+                gl_FragColor += texture2D(textureSampler, vec2(vUV.x+dx, vUV.y+dy)) * MOTION_BLUR_POWER;
+                gl_FragColor /= (1. + MOTION_BLUR_POWER);
+            }
+        }
+
+        void applyNoise()
+        {
+            float r2 = rand(vUV*time) * NOISE_POWER;
+            gl_FragColor.xyz *= (1. + r2) * COLOR_BALANCE;
+        }
+
+        void main(void)
+        {
+
+//            gl_FragColor = texture2D(textureSampler, vUV);
+
+            if(radialMotionPower > .0)
+            {
+                applyRadialBlur();
+            }
+            else
+            {
+                gl_FragColor = texture2D(textureSampler, vUV);
+                applyMotionBlur();
+                applyNoise();
+            }
+        }
+
+
+    </script>
+
+
+
+</shader>

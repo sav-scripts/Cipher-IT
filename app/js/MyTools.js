@@ -78,7 +78,8 @@
             start = (progress - fadeSize) * 100;
             end = progress * 100;
 
-            self.$dom.css("background-image", "linear-gradient(to top, rgba(0, 0, 0, .85) "+start+"%, rgba(0, 0, 0, 0) "+end+"%)");
+            //self.$dom.css("background-image", "linear-gradient(to top, rgba(0, 0, 0, .85) "+start+"%, rgba(0, 0, 0, 0) "+end+"%)");
+            self.$dom.css("background-image", "radial-gradient(rgba(0, 0, 0, .85) "+start+"%, rgba(0, 0, 0, 0) "+end+"%)");
         }
         else
         {
@@ -86,7 +87,8 @@
             start = (progress - fadeSize) * 100;
             end = progress * 100;
 
-            self.$dom.css("background-image", "linear-gradient(to bottom, rgba(0, 0, 0, 0) "+start+"%, rgba(0, 0, 0, .85) "+end+"%)");
+            //self.$dom.css("background-image", "linear-gradient(to bottom, rgba(0, 0, 0, 0) "+start+"%, rgba(0, 0, 0, .85) "+end+"%)");
+            self.$dom.css("background-image", "radial-gradient(rgba(0, 0, 0, 0) "+start+"%, rgba(0, 0, 0, .85) "+end+"%)");
         }
     }
 

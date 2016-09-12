@@ -84,9 +84,9 @@
             }
 
 
-            ShaderLoader.defaultPath = "../editor/shaders/";
+            ShaderLoader.defaultPath = "./shaders/";
 
-            ShaderLoader.loadFiles(["shape", "for-scene"],function()
+            ShaderLoader.loadFiles(["for-scene"],function()
             {
                 //DataManager.loadFromExtractedData(_sceneDataPath, self, null, function ()
                 DataManager.loadFromExtractedData(_sceneDataPath, self, useSmallTextures, function ()
@@ -99,8 +99,8 @@
 
                     RainMaker.init(_scene);
 
-                    PostProcessLib.init(_engine, _scene, _customCamera._camera, true);
-                    PostProcessLib.enableEffect("noise");
+                    PostProcessLib.init(_engine, _scene, _customCamera._camera);
+                    PostProcessLib.enableEffect("scene");
 
                     Loading.hide(onReady);
                 });

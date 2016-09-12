@@ -93,6 +93,7 @@
 
             if(_isCompleted)
             {
+                Story.activeSpHiding();
                 SceneHandler.toHash("/HappyEnd/Yes");
                 return;
             }
@@ -154,6 +155,7 @@
             tl.add(function()
             {
                 _isLocking = false;
+                Story.activeSpHiding();
                 SceneHandler.toHash("/HappyEnd/Yes");
 
             }, "+=1");

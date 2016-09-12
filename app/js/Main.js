@@ -122,6 +122,8 @@
 
             checkAccessToken();
 
+            setupWhiteCover();
+
             Menu.init();
 
             //startApp();
@@ -210,6 +212,38 @@
 
         loginFB: loginFB
     };
+
+    function setupWhiteCover()
+    {
+        var $doms = {};
+        $doms.whiteCover = $("<div>", {'class':'white-cover'});
+
+        var isHiding = true;
+
+        self.showWhiteCover = function()
+        {
+            if(!isHiding) return;
+            isHiding = false;
+
+            $('body').append($doms.whiteCover);
+            var tl = new TimelineMax;
+            tl.set($doms.whiteCover, {autoAlpha:0});
+            tl.to($doms.whiteCover,.4, {autoAlpha:1, ease:Power1.easeOut});
+        };
+
+        self.hideWhiteCover = function()
+        {
+            if(isHiding) return;
+            isHiding = true;
+
+            var tl = new TimelineMax;
+            tl.to($doms.whiteCover,.9, {autoAlpha:0, ease:Power3.easeIn});
+            tl.add(function()
+            {
+                $doms.whiteCover.detach();
+            });
+        };
+    }
 
     function onResize()
     {

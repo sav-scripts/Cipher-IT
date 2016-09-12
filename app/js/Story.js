@@ -5,6 +5,7 @@
         _currentContent,
         _contentDic,
         _phaseIndex = 0,
+        _spHidingActivated = false,
         _phaseDic =
         {
             0: {description: "start", type:"", helpObjectHash:"/Phone"},
@@ -61,12 +62,15 @@
                 {
                     build(templates);
 
+
                     var useSmallTextures = (Main.settings.viewport.index == 0);
                     //var useSmallTextures = true;
 
                     Story.Scene.init($doms.sceneCanvas[0], useSmallTextures, function()
                     {
                         _isInit = true;
+
+                        HappyEnd.preload();
 
                         if(Main.settings.startPhase && _phaseDic[Main.settings.startPhase])
                         {
@@ -105,6 +109,11 @@
             {
                 hide(cb);
             }
+        },
+
+        activeSpHiding: function()
+        {
+            _spHidingActivated = true;
         },
 
         toContent: function(contentHash, cb)
@@ -344,6 +353,8 @@
 
         self.resize();
 
+        PostProcessLib.getEffect("scene").raidalMotionTo(0, 0);
+
         Menu.show();
         Menu.Logo._show();
 
@@ -367,17 +378,37 @@
         Menu.hide();
 
         Story.Scene.setUserControlEnabled(false);
-        
-        
 
         var tl = new TimelineMax;
-        tl.to($doms.container, 1, {autoAlpha: 0, ease:Power3.easeOut});
-        tl.add(function ()
+        
+        if(_spHidingActivated)
+        //if(true)
         {
-            Story.Scene.setActive(false);
-            $doms.container.detach();
-            cb.apply();
-        });
+            _spHidingActivated = false;
+
+            var d = 1.8;
+
+            PostProcessLib.getEffect("scene").raidalMotionTo(1, d, Power1.easeIn);
+
+            tl.add(Main.showWhiteCover, d - .4);
+            //tl.to($doms.container,.4, {autoAlpha: 0, ease:Power3.easeOut}, 1);
+            tl.add(function ()
+            {
+                Story.Scene.setActive(false);
+                $doms.container.detach();
+                cb.apply();
+            }, d +.1);
+        }
+        else
+        {
+            tl.to($doms.container, 1, {autoAlpha: 0, ease:Power3.easeOut});
+            tl.add(function ()
+            {
+                Story.Scene.setActive(false);
+                $doms.container.detach();
+                cb.apply();
+            });
+        }
     }
 
     function requestFullScreen()
@@ -392,11 +423,6 @@
 
 
         if(func) func.call(document.body);
-        TweenMax.delayedCall(1, function()
-        {
-
-            console.log($(window).width(640));
-        });
     }
 
     function exitFullScreen()

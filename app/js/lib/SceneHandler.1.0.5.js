@@ -410,9 +410,9 @@
     }
 
 
-    _p.loadTemplate = function(imageSetting, templates, cb, keepLoading)
+    _p.loadTemplate = function(imageSetting, templates, cb, keepLoading, hideLoading)
     {
-        if(_Loading) _Loading.show();
+        if(_Loading && !hideLoading) _Loading.show();
 
         var startWeight = 0, weight = 100;
 
@@ -420,7 +420,7 @@
         {
             Utility.preloadImages(imageSetting.list, loadOne ,function(progress)
             {
-                if(_Loading) _Loading.progress(progress/100);
+                if(_Loading && !hideLoading) _Loading.progress(progress/100);
             });
         }
         else loadOne(0);
@@ -429,7 +429,7 @@
         {
             if(templates.length == 0)
             {
-                if(_Loading) _Loading.hide();
+                if(_Loading && !hideLoading) _Loading.hide();
                 cb.apply(null); return;
             }
             if(index == null) index = 0;
@@ -448,7 +448,7 @@
             }
             else
             {
-                if(_Loading) _Loading.progress(startWeight);
+                if(_Loading && !hideLoading) _Loading.progress(startWeight);
 
                 frameDom = document.createElement("div");
 
@@ -467,7 +467,7 @@
                     {
                         if(extractDom.parentNode) extractDom.parentNode.removeChild(extractDom);
 
-                        if(_Loading)
+                        if(_Loading && !hideLoading)
                         {
                             var progress = (startWeight + weight) / 100;
                             _Loading.progress(progress);
@@ -477,7 +477,7 @@
                     }, function(loaded, count)
                     {
 
-                        if(_Loading)
+                        if(_Loading && !hideLoading)
                         {
                             var progress = (startWeight + loaded/count * weight) / 100;
                             _Loading.progress(progress);
@@ -491,7 +491,7 @@
                 index ++;
                 if(index >= templates.length)
                 {
-                    if(_Loading && !keepLoading) _Loading.hide();
+                    if(_Loading && !hideLoading && !keepLoading) _Loading.hide();
                     cb.apply(null);
                 }
                 else loadOne(index);

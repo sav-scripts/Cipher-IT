@@ -9,13 +9,41 @@
             "/Form": true
         },
         _$currentContent,
-        _isInit = false;
+        _isInit = false,
+        _isPreloading = false,
+        _cbAfterPreloading = null;
 
     var self = window.HappyEnd =
     {
+        preload: function()
+        {
+            if(!_isInit)
+            {
+                _isPreloading = true;
+                loadAndBuild(function()
+                {
+                    _isPreloading = false;
+                    if(_cbAfterPreloading)
+                    {
+                        _cbAfterPreloading.call();
+                        _cbAfterPreloading = null;
+                    }
+
+                }, true);
+            }
+        },
+
         stageIn: function (options, cb)
         {
-            (!_isInit) ? loadAndBuild(execute) : execute();
+            if(_isPreloading)
+            {
+                _cbAfterPreloading = execute;
+            }
+            else
+            {
+                (!_isInit) ? loadAndBuild(execute) : execute();
+            }
+
             function execute(isFromLoad)
             {
                 if (isFromLoad && options.cbContentLoaded) options.cbContentLoaded.call();
@@ -30,21 +58,6 @@
                         cb.call();
                     }
                 });
-            }
-
-            function loadAndBuild(cb)
-            {
-                var templates =
-                    [
-                        {url: "_happy_end.html", startWeight: 0, weight: 100, dom: null}
-                    ];
-
-                SceneHandler.loadTemplate(null, templates, function loadComplete()
-                {
-                    build(templates);
-                    _isInit = true;
-                    cb.apply(null);
-                }, 0);
             }
         },
 
@@ -71,8 +84,18 @@
             }
 
             _$currentContent = $content;
-            tl.to(_$currentContent,.5,{autoAlpha:1});
-            tl.add(cb);
+
+
+            if(contentHash == "/Yes")
+            {
+                $doms.firstStepContainer._show(cb);
+            }
+            else
+            {
+                tl.set(_$currentContent, {autoAlpha:0});
+                tl.to(_$currentContent,.5,{autoAlpha:1});
+                tl.add(cb);
+            }
         },
 
         resize: function ()
@@ -81,11 +104,27 @@
         }
     };
 
+    function loadAndBuild(cb, hideLoading)
+    {
+        var templates =
+            [
+                {url: "_happy_end.html", startWeight: 0, weight: 100, dom: null}
+            ];
+
+        SceneHandler.loadTemplate(null, templates, function loadComplete()
+        {
+            build(templates);
+            _isInit = true;
+            cb.apply(null);
+        }, false, hideLoading);
+    }
+
 
     function build(templates)
     {
         $("#invisible-container").append(templates[0].dom);
         $doms.container = $("#happy-end");
+
 
         setupNotReally();
         setupFirstStep();
@@ -109,7 +148,8 @@
         TweenMax.set($doms.notReallyContainer, {autoAlpha:0});
         TweenMax.set($doms.formStepContainer, {autoAlpha:0});
 
-        TweenMax.set($doms.container, {autoAlpha:1});
+        TweenMax.set($doms.container, {autoAlpha:0});
+        TweenMax.to($doms.container,.5, {autoAlpha:1});
 
         _$currentContent = null;
 
@@ -169,9 +209,9 @@
 
     function setupFirstStep()
     {
-        $doms.firstStepContainer = _contentDic["/Yes"] = $doms.container.find(".first-step");
+        var $container = $doms.firstStepContainer = _contentDic["/Yes"] = $doms.container.find(".first-step");
 
-        $doms.container.find(".btn-to-form").on(_CLICK_, function()
+        var $btn = $doms.container.find(".btn-to-form").on(_CLICK_, function()
         {
             Main.loginFB('/HappyEnd/Yes', function()
             {
@@ -192,6 +232,63 @@
                 );
             });
         });
+
+
+        var $title = $container.find(".title"),
+            $text = $container.find(".text"),
+            $stamp = $container.find(".stamp");
+
+        $text.css('background-position', 'top');
+
+        $doms.firstStepContainer._show = function(cb)
+        {
+            $text._height = Main.settings.viewport.index == 0? 154: 157;
+
+            var tl = new TimelineMax;
+
+            //tl.set($doms.whiteCover, {autoAlpha:0});
+            tl.set($container, {autoAlpha:0});
+            tl.set([$title[0], $stamp[0], $btn[0]], {autoAlpha:0});
+            tl.set($text, {height: 0});
+
+            //tl.to($doms.whiteCover,.4, {autoAlpha:1, ease:Power1.easeOut});
+
+            Main.showWhiteCover();
+            tl.add(Main.showWhiteCover, 0);
+
+            tl.set($container, {autoAlpha:1},.4);
+            tl.set($title, {x:50, y:-50, marginTop: 100, rotation:-30, scale:3});
+            tl.set($stamp, {scale:1.5, marginTop: 100});
+
+            //tl.to($doms.whiteCover,.9, {autoAlpha:0, ease:Power3.easeIn}, "+=.6");
+            tl.add(Main.hideWhiteCover, .6);
+
+            tl.to($title,.3, {autoAlpha:1}, "-=.1");
+            tl.to($title, 1.5, {x:0, y:0, rotation:0, scale:1, ease:SlowMo.ease.config(0.3, 0.5, false)}, "-=.4");
+            tl.to($stamp,.1, {scale:1, autoAlpha:1, ease:Back.easeOut}, "+=.0");
+            tl.add(shakeScreen, "-=.0");
+
+            tl.to([$title[0], $stamp[0]], 1, {marginTop:0, ease:Power1.easeInOut}, "+=.5");
+            tl.to($text,.8, {height: $text._height, ease:Linear.easeNone}, "-=.4");
+            tl.to($btn,.4, {autoAlpha:1});
+
+            if(cb) tl.add(cb);
+        };
+    }
+
+
+    function shakeScreen()
+    {
+        var offsetX = (Math.random()*16+16) * (Math.random()>.5? 1: -1),
+            offsetY = (Math.random()*12+12) * (Math.random()>.5? 1: -1);
+
+        offsetX *= .3;
+        offsetY *= .3;
+
+        var $dom = $("body");
+        TweenMax.killTweensOf($dom);
+        TweenMax.set($dom, {marginLeft:offsetX, marginTop:offsetY});
+        TweenMax.to($dom,.7, {marginLeft:0, marginTop:0, ease:Elastic.easeOut.config(1,.2)});
     }
 
     function setupFormStep()

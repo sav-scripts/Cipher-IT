@@ -4,6 +4,15 @@
 @pc-content-half-width: @pc-content-width * .5;
 @pc-content-half-height: @pc-content-height * .5;
 
+
+.white-cover{
+    position: fixed;
+    width: 100%;
+    height: 90%;
+    background-color:white;
+    z-index: 1001;
+}
+
 .my-layout-2(@src){
 
     .layout{
@@ -1110,7 +1119,7 @@
         background-position: center center;
     }
 
-    .my-layout("layouts/happy-end-not-really-pc.jpg");
+    .my-layout("layouts/happy-end-pc.jpg");
 
 
     .not-really{
@@ -1131,7 +1140,10 @@
         top:50%;
 
         .abs-div-2(open-case, -686,-214,705,579,"happy-end-open-case.png");
-        .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
+//        .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
+        .abs-div-2(title, 57,-153,356,94,"happy-end-title-1.png");
+        .abs-div-2(text, 35,-48,412,157,"happy-end-text-1.png");
+        .abs-div-2(stamp, 262,-198,179,112,"happy-end-stamp-1.png");
         .fade-btn-2(btn-to-form,"happy-end-btn-to-form.png", 61,124,223,52);
 
 //        display:none;

@@ -543,13 +543,16 @@
     /** intro **/
     #happy-end{
 
+        min-height: @mobile-content-height;
+
         .background{
             .image-bg("happy-end-background.m.jpg", cover);
             background-position: center center;
             position: fixed;
+            height: 90%;
         }
 
-        .my-layout("layouts/happy-end-form-m.jpg");
+        .my-layout("layouts/happy-end-m.jpg");
 
         .not-really{
             position: absolute;
@@ -569,7 +572,10 @@
             top:50%;
 
             .abs-div-2(open-case, -320,-397,524,493,"happy-end-open-case.m.png");
-            .abs-div-2(content, -310,-184,568,405,"happy-end-content.m.png");
+//            .abs-div-2(content, -310,-184,568,405,"happy-end-content.m.png");
+            .abs-div-2(title, -281,-84,395,142,"happy-end-title-1.m.png");
+            .abs-div-2(text, -258,67,516,154,"happy-end-text-1.m.png");
+            .abs-div-2(stamp, -310,-187,276,166,"happy-end-stamp-1.m.png");
             .fade-btn-2(btn-to-form,"happy-end-btn-to-form.m.png", -262,266,521,94);
 
             //        display:none;

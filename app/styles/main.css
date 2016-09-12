@@ -1627,6 +1627,7 @@ body.no-scroll-mode {
 @media (max-width: 640px) {
   body {
     overflow-x: auto;
+    width: 640px;
   }
   #scene-container {
     width: 640px;
@@ -2421,7 +2422,7 @@ body.no-scroll-mode {
   #participate .part-3 {
     position: relative;
     width: 100%;
-    height: 2900px;
+    height: 2944px;
     min-height: 111.1111%;
   }
   #participate .part-3 .layout {
@@ -2463,14 +2464,14 @@ body.no-scroll-mode {
     left: -246%;
     top: -1186%;
     width: 498%;
-    height: 1017%;
+    height: 1061%;
     background-image: url("../images/participate-3-content.m.png");
     background-size: cover;
   }
   #participate .part-3 .wrapper .dates {
     position: absolute;
     left: -260%;
-    top: -113%;
+    top: -69%;
     width: 162%;
     height: 657%;
     background-image: url("../images/participate-3-dates.m.png");
@@ -2626,21 +2627,21 @@ body.no-scroll-mode {
     opacity: .17;
   }
   #participate .part-3 .wrapper .time-group-1 {
-    top: -60px;
+    top: -16px;
   }
   #participate .part-3 .wrapper .time-group-2 {
-    top: 150px;
+    top: 194px;
   }
   #participate .part-3 .wrapper .time-group-3 {
-    top: 358px;
+    top: 402px;
   }
   #participate .part-3 .wrapper .time-group-4 {
-    top: 566px;
+    top: 610px;
   }
   #participate .part-3 .wrapper .form-wrapper {
     position: absolute;
     left: 0;
-    top: 265px;
+    top: 309px;
     width: 100%;
     height: 100%;
   }
@@ -2954,6 +2955,13 @@ body.no-scroll-mode {
     top: 55.55555556%;
     margin-top: -499px;
   }
+}
+.white-cover {
+  position: fixed;
+  width: 100%;
+  height: 90%;
+  background-color: white;
+  z-index: 1001;
 }
 /** intro **/
 #intro {
@@ -7800,7 +7808,7 @@ body.no-scroll-mode {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("../images/layouts/happy-end-not-really-pc.jpg");
+  background-image: url("../images/layouts/happy-end-pc.jpg");
   background-size: auto;
   opacity: .4;
 }
@@ -7895,15 +7903,37 @@ body.no-scroll-mode {
   background-image: url("../images/happy-end-open-case.png");
   background-size: auto;
 }
-#happy-end .first-step .content {
+#happy-end .first-step .title {
   position: absolute;
-  left: 35px;
-  top: -198px;
-  width: 412px;
-  height: 307px;
+  left: 57px;
+  top: -153px;
+  width: 356px;
+  height: 94px;
   margin-left: 0px;
   margin-top: 0px;
-  background-image: url("../images/happy-end-content.png");
+  background-image: url("../images/happy-end-title-1.png");
+  background-size: auto;
+}
+#happy-end .first-step .text {
+  position: absolute;
+  left: 35px;
+  top: -48px;
+  width: 412px;
+  height: 157px;
+  margin-left: 0px;
+  margin-top: 0px;
+  background-image: url("../images/happy-end-text-1.png");
+  background-size: auto;
+}
+#happy-end .first-step .stamp {
+  position: absolute;
+  left: 262px;
+  top: -198px;
+  width: 179px;
+  height: 112px;
+  margin-left: 0px;
+  margin-top: 0px;
+  background-image: url("../images/happy-end-stamp-1.png");
   background-size: auto;
 }
 #happy-end .first-step .btn-to-form {
@@ -9714,17 +9744,21 @@ body.no-scroll-mode {
     background-size: cover;
   }
   /** intro **/
+  #happy-end {
+    min-height: 855px;
+  }
   #happy-end .background {
     background-image: url("../images/happy-end-background.m.jpg");
     background-size: cover;
     background-position: center center;
     position: fixed;
+    height: 90%;
   }
   #happy-end .layout {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url("../images/layouts/happy-end-form-m.jpg");
+    background-image: url("../images/layouts/happy-end-m.jpg");
     background-size: auto;
     opacity: .4;
   }
@@ -9819,15 +9853,37 @@ body.no-scroll-mode {
     background-image: url("../images/happy-end-open-case.m.png");
     background-size: auto;
   }
-  #happy-end .first-step .content {
+  #happy-end .first-step .title {
     position: absolute;
-    left: -310px;
-    top: -184px;
-    width: 568px;
-    height: 405px;
+    left: -281px;
+    top: -84px;
+    width: 395px;
+    height: 142px;
     margin-left: 0px;
     margin-top: 0px;
-    background-image: url("../images/happy-end-content.m.png");
+    background-image: url("../images/happy-end-title-1.m.png");
+    background-size: auto;
+  }
+  #happy-end .first-step .text {
+    position: absolute;
+    left: -258px;
+    top: 67px;
+    width: 516px;
+    height: 154px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-text-1.m.png");
+    background-size: auto;
+  }
+  #happy-end .first-step .stamp {
+    position: absolute;
+    left: -310px;
+    top: -187px;
+    width: 276px;
+    height: 166px;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url("../images/happy-end-stamp-1.m.png");
     background-size: auto;
   }
   #happy-end .first-step .btn-to-form {
