@@ -3,7 +3,9 @@
  */
 (function(){
 
-    var _self;
+    var PI = Math.PI,
+        PI_HALF = PI * .5,
+        PI_2 = PI*2;
 
     window.CustomCamera = CustomCamera;
 
@@ -25,14 +27,14 @@
         camera.radius = this._defaultCameraRadius = startCameraRadius;
 
 
-        //var dArc = this._dBetaLimitArc = Math.PI*dBetaLimitDeg/180;
-        camera.upperBetaLimit = Math.PI*.5 + Math.PI*dUpperBetaLimitDeg/180;
-        camera.lowerBetaLimit = Math.PI*.5 - Math.PI*dLowerBetaLimitDeg/180;
+        //var dArc = this._dBetaLimitArc = PI*dBetaLimitDeg/180;
+        camera.upperBetaLimit = PI_HALF + PI*dUpperBetaLimitDeg/180;
+        camera.lowerBetaLimit = PI_HALF - PI*dLowerBetaLimitDeg/180;
 
         this._tweenObj.alpha = this._tweenObj.targetAlpha = camera.alpha = 0;
         this._tweenObj.beta = this._tweenObj.targetBeta = camera.beta;
 
-        this._useDeviceOrientation = ($.browser.mobile && Modernizr.deviceorientation);
+        //this._useDeviceOrientation = ($.browser.mobile && Modernizr.deviceorientation);
 
         //this.setEnabled(true);
     }
@@ -89,22 +91,20 @@
 
         lookAt: function(position, cb)
         {
-            var self = this;
-
-            this._camera.alpha %= Math.PI*2;
+            this._camera.alpha %= PI_2;
 
             this._oldAlpha = this._camera.alpha;
             this._oldBeta = this._camera.beta;
 
             var newAlpha = Math.atan2(-position.z, -position.x),
                 length = Math.sqrt(position.x * position.x + position.z*position.z),
-                newBeta = Math.atan2(-position.y, -length) - Math.PI*.5;
+                newBeta = Math.atan2(-position.y, -length) - PI_HALF;
 
-            if(newBeta < 0) newBeta += Math.PI*2;
+            if(newBeta < 0) newBeta += PI_2;
 
-            if(Math.abs(this._oldAlpha - newAlpha) > Math.PI)
+            if(Math.abs(this._oldAlpha - newAlpha) > PI)
             {
-                (newAlpha > this._oldAlpha)? newAlpha -= Math.PI*2: newAlpha += Math.PI*2;
+                (newAlpha > this._oldAlpha)? newAlpha -= PI_2: newAlpha += PI_2;
             }
 
             var tl = new TimelineMax;
@@ -120,20 +120,20 @@
         {
             var self = this;
 
-            this._camera.alpha %= Math.PI*2;
+            this._camera.alpha %= PI_2;
 
             this._oldAlpha = this._camera.alpha;
             this._oldBeta = this._camera.beta;
 
             var newAlpha = Math.atan2(-position.z, -position.x),
                 length = Math.sqrt(position.x * position.x + position.z*position.z),
-                newBeta = Math.atan2(-position.y, -length) - Math.PI*.5;
+                newBeta = Math.atan2(-position.y, -length) - PI_HALF;
 
-            if(newBeta < 0) newBeta += Math.PI*2;
+            if(newBeta < 0) newBeta += PI_2;
 
-            if(Math.abs(this._oldAlpha - newAlpha) > Math.PI)
+            if(Math.abs(this._oldAlpha - newAlpha) > PI)
             {
-                (newAlpha > this._oldAlpha)? newAlpha -= Math.PI*2: newAlpha += Math.PI*2;
+                (newAlpha > this._oldAlpha)? newAlpha -= PI_2: newAlpha += PI_2;
             }
 
             //console.log("old beta: " + this._oldBeta);
@@ -142,7 +142,7 @@
             //console.log("old alpha: " + this._oldAlpha);
             //console.log("new alpha: " + newAlpha);
 
-            //var dAlpha = Math.abs(newAlpha - this._camera.alpha) % (Math.PI*2),
+            //var dAlpha = Math.abs(newAlpha - this._camera.alpha) % (PI_2),
             //    duration = dAlpha*5;
             //
             //console.log(duration);
@@ -197,9 +197,9 @@
                 self._camera.radius = self._oldRadius;
 
                 var newAlpha = self._camera.alpha;
-                if(Math.abs(self._oldAlpha - newAlpha) > Math.PI)
+                if(Math.abs(self._oldAlpha - newAlpha) > PI)
                 {
-                    (newAlpha > self._oldAlpha)? newAlpha -= Math.PI*2: newAlpha += Math.PI*2;
+                    (newAlpha > self._oldAlpha)? newAlpha -= PI_2: newAlpha += PI_2;
                     self._camera.alpha = newAlpha;
                 }
 
@@ -207,7 +207,7 @@
             });
 
             //tl.to(this._camera, 1, {alpha: this._oldAlpha, beta: this._oldBeta, radius: 75, fov:.8, ease:Power1.easeInOut});
-            tl.to(this._camera, 1, {beta: Math.PI *.5, radius: 75, fov:.8, ease:Power1.easeInOut});
+            tl.to(this._camera, 1, {beta: PI *.5, radius: 75, fov:.8, ease:Power1.easeInOut});
             tl.add(cb);
 
         },
@@ -243,7 +243,6 @@
         }
         else
         {
-
             $(this._canvas).on("pointerdown", {self:this}, onPointerDown);
             $(window).on("pointermove", {self:this}, onPointerMove).on("pointerup", {self:this}, onPointerUp);
         }
@@ -253,30 +252,37 @@
         function handleOrientation(event)
         {
 
-            //if((targetAlpha - self._tweenObj.alpha) > Math.PI) self._tweenObj.alpha += Math.PI * 2;
-            //if((targetAlpha - self._tweenObj.alpha) < -Math.PI*2) self._tweenObj.alpha -= Math.PI * 2;
+            //if((targetAlpha - self._tweenObj.alpha) > PI) self._tweenObj.alpha += PI * 2;
+            //if((targetAlpha - self._tweenObj.alpha) < -PI_2) self._tweenObj.alpha -= PI * 2;
 
             var alpha = event.alpha,
                 beta = event.beta;
 
-
-            if(Math.abs(alpha - self._tweenObj.alpha) > 180)
-            {
-                (alpha > self._tweenObj.alpha)? self._tweenObj.alpha += 360: self._tweenObj.alpha -= 360;
-            }
+            //if(Math.abs(alpha - self._tweenObj.alpha) > 180)
+            //{
+            //    (alpha > self._tweenObj.alpha)? self._tweenObj.alpha += 360: self._tweenObj.alpha -= 360;
+            //}
 
             beta = 90 - (beta - 60) * .5;
 
-            //var targetAlpha = alpha/180*Math.PI;
-            //self._tweenObj.targetAlpha = targetAlpha;
+            //TweenMax.killTweensOf(self._tweenObj);
+            //TweenMax.to(self._tweenObj,.5,{alpha: alpha, beta: beta, onUpdate:updateCamera, onUpdateParams:[self]});
 
-            //console.log(event.alpha + ", " + event.beta + ", " + event.gamma + " => " + alpha);
+            //self._camera.alpha = alpha/180*PI;
+            //self._camera.beta = beta/180*PI;
 
-            TweenMax.killTweensOf(self._tweenObj);
-            TweenMax.to(self._tweenObj,.5,{alpha: alpha, beta: beta, onUpdate:updateCamera, onUpdateParams:[self]});
+            var targetAlpha = alpha/180*PI,
+                targetBeta = beta/180*PI;
 
-            //self._camera.alpha = alpha/180*Math.PI;
-            //self._camera.beta = beta/180*Math.PI;
+            self._camera.alpha = self._camera.alpha%PI_2;
+            if(Math.abs(targetAlpha - self._camera.alpha) > PI)
+            {
+                (targetAlpha > self._camera.alpha)? self._camera.alpha += PI_2: self._camera.alpha -= PI_2;
+                console.log(self._camera.alpha);
+            }
+
+            self._camera.inertialAlphaOffset = (targetAlpha - self._camera.alpha)*.1;
+            self._camera.inertialBetaOffset = (targetBeta - self._camera.beta)*.1;
 
         }
 
@@ -299,12 +305,14 @@
 
     function onPointerDown(event)
     {
+        //console.log("on pointer down");
         var self = event.data.self;
         self._tweenObj.pointerDownPosition = {x: event.clientX, y: event.clientY};
     }
 
     function onPointerMove(event)
     {
+        //console.log("on pointer move");
         var self = event.data.self;
 
 
@@ -347,8 +355,8 @@
 
     function updateCamera(self)
     {
-        self._camera.alpha = self._tweenObj.alpha/180*Math.PI;
-        var beta = self._tweenObj.beta/180*Math.PI;
+        self._camera.alpha = self._tweenObj.alpha/180*PI;
+        var beta = self._tweenObj.beta/180*PI;
         if(beta > self._camera.upperBetaLimit) beta = self._camera.upperBetaLimit;
         if(beta < self._camera.lowerBetaLimit) beta = self._camera.lowerBetaLimit;
         self._camera.beta = beta;

@@ -1,6 +1,6 @@
 @import "common-mixins.less";
 
-@command-container-width: 200px;
+@command-container-width: 240px;
 
 body, html{
     margin: 0;
@@ -191,15 +191,17 @@ td {
 
             cursor: pointer;
 
-            @w: 140px;
+            @w: 200px;
+            @sw: 180px;
 
             margin-bottom: 16px;
             margin-top: 16px;
             height: 30px;
             line-height: 30px;
 
-            width: 180px;
-            margin-left: 20px;
+            width: @w;
+            margin-left: @command-container-width - @w;
+            right:0;
 
             border-radius: 5px 0 0 5px;
 
@@ -213,8 +215,8 @@ td {
 
             &.focus-mode{
                 color: #407f9a;
-                margin-left: @command-container-width - @w;
-                width: @w;
+                margin-left: @command-container-width - @sw;
+                width: @sw;
             }
         }
 
@@ -222,15 +224,15 @@ td {
 
             cursor: pointer;
 
-            @w: 140px;
+            @w: 160px;
 
             margin-bottom: 16px;
             margin-top: 16px;
             height: 30px;
             line-height: 30px;
 
-            width: 120px;
-            margin-left: 80px;
+            width: @w;
+            margin-left: @command-container-width - @w;
 
             border-radius: 5px 0 0 5px;
 

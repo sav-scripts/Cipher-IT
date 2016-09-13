@@ -128,7 +128,6 @@
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
         {
-            Menu.show();
             $doms.container.css("display", "none");
             cb.apply();
         });

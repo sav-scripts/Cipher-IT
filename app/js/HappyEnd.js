@@ -11,6 +11,7 @@
         _$currentContent,
         _isInit = false,
         _isPreloading = false,
+        _isFail = true,
         _cbAfterPreloading = null;
 
     var self = window.HappyEnd =
@@ -200,6 +201,7 @@
                         picture: picture
                     },function()
                     {
+                        _isFail = true;
                         SceneHandler.toHash("/HappyEnd/Form");
                     }
                 );
@@ -227,6 +229,7 @@
                         picture: picture
                     },function()
                     {
+                        _isFail = false;
                         SceneHandler.toHash("/HappyEnd/Form");
                     }
                 );
@@ -368,6 +371,8 @@
 
         if(formObj)
         {
+            formObj.is_fail = _isFail? 1: 0;
+
             Loading.progress('資料傳輸中 ... 請稍候').show();
 
             ApiProxy.callApi("lottery", formObj, false, function(response)
@@ -380,6 +385,7 @@
                 else
                 {
                     alert('資料送出成功');
+                    _isFail = true;
                     resetForm();
                     Loading.hide();
                 }
@@ -409,8 +415,6 @@
     {
         var formObj={};
         var dom;
-
-
 
         if(!$doms.checkbox[0].checked)
         {
@@ -484,6 +488,8 @@
         {
             alert('請輸入詳細的地址'); dom.focus(); return;
         }else formObj.address_detail = dom.value;
+
+
 
         return formObj;
 

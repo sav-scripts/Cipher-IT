@@ -335,31 +335,19 @@
             return {dataArray:dataArray, imageArray: imageArray, lightImageArray: lightImageArray};
         },
 
-        applyImportData: function(dataArray, imageDic, onAllLoaded)
+        applyImportData: function(dataArray, imageDic, onProgress, onAllLoaded)
         {
             self.clearAll();
 
             if(!dataArray) dataArray = [];
 
             _serial = 0;
-            var i, obj, needLoadCount = 0;
+            var i, obj, totalCount = dataArray.length, completeCount = 0;
             for(i=0;i<dataArray.length;i++)
             {
                 obj = dataArray[i];
 
-                //var serial =obj.serial,
-                //    imagePath = DataManager.BILLBOARD_FOLDER_PATH + obj.image,
-                //    imageHead = obj.imageDataHead,
-                //    imageSrc = imageHead + imageDic[imagePath];
-
-                //console.log(imageSrc);
-
-                needLoadCount ++;
-
                 var newObject = _editorObjectDic[obj.serial] = BillboardObject.CreateFromData(_scene, imageDic, obj, onLoad);
-
-                //_editorObjectDic[serial] = new BillboardObject(serial, _scene, new BABYLON.Vector3(obj.targetX, obj.targetY,
-                //    obj.targetZ), obj.radius, obj.scale, imageSrc, true, obj.offsetX, obj.offsetY, obj.renderingOrder, obj.name);
 
                 _serial = Math.max(_serial, newObject._serial);
 
@@ -371,8 +359,11 @@
 
             function onLoad()
             {
-                needLoadCount --;
-                if(needLoadCount <= 0)
+                completeCount ++;
+
+                if(onProgress) onProgress.call(null, completeCount, totalCount);
+
+                if(completeCount >= totalCount)
                 {
                     if(onAllLoaded) onAllLoaded.call();
                 }

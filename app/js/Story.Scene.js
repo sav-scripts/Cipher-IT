@@ -38,8 +38,9 @@
     {
         engine: null,
         customCamera: null,
+        enablePostEffect: true,
 
-        init: function(canvas, useSmallTextures, onReady)
+        init: function(canvas, useSmallTextures, onProgress, onReady)
         {
             _canvas = canvas;
             _engine = this.engine = new BABYLON.Engine(_canvas, false);
@@ -48,6 +49,8 @@
             {
                 event.preventDefault();
             });
+
+            if(Main.settings.viewport.index == 0) self.enablePostEffect = false;
 
             //var webgl = _canvas.getContext("webgl");
             //console.log(webgl.getParameter(webgl.MAX_TEXTURE_SIZE));
@@ -74,7 +77,6 @@
 
             _sceneSphere.material = MaterialLib.createNormal();
             _sceneSphere.material.disableLighting = true;
-            //disableLighting
 
             if(Utility.urlParams.fog == 1)
             {
@@ -88,8 +90,21 @@
 
             ShaderLoader.loadFiles(["for-scene"],function()
             {
-                //DataManager.loadFromExtractedData(_sceneDataPath, self, null, function ()
-                DataManager.loadFromExtractedData(_sceneDataPath, self, useSmallTextures, function ()
+                var backgroundWeight = .25, billboardWeight = 1-backgroundWeight;
+
+                DataManager.loadFromExtractedData(_sceneDataPath, self, useSmallTextures, function(type, count, total)
+                {
+                    if(type == 'background')
+                    {
+                        onProgress.call(null, backgroundWeight);
+                    }
+                    else
+                    {
+                        onProgress.call(null, (backgroundWeight + (count/total)*billboardWeight));
+                    }
+                    //console.log("on progress: " + type + ", " + count + " / " + total);
+
+                }, function ()
                 {
                     BillboardEditor.setAllUnPickable();
 
@@ -97,12 +112,17 @@
 
                     Story.ObjectManager.init(_scene);
 
-                    RainMaker.init(_scene);
 
-                    PostProcessLib.init(_engine, _scene, _customCamera._camera);
-                    PostProcessLib.enableEffect("scene");
+                    if(self.enablePostEffect)
+                    {
+                        RainMaker.init(_scene);
 
-                    Loading.hide(onReady);
+                        PostProcessLib.init(_engine, _scene, _customCamera._camera);
+                        PostProcessLib.enableEffect("scene");
+                    }
+
+                    if(onReady) onReady.call();
+                    //Loading.hide(onReady);
                 });
             });
         },
@@ -140,15 +160,7 @@
             var texture = new BABYLON.Texture("data:background"+new Date().getTime(), _scene, null, true, null, null, null, imageSrc, true);
 
             var mat = _sceneSphere.material;
-
-            if(mat.constructor.name == 'StandardMaterial')
-            {
-                mat.diffuseTexture = texture;
-            }
-            else if(mat.constructor.name == 'ShaderMaterial')
-            {
-                mat.setTexture('textureSampler', texture);
-            }
+            mat.diffuseTexture = texture;
         },
 
         applyBackground: function(imageSrc, cb)
@@ -156,15 +168,7 @@
             var texture = new BABYLON.Texture(imageSrc, _scene, null, true, null, function()
             {
                 var mat = _sceneSphere.material;
-
-                if(mat.constructor.name == 'StandardMaterial')
-                {
-                    mat.diffuseTexture = texture;
-                }
-                else if(mat.constructor.name == 'ShaderMaterial')
-                {
-                    mat.setTexture('textureSampler', texture);
-                }
+                mat.diffuseTexture = texture;
 
                 if(cb) cb.call();
             });

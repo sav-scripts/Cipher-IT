@@ -57,6 +57,7 @@ function get_lottery_data()
 {
     $pageIndex = getInput('page_index');
     $pageSize = getInput('page_size');
+    $mode = getInput('mode');
 
     $firstIndex = $pageIndex * $pageSize;
 
@@ -66,7 +67,25 @@ function get_lottery_data()
 
     global $link;
 
-    $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` ".$limit;
+    if($mode == 'view')
+    {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` ".$limit;
+    }
+    else if($mode == 'lottery_success')
+    {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` WHERE `lottery`.`is_fail` = 0 GROUP BY `phone` ORDER BY rand() ".$limit;
+    }
+    else if($mode == 'lottery_all')
+    {
+        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` GROUP BY `phone` ORDER BY rand() ".$limit;
+    }
+    else
+    {
+        quit("unknown mode: $mode");
+    }
+
+
+
     $result = mysqli_query($link, $sql);
 
     $NORResult=mysqli_query($link,"Select FOUND_ROWS()");

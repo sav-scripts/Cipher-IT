@@ -30,7 +30,7 @@
             {
                 var templates =
                     [
-                        {url: "_participate.html", startWeight: 0, weight: 99, dom: null}
+                        {url: "_participate.html", startWeight: 0, weight: 70, dom: null}
                     ];
 
 
@@ -175,21 +175,31 @@
 
     function loadCanvasAnimation(cb)
     {
-        var numScripts = 1, numScriptLoaded = 0, animeScript= 'js/animes/form_Canvas.js';
+        var scripts =
+            [
+                'js/lib/createjs-2015.11.26.min.js',
+                'js/lib/CreatejsExtend.js',
+                'js/animes/form_Canvas.js'
+            ];
 
-        $LAB.script(animeScript).wait(scriptLoaded);
+        var numScripts = scripts.length,
+            numScriptLoaded = 0,
+            startWeight = .7,
+            myWeight = .3,
+            i, chain = $LAB;
+
+        for(i=0;i<scripts.length;i++)
+        {
+            chain = chain.script(scripts[i]).wait(scriptLoaded);
+        }
 
         function scriptLoaded()
         {
             numScriptLoaded ++;
 
-            //Loading.updateProgress(numScriptLoaded / numScripts*100, 0, 20, false);
+            Loading.progress(startWeight + (numScriptLoaded/numScripts*myWeight));
 
-            if(numScriptLoaded < numScripts)
-            {
-
-            }
-            else
+            if(numScriptLoaded == numScripts)
             {
                 cb.call();
             }

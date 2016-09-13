@@ -70,7 +70,7 @@
             "/Story/Briefcase",
             "/Story/ExitConfirm",
 
-            "/HappyEnd",
+            //"/HappyEnd",
             "/HappyEnd/Yes",
             "/HappyEnd/NotReally",
             "/HappyEnd/Form",

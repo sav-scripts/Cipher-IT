@@ -112,6 +112,8 @@
 
         setupIntroAnimation();
 
+        //applyVideo();
+
         $doms.container.detach();
     }
 
@@ -120,9 +122,14 @@
         $("#scene-container").append($doms.container);
 
         self.resize();
+
         ScalableContent.updateResizeAble();
 
         play();
+
+        Menu.hide();
+
+        //$doms.video[0].play();
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
@@ -131,6 +138,51 @@
         {
             cb.apply();
         });
+    }
+
+    function applyVideo()
+    {
+
+
+        window.requestAnimFrame = (function(callback) {
+            return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        $doms.video = $doms.container.find(".intro-video");
+        $doms.videoCanvas = $doms.container.find('.intro-video-canvas');
+
+            var v = $doms.video[0];
+            var canvas = $doms.videoCanvas[0];
+            var context = canvas.getContext('2d');
+
+        console.log(context.globalCompositeOperation);
+        //context.globalCompositeOperation = 'lighter';
+        context.globalCompositeOperation = 'multiply';
+
+        //v.addEventListener("loadeddata", function()
+        //{
+        //    console.log("check");
+        //});
+
+        drawVideo();
+
+        function drawVideo()
+        {
+            context.clearRect(0, 0, 1920, 1080);
+            context.drawImage(v, 0, 0, 1920, 1080);
+            requestAnimFrame(drawVideo);
+        }
+
+        function draw(v,c,w,h) {
+            if(v.paused || v.ended) return false;
+            c.drawImage(v,0,0,w,h);
+            //setTimeout(draw,20,v,c,w,h);
+        }
+
+
     }
 
     function skipIntro()
@@ -166,21 +218,29 @@
 
     function loadCanvasAnimation(cb)
     {
-        var numScripts = 1,
-            numScriptLoaded = 0,
-            animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js': 'js/animes/intro.js';
+        var animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js': 'js/animes/intro.js';
+        var scripts =
+            [
+                'js/lib/createjs-2015.11.26.min.js',
+                'js/lib/CreatejsExtend.js',
+                animeScript
+            ];
 
-        $LAB.script(animeScript).wait(scriptLoaded);
+        var numScripts = scripts.length,
+            numScriptLoaded = 0,
+            i, chain = $LAB;
+
+        //$LAB.script(animeScript).wait(scriptLoaded).script('js/lib/test.js').wait(scriptLoaded).script('js/lib/test.js').wait(scriptLoaded);
+        for(i=0;i<scripts.length;i++)
+        {
+            chain = chain.script(scripts[i]).wait(scriptLoaded);
+        }
 
         function scriptLoaded()
         {
             numScriptLoaded ++;
 
-            if(numScriptLoaded < numScripts)
-            {
-
-            }
-            else
+            if(numScriptLoaded == numScripts)
             {
                 loadCanvasImages(cb);
             }

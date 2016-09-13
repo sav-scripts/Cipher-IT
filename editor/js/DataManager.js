@@ -37,7 +37,7 @@
             });
         },
 
-        loadFromExtractedData: function(path, SceneClass, useSmallTextures, cb)
+        loadFromExtractedData: function(path, SceneClass, useSmallTextures, onProgress, cb)
         {
             var textureFolderName = (useSmallTextures)? "textures_m": "textures";
 
@@ -56,10 +56,16 @@
                 //console.log(response);
                 SceneClass.applyBackground(path + 'textures/' + response.backgroundImage, function()
                 {
+                    onProgress.call(null, 'background', 1, 1);
+
                     ShapeEditor.applyImportData(response.shapeData);
                     LightEditor.applyImportData(response.lightData);
 
-                    BillboardEditor.applyImportData(response.billboardData, path + textureFolderName + "/billboard/", function()
+                    BillboardEditor.applyImportData(response.billboardData, path + textureFolderName + "/billboard/", function(count, total)
+                    {
+                        onProgress.call(null, 'billboard', count, total);
+
+                    }, function()
                     {
                         if(cb) cb.call();
                     });

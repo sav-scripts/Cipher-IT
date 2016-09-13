@@ -278,6 +278,8 @@
                     //{
                     //    engine.setAlphaMode(BABYLON.Engine.ALPHA_COMBINE);
                     //}
+
+                    //console.log(_arcCamera.alpha);
                 });
 
                 scene.registerAfterRender(function()

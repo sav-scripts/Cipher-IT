@@ -34,7 +34,7 @@
     {
         stageIn: function (options, cb)
         {
-            (!_isInit) ? loadAndBuild(execute) : execute();
+            (!_isInit) ? loadScripts(execute) : execute();
             function execute(isFromLoad)
             {
                 if (isFromLoad && options.cbContentLoaded) options.cbContentLoaded.call();
@@ -51,11 +51,43 @@
                 });
             }
 
+            function loadScripts(cb)
+            {
+                Loading.progress(0).show();
+                var scripts =
+                    [
+                        'js/lib/babylon.2.4.js'
+                    ];
+
+                var numScripts = scripts.length,
+                    numScriptLoaded = 0,
+                    startWeight = .0,
+                    myWeight = .1,
+                    i, chain = $LAB;
+
+                for(i=0;i<scripts.length;i++)
+                {
+                    chain = chain.script(scripts[i]).wait(scriptLoaded);
+                }
+
+                function scriptLoaded()
+                {
+                    numScriptLoaded ++;
+
+                    Loading.progress(startWeight + (numScriptLoaded/numScripts*myWeight));
+
+                    if(numScriptLoaded == numScripts)
+                    {
+                        loadAndBuild(cb);
+                    }
+                }
+            }
+
             function loadAndBuild(cb)
             {
                 var templates =
                     [
-                        {url: "_story.html", startWeight: 0, weight: 100, dom: null}
+                        {url: "_story.html", startWeight: 10, weight: 50, dom: null}
                     ];
 
                 SceneHandler.loadTemplate(null, templates, function loadComplete()
@@ -66,9 +98,15 @@
                     var useSmallTextures = (Main.settings.viewport.index == 0);
                     //var useSmallTextures = true;
 
-                    Story.Scene.init($doms.sceneCanvas[0], useSmallTextures, function()
+                    Story.Scene.init($doms.sceneCanvas[0], useSmallTextures, function(progress)
+                    {
+                        //console.log(progress);
+                        Loading.progress(.6 + progress *.4);
+                    }, function()
                     {
                         _isInit = true;
+
+                        Loading.hide();
 
                         HappyEnd.preload();
 
@@ -261,6 +299,8 @@
                 obj = Story.ObjectManager.getObject(hash),
                 position = obj.editorObject._mesh.position.clone();
 
+            if(obj.y) position.y += obj.y;
+
             Story.Scene.customCamera.lookAt(position, function()
             {
                 Story.ObjectManager.showPointFingerAt(hash);
@@ -317,6 +357,7 @@
 
             help: $doms.container.find(".btn-help").on(_CLICK_, function()
             {
+                //$doms.buttons.help.toggleClass('flash-mode', false);
                 self.triggerHelp();
             }),
 
@@ -353,7 +394,7 @@
 
         self.resize();
 
-        PostProcessLib.getEffect("scene").raidalMotionTo(0, 0);
+        if(Story.Scene.enablePostEffect) PostProcessLib.getEffect("scene").raidalMotionTo(0, 0);
 
         Menu.show();
         Menu.Logo._show();
@@ -386,9 +427,17 @@
         {
             _spHidingActivated = false;
 
-            var d = 1.8;
+            var d;
 
-            PostProcessLib.getEffect("scene").raidalMotionTo(1, d, Power1.easeIn);
+            if(Story.Scene.enablePostEffect)
+            {
+                d = 1.8;
+                PostProcessLib.getEffect("scene").raidalMotionTo(1, d, Power1.easeIn);
+            }
+            else
+            {
+                d = .4;
+            }
 
             tl.add(Main.showWhiteCover, d - .4);
             //tl.to($doms.container,.4, {autoAlpha: 0, ease:Power3.easeOut}, 1);

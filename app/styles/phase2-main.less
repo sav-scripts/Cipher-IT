@@ -56,25 +56,38 @@
 
     .intro-video{
         position: absolute;
+        width: 20%;
+        height: 20%;
+
+//        visibility: hidden;
+
+        z-index: 12;
+    }
+    .intro-video-canvas{
+        position: absolute;
         width: 100%;
         height: 100%;
+
+        z-index: 11;
     }
 
     .intro-animation{
         position: absolute;
         width: 100%;
         height: 100%;
+
+//        visibility: hidden;
     }
 
     .wrapper{
         .percent-container();
 
-        .percent-div(left-content, -768,-240,496,324, "intro-content.png");
+        .percent-div(left-content, -723,-240,496,324, "intro-content.png");
 
         .btn-play{
 
 //            .percent-div(none, -689,105, 337, 94);
-            .percent-div(none, -716,125, 361, 99);
+            .percent-div(none, -671,125, 361, 99);
 
             .normal-state{
 
@@ -199,6 +212,27 @@
         .fade-btn-2(btn-sound, "story-btn-sound.png", 140, 0, 51, 52);
         .fade-btn-2(btn-help, "story-btn-help.png", 210, 0, 51, 52);
         .fade-btn-2(btn-evidence, "story-btn-evidence.png", 280, 0, 51, 52);
+
+        .btn-help{
+
+            @keyframes changeOpacity {
+                from {
+                    opacity: 1;
+                }
+
+                to {
+                    opacity: .4;
+                }
+            }
+
+
+            &.flash-mode{
+                animation-duration: 0.3s;
+                animation-name: changeOpacity;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+        }
 
         .btn-sound{
             .normal-state, .hover-state{
@@ -564,7 +598,7 @@
                     position: absolute;
                     width: 100%;
                     height: 100%;
-                    .image-bg("story-phone-bingo-icon.png");
+                    .image-bg("story-phone-bingo-icon.png", cover);
                 }
             }
 
@@ -686,6 +720,7 @@
                         margin-top: -1px;
                     }
                     .enable-hide();
+                    display: none;
                 }
                 .arrow-down{
                     .percent-div(none, 349, 185, 80, 80, "story-fingerprint-arrow-down.png");
@@ -694,6 +729,7 @@
                         margin-top: 1px;
                     }
                     .enable-hide();
+                    display: none;
                 }
 
                 .sample-layout{
@@ -705,7 +741,7 @@
                     .percent-container(absolute, 100%, 100%, -180%, -18%);
 
                     @texture-width:500;
-                    @texture-height:1620;
+                    @texture-height:540;
                     @texture-gap-x: 100;
                     @texture-gap-y: 135;
 
@@ -721,7 +757,7 @@
                     @clip-height: (@h / @sample-height) * 100%;
 
                     @num-cols: 5;
-                    @num-rows: 6;
+                    @num-rows: 2;
 
                     @texture-gap-x-percent: 100 / (@num-cols - 1) * 1%;
                     @texture-gap-y-percent: 100 / (@num-rows * 2 - 1) * 1%;
@@ -730,7 +766,7 @@
                         .percent-container(absolute, 100%, 100%, 0%, 0%);
 
                         .my-loop (1);
-                        .my-loop (@i) when (@i <= 30) {
+                        .my-loop (@i) when (@i <= 10) {
                             .my-mixin(@i);
                             .my-loop(@i + 1);
                         }
@@ -952,7 +988,7 @@
                         position: absolute;
                         width: 100%;
                         height: 100%;
-                        .image-bg("story-fingerprint-mismatch.png");
+                        .image-bg("story-fingerprint-mismatch.png", cover);
                     }
                 }
 
@@ -1104,7 +1140,7 @@
 }
 
 
-/** intro **/
+/** happy-end **/
 #happy-end{
 
     position: absolute;

@@ -20,10 +20,11 @@ $birthDay = checkInput('birth_day');
 $addressCounty = checkInput('address_county');
 $addressZone = checkInput('address_zone');
 $addressDetail = checkInput('address_detail');
+$isFail = checkInput('is_fail');
 
 $sql = "INSERT INTO `lottery` (
-    `id`, `family_name`, `name`, `gender`, `phone`, `email`, `birth_year`, `birth_month`, `birth_day`, `address_county`, `address_zone`, `address_detail`) VALUES (
-    NULL, '$familyName', '$name', '$gender', '$phone', '$email', '$birthYear', '$birthMonth', '$birthDay', '$addressCounty', '$addressZone', '$addressDetail');";
+    `id`, `is_fail`, `family_name`, `name`, `gender`, `phone`, `email`, `birth_year`, `birth_month`, `birth_day`, `address_county`, `address_zone`, `address_detail`) VALUES (
+    NULL, '$isFail', '$familyName', '$name', '$gender', '$phone', '$email', '$birthYear', '$birthMonth', '$birthDay', '$addressCounty', '$addressZone', '$addressDetail');";
 
 $result = mysqli_query($link, $sql);
 if(!$result) quit(mysqli_error($link));

@@ -448,7 +448,7 @@
             }
             else
             {
-                if(_Loading && !hideLoading) _Loading.progress(startWeight);
+                if(_Loading && !hideLoading) _Loading.progress(startWeight *.01);
 
                 frameDom = document.createElement("div");
 

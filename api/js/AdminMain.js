@@ -39,7 +39,9 @@
                     //    self.toLogin();
                     //}
 
-                    var firstHash = response.data? "/Participate": "/Login";
+                    var hash = SceneHandler.getHash();
+
+                    var firstHash = response.data? hash: "/Login";
 
                     SceneHandler.init(['/Participate', "/Login", "/Lottery", "/Setting"],
                     {

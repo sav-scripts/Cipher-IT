@@ -32,7 +32,7 @@
                 nameHead: 'trigger',
                 name: "backpacker",
                 isNpc: true,
-                dialogs: ["<span>昨晚在酒吧聽說有神秘新酒登台，全台僅600瓶!跟這案子有關嗎？</span>"],
+                dialogs: ["<span>昨晚在酒吧聽說有神秘新酒登台，全台僅624瓶!跟這案子有關嗎？</span>"],
                 y: 10
             },
             "/Bartender":
@@ -57,7 +57,7 @@
                 nameHead: 'trigger',
                 name: "sport-girl",
                 isNpc: true,
-                dialogs: [  "<span>沒有證據請不要碰我，小心我告你性騷擾！</span>",
+                dialogs: [  "<span>小心點，沒有證據請不要碰我！</span>",
                             '<span>這裡的</span><span class="green">&nbsp;RAEP&nbsp;Bar&nbsp;</span><span>是我們社區鄰居喜歡聚集的地方，但最近好像有個不認識的人常進出這裡…</span>'],
                 changePhaseAfterDialog: null,
                 y: 10
@@ -98,7 +98,8 @@
             {
                 type: 'hint',
                 name: "poster",
-                disableInStart: true
+                disableInStart: true,
+                y: 10
             },
 
             "/Billboard":
@@ -119,7 +120,8 @@
             {
                 type: 'hint',
                 name: "briefcase",
-                disableInStart: true
+                disableInStart: true,
+                y: 30
             }
         };
 
@@ -484,8 +486,8 @@
 
         if(obj.nameHead == 'hint')
         {
-            obj.editorObject._imageWidth = 139;
-            obj.editorObject._imageHeight = 141;
+            obj.editorObject._imageWidth = 139*2;
+            obj.editorObject._imageHeight = 141*2;
             obj.editorObject._updateGeom();
 
             mesh.material.diffuseTexture = mesh.material.opacityTexture = _lightTexture;
@@ -555,7 +557,8 @@
         }
 
         mesh.actionManager = new BABYLON.ActionManager(_scene);
-        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function()
+        //mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function()
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
         {
             //self.setPointFingerAt(hash);
             if(_currentPointFingerHash)
@@ -590,7 +593,7 @@
             tl.set(mesh, {scalingDeterminant: 1});
         }
 
-        var delay = 1 + Math.random()*2;
+        var delay = .8 + Math.random();
         TweenMax.delayedCall(delay, function()
         {
             obj.flashTriggerTl.restart();

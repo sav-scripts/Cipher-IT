@@ -13,7 +13,7 @@ html {
   transition: background-position, 0.5s, ease-out;
 }
 #background.command-mode {
-  background-position: 200px 0;
+  background-position: 240px 0;
 }
 #scene-container {
   position: absolute;
@@ -100,9 +100,9 @@ td {
 }
 #command-container {
   position: fixed;
-  width: 200px;
+  width: 240px;
   height: 100%;
-  left: -205px;
+  left: -245px;
   background-color: #dadacb;
   border-right: 5px solid white;
   box-shadow: -10px 0 10px rgba(0, 0, 0, 0.04) inset;
@@ -125,8 +125,9 @@ td {
   margin-top: 16px;
   height: 30px;
   line-height: 30px;
-  width: 180px;
-  margin-left: 20px;
+  width: 200px;
+  margin-left: 40px;
+  right: 0;
   border-radius: 5px 0 0 5px;
   text-align: center;
   font-family: '微軟正黑體', "Heiti TC", serif;
@@ -138,7 +139,7 @@ td {
 #command-container .button-container .btn.focus-mode {
   color: #407f9a;
   margin-left: 60px;
-  width: 140px;
+  width: 180px;
 }
 #command-container .button-container .sub-btn {
   cursor: pointer;
@@ -146,7 +147,7 @@ td {
   margin-top: 16px;
   height: 30px;
   line-height: 30px;
-  width: 120px;
+  width: 160px;
   margin-left: 80px;
   border-radius: 5px 0 0 5px;
   text-align: center;

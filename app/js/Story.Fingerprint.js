@@ -191,7 +191,7 @@
         var i,
             currentRow = 0,
             numCols = 5,
-            numRows = 6,
+            numRows = 2,
             visableRows = 2,
             minRowIndex = 0,
             maxRowIndex = numRows - visableRows,
@@ -204,7 +204,7 @@
         //var matchIndex = 0;
         var isShared = false,
             sharedMatchIndex = 0,
-            matchIndex = 26;
+            matchIndex = 6;
 
         $doms.btnSend = $doms.container.find(".btn-send");
         $doms.arrowUp = $doms.container.find(".arrow-up").on(_CLICK_, function()

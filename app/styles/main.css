@@ -2991,8 +2991,15 @@ body.no-scroll-mode {
 }
 #intro .intro-video {
   position: absolute;
+  width: 20%;
+  height: 20%;
+  z-index: 12;
+}
+#intro .intro-video-canvas {
+  position: absolute;
   width: 100%;
   height: 100%;
+  z-index: 11;
 }
 #intro .intro-animation {
   position: absolute;
@@ -3008,7 +3015,7 @@ body.no-scroll-mode {
 }
 #intro .wrapper .left-content {
   position: absolute;
-  left: -768%;
+  left: -723%;
   top: -240%;
   width: 496%;
   height: 324%;
@@ -3017,7 +3024,7 @@ body.no-scroll-mode {
 }
 #intro .wrapper .btn-play {
   position: absolute;
-  left: -716%;
+  left: -671%;
   top: 125%;
   width: 361%;
   height: 99%;
@@ -3329,6 +3336,20 @@ body.no-scroll-mode {
   opacity: 1;
   visibility: visible;
   transition-delay: 0s;
+}
+@keyframes changeOpacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: .4;
+  }
+}
+#story .buttons .btn-help.flash-mode {
+  animation-duration: 0.3s;
+  animation-name: changeOpacity;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 #story .buttons .btn-sound .normal-state,
 #story .buttons .btn-sound .hover-state {
@@ -4557,7 +4578,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/story-phone-bingo-icon.png");
-  background-size: auto;
+  background-size: cover;
 }
 #story .phone-popup .content .honey {
   position: absolute;
@@ -5131,6 +5152,7 @@ body.no-scroll-mode {
   transition: opacity 0.4s ease-out;
   transition-delay: 0s;
   opacity: 1;
+  display: none;
 }
 #story .fingerprint-popup .content .system .arrow-up:active {
   margin-top: -1px;
@@ -5152,6 +5174,7 @@ body.no-scroll-mode {
   transition: opacity 0.4s ease-out;
   transition-delay: 0s;
   opacity: 1;
+  display: none;
 }
 #story .fingerprint-popup .content .system .arrow-down:active {
   margin-top: 1px;
@@ -5215,7 +5238,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 0% 54.54545455%;
+  background-position: 0% 66.66666667%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5263,7 +5286,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 25% 54.54545455%;
+  background-position: 25% 66.66666667%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5311,7 +5334,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 50% 54.54545455%;
+  background-position: 50% 66.66666667%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5359,7 +5382,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 75% 54.54545455%;
+  background-position: 75% 66.66666667%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5407,7 +5430,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 100% 54.54545455%;
+  background-position: 100% 66.66666667%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5445,7 +5468,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 0% 9.09090909%;
+  background-position: 0% 33.33333333%;
   background-size: 500%;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(6) .hover-state {
@@ -5455,7 +5478,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 0% 63.63636364%;
+  background-position: 0% 100%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5493,7 +5516,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 25% 9.09090909%;
+  background-position: 25% 33.33333333%;
   background-size: 500%;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(7) .hover-state {
@@ -5503,7 +5526,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 25% 63.63636364%;
+  background-position: 25% 100%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5541,7 +5564,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 50% 9.09090909%;
+  background-position: 50% 33.33333333%;
   background-size: 500%;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(8) .hover-state {
@@ -5551,7 +5574,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 50% 63.63636364%;
+  background-position: 50% 100%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5589,7 +5612,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 75% 9.09090909%;
+  background-position: 75% 33.33333333%;
   background-size: 500%;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(9) .hover-state {
@@ -5599,7 +5622,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 75% 63.63636364%;
+  background-position: 75% 100%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5637,7 +5660,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 100% 9.09090909%;
+  background-position: 100% 33.33333333%;
   background-size: 500%;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(10) .hover-state {
@@ -5647,7 +5670,7 @@ body.no-scroll-mode {
   background-image: url("../images/story-fingerprint-fingerprints-1.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: 100% 63.63636364%;
+  background-position: 100% 100%;
   background-size: 500%;
   visibility: hidden;
   opacity: 0;
@@ -5662,966 +5685,6 @@ body.no-scroll-mode {
   visibility: hidden;
 }
 #story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(10).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 0%;
-  top: 270%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 18.18181818%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 72.72727273%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(11).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 100%;
-  top: 270%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 18.18181818%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 72.72727273%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(12).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 200%;
-  top: 270%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 18.18181818%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 72.72727273%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(13).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 300%;
-  top: 270%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 18.18181818%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 72.72727273%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(14).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 400%;
-  top: 270%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 18.18181818%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 72.72727273%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(15).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 0%;
-  top: 405%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 27.27272727%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 81.81818182%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(16).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 100%;
-  top: 405%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 27.27272727%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 81.81818182%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(17).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 200%;
-  top: 405%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 27.27272727%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 81.81818182%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(18).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 300%;
-  top: 405%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 27.27272727%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 81.81818182%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(19).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 400%;
-  top: 405%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 27.27272727%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 81.81818182%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(20).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 0%;
-  top: 540%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 36.36363636%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 90.90909091%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(21).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 100%;
-  top: 540%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 36.36363636%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 90.90909091%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(22).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 200%;
-  top: 540%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 36.36363636%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 90.90909091%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(23).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 300%;
-  top: 540%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 36.36363636%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 90.90909091%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(24).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 400%;
-  top: 540%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 36.36363636%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 90.90909091%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(25).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 0%;
-  top: 675%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 45.45454545%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 0% 100%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(26).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 100%;
-  top: 675%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 45.45454545%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 25% 100%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(27).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 200%;
-  top: 675%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 45.45454545%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 50% 100%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(28).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 300%;
-  top: 675%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 45.45454545%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 75% 100%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(29).selected .hover-state {
-  opacity: 1;
-  visibility: visible;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30) {
-  position: absolute;
-  width: 100%;
-  height: 135%;
-  left: 400%;
-  top: 675%;
-  cursor: pointer;
-  overflow: hidden;
-  transition: opacity 0.5s ease-out;
-  transition-delay: 0s;
-  opacity: 1;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30) .normal-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 45.45454545%;
-  background-size: 500%;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30) .hover-state {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: url("../images/story-fingerprint-fingerprints-1.png");
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: 100% 100%;
-  background-size: 500%;
-  visibility: hidden;
-  opacity: 0;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30).hide-mode {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease-out, visibility 0s linear 0.5s;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30).selected .normal-state {
-  opacity: 0;
-  visibility: hidden;
-}
-#story .fingerprint-popup .content .system .fingerprints .wrapper .sample:nth-child(30).selected .hover-state {
   opacity: 1;
   visibility: visible;
 }
@@ -6821,7 +5884,7 @@ body.no-scroll-mode {
   width: 100%;
   height: 100%;
   background-image: url("../images/story-fingerprint-mismatch.png");
-  background-size: auto;
+  background-size: cover;
 }
 #story .fingerprint-popup .results .wrapper .bingo {
   position: absolute;
@@ -7790,7 +6853,7 @@ body.no-scroll-mode {
   visibility: visible;
   transition-delay: 0s;
 }
-/** intro **/
+/** happy-end **/
 #happy-end {
   position: absolute;
   width: 100%;
@@ -8461,54 +7524,10 @@ body.no-scroll-mode {
     visibility: visible;
     transition-delay: 0s;
   }
-  #story .buttons .btn-fullscreen {
-    position: absolute;
-    left: 0px;
-    top: 264px;
-    width: 75px;
-    height: 75px;
-  }
-  #story .buttons .btn-fullscreen .normal-state {
-    position: absolute;
-    background-image: url("../images/story-btn-fullscreen.m.png");
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    background-position: 0 0;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.4s ease-out;
-    transition-delay: 0s;
-  }
-  #story .buttons .btn-fullscreen .hover-state {
-    position: absolute;
-    background-image: url("../images/story-btn-fullscreen.m.png");
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    background-position: 0 -100%;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-fullscreen:hover {
-    cursor: pointer;
-  }
-  #story .buttons .btn-fullscreen:hover .normal-state {
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
-  }
-  #story .buttons .btn-fullscreen:hover .hover-state {
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
-  }
   #story .buttons .btn-exit {
     position: absolute;
     left: 0px;
-    top: 352px;
+    top: 264px;
     width: 75px;
     height: 75px;
   }
@@ -8548,6 +7567,9 @@ body.no-scroll-mode {
     opacity: 1;
     visibility: visible;
     transition-delay: 0s;
+  }
+  #story .buttons .btn-fullscreen {
+    display: none;
   }
   #story .buttons .btn-sound .normal-state,
   #story .buttons .btn-sound .hover-state {
