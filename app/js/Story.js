@@ -6,6 +6,7 @@
         _contentDic,
         _phaseIndex = 0,
         _spHidingActivated = false,
+        _isBabylonSupported,
         _phaseDic =
         {
             0: {description: "start", type:"", helpObjectHash:"/Phone"},
@@ -37,6 +38,15 @@
             (!_isInit) ? loadScripts(execute) : execute();
             function execute(isFromLoad)
             {
+                if(!_isBabylonSupported)
+                {
+                    alert('您的瀏覽器不支援需要的 WebGL 功能');
+                    Loading.hide();
+                    cb.call();
+                    SceneHandler.toHash('/Participate/Product');
+                    return;
+                }
+
                 if (isFromLoad && options.cbContentLoaded) options.cbContentLoaded.call();
                 show(function()
                 {
@@ -48,6 +58,8 @@
                     {
                         cb.call();
                     }
+
+
                 });
             }
 
@@ -82,10 +94,20 @@
 
                     if(count == total)
                     {
-                        setupSounds(function()
+                        _isBabylonSupported = BABYLON.Engine.isSupported();
+                        //_isBabylonSupported = false;
+
+                        if(!_isBabylonSupported)
                         {
-                            loadAndBuild(cb);
-                        });
+                            cb.call();
+                        }
+                        else
+                        {
+                            setupSounds(function()
+                            {
+                                loadAndBuild(cb);
+                            });
+                        }
                     }
                 }
             }
@@ -107,6 +129,7 @@
                     },
                     function()
                     {
+                        SoundSwitch.update();
                         if(cb) cb.call();
                     });
             }
@@ -367,6 +390,22 @@
             }
         },
 
+        enableDragHint: function()
+        {
+            $doms.dragHint.toggleClass("hide-mode", false);
+            Story.Scene.customCamera.listenDrag(this.disableDragHint);
+        },
+
+        disableDragHint: function()
+        {
+            $doms.dragHint.toggleClass("hide-mode", true);
+
+            TweenMax.delayedCall(1, function()
+            {
+                $doms.dragHint.detach();
+            });
+        },
+
         resize: function ()
         {
             if(_isInit)
@@ -434,6 +473,8 @@
         self.DialogText.init($doms.container.find(".dialog"));
         self.DialogTrigger.init();
 
+        $doms.dragHint = $doms.container.find(".drag-hint").toggleClass("hide-mode", true);
+
         $doms.sceneCanvas = $doms.container.find(".scene-canvas");
     }
 
@@ -468,6 +509,12 @@
 
     function hide(cb)
     {
+        if(!_isInit)
+        {
+            cb.call();
+            return;
+        }
+
         Menu.Logo._hide();
         Menu.hide();
 

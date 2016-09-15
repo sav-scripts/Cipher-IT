@@ -215,6 +215,19 @@
                 self.setSoundOn(!_isSoundOn);
             });
 
+
+
+            //console.log('soundOn = ' + Cookies.get("soundOn"));
+
+            if(Cookies.get("soundOn") === undefined)
+            {
+                Cookies.set("soundOn", _isSoundOn, { expires: 7 });
+            }
+
+            _isSoundOn = (Cookies.get("soundOn") === 'true');
+
+            //console.log(_isSoundOn);
+
             update();
         },
 
@@ -240,11 +253,16 @@
             _isHiding = true;
 
             $doms.container.toggleClass("hide-mode", _isHiding);
-        }
+        },
+
+        update: update
     };
 
     function update()
     {
+        Cookies.set("soundOn", _isSoundOn, { expires: 7 });
+        //console.log("sound on = " + _isSoundOn);
+
         $doms.btn.toggleClass('off-mode', !_isSoundOn);
 
         if(window.SP)

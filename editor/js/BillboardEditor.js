@@ -550,7 +550,7 @@
 
 (function(){
 
-    const GLOBAL_SCALE = .2;
+    var GLOBAL_SCALE = .2;
 
     window.BillboardObject = BillboardObject;
 

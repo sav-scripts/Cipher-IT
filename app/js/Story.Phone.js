@@ -13,6 +13,8 @@
         _matchCount = 0,
         _myPhase = 0,
         _btnCloseClicked = false,
+        _tlPlayHint,
+        _tlPlayHintTimer,
         _quezNumberDic =
         {
             3: true,
@@ -51,6 +53,21 @@
                     SceneHandler.toHash("/Story");
                 }
             });
+
+            $doms.cLetter = $doms.container.find(".c-letter").css("visibility", "hidden");
+
+            var tl = _tlPlayHint = new TimelineMax;
+            tl.set($doms.cLetter, {autoAlpha:0});
+            tl.to($doms.cLetter, 1.5, {autoAlpha:1, ease:Power1.easeInOut});
+            tl.to($doms.cLetter, 1.5, {autoAlpha:0, ease:Power1.easeInOut});
+            tl.pause();
+
+            tl = _tlPlayHintTimer = new TimelineMax;
+            tl.add(function()
+            {
+                _tlPlayHint.restart();
+            }, 15);
+            tl.pause();
 
             setupQuez();
 
@@ -223,6 +240,7 @@
         if(_isDetecting) return;
         _isDetecting = true;
 
+        _tlPlayHintTimer.restart();
         $doms.container.on("pointerdown", detectDrag);
     }
 
@@ -276,6 +294,8 @@
 
         function checkCount()
         {
+            //_tlPlayHintTimer.restart();
+
             this.__triggered = !this.__triggered;
 
             if(_quezNumberDic[this.__index])
@@ -321,6 +341,7 @@
         if(!_isDetecting) return;
         _isDetecting = false;
 
+        _tlPlayHintTimer.pause();
         $doms.container.unbind("pointerdown", detectDrag);
 
     }

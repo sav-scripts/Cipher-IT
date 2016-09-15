@@ -55,6 +55,8 @@
         _defaultCameraRadius: 0,
         _dBetaLimitArc: 0,
 
+        _cbOnDrag: null,
+
         _tweenObj:
         {
             pointerDownPosition: null,
@@ -68,6 +70,11 @@
 
         _isEnabled: false,
         _useDeviceOrientation: false,
+
+        listenDrag: function(cb)
+        {
+            this._cbOnDrag = cb;
+        },
 
         setEnabled: function(b)
         {
@@ -320,6 +327,12 @@
         var startPosition = self._tweenObj.pointerDownPosition;
         if(startPosition)
         {
+            if(self._cbOnDrag)
+            {
+                self._cbOnDrag.call();
+                self._cbOnDrag = null;
+            }
+
             var canvasWidth = $(self._canvas).width(),
                 canvasHeight = $(self._canvas).height(),
                 dx = event.clientX - startPosition.x,

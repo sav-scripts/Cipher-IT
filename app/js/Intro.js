@@ -294,6 +294,7 @@
         },
         function()
         {
+            SoundSwitch.update();
             if(cb) cb.call();
         });
     }

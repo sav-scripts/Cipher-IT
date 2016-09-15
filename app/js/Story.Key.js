@@ -8,6 +8,7 @@
     var $doms = {},
         _isHiding = true,
         _ba,
+        _firstTimeHide = true,
         _dialogText = '<span>嫌犯棄車匆匆逃逸，在現場掉了一把刻有</span><span class="green">Ｃ的鑰匙</span><span>，這也許是某種線索</span>';
 
     var self = window.Story.Key=
@@ -63,6 +64,12 @@
         {
             if (_isHiding) return;
             _isHiding = true;
+
+            if(_firstTimeHide)
+            {
+                _firstTimeHide = false;
+                Story.enableDragHint();
+            }
 
             $doms.btnClose.toggleClass("showing-mode", false);
 

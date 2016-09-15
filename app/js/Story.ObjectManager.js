@@ -57,7 +57,7 @@
                 nameHead: 'trigger',
                 name: "sport-girl",
                 isNpc: true,
-                dialogs: [  "<span>小心點，沒有證據請不要碰我！</span>",
+                dialogs: [  "<span>小心點，沒有證據請不要接近我！</span>",
                             '<span>這裡的</span><span class="green">&nbsp;RAEP&nbsp;Bar&nbsp;</span><span>是我們社區鄰居喜歡聚集的地方，但最近好像有個不認識的人常進出這裡…</span>'],
                 changePhaseAfterDialog: null,
                 y: 10

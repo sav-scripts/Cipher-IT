@@ -10,7 +10,7 @@
         _password = "1824",
         _isCompleted = false,
         _isLocking = false,
-        _dialogText = '<span>數字密碼？和格蘭利威有關嗎？</span>';
+        _dialogText = '<span>數字密碼？和格蘭利威的領扣有關嗎？</span>';
 
     var self = window.Story.Briefcase =
     {

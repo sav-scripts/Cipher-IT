@@ -236,6 +236,45 @@
         touch-action: none;
     }
 
+    /** drag hint **/
+    .drag-hint{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @w: 141px;
+        @h: 141px;
+        width: @w;
+        height: @h;
+        margin-left: -@w*.5;
+        margin-top: -@h*.5;
+        .image-bg("story-drag-bg.png");
+
+        z-index: 100;
+
+        pointer-events: none;
+
+        .gif-icon{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            .image-bg("story-drag-hand.gif");
+
+            pointer-events: none;
+        }
+
+        transition: opacity .5s linear;
+
+        transition-delay: 0s;
+        visibility: visible;
+
+        &.hide-mode{
+            visibility: hidden;
+            opacity: 0;
+
+            transition: opacity .5s linear, visibility 0s linear .5s;
+        }
+    }
+
     /** coners **/
     .coner-top-left{
 
@@ -243,7 +282,7 @@
         left: 0;
         top:0;
         width: 449px;
-        height: 487px;
+        height: 359px;
         .image-bg('coner-top-left.png');
     }
 
@@ -253,7 +292,7 @@
         right: 0;
         top:0;
         width: 449px;
-        height: 372px;
+        height: 358px;
         .image-bg('coner-top-right.png');
     }
 
@@ -567,6 +606,11 @@
                 .percent-div(none, -818, -722, 1634, 1394, "story-phone-mailbox.jpg");
                 .unselectable();
                 touch-action: none;
+            }
+
+            .c-letter{
+                .percent-div(none, -165, -205, 320, 357, "story-phone-c.png");
+                pointer-events: none;
             }
 
             .quez-container{

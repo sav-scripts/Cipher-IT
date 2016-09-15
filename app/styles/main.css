@@ -3323,6 +3323,7 @@ body.no-scroll-mode {
   position: absolute;
   width: 100%;
   height: 100%;
+  /** drag hint **/
   /** coners **/
   /** story buttons **/
   /** story evidences **/
@@ -3343,12 +3344,41 @@ body.no-scroll-mode {
   height: 100%;
   touch-action: none;
 }
+#story .drag-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 141px;
+  height: 141px;
+  margin-left: -70.5px;
+  margin-top: -70.5px;
+  background-image: url("../images/story-drag-bg.png");
+  background-size: auto;
+  z-index: 100;
+  pointer-events: none;
+  transition: opacity .5s linear;
+  transition-delay: 0s;
+  visibility: visible;
+}
+#story .drag-hint .gif-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/story-drag-hand.gif");
+  background-size: auto;
+  pointer-events: none;
+}
+#story .drag-hint.hide-mode {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .5s linear, visibility 0s linear .5s;
+}
 #story .coner-top-left {
   position: absolute;
   left: 0;
   top: 0;
   width: 449px;
-  height: 487px;
+  height: 359px;
   background-image: url("../images/coner-top-left.png");
   background-size: auto;
 }
@@ -3357,7 +3387,7 @@ body.no-scroll-mode {
   right: 0;
   top: 0;
   width: 449px;
-  height: 372px;
+  height: 358px;
   background-image: url("../images/coner-top-right.png");
   background-size: auto;
 }
@@ -4316,6 +4346,16 @@ body.no-scroll-mode {
   user-select: none;
   -webkit-user-drag: none;
   touch-action: none;
+}
+#story .phone-popup .content .c-letter {
+  position: absolute;
+  left: -165%;
+  top: -205%;
+  width: 320%;
+  height: 357%;
+  background-image: url("../images/story-phone-c.png");
+  background-size: cover;
+  pointer-events: none;
 }
 #story .phone-popup .content .quez-container {
   position: absolute;
@@ -7669,7 +7709,7 @@ body.no-scroll-mode {
   #rotate-screen-hint {
     position: fixed;
     z-index: 2000;
-    background-color: rgba(0, 0, 0, 0.95);
+    background-color: black;
     width: 100%;
     height: 100%;
     transition: opacity 0.4s ease-out;
@@ -7689,6 +7729,29 @@ body.no-scroll-mode {
     color: white;
     letter-spacing: 2px;
     text-align: center;
+  }
+  #rotate-screen-hint .pic {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+    background-image: url("../images/rotate-screen-hint.jpg");
+    background-size: auto;
+    animation-duration: 0.6s;
+    animation-name: changeOpacity;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes changeOpacity {
+    from {
+      opacity: .4;
+    }
+    to {
+      opacity: 1;
+    }
   }
   #rotate-screen-hint.hide-mode {
     opacity: 0;
@@ -7851,6 +7914,7 @@ body.no-scroll-mode {
   /** story **/
   #story {
     min-height: 855px;
+    /** drag hint **/
     /** coners **/
     /** story buttons **/
     /** story evidences **/
@@ -7863,6 +7927,18 @@ body.no-scroll-mode {
     /** story fingerfrint **/
     /** story medal **/
     /** story briefcase **/
+  }
+  #story .drag-hint {
+    width: 197px;
+    height: 197px;
+    margin-left: -98.5px;
+    margin-top: -98.5px;
+    background-image: url("../images/story-drag-bg.m.png");
+    background-size: auto;
+  }
+  #story .drag-hint .gif-icon {
+    background-image: url("../images/story-drag-hand.m.gif");
+    background-size: auto;
   }
   #story .coner-top-left,
   #story .coner-top-right,
@@ -8579,6 +8655,15 @@ body.no-scroll-mode {
     -webkit-user-drag: none;
     touch-action: none;
     opacity: 1;
+  }
+  #story .phone-popup .content .c-letter {
+    position: absolute;
+    left: -149%;
+    top: -212%;
+    width: 285%;
+    height: 318%;
+    background-image: url("../images/story-phone-c.m.png");
+    background-size: cover;
   }
   #story .phone-popup .content .quez-container {
     position: absolute;

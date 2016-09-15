@@ -222,7 +222,7 @@
         {
             Main.loginFB('/HappyEnd/Yes', function()
             {
-                var picture = Utility.getPath() + "misc/share_success.jpg";
+                var picture = Utility.getPath() + "misc/share_success.jpg?v=1";
                 FB.ui
                 (
                     {
