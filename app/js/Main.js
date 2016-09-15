@@ -1,5 +1,7 @@
 (function(){
 
+    var $doms = {};
+
     "use strict";
     var self = window.Main =
     {
@@ -45,6 +47,13 @@
             }
         },
 
+        soundSettings:
+        {
+            folder: "./misc/",
+            globalClassName: "SP",
+            defaultFadeDuration: 1
+        },
+
         hashArray:
         [
             "/LandingPage",
@@ -78,7 +87,9 @@
             "/Participate",
             "/Participate/Product",
             "/Participate/Form",
-            "/ParticipateRule"
+
+            "/ParticipateRule",
+            "/StoryRule"
         ],
 
         firstHash: '',
@@ -119,6 +130,8 @@
             self.settings.isiOS = Utility.isiOS();
 
             window._CLICK_ = (self.settings.isiOS)? "touchend": "click";
+
+            $doms.rotateScreenHint = $("#rotate-screen-hint");
 
             checkAccessToken();
 
@@ -185,6 +198,17 @@
                             SceneHandler.setHash('/LandingPage');
 
                             return null;
+                        }
+
+                        if(hashName.match('/Story'))
+                        {
+                            if(!Modernizr.webgl)
+                            {
+                                alert("您的瀏覽器不支援 WebGL");
+                                SceneHandler.setHash('/Participate/Product');
+
+                                return null;
+                            }
                         }
 
 
@@ -275,6 +299,11 @@
 
         //ScalableContent.updateView(width, height);
         ScalableContent.updateResizeAble();
+
+        if(vp.index == 0)
+        {
+            $doms.rotateScreenHint.toggleClass('hide-mode', !(vp.width > vp.height));
+        }
     }
 
     function checkAccessToken()

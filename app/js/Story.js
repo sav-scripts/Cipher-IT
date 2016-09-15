@@ -12,7 +12,7 @@
             1: {description: "phone enabled", type:"", helpObjectHash:"/Phone"},
             2: {description: "poster enabled (phone puzzle complete)", type:"", helpObjectHash:"/Poster"},
             3: {description: "billboard enabled", type:"", helpObjectHash:"/Billboard"},
-            4: {description: "sport girl key dialog enabled", type:"", helpObjectHash:"/SportGirl"},
+            4: {description: "sport girl key dialog enabled", type:"", helpObjectHash:"/SportGirlSP"},
             5: {description: "bartender key dialog enabled", type:"", helpObjectHash:"/Bartender"},
             6: {description: "fingerprint enabled", type:"", helpObjectHash:"/Bartender"},
             7: {description: "medal enabled, briefcase enabled (fingerprint puzzle complete)", type:"", helpObjectHash:"/Medal"}
@@ -54,15 +54,19 @@
             function loadScripts(cb)
             {
                 Loading.progress(0).show();
+
+
+                var startWeight = .0, weight = .3;
                 var scripts =
                     [
-                        'js/lib/babylon.2.4.js'
+                        'js/lib/babylon.2.4.js',
+                        'js/lib/createjs-2015.11.26.min.js',
+                        //'js/lib/soundjs-0.6.2.min.js',
+                        'js/lib/SoundjsExtend.js'
                     ];
 
-                var numScripts = scripts.length,
-                    numScriptLoaded = 0,
-                    startWeight = .0,
-                    myWeight = .1,
+                var total = scripts.length,
+                    count = 0,
                     i, chain = $LAB;
 
                 for(i=0;i<scripts.length;i++)
@@ -72,23 +76,47 @@
 
                 function scriptLoaded()
                 {
-                    numScriptLoaded ++;
+                    count ++;
 
-                    Loading.progress(startWeight + (numScriptLoaded/numScripts*myWeight));
+                    Loading.progress(startWeight + weight*count/total);
 
-                    if(numScriptLoaded == numScripts)
+                    if(count == total)
                     {
-                        loadAndBuild(cb);
+                        setupSounds(function()
+                        {
+                            loadAndBuild(cb);
+                        });
                     }
                 }
+            }
+
+            function setupSounds(cb)
+            {
+                var startWeight = .3, weight = .1;
+
+                if(!window.SP) createjs.Sound.init(Main.soundSettings);
+
+                SP.load(
+                    [
+                        {id:"game-bgm", src:"game_bg.mp3?v=2", defaultPlayProps:{loop: -1, volume: 1}}
+                        //{id:"zoom", src:"zoom.mp3"}
+                    ],
+                    function(count, total)
+                    {
+                        Loading.progress(startWeight + weight*count/total);
+                    },
+                    function()
+                    {
+                        if(cb) cb.call();
+                    });
             }
 
             function loadAndBuild(cb)
             {
                 var templates =
-                    [
-                        {url: "_story.html", startWeight: 10, weight: 50, dom: null}
-                    ];
+                [
+                    {url: "_story.html", startWeight: 40, weight: 30, dom: null}
+                ];
 
                 SceneHandler.loadTemplate(null, templates, function loadComplete()
                 {
@@ -101,7 +129,7 @@
                     Story.Scene.init($doms.sceneCanvas[0], useSmallTextures, function(progress)
                     {
                         //console.log(progress);
-                        Loading.progress(.6 + progress *.4);
+                        Loading.progress(.7 + progress *.3);
                     }, function()
                     {
                         _isInit = true;
@@ -149,6 +177,11 @@
             }
         },
 
+        executeAfterPopupClosed: function()
+        {
+            Menu.show();
+        },
+
         activeSpHiding: function()
         {
             _spHidingActivated = true;
@@ -176,8 +209,8 @@
             }
             else
             {
-                Menu.show();
-                $doms.buttons.container.toggleClass("hide-mode", false);
+                //Menu.show();
+                //$doms.buttons.container.toggleClass("hide-mode", false);
             }
 
             if(_currentContent)
@@ -198,13 +231,23 @@
                 if(!_currentContent)
                 {
                     Story.Scene.setUserControlEnabled(true);
-                    cb.call();
+                    complete();
                 }
                 else
                 {
                     Story.Scene.setUserControlEnabled(false);
-                    _currentContent.show(cb);
+                    _currentContent.show(complete);
                 }
+            }
+
+            function complete()
+            {
+                if(!(nextContent && nextContent.needHideUI))
+                {
+                    Menu.show();
+                    $doms.buttons.container.toggleClass("hide-mode", false);
+                }
+                cb.call();
             }
         },
 
@@ -259,11 +302,15 @@
                     Story.Evidences.unlockEvidence("/Billboard");
                     Story.ObjectManager.disableFlash("/Billboard");
 
+                    Story.ObjectManager.setObjectEnabled("/SportGirlSP", true);
+
                     Story.ObjectManager.setObjectDialog("/SportGirl", 1, StoryPhases.BARTENDER);
                     Story.ObjectManager.setDialogToNew("/SportGirl");
                 }
                 else if(_phaseIndex == 5)
                 {
+                    Story.ObjectManager.disableFlash("/SportGirlSP");
+
                     Story.ObjectManager.changeNpcAction("/Bartender", 1, 0);
                     Story.ObjectManager.setObjectDialog("/Bartender", 1, StoryPhases.FINGERPRINT, null, "/Story/Fingerprint", null);
                     Story.ObjectManager.setDialogToNew("/Bartender");
@@ -353,6 +400,8 @@
 
             soundSwitch: $doms.container.find(".btn-sound").on(_CLICK_, function()
             {
+                SoundSwitch.setSoundOn(!SoundSwitch.getSoundOn());
+                $doms.buttons.soundSwitch.toggleClass("off-mode", !SoundSwitch.getSoundOn());
             }),
 
             help: $doms.container.find(".btn-help").on(_CLICK_, function()
@@ -399,6 +448,10 @@
         Menu.show();
         Menu.Logo._show();
 
+        $doms.buttons.soundSwitch.toggleClass("off-mode", !SoundSwitch.getSoundOn());
+
+        SP.playTrack('game-bgm');
+
         $doms.buttons.container.toggleClass("hide-mode", false);
 
         Story.Scene.setActive(true);
@@ -418,6 +471,8 @@
         Menu.Logo._hide();
         Menu.hide();
 
+        SP.stopTrack('game-bgm');
+
         Story.Scene.setUserControlEnabled(false);
 
         var tl = new TimelineMax;
@@ -431,7 +486,7 @@
 
             if(Story.Scene.enablePostEffect)
             {
-                d = 1.8;
+                d = 1.2;
                 PostProcessLib.getEffect("scene").raidalMotionTo(1, d, Power1.easeIn);
             }
             else
@@ -446,7 +501,7 @@
                 Story.Scene.setActive(false);
                 $doms.container.detach();
                 cb.apply();
-            }, d +.1);
+            }, d);
         }
         else
         {

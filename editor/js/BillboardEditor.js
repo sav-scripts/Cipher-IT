@@ -438,10 +438,10 @@
             };
 
             // fix for dat gui chain bug
-            _guiItems.offsetX = _guiItems.offsetX.min(0).max(1).step(.001).name("水平中心");
+            _guiItems.offsetX = _guiItems.offsetX.min(-2.0).max(3.0).step(.01).name("水平中心");
             _guiItems.offsetX.onChange(function(){ _editingObject._updateGeom.call(_editingObject);});
 
-            _guiItems.offsetY = _guiItems.offsetY.min(0).max(1).step(.001).name("垂直中心");
+            _guiItems.offsetY = _guiItems.offsetY.min(-2.0).max(3.0).step(.01).name("垂直中心");
             _guiItems.offsetY.onChange(function(){ _editingObject._updateGeom.call(_editingObject);});
 
             _guiItems.radius = _guiItems.radius.min(0).max(_sceneSize).step(.01).name("3D 深度");

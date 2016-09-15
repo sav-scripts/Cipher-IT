@@ -90,6 +90,18 @@
             }
         },
 
+        getDicByName: function()
+        {
+            var dic = {};
+            for(var key in _editorObjectDic)
+            {
+                var obj = _editorObjectDic[key];
+                dic[obj._name] = obj;
+            }
+
+            return dic;
+        },
+
         enable: function()
         {
             if(_isEnabled) return;
@@ -427,11 +439,10 @@
 
         if(_guiItems)
         {
-            _guiItems.renderingOrder.remove();
-
-            _guiItems.toLastStep.remove();
-            _guiItems.deleteAll.remove();
-            _guiItems.complete.remove();
+            for(var key in _guiItems)
+            {
+                _guiItems[key].remove();
+            }
 
             _guiItems = null;
         }

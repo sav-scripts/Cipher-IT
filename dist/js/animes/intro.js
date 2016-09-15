@@ -9,38 +9,38 @@ lib.properties = {
 	fps: 30,
 	color: "#000000",
 	manifest: [
-		{src:"images/intro/box.png?1473426183423", id:"box"},
-		{src:"images/intro/bto.png?1473426183423", id:"bto"},
-		{src:"images/intro/btobg.png?1473426183423", id:"btobg"},
-		{src:"images/intro/cl1.png?1473426183423", id:"cl1"},
-		{src:"images/intro/cl2.png?1473426183423", id:"cl2"},
-		{src:"images/intro/cl3.png?1473426183423", id:"cl3"},
-		{src:"images/intro/g1.png?1473426183423", id:"g1"},
-		{src:"images/intro/g2.png?1473426183423", id:"g2"},
-		{src:"images/intro/g3.png?1473426183423", id:"g3"},
-		{src:"images/intro/g4.png?1473426183423", id:"g4"},
-		{src:"images/intro/g5.png?1473426183423", id:"g5"},
-		{src:"images/intro/g6.png?1473426183423", id:"g6"},
-		{src:"images/intro/g7.png?1473426183423", id:"g7"},
-		{src:"images/intro/g8.png?1473426183423", id:"g8"},
-		{src:"images/intro/girlglass.png?1473426183423", id:"girlglass"},
-		{src:"images/intro/glass2.png?1473426183423", id:"glass2"},
-		{src:"images/intro/glass3.png?1473426183423", id:"glass3"},
-		{src:"images/intro/glass4.png?1473426183423", id:"glass4"},
-		{src:"images/intro/glass6.png?1473426183423", id:"glass6"},
-		{src:"images/intro/introimg1.png?1473426183423", id:"introimg1"},
-		{src:"images/intro/map.png?1473426183423", id:"map"},
-		{src:"images/intro/policelinedonotcross.png?1473426183423", id:"policelinedonotcross"},
-		{src:"images/intro/policecar.png?1473426183423", id:"policecar"},
-		{src:"images/intro/round.png?1473426183423", id:"round"},
-		{src:"images/intro/shatter_glass01.png?1473426183423", id:"shatter_glass01"},
-		{src:"images/intro/shatter_glass02.png?1473426183423", id:"shatter_glass02"},
-		{src:"images/intro/shatter_glass03.png?1473426183423", id:"shatter_glass03"},
-		{src:"images/intro/shatter_glass04.png?1473426183423", id:"shatter_glass04"},
-		{src:"images/intro/shatter_glass05.png?1473426183423", id:"shatter_glass05"},
-		{src:"images/intro/shatter_glass06.png?1473426183423", id:"shatter_glass06"},
-		{src:"images/intro/txt.png?1473426183423", id:"txt"},
-		{src:"images/intro/txt2.png?1473426183423", id:"txt2"}
+		{src:"images/intro/box.png?1473852985367", id:"box"},
+		{src:"images/intro/bto.png?1473852985367", id:"bto"},
+		{src:"images/intro/btobg.png?1473852985367", id:"btobg"},
+		{src:"images/intro/cl1.png?1473852985367", id:"cl1"},
+		{src:"images/intro/cl2.png?1473852985367", id:"cl2"},
+		{src:"images/intro/cl3.png?1473852985367", id:"cl3"},
+		{src:"images/intro/g1.png?1473852985367", id:"g1"},
+		{src:"images/intro/g2.png?1473852985367", id:"g2"},
+		{src:"images/intro/g3.png?1473852985367", id:"g3"},
+		{src:"images/intro/g4.png?1473852985367", id:"g4"},
+		{src:"images/intro/g5.png?1473852985367", id:"g5"},
+		{src:"images/intro/g6.png?1473852985367", id:"g6"},
+		{src:"images/intro/g7.png?1473852985367", id:"g7"},
+		{src:"images/intro/g8.png?1473852985367", id:"g8"},
+		{src:"images/intro/girlglass.png?1473852985367", id:"girlglass"},
+		{src:"images/intro/glass2.png?1473852985367", id:"glass2"},
+		{src:"images/intro/glass3.png?1473852985367", id:"glass3"},
+		{src:"images/intro/glass4.png?1473852985367", id:"glass4"},
+		{src:"images/intro/glass6.png?1473852985367", id:"glass6"},
+		{src:"images/intro/introimg1.png?1473852985367", id:"introimg1"},
+		{src:"images/intro/map.png?1473852985367", id:"map"},
+		{src:"images/intro/policelinedonotcross.png?1473852985367", id:"policelinedonotcross"},
+		{src:"images/intro/policecar.png?1473852985367", id:"policecar"},
+		{src:"images/intro/round.png?1473852985367", id:"round"},
+		{src:"images/intro/shatter_glass01.png?1473852985367", id:"shatter_glass01"},
+		{src:"images/intro/shatter_glass02.png?1473852985367", id:"shatter_glass02"},
+		{src:"images/intro/shatter_glass03.png?1473852985367", id:"shatter_glass03"},
+		{src:"images/intro/shatter_glass04.png?1473852985367", id:"shatter_glass04"},
+		{src:"images/intro/shatter_glass05.png?1473852985367", id:"shatter_glass05"},
+		{src:"images/intro/shatter_glass06.png?1473852985367", id:"shatter_glass06"},
+		{src:"images/intro/txt.png?1473852985367", id:"txt"},
+		{src:"images/intro/txt2.png?1473852985367", id:"txt2"}
 	]
 };
 
@@ -3998,7 +3998,7 @@ p.nominalBounds = new cjs.Rectangle(187.9,-245.6,765.5,461.7);
 	this.instance_4 = new lib.g81();
 	this.instance_4.setTransform(553.2,-145.9,1,1,0,-30,150,56.7,32.3);
 
-	this.timeline.addTween(cjs.Tween.get(this.instance_4).wait(1).to({regX:54.7,regY:34.3,skewX:-25.1,skewY:125.7,x:521.8,y:-154.5},0).wait(1).to({skewX:-18.4,skewY:92.2,x:474.4,y:-167},0).wait(1).to({skewX:-10.2,skewY:51,x:416.1,y:-181.4},0).wait(1).to({skewX:-5.7,skewY:28.7,x:384.9,y:-188.9},0).wait(1).to({skewX:-3.6,skewY:18.1,x:370,y:-192.4},0).wait(1).to({skewX:-2.4,skewY:11.8,x:361.4,y:-194.5},0).wait(1).to({skewX:-1.6,skewY:7.8,x:355.8,y:-195.8},0).wait(1).to({skewX:-1,skewY:5.1,x:352,y:-196.7},0).wait(1).to({skewX:-0.6,skewY:3.2,x:349.4,y:-197.4},0).wait(1).to({skewX:-0.4,skewY:1.8,x:347.5,y:-197.8},0).wait(1).to({skewX:-0.2,skewY:0.9,x:346.3,y:-198.1},0).wait(1).to({skewX:-0.1,skewY:0.4,x:345.5,y:-198.3},0).wait(1).to({skewX:0,skewY:0.1,x:345.1,y:-198.4},0).wait(1).to({regX:56.7,regY:32.3,skewY:0,x:347,y:-200.4},0).wait(1));
+	this.timeline.addTween(cjs.Tween.get(this.instance_4).wait(1).to({regX:54.7,regY:34.3,skewX:-25.1,skewY:125.7,x:527,y:-154.5},0).wait(1).to({skewX:-18.4,skewY:92.2,x:486.7,y:-167},0).wait(1).to({skewX:-10.2,skewY:51,x:437.2,y:-181.4},0).wait(1).to({skewX:-5.7,skewY:28.7,x:410.8,y:-188.9},0).wait(1).to({skewX:-3.6,skewY:18.1,x:398.2,y:-192.4},0).wait(1).to({skewX:-2.4,skewY:11.8,x:390.9,y:-194.5},0).wait(1).to({skewX:-1.6,skewY:7.8,x:386.2,y:-195.8},0).wait(1).to({skewX:-1,skewY:5.1,x:382.9,y:-196.7},0).wait(1).to({skewX:-0.6,skewY:3.2,x:380.7,y:-197.4},0).wait(1).to({skewX:-0.4,skewY:1.8,x:379.1,y:-197.8},0).wait(1).to({skewX:-0.2,skewY:0.9,x:378.1,y:-198.1},0).wait(1).to({skewX:-0.1,skewY:0.4,x:377.5,y:-198.3},0).wait(1).to({skewX:0,skewY:0.1,x:377.1,y:-198.4},0).wait(1).to({regX:56.7,regY:32.3,skewY:0,x:379,y:-200.4},0).wait(1));
 
 	// g7
 	this.instance_5 = new lib.g71();

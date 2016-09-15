@@ -85,6 +85,8 @@
                 dialogs: ["<span>打不開！果然沒有我想得那麼簡單！</span>"],
                 dialogAnimeType: 'shake',
                 clearAble: true,
+                withHitarea: true,
+                hitareaIsShape: true,
                 y: 10
             },
 
@@ -99,14 +101,28 @@
                 type: 'hint',
                 name: "poster",
                 disableInStart: true,
+                withHitarea: true,
+                hitareaIsShape: true,
                 y: 10
+            },
+
+            "/SportGirlSP":
+            {
+                type: 'hint',
+                name: "sport-girl-sp",
+                disableInStart: true,
+                withHitarea: true,
+                hash: '/SportGirl',
+                y: 40
             },
 
             "/Billboard":
             {
                 type: 'hint',
                 name: "billboard",
-                disableInStart: true
+                disableInStart: true,
+                withHitarea: true,
+                hitareaIsShape: true
             },
 
             "/Medal":
@@ -121,6 +137,7 @@
                 type: 'hint',
                 name: "briefcase",
                 disableInStart: true,
+                withHitarea: true,
                 y: 30
             }
         };
@@ -139,6 +156,7 @@
 
 
             var dic = BillboardEditor.getDicByName(),
+                shapeDic = ShapeEditor.getDicByName(),
                 hash,
                 obj;
 
@@ -146,7 +164,7 @@
             {
                 obj = _objectDic[hash];
 
-                setupObject(dic, hash, obj);
+                setupObject(dic, shapeDic, hash, obj);
             }
 
             updateEnabled();
@@ -182,6 +200,8 @@
                         obj.editorObject.dispose();
                     });
                 }
+
+
                 delete _objectDic[hash];
             }
         },
@@ -395,6 +415,8 @@
         var obj = _objectDic[hash],
             mesh = obj.editorObject._mesh;
 
+        if(obj.hitareaMesh) mesh = obj.hitareaMesh;
+
         if(_isInteractiveEnabled && obj.isEnabled)
         {
             mesh.actionManager.actions = mesh.actionManager.__actions;
@@ -408,7 +430,7 @@
         obj.editorObject._mesh.setEnabled(obj.isEnabled);
     }
 
-    function setupObject(dic, hash, obj)
+    function setupObject(dic, shapeDic, hash, obj)
     {
 
         var objectName, editorObject;
@@ -430,7 +452,7 @@
             return;
         }
 
-        obj.hash = hash;
+        if(!obj.hash) obj.hash = hash;
         if(obj.dialogs) obj.currentDialog = obj.dialogs[0];
         obj.editorObject = editorObject;
 
@@ -481,7 +503,9 @@
         //}
 
 
-        var mesh = obj.editorObject._mesh;
+
+        var mesh = obj.editorObject._mesh,
+            triggerMesh = mesh;
         mesh.isPickable = true;
 
         if(obj.nameHead == 'hint')
@@ -556,9 +580,26 @@
             self.setDialogToNew(hash);
         }
 
-        mesh.actionManager = new BABYLON.ActionManager(_scene);
-        //mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function()
-        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
+        if(obj.withHitarea)
+        {
+            mesh.isPickable = false;
+
+            triggerMesh = obj.hitareaIsShape? shapeDic['hitarea-' + obj.name]._mesh: dic['hitarea-' + obj.name]._mesh;
+
+            if(!triggerMesh)
+            {
+                alert("hitarea for: " + obj.name + " is missing");
+            }
+
+            obj.hitareaMesh = triggerMesh;
+
+            triggerMesh.setEnabled(false);
+            triggerMesh.isPickable = true;
+        }
+
+        triggerMesh.actionManager = new BABYLON.ActionManager(_scene);
+        //mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickDownTrigger, function()
+        triggerMesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function()
         {
             //self.setPointFingerAt(hash);
             if(_currentPointFingerHash)
@@ -568,8 +609,8 @@
             SceneHandler.toHash("/Story" + obj.hash);
         }));
 
-        mesh.actionManager.__actions = mesh.actionManager.actions;
-        mesh.actionManager.actions = [];
+        triggerMesh.actionManager.__actions = triggerMesh.actionManager.actions;
+        triggerMesh.actionManager.actions = [];
 
     }
 

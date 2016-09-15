@@ -183,14 +183,15 @@
 
     _p.toLastHash = function()
     {
-        if(window.history)
-        {
-            history.back();
-        }
-        else
-        {
-            _p.toHash(_lastHash);
-        }
+        //if(window.history)
+        //{
+        //    history.back();
+        //}
+        //else
+        //{
+        //    _p.toHash(_lastHash);
+        //}
+        _p.toHash(_lastHash);
     };
 
     _p.toLastNonPopupHash = function()
@@ -367,7 +368,11 @@
                     }
                     else
                     {
-                        currentClass.hide(toContentComplete);
+                        currentClass.hide(function()
+                        {
+                            if(targetClass.executeAfterPopupClosed) targetClass.executeAfterPopupClosed.call();
+                            toContentComplete();
+                        });
                     }
                 }
                 else if(!currentClass._isPopup && targetClass._isPopup == true)

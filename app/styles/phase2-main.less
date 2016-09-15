@@ -36,6 +36,45 @@
     }
 }
 
+/** sound switch **/
+#sound-switch{
+    position: fixed;
+    right:280px;
+    top:18px;
+
+    z-index: 10;
+
+
+    transition: top .5s ease-out, right .5s ease-out;
+
+    &.intro-mode{
+        right: 210px;
+    }
+
+    &.hide-mode{
+        top: -65px;
+
+        transition: top .5s ease-in, right .5s ease-in;
+    }
+
+    .fade-btn-2(btn-sound, "story-btn-sound.png", 140, 0, 51, 52);
+
+    .btn-sound{
+        .normal-state, .hover-state{
+            background-size:auto;
+        }
+        &.off-mode{
+            .normal-state{
+                background-position: right top;
+            }
+            .hover-state{
+                background-position: right bottom;
+            }
+        }
+    }
+
+}
+
 /** intro **/
 #intro{
 
@@ -82,7 +121,7 @@
     .wrapper{
         .percent-container();
 
-        .percent-div(left-content, -723,-240,496,324, "intro-content.png");
+        .percent-div(left-content, -752,-270,538,324, "intro-content.png");
 
         .btn-play{
 
@@ -196,6 +235,52 @@
         height: 100%;
         touch-action: none;
     }
+
+    /** coners **/
+    .coner-top-left{
+
+        position: absolute;
+        left: 0;
+        top:0;
+        width: 449px;
+        height: 487px;
+        .image-bg('coner-top-left.png');
+    }
+
+    .coner-top-right{
+
+        position: absolute;
+        right: 0;
+        top:0;
+        width: 449px;
+        height: 372px;
+        .image-bg('coner-top-right.png');
+    }
+
+    .coner-bottom-left{
+
+        position: absolute;
+        left: 0;
+        bottom:0;
+        width: 449px;
+        height: 359px;
+        .image-bg('coner-bottom-left.png');
+    }
+
+    .coner-bottom-right{
+
+        position: absolute;
+        right: 0;
+        bottom:0;
+        width: 449px;
+        height: 359px;
+        .image-bg('coner-bottom-right.png');
+    }
+
+    .coner-top-left, .coner-top-right, .coner-bottom-left, .coner-bottom-right{
+        pointer-events: none;
+    }
+
 
     /** story buttons **/
     .buttons{
@@ -450,6 +535,8 @@
             bottom: 50px;
 
             text-align: center;
+
+            cursor: default;
         }
 
     }
@@ -676,8 +763,8 @@
             .system{
                 .percent-container(absolute, 100%, 100%, 0, 0);
                 .percent-div(badge, -371, -153, 86, 102, "story-fingerprint-small-badge.png");
-                .percent-div(content, -259, -152, 414, 93, "story-fingerprint-content-1.png");
-                .fade-btn-2(btn-share, "story-fingerprint-btn-share.png", 182, -111, 163, 52);
+                .percent-div(content, -259, -152, 412, 97, "story-fingerprint-content-1.png");
+                .fade-btn-2(btn-share, "story-fingerprint-btn-share.png", 182, -108, 211, 56);
 
                 .percent-div(raw-sample, -387, -14, 151, 254, "story-fingerprint-sample-1.png");
 
@@ -955,6 +1042,8 @@
                         transition: opacity .5s ease-out, visibility 0s linear .5s;
                     }
 
+                    .percent-div(content, -259, -152, 412, 97, "story-fingerprint-content-2.png");
+
                     .fingerprints-2{
                         opacity: 1;
                         visibility: visible;
@@ -1178,7 +1267,7 @@
         .abs-div-2(open-case, -686,-214,705,579,"happy-end-open-case.png");
 //        .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
         .abs-div-2(title, 57,-153,356,94,"happy-end-title-1.png");
-        .abs-div-2(text, 35,-48,412,157,"happy-end-text-1.png");
+        .abs-div-2(text, 35,-48,417,164,"happy-end-text-1.png");
         .abs-div-2(stamp, 262,-198,179,112,"happy-end-stamp-1.png");
         .fade-btn-2(btn-to-form,"happy-end-btn-to-form.png", 61,124,223,52);
 
@@ -1363,4 +1452,41 @@
         }
 
     }
+}
+
+/** story rule **/
+#story-rule{
+    position: fixed;
+    width: 100%;
+    height: 90%;
+
+    z-index: 20;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .image-bg("participate-3-background.jpg", cover);
+
+    .container{
+        @w: 1200px;
+        @h: 2492px;
+        position: absolute;
+        width: @w;
+        height: @h;
+
+        left:50%;
+        margin-left: -@w * .5;
+
+        .content{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: @w;
+            height: @h;
+            .image-bg("story-rule-content.png");
+
+        }
+    }
+
+    .common-btn-close(true);
 }

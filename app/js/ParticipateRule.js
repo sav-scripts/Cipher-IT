@@ -37,7 +37,6 @@
         {
             $doms.container.unbind("scroll", updateScrollTop);
 
-            Menu.show();
             $doms.btnClose.toggleClass("showing-mode", false);
 
             var tl = new TimelineMax;

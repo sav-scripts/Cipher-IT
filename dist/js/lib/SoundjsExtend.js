@@ -19,29 +19,46 @@ createjs.Sound.initAndLoad(
     var _trackDic = {},
         _manifestDic = {},
         _folder,
-        _defaultFadeDuration;
+        _defaultFadeDuration,
+        _isInit = false;
 
-    var _p = window.createjs.Sound;
+    var self = window.createjs.Sound;
 
-    _p.initAndLoad = function (manifest, options, cb)
+    self.init = function (options)
     {
+        if(_isInit) return;
+        _isInit = true;
+
         options = options || {};
         _folder = options.folder || "./";
         _defaultFadeDuration = options.defaultFadeDuration || 1;
         if(options.globalClassName) registerGlobalClassName(options.globalClassName);
+    };
+
+    self.load = function(manifest, onProgress, cb)
+    {
 
         createjs.Sound.alternateExtensions = ["mp3"];
         createjs.Sound.addEventListener("fileload", handleLoad);
 
         createjs.Sound.registerSounds(manifest, _folder);
 
-        var count = 0;
+
+        var count = 0, total = manifest.length;
+
+        //for(var i=0;i<manifest.length;i++)
+        //{
+        //    var obj = manifest[i];
+        //    createjs.Sound.registerSound(obj.src, obj.id, obj.data, _folder, obj.defaultPlayProps);
+        //}
 
         function handleLoad(event)
         {
             var obj = manifest[count];
             _manifestDic[obj.id] = obj;
             count++;
+
+            if(onProgress) onProgress.call(null, count, total);
 
             if (count >= manifest.length)
             {
@@ -52,37 +69,37 @@ createjs.Sound.initAndLoad(
         }
     };
 
-    _p.playTrack = _p.resumeTrack = function(id, fadeDuration)
+    self.playTrack = self.resumeTrack = function(id, fadeDuration, startPosition)
     {
-        fadeInTrack(id, fadeDuration);
+        fadeInTrack(id, fadeDuration, startPosition);
     };
 
-    _p.restartTrack = function(id, fadeDuration)
+    self.restartTrack = function(id, fadeDuration, startPosition)
     {
-        fadeInTrack(id, fadeDuration, true);
+        fadeInTrack(id, fadeDuration, startPosition || 0);
     };
 
-    _p.pauseTrack = function(id, fadeDuration)
+    self.pauseTrack = function(id, fadeDuration)
     {
-        fadeOutTrack(id, fadeDuration, false);
+        fadeOutTrack(id, fadeDuration);
     };
 
-    _p.stopTrack = function(id, fadeDuration)
+    self.stopTrack = function(id, fadeDuration)
     {
-        fadeOutTrack(id, fadeDuration, true);
+        fadeOutTrack(id, fadeDuration);
     };
 
-    _p.getTrack = getTrack;
+    self.getTrack = getTrack;
 
     function getTrack(id)
     {
-        var track = _trackDic[id] = _trackDic[id] || _p.createInstance(id);
+        var track = _trackDic[id] = _trackDic[id] || self.createInstance(id);
         if(TimelineLite && !track._tween) track._tween = new TimelineLite;
 
         return track;
     }
 
-    function fadeInTrack(id, fadeDuration, isRestart)
+    function fadeInTrack(id, fadeDuration, startPosition)
     {
         var track = getTrack(id);
 
@@ -93,7 +110,11 @@ createjs.Sound.initAndLoad(
         var obj = _manifestDic[id];
         var volume = obj.defaultPlayProps && obj.defaultPlayProps.volume? obj.defaultPlayProps.volume: 1;
 
-        if(isRestart) track.position = 0;
+
+        if(startPosition !== undefined && startPosition !== null)
+        {
+            track.position = startPosition * 1000;
+        }
 
         var tween = track._tween;
         if(!tween)
@@ -138,7 +159,7 @@ createjs.Sound.initAndLoad(
     function registerGlobalClassName(globalName)
     {
         if(window[globalName]) console.warn("window variable: " + globalName + " already used");
-        window[globalName] = _p;
+        window[globalName] = self;
     }
 	
 }());

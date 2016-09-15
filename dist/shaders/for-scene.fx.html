@@ -49,7 +49,7 @@
 //        varying float vTime;
 
         uniform sampler2D textureSampler;
-        uniform sampler2D noiseSampler;
+        uniform sampler2D videoTexture;
         uniform float time;
         uniform vec2 motion;
 
@@ -131,6 +131,16 @@
             gl_FragColor.xyz *= (1. + r2) * COLOR_BALANCE;
         }
 
+        float blendScreen(float base, float blend)
+        {
+            return 1.0-((1.0-base)*(1.0-blend));
+        }
+
+        vec3 blendScreen(vec3 base, vec3 blend)
+        {
+	        return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b));
+        }
+
         void main(void)
         {
 
@@ -146,6 +156,11 @@
                 applyMotionBlur();
                 applyNoise();
             }
+
+//            vec4 t1 = texture2D( videoTexture, vUV);
+//            t1 = t1 * .5;
+//            gl_FragColor.xyz = blendScreen(gl_FragColor.xyz, t1.xyz);
+
         }
 
 

@@ -57,6 +57,11 @@
             hide(cb);
         },
 
+        executeAfterPopupClosed: function()
+        {
+            Menu.show();
+        },
+
         toContent: function(contentHash, cb)
         {
             if(!_isInit) return;

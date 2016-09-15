@@ -6,6 +6,7 @@
         _movieclipRoot = null,
         _introPlaying = false,
         _introTl,
+        _isActive = false,
         _isInit = false;
 
     var self = window.Intro =
@@ -23,12 +24,12 @@
             {
                 var templates =
                     [
-                        {url: "_intro.html", startWeight: 0, weight: 50, dom: null}
+                        {url: "_intro.html", startWeight: 0, weight: 30, dom: null}
                     ];
 
                 SceneHandler.loadTemplate(null, templates, function loadComplete()
                 {
-                    loadCanvasAnimation(function()
+                    loadLibAndAnimation(function()
                     {
                         Loading.hide();
                         build(templates);
@@ -119,15 +120,20 @@
 
     function show(cb)
     {
+        _isActive = true;
+
         $("#scene-container").append($doms.container);
 
         self.resize();
 
         ScalableContent.updateResizeAble();
 
+        Menu.hide();
+        //SoundSwitch.hide();
+
         play();
 
-        Menu.hide();
+        SP.restartTrack("intro-bgm", null, 14);
 
         //$doms.video[0].play();
 
@@ -136,6 +142,24 @@
         tl.to($doms.container, .3, {autoAlpha: 1});
         tl.add(function ()
         {
+            cb.apply();
+        });
+    }
+
+    function hide(cb)
+    {
+        _isActive = false;
+
+        SP.stopTrack("intro-bgm");
+
+        Menu.hide();
+        SoundSwitch.hide();
+
+        var tl = new TimelineMax;
+        tl.to($doms.container, .4, {autoAlpha: 0});
+        tl.add(function ()
+        {
+            $doms.container.detach();
             cb.apply();
         });
     }
@@ -216,21 +240,23 @@
         _movieclipRoot.stop();
     }
 
-    function loadCanvasAnimation(cb)
+    function loadLibAndAnimation(cb)
     {
+        var startWeight = .3, weight = .2;
         var animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js': 'js/animes/intro.js';
         var scripts =
             [
                 'js/lib/createjs-2015.11.26.min.js',
+                //'js/lib/soundjs-0.6.2.min.js',
                 'js/lib/CreatejsExtend.js',
+                'js/lib/SoundjsExtend.js',
                 animeScript
             ];
 
-        var numScripts = scripts.length,
-            numScriptLoaded = 0,
+        var total = scripts.length,
+            count = 0,
             i, chain = $LAB;
 
-        //$LAB.script(animeScript).wait(scriptLoaded).script('js/lib/test.js').wait(scriptLoaded).script('js/lib/test.js').wait(scriptLoaded);
         for(i=0;i<scripts.length;i++)
         {
             chain = chain.script(scripts[i]).wait(scriptLoaded);
@@ -238,20 +264,44 @@
 
         function scriptLoaded()
         {
-            numScriptLoaded ++;
+            count ++;
 
-            if(numScriptLoaded == numScripts)
+            Loading.progress(startWeight + weight*count/total);
+
+            if(count == total)
             {
-                loadCanvasImages(cb);
+                setupSounds(function()
+                {
+                    loadCanvasImages(cb);
+                });
             }
         }
     }
 
+    function setupSounds(cb)
+    {
+        var startWeight = .5, weight = .1;
+
+        if(!window.SP) createjs.Sound.init(Main.soundSettings);
+
+        SP.load(
+        [
+            {id:"intro-bgm", src:"intro_bg.mp3?v=2", defaultPlayProps:{loop: -1, volume: 1}}
+        ],
+        function(count, total)
+        {
+            Loading.progress(startWeight + weight*count/total);
+        },
+        function()
+        {
+            if(cb) cb.call();
+        });
+    }
 
     function loadCanvasImages(cb)
     {
-        var startWeight = 50, weight = 50,
-            count = lib.properties.manifest.length, loaded = 0;
+        var startWeight = .6, weight = .4,
+            total = lib.properties.manifest.length, count = 0;
 
         var images = window.images||{};
 
@@ -262,10 +312,9 @@
 
         function handleFileLoad(evt)
         {
-            loaded++;
+            count++;
 
-            var progress = (startWeight + loaded/count * weight) / 100;
-            Loading.progress(progress);
+            Loading.progress(startWeight + count/total * weight);
 
             if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
         }
@@ -274,6 +323,9 @@
     function play(cb)
     {
         _introPlaying = true;
+
+        SoundSwitch.show();
+        SoundSwitch.$doms.container.toggleClass('intro-mode', true);
 
         $doms.btnSkip.toggleClass("hide-mode", false);
 
@@ -294,20 +346,14 @@
         tl.to($doms.btnPlay,.8, {autoAlpha:1, x:0, ease:Back.easeOut}, t + .3);
         tl.add(function()
         {
+            if(_isActive)
+            {
+                SoundSwitch.$doms.container.toggleClass('intro-mode', false);
+                Menu.show();
+            }
             $doms.btnSkip.toggleClass("hide-mode", true);
             _introPlaying = false;
             if(cb) cb.call();
-        });
-    }
-
-    function hide(cb)
-    {
-        var tl = new TimelineMax;
-        tl.to($doms.container, .4, {autoAlpha: 0});
-        tl.add(function ()
-        {
-            $doms.container.detach();
-            cb.apply();
         });
     }
 

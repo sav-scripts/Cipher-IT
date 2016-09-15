@@ -136,7 +136,7 @@
 
         tl.add(function()
         {
-            $doms.container.toggleClass("scrollable-mode", true);
+            //$doms.container.toggleClass("scrollable-mode", true);
             if(cb) cb.call();
         });
     }
@@ -293,6 +293,8 @@
 
             var $sample = $container.find(".sample:nth-child("+(index+1)+")");
 
+            $sample.attr("touch-action", 'none').children().css('pointer-events', 'none');
+
             $sample._row = row;
             $sample._col = col;
             $sample._index = index;
@@ -423,7 +425,7 @@
 
             $doms.container.scrollTop(0);
 
-            $doms.container.toggleClass("scrollable-mode", false);
+            //$doms.container.toggleClass("scrollable-mode", false);
 
             isShared = true;
             matchIndex = sharedMatchIndex;

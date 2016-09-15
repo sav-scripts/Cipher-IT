@@ -162,6 +162,7 @@
 
             tl.add(function()
             {
+                //SP.play('zoom');
 
                 var radius = self._camera.position.subtract(position).length();
 

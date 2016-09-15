@@ -374,17 +374,22 @@ body{
                 left:59px;
                 top:70px;
 
-                .my-mixin(1, 0, 0, 214px, 50px);
-                .my-mixin(2, 0, 50px, 214px, 40px, true);
-                .my-mixin(3, 0, 90px, 214px, 40px, true);
-                .my-mixin(4, 0, 130px, 214px, 40px, true);
-                .my-mixin(5, 0, 180px, 214px, 35px);
-                .my-mixin(6, 0, 218px, 214px, 40px, true);
-                .my-mixin(7, 0, 258px, 214px, 40px, true);
-                .my-mixin(8, 0, 298px, 214px, 40px, true);
-                .my-mixin(9, 0, 348px, 214px, 40px, true);
-                .my-mixin(10, 0, 388px, 214px, 40px, true);
-                .my-mixin(11, 0, 428px, 54px, 54px, true);
+                .my-mixin(1, 0, 0, 214px, 40px);
+                .my-mixin(2, 0, 40px, 214px, 35px, true);
+                .my-mixin(3, 0, 75px, 214px, 35px, true);
+                .my-mixin(4, 0, 110px, 214px, 35px, true);
+
+                .my-mixin(5, 0, 145px, 214px, 50px);
+                .my-mixin(6, 0, 195px, 214px, 35px, true);
+                .my-mixin(7, 0, 230px, 214px, 35px, true);
+                .my-mixin(8, 0, 265px, 214px, 35px, true);
+
+                .my-mixin(9, 0, 300px, 214px, 45px);
+                .my-mixin(10, 0, 345px, 214px, 35px, true);
+                .my-mixin(11, 0, 380px, 214px, 35px, true);
+
+                .my-mixin(12, 0, 415px, 114px, 55px, true);
+                .my-mixin(13, 0, 470px, 54px, 54px, true);
 
                 .my-mixin(@index; @left; @top; @width; @height; @button-mode: none;)
                 {
@@ -412,6 +417,10 @@ body{
 
                             pointer-events: none;
                             transition-delay:0s;
+                        }
+
+                        &.hide-mode{
+                            display: none;
                         }
 
 
@@ -467,6 +476,8 @@ body{
     width: 91px;
     height: 70px;
     .image-bg("logo-top.png");
+
+    cursor: pointer;
 
     z-index: 100;
 

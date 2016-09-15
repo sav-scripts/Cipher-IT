@@ -12,6 +12,8 @@
     {
         init: function()
         {
+            SoundSwitch.init();
+
             $doms.container = $("#menu");
 
             $doms.buttonContainer = $doms.container.find(".container");
@@ -39,6 +41,11 @@
                 SceneHandler.toHash("/Story");
             });
 
+            setupButton(3, 'story rule', function()
+            {
+                SceneHandler.toHash("/StoryRule");
+            });
+
             setupButton(6, 'participate to part2', function()
             {
                 //Participate.toContent('part2');
@@ -56,18 +63,23 @@
                 SceneHandler.toHash("/ParticipateRule");
             });
 
-            setupButton(10, 'to offical site', function()
+            setupButton(12, 'to offical site', function()
             {
                 window.open('http://www.theglenlivet.com.tw/');
             });
 
-            setupButton(11, 'to FB', function()
+            setupButton(13, 'to FB', function()
             {
                 window.open('https://www.facebook.com/TheGlenlivetTW/');
             });
 
             //console.log("check");
             self.Logo = createHideAble($("#logo"), true);
+
+            self.Logo.on(_CLICK_, function()
+            {
+                SceneHandler.toHash("/Intro");
+            });
 
             //self.show();
             //self.open();
@@ -137,9 +149,9 @@
         var tl = _iconTl = new TimelineMax();
         tl.addLabel("start");
 
-        tl.set($doms.bar1, {marginTop: -9, transformOrigin:"center center"});
-        tl.set($doms.bar2, {marginTop: -1, transformOrigin:"center center"});
-        tl.set($doms.bar3, {marginTop: 7, transformOrigin:"center center"});
+        tl.set($doms.bar1, {marginTop: -9, width:12, autoAlpha:1, transformOrigin:"center center"});
+        tl.set($doms.bar2, {marginTop: -1, width:12, autoAlpha:1, transformOrigin:"center center"});
+        tl.set($doms.bar3, {marginTop: 7, width:12, autoAlpha:1, transformOrigin:"center center"});
         tl.to($doms.bar1,.4, {marginTop: -1, ease:Power1.easeIn}, 0);
         tl.to($doms.bar3,.4, {marginTop: -1, ease:Power1.easeIn}, 0);
         tl.set($doms.bar2, {autoAlpha: 0});
@@ -177,5 +189,70 @@
 
         return $dom;
     }
+
+}());
+
+
+
+(function(){
+
+    var _isHiding = true,
+        _isSoundOn = true,
+        $doms = {};
+
+    var self = window.SoundSwitch =
+    {
+        $doms: null,
+
+        init: function()
+        {
+            self.$doms = $doms;
+
+            $doms.container = $("#sound-switch");
+
+            $doms.btn = $doms.container.find(".btn-sound").on(_CLICK_, function()
+            {
+                self.setSoundOn(!_isSoundOn);
+            });
+
+            update();
+        },
+
+        getSoundOn: function(){ return _isSoundOn; },
+
+        setSoundOn: function(b)
+        {
+            _isSoundOn = b;
+            update();
+        },
+
+        show: function (cb)
+        {
+            if (!_isHiding) return;
+            _isHiding = false;
+
+            $doms.container.toggleClass("hide-mode", _isHiding);
+
+        },
+        hide: function (cb)
+        {
+            if (_isHiding) return;
+            _isHiding = true;
+
+            $doms.container.toggleClass("hide-mode", _isHiding);
+        }
+    };
+
+    function update()
+    {
+        $doms.btn.toggleClass('off-mode', !_isSoundOn);
+
+        if(window.SP)
+        {
+            TweenMax.to(window.SP,1, {volume: _isSoundOn? 1: 0});
+            //window.SP.volume = _isSoundOn? 1: 0;
+        }
+    }
+
 
 }());

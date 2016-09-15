@@ -67,6 +67,11 @@
             hide(cb);
         },
 
+        executeAfterPopupClosed: function()
+        {
+            Menu.show();
+        },
+
         toContent: function(contentHash, cb)
         {
             if(!_isInit) return;
@@ -256,7 +261,7 @@
 
             //tl.to($doms.whiteCover,.4, {autoAlpha:1, ease:Power1.easeOut});
 
-            Main.showWhiteCover();
+            //Main.showWhiteCover();
             tl.add(Main.showWhiteCover, 0);
 
             tl.set($container, {autoAlpha:1},.4);
@@ -388,6 +393,8 @@
                     _isFail = true;
                     resetForm();
                     Loading.hide();
+
+                    SceneHandler.toHash("/Participate/Product");
                 }
             });
         }

@@ -88,7 +88,7 @@
 
             ShaderLoader.defaultPath = "./shaders/";
 
-            ShaderLoader.loadFiles(["for-scene"],function()
+            ShaderLoader.loadFiles(["for-scene", "shape"],function()
             {
                 var backgroundWeight = .25, billboardWeight = 1-backgroundWeight;
 
@@ -167,6 +167,7 @@
         {
             var texture = new BABYLON.Texture(imageSrc, _scene, null, true, null, function()
             {
+                //var videoTexture = new BABYLON.VideoTexture("video", ["misc/rain.webm"], _scene, true, true);
                 var mat = _sceneSphere.material;
                 mat.diffuseTexture = texture;
 

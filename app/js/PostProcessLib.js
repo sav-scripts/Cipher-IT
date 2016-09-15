@@ -76,6 +76,7 @@
             time = 0.1,
             __motion = new BABYLON.Vector2(0, 0);
 
+        //var postProcess = new BABYLON.PostProcess(effectName, effectName, ["time", "motion", 'radialMotionPower'], ['videoTexture'], 1, null, null, _engine, false);
         var postProcess = new BABYLON.PostProcess(effectName, effectName, ["time", "motion", 'radialMotionPower'], null, 1, null, null, _engine, false);
 
         var obj = _dic[effectName];
@@ -105,8 +106,13 @@
             if(cb) tl.add(cb);
         };
 
+
+        //var videoTexture = new BABYLON.VideoTexture("video", ["misc/rain.webm"], _scene, true, false);
+
         postProcess.onApply = function (effect)
         {
+            //effect.setTexture('videoTexture', videoTexture);
+
             time += .01;
             effect.setFloat("time", time);
 
