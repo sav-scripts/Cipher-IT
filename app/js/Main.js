@@ -1,7 +1,5 @@
 (function(){
 
-    var $doms = {};
-
     "use strict";
     var self = window.Main =
     {
@@ -84,6 +82,8 @@
             "/HappyEnd/NotReally",
             "/HappyEnd/Form",
 
+            "/Roulette",
+
             "/Participate",
             "/Participate/Product",
             "/Participate/Form",
@@ -117,6 +117,8 @@
                 history.scrollRestoration = 'manual';
             }
 
+            self.settings.isWebGLSupported = isWebGLSupported();
+
             if(Utility.urlParams.startPhase) self.settings.startPhase = parseInt(Utility.urlParams.startPhase);
 
             if(Modernizr.touchevents && Utility.urlParams.debug == '1') Logger.init(true).show();
@@ -131,7 +133,7 @@
 
             window._CLICK_ = (self.settings.isiOS)? "touchend": "click";
 
-            $doms.rotateScreenHint = $("#rotate-screen-hint");
+            //$doms.rotateScreenHint = $("#rotate-screen-hint");
 
             checkAccessToken();
 
@@ -202,7 +204,8 @@
 
                         if(hashName.match('/Story'))
                         {
-                            if(!Modernizr.webgl)
+                            //if(!Modernizr.webgl)
+                            if(!self.settings.isWebGLSupported)
                             {
                                 alert("您的瀏覽器不支援 WebGL");
                                 SceneHandler.setHash('/Participate/Product');
@@ -236,6 +239,21 @@
 
         loginFB: loginFB
     };
+
+    function isWebGLSupported() {
+        try {
+            // Avoid creating an unsized context for CocoonJS, since size determined on first creation.  Is not resizable
+            if (navigator.isCocoonJS) {
+                return true;
+            }
+            var tempcanvas = document.createElement("canvas");
+            var gl = tempcanvas.getContext("webgl") || tempcanvas.getContext("experimental-webgl");
+            return gl != null && !!window.WebGLRenderingContext;
+        }
+        catch (e) {
+            return false;
+        }
+    }
 
     function setupWhiteCover()
     {
@@ -300,10 +318,10 @@
         //ScalableContent.updateView(width, height);
         ScalableContent.updateResizeAble();
 
-        if(vp.index == 0)
-        {
-            $doms.rotateScreenHint.toggleClass('hide-mode', !(vp.width > vp.height));
-        }
+        //if(vp.index == 0)
+        //{
+        //    $doms.rotateScreenHint.toggleClass('hide-mode', !(vp.width > vp.height));
+        //}
     }
 
     function checkAccessToken()

@@ -4,6 +4,7 @@
         _isInit = false,
         _currentContent,
         _contentDic,
+        _isActive,
         _phaseIndex = 0,
         _spHidingActivated = false,
         _isBabylonSupported,
@@ -120,8 +121,13 @@
 
                 SP.load(
                     [
-                        {id:"game-bgm", src:"game_bg.mp3?v=2", defaultPlayProps:{loop: -1, volume: 1}}
-                        //{id:"zoom", src:"zoom.mp3"}
+                        {id:"game-bgm", src:"game_bg.mp3?v=2", defaultPlayProps:{loop: -1, volume: 1}},
+                        {id:"zoom", src:"zoom.mp3"},
+                        {id:"click", src:"click.mp3"},
+                        {id:"click_2", src:"click_2.mp3"},
+                        {id:"click_3", src:"click_3.mp3"},
+                        {id:"bingo", src:"bingo.mp3"},
+                        {id:"stageClear", src:"stage_clear.mp3"}
                     ],
                     function(count, total)
                     {
@@ -287,6 +293,8 @@
                 update();
             }
 
+            return true;
+
             function update()
             {
                 console.log("story progress to "+_phaseIndex +" => " + _phaseDic[_phaseIndex].description);
@@ -413,6 +421,16 @@
                 Story.Scene.engine.resize();
                 self.Evidences.resize();
                 self.Fingerprint.resize();
+
+                if(_isActive)
+                {
+                    var vp = Main.settings.viewport;
+
+                    if(vp.index == 0)
+                    {
+                        $doms.rotateScreenHint.toggleClass('hide-mode', !(vp.width > vp.height));
+                    }
+                }
             }
         }
     };
@@ -424,33 +442,40 @@
         $doms.container = $("#story");
 
 
+        $doms.rotateScreenHint = $("#rotate-screen-hint");
+
         $doms.buttons =
         {
             container: $doms.container.find(".buttons"),
             exit: $doms.container.find(".btn-exit").on(_CLICK_, function()
             {
+                SP.play('click_2');
                 SceneHandler.toHash("/Story/ExitConfirm");
             }),
 
             fullscreen: $doms.container.find(".btn-fullscreen").on(_CLICK_, function()
             {
+                SP.play('click_2');
                 self.changeFullScreen();
             }),
 
             soundSwitch: $doms.container.find(".btn-sound").on(_CLICK_, function()
             {
+                SP.play('click_2');
                 SoundSwitch.setSoundOn(!SoundSwitch.getSoundOn());
                 $doms.buttons.soundSwitch.toggleClass("off-mode", !SoundSwitch.getSoundOn());
             }),
 
             help: $doms.container.find(".btn-help").on(_CLICK_, function()
             {
+                SP.play('click_2');
                 //$doms.buttons.help.toggleClass('flash-mode', false);
                 self.triggerHelp();
             }),
 
             evidences: $doms.container.find(".btn-evidence").on(_CLICK_, function()
             {
+                SP.play('click_2');
                 SceneHandler.toHash("/Story/Evidences");
 
             })
@@ -481,6 +506,9 @@
     function show(cb)
     {
         $("#scene-container").append($doms.container);
+
+
+        _isActive = true;
 
         self.resize();
 
@@ -543,22 +571,21 @@
 
             tl.add(Main.showWhiteCover, d - .4);
             //tl.to($doms.container,.4, {autoAlpha: 0, ease:Power3.easeOut}, 1);
-            tl.add(function ()
-            {
-                Story.Scene.setActive(false);
-                $doms.container.detach();
-                cb.apply();
-            }, d);
+            tl.add(complete, d);
         }
         else
         {
             tl.to($doms.container, 1, {autoAlpha: 0, ease:Power3.easeOut});
-            tl.add(function ()
-            {
-                Story.Scene.setActive(false);
-                $doms.container.detach();
-                cb.apply();
-            });
+            tl.add(complete);
+        }
+
+        function complete()
+        {
+            Story.Scene.setActive(false);
+            $doms.container.detach();
+            _isActive = false;
+            $doms.rotateScreenHint.toggleClass("hide-mode", true);
+            cb.apply();
         }
     }
 

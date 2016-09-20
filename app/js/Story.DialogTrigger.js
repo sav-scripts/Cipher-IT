@@ -55,6 +55,11 @@
                 Story.ObjectManager.clearObject(_currentObject.hash);
             }
 
+            if(_currentObject.changePhaseAfterActionChange || _currentObject.changePhaseAfterDialog)
+            {
+                SP.play("bingo");
+            }
+
             Story.Scene.customCamera.focusOn(_currentObject.position, function()
             {
                 if(_currentObject.changeActionWhenDialoging && _currentObject.changeActionWhenDialoging !== null)
@@ -67,6 +72,7 @@
                         if(_currentObject.changePhaseAfterActionChange)
                         {
                             Story.setPhaseTo(_currentObject.changePhaseAfterActionChange);
+                            _currentObject.changePhaseAfterActionChange = null;
                         }
                     });
                 }
@@ -103,6 +109,7 @@
                 if(_currentObject.changePhaseAfterDialog)
                 {
                     Story.setPhaseTo(_currentObject.changePhaseAfterDialog);
+                    _currentObject.changePhaseAfterDialog = null;
                 }
 
                 if(cb) cb.call();

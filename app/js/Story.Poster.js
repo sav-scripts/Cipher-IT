@@ -38,7 +38,10 @@
             _isHiding = false;
 
 
-            Story.setPhaseTo(StoryPhases.BILLBOARD);
+            if(Story.setPhaseTo(StoryPhases.BILLBOARD))
+            {
+                SP.play("bingo");
+            }
 
             $doms.parent.append($doms.container);
 

@@ -81,6 +81,8 @@
 
                 $clip.on(_CLICK_, function()
                 {
+                    SP.play('click');
+
                     if($clip._unlocked)
                     {
                         SceneHandler.toHash("/Story" + hash);
@@ -148,8 +150,10 @@
                 {
                     $doms.triggerButton.toggleClass("news-mode", true);
                     _lastUnlockedIndex = $doms.clips[hash]._index;
+                    return true;
                 }
             }
+            return false;
         },
 
         isEvidenceUnlocked: function(hash)

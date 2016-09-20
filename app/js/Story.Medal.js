@@ -39,7 +39,11 @@
 
             //Story.setPhaseTo(3);
             //Story.ObjectManager.clearObject("/Medal");
-            Story.Evidences.unlockEvidence("/Medal");
+
+            if(Story.Evidences.unlockEvidence("/Medal"))
+            {
+                SP.play("bingo");
+            }
 
             Story.changePhaseHelpHash(StoryPhases.MEDAL_AND_BRIEFCASE, "/Briefcase");
 

@@ -243,7 +243,7 @@
     function loadLibAndAnimation(cb)
     {
         var startWeight = .3, weight = .2;
-        var animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js': 'js/animes/intro.js';
+        var animeScript= Main.settings.viewport.index == 0? 'js/animes/intro_m.js?v=3': 'js/animes/intro.js?v=3';
         var scripts =
             [
                 'js/lib/createjs-2015.11.26.min.js',

@@ -88,7 +88,7 @@ module.exports = function(grunt)
                 src: 'app/styles/main.less',
                 dest: 'dist/styles/main.css',
                 options: {
-                    compress: true
+                    compress: false
                 }
             }
         },

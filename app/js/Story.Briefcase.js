@@ -10,6 +10,7 @@
         _password = "1824",
         _isCompleted = false,
         _isLocking = false,
+        _isStageClearPlaying,
         _dialogText = '<span>數字密碼？和格蘭利威的領扣有關嗎？</span>';
 
     var self = window.Story.Briefcase =
@@ -42,7 +43,10 @@
 
             //Story.setPhaseTo(3);
             //Story.ObjectManager.clearObject("/Briefcase");
-            Story.Evidences.unlockEvidence("/Briefcase");
+            if(Story.Evidences.unlockEvidence("/Briefcase"))
+            {
+                SP.play("bingo");
+            }
 
             $doms.parent.append($doms.container);
 
@@ -93,8 +97,7 @@
 
             if(_isCompleted)
             {
-                Story.activeSpHiding();
-                SceneHandler.toHash("/HappyEnd/Yes");
+                gameComplete();
                 return;
             }
 
@@ -134,6 +137,9 @@
         {
             _isCompleted = true;
 
+
+            SP.play("bingo");
+
             _isLocking = true;
             var tl = new TimelineMax, t = 0;
 
@@ -155,12 +161,18 @@
             tl.add(function()
             {
                 _isLocking = false;
-                Story.activeSpHiding();
-                SceneHandler.toHash("/HappyEnd/Yes");
+                gameComplete();
 
             }, "+=1");
         }
 
+    }
+
+    function gameComplete()
+    {
+        SP.play("stageClear");
+        Story.activeSpHiding();
+        SceneHandler.toHash("/HappyEnd/Yes");
     }
 
     function getNumbers()
@@ -212,17 +224,21 @@
 
             function toPrevNum()
             {
+                SP.play('click_3');
                 if(_isLocking || _isCompleted) return;
                 var num = $slot._number - 1;
                 //if(num < 0) num = 9;
+
                 toNumber(num);
             }
 
             function toNextNum()
             {
+                SP.play('click_3');
                 if(_isLocking || _isCompleted) return;
                 var num = $slot._number + 1;
                 //if(num < 0) num = 9;
+
                 toNumber(num);
             }
 

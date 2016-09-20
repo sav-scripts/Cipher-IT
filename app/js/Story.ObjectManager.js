@@ -606,6 +606,7 @@
             {
                 self.hidePointerFinger();
             }
+            SP.play('click_2');
             SceneHandler.toHash("/Story" + obj.hash);
         }));
 

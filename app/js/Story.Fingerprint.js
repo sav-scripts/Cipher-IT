@@ -177,6 +177,8 @@
 
     function playMatched(cb)
     {
+        SP.play("bingo");
+
         var $target = $doms.bingo;
 
         var tl = new TimelineMax;

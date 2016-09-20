@@ -11,6 +11,7 @@
         _isDetecting = false,
         _isDetectComplete = false,
         _matchCount = 0,
+        _pressedCount = 0,
         _myPhase = 0,
         _btnCloseClicked = false,
         _tlPlayHint,
@@ -72,6 +73,7 @@
             setupQuez();
 
             setupBingo();
+            setupWrong();
 
             $doms.container.detach();
 
@@ -86,7 +88,10 @@
             _isLocking = false;
 
             //Story.ObjectManager.clearObject("/Phone");
-            Story.Evidences.unlockEvidence("/Phone");
+            if(Story.Evidences.unlockEvidence("/Phone"))
+            {
+                SP.play("bingo");
+            }
 
             $doms.parent.append($doms.container);
 
@@ -146,6 +151,8 @@
 
         $doms.bingo._play = function()
         {
+            SP.play("bingo");
+
             $doms.content.append($doms.bingo);
             var tl = new TimelineMax();
             tl.set($doms.bingo, {autoAlpha: 1});
@@ -195,6 +202,38 @@
             $doms.bingo.detach();
 
             $doms.content.append($honey);
+        }
+    }
+
+    function setupWrong()
+    {
+        $doms.wrong = $doms.container.find(".wrong").detach();
+
+        var $icon = $doms.wrong.find(".icon"),
+            $honey = $doms.container.find(".honey").detach();
+
+        $doms.wrong._play = function()
+        {
+            $doms.content.append($doms.wrong);
+            var tl = new TimelineMax();
+            tl.set($doms.wrong, {autoAlpha: 1});
+            tl.set($honey, {autoAlpha: 0});
+            tl.set($icon, {autoAlpha:0},.1);
+            tl.set($icon, {autoAlpha:1},.2);
+            tl.set($icon, {autoAlpha:0},.3);
+            tl.set($icon, {autoAlpha:1},.4);
+
+            tl.to($doms.wrong,.6, {autoAlpha: 0, ease:Power2.easeIn}, "+=1.4");
+
+            tl.add(function()
+            {
+                $doms.wrong.detach();
+            });
+        };
+
+        $doms.wrong._toCompleteMode = function()
+        {
+            $doms.wrong.detach();
         }
     }
 
@@ -298,6 +337,15 @@
 
             this.__triggered = !this.__triggered;
 
+            if(this.__triggered)
+            {
+                _pressedCount ++;
+            }
+            else
+            {
+                _pressedCount --;
+            }
+
             if(_quezNumberDic[this.__index])
             {
                 (this.__triggered)? _matchCount++: _matchCount--;
@@ -309,7 +357,7 @@
 
             $(this).toggleClass("hide-mode", !this.__triggered);
 
-            updateMatchCount(_matchCount);
+            updateMatchCount(_pressedCount);
 
             if(_matchCount >= 7)
             {
@@ -319,6 +367,31 @@
                 _isDetectComplete = true;
                 stopDetect();
                 onrelease();
+            }
+            else if(_pressedCount >= 7)
+            {
+                reset();
+            }
+        }
+
+        function reset()
+        {
+            _tlPlayHintTimer.restart();
+            $doms.wrong._play();
+
+            var i, $num;
+
+            for(i=0;i<10;i++)
+            {
+
+                $num = $doms.numbers[i];
+                $num[0].__triggered = false;
+                $num.toggleClass("hide-mode", true);
+
+                _matchCount = 0;
+                _pressedCount = 0;
+
+                updateMatchCount(_pressedCount);
             }
         }
     }

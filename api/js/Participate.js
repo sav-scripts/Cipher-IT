@@ -139,6 +139,12 @@
             t += .1;
         }
 
+        //console.log(_participateData);
+        //if(_participateData.length == 0)
+        //{
+        //    $($table.children("tr")[1]).detach();
+        //}
+
         for(i=0;i<_participateData.length;i++)
         {
             obj = _participateData[i];
@@ -149,6 +155,15 @@
             {
                 var birthday = obj.birth_year + "-" + obj.birth_month + "-" + obj.birth_day;
                 $table.append("<tr><td>"+obj.name+"</td><td>"+obj.gender+"</td><td>"+obj.phone+"</td><td>"+obj.email+"</td><td>"+birthday+"</td></tr>");
+            }
+        }
+
+        for(var key in $doms.tableDic)
+        {
+            $table = $doms.tableDic[key];;
+            if($table.find('tr').length == 2)
+            {
+                $($table.find('tr')[1]).detach();
             }
         }
 

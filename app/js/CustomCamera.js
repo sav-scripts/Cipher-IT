@@ -170,6 +170,7 @@
             tl.add(function()
             {
                 //SP.play('zoom');
+                SP.play('zoom', {delay:400});
 
                 var radius = self._camera.position.subtract(position).length();
 

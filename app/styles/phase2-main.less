@@ -121,12 +121,12 @@
     .wrapper{
         .percent-container();
 
-        .percent-div(left-content, -752,-270,538,324, "intro-content.png");
+        .percent-div(left-content, -790,-240,538,324, "intro-content.png");
 
         .btn-play{
 
 //            .percent-div(none, -689,105, 337, 94);
-            .percent-div(none, -671,125, 361, 99);
+            .percent-div(none, -710,125, 361, 99);
 
             .normal-state{
 
@@ -174,6 +174,16 @@
             }
         }
 
+        @media (max-width: 1660px)
+        {
+            .left-content{
+                left: -710%;
+            }
+            .btn-play{
+                left:-631%;
+            }
+        }
+
     }
 
     .btn-skip{
@@ -199,9 +209,9 @@
 
 #story{
 
-    position: absolute;
+    position: fixed;
     width: 100%;
-    height: 100%;
+    height: 90%;
 
 //    .my-layout("layouts/story-pc.jpg");
 //    .layout{
@@ -512,6 +522,10 @@
                         .image-bg("evidence-icon-@{type}.png");
                     }
 
+                    &:active{
+                        margin-top: -@clip-height * .5 + 1px;
+                    }
+
                     &.lock-mode{
 
                         cursor: default;
@@ -730,6 +744,16 @@
                     width: 100%;
                     height: 100%;
                     .image-bg("story-phone-bingo-icon.png", cover);
+                }
+            }
+
+            .wrong{
+                .percent-div(none, -238, -215,472,475,"story-phone-bingo.png");
+                .icon{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    .image-bg("story-phone-wrong-icon.png", cover);
                 }
             }
 
@@ -1311,7 +1335,7 @@
         .abs-div-2(open-case, -686,-214,705,579,"happy-end-open-case.png");
 //        .abs-div-2(content, 35,-198,412,307,"happy-end-content.png");
         .abs-div-2(title, 57,-153,356,94,"happy-end-title-1.png");
-        .abs-div-2(text, 35,-48,417,164,"happy-end-text-1.png");
+        .abs-div-2(text, 35,-48,427,173,"happy-end-text-1.png");
         .abs-div-2(stamp, 262,-198,179,112,"happy-end-stamp-1.png");
         .fade-btn-2(btn-to-form,"happy-end-btn-to-form.png", 61,124,223,52);
 
@@ -1496,6 +1520,13 @@
         }
 
     }
+}
+
+/** roulette **/
+#roulette{
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 /** story rule **/

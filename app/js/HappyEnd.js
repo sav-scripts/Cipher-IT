@@ -201,8 +201,8 @@
                         method:"share",
                         display: "iframe",
                         href: Utility.getPathWithFilename(),
-                        title: "你要放棄破案了嗎？",
-                        description: '真可惜，你離真相只差一點了！沒關係！只要留下報名資料，也能參加抽獎。歡迎再來挑戰，並號召好友一起加入破案喔～',
+                        title: "你要放棄尋找 Cipher 秘酩黑了嗎？",
+                        description: '真可惜，你差一點就能找到失蹤的 Cipher 秘酩黑了！沒關係，只要留下報名資料，也能參加抽獎。歡迎再來挑戰，並號召好友一起破案喔~',
                         picture: picture
                     },function()
                     {
@@ -229,8 +229,8 @@
                         method:"share",
                         display: "iframe",
                         href: Utility.getPathWithFilename(),
-                        title: "尋獲失蹤的神秘Cipher祕酩黑!",
-                        description: '尋獲失蹤的Cipher 秘酩黑！在這麼短的時間內能偵破這宗懸案，絕不簡單！想知道誰才是真正的劫犯？立刻加入偵辦行列吧！',
+                        title: "尋獲失蹤的神秘 Cipher 祕酩黑!",
+                        description: '尋獲失蹤的 Cipher 秘酩黑！在這麼短的時間內能偵破這宗懸案，絕不簡單！想知道誰才是真正的劫犯？立刻加入偵辦行列吧！',
                         picture: picture
                     },function()
                     {
@@ -250,7 +250,7 @@
 
         $doms.firstStepContainer._show = function(cb)
         {
-            $text._height = Main.settings.viewport.index == 0? 154: 157;
+            $text._height = Main.settings.viewport.index == 0? 158: 173;
 
             var tl = new TimelineMax;
 

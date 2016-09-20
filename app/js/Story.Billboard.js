@@ -37,7 +37,10 @@
             if (!_isHiding) return;
             _isHiding = false;
 
-            Story.setPhaseTo(StoryPhases.SPORT_GIRL);
+            if(Story.setPhaseTo(StoryPhases.SPORT_GIRL))
+            {
+                SP.play("bingo");
+            }
 
             $doms.parent.append($doms.container);
 

@@ -103,7 +103,7 @@
 
         setupButton('participate', "/Participate");
         setupButton('lottery', "/Lottery");
-        setupButton('setting', "/Setting");
+        //setupButton('setting', "/Setting");
         setupButton('logout', null, function()
         {
             ApiProxy.callApi("admin_cmds", {cmd:'logout'}, null, function(response)

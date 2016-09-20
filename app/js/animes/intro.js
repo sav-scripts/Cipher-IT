@@ -9,38 +9,38 @@ lib.properties = {
 	fps: 30,
 	color: "#000000",
 	manifest: [
-		{src:"images/intro/box.png?1473852985367", id:"box"},
-		{src:"images/intro/bto.png?1473852985367", id:"bto"},
-		{src:"images/intro/btobg.png?1473852985367", id:"btobg"},
-		{src:"images/intro/cl1.png?1473852985367", id:"cl1"},
-		{src:"images/intro/cl2.png?1473852985367", id:"cl2"},
-		{src:"images/intro/cl3.png?1473852985367", id:"cl3"},
-		{src:"images/intro/g1.png?1473852985367", id:"g1"},
-		{src:"images/intro/g2.png?1473852985367", id:"g2"},
-		{src:"images/intro/g3.png?1473852985367", id:"g3"},
-		{src:"images/intro/g4.png?1473852985367", id:"g4"},
-		{src:"images/intro/g5.png?1473852985367", id:"g5"},
-		{src:"images/intro/g6.png?1473852985367", id:"g6"},
-		{src:"images/intro/g7.png?1473852985367", id:"g7"},
-		{src:"images/intro/g8.png?1473852985367", id:"g8"},
-		{src:"images/intro/girlglass.png?1473852985367", id:"girlglass"},
-		{src:"images/intro/glass2.png?1473852985367", id:"glass2"},
-		{src:"images/intro/glass3.png?1473852985367", id:"glass3"},
-		{src:"images/intro/glass4.png?1473852985367", id:"glass4"},
-		{src:"images/intro/glass6.png?1473852985367", id:"glass6"},
-		{src:"images/intro/introimg1.png?1473852985367", id:"introimg1"},
-		{src:"images/intro/map.png?1473852985367", id:"map"},
-		{src:"images/intro/policelinedonotcross.png?1473852985367", id:"policelinedonotcross"},
-		{src:"images/intro/policecar.png?1473852985367", id:"policecar"},
-		{src:"images/intro/round.png?1473852985367", id:"round"},
-		{src:"images/intro/shatter_glass01.png?1473852985367", id:"shatter_glass01"},
-		{src:"images/intro/shatter_glass02.png?1473852985367", id:"shatter_glass02"},
-		{src:"images/intro/shatter_glass03.png?1473852985367", id:"shatter_glass03"},
-		{src:"images/intro/shatter_glass04.png?1473852985367", id:"shatter_glass04"},
-		{src:"images/intro/shatter_glass05.png?1473852985367", id:"shatter_glass05"},
-		{src:"images/intro/shatter_glass06.png?1473852985367", id:"shatter_glass06"},
-		{src:"images/intro/txt.png?1473852985367", id:"txt"},
-		{src:"images/intro/txt2.png?1473852985367", id:"txt2"}
+		{src:"images/intro/box.png?1474343126600", id:"box"},
+		{src:"images/intro/bto.png?1474343126600", id:"bto"},
+		{src:"images/intro/btobg.png?1474343126600", id:"btobg"},
+		{src:"images/intro/cl1.png?1474343126600", id:"cl1"},
+		{src:"images/intro/cl2.png?1474343126600", id:"cl2"},
+		{src:"images/intro/cl3.png?1474343126600", id:"cl3"},
+		{src:"images/intro/g1.png?1474343126600", id:"g1"},
+		{src:"images/intro/g2.png?1474343126600", id:"g2"},
+		{src:"images/intro/g3.png?1474343126600", id:"g3"},
+		{src:"images/intro/g4.png?1474343126600", id:"g4"},
+		{src:"images/intro/g5.png?1474343126600", id:"g5"},
+		{src:"images/intro/g6.png?1474343126600", id:"g6"},
+		{src:"images/intro/g7.png?1474343126600", id:"g7"},
+		{src:"images/intro/g8.png?1474343126600", id:"g8"},
+		{src:"images/intro/girlglass.png?1474343126600", id:"girlglass"},
+		{src:"images/intro/glass2.png?1474343126600", id:"glass2"},
+		{src:"images/intro/glass3.png?1474343126600", id:"glass3"},
+		{src:"images/intro/glass4.png?1474343126600", id:"glass4"},
+		{src:"images/intro/glass6.png?1474343126600", id:"glass6"},
+		{src:"images/intro/introimg1.png?1474343126600", id:"introimg1"},
+		{src:"images/intro/map.png?1474343126600", id:"map"},
+		{src:"images/intro/policelinedonotcross.png?1474343126600", id:"policelinedonotcross"},
+		{src:"images/intro/policecar.png?1474343126600", id:"policecar"},
+		{src:"images/intro/round.png?1474343126600", id:"round"},
+		{src:"images/intro/shatter_glass01.png?1474343126600", id:"shatter_glass01"},
+		{src:"images/intro/shatter_glass02.png?1474343126600", id:"shatter_glass02"},
+		{src:"images/intro/shatter_glass03.png?1474343126600", id:"shatter_glass03"},
+		{src:"images/intro/shatter_glass04.png?1474343126600", id:"shatter_glass04"},
+		{src:"images/intro/shatter_glass05.png?1474343126600", id:"shatter_glass05"},
+		{src:"images/intro/shatter_glass06.png?1474343126600", id:"shatter_glass06"},
+		{src:"images/intro/txt.png?1474343126600", id:"txt"},
+		{src:"images/intro/txt2.png?1474343126600", id:"txt2"}
 	]
 };
 
@@ -2577,7 +2577,7 @@ p.nominalBounds = new cjs.Rectangle(0.9,0,11.4,12.2);
 
 	// 圖層 4
 	this.instance = new lib.補間動畫4("synched",0);
-	this.instance.setTransform(592.2,4,0.856,0.856,-7);
+	this.instance.setTransform(592.2,35.5,0.72,0.72,-7);
 
 	this.instance.mask = mask;
 
@@ -2594,11 +2594,11 @@ p.nominalBounds = new cjs.Rectangle(0.9,0,11.4,12.2);
 
 	// 圖層 3
 	this.instance_2 = new lib.polica_car();
-	this.instance_2.setTransform(507.4,-200.8,0.733,0.733,0,0,0,833.3,555.3);
+	this.instance_2.setTransform(501.7,-65.3,0.658,0.658,0,0,0,833.3,555.3);
 
 	this.instance_2.mask = mask;
 
-	this.timeline.addTween(cjs.Tween.get(this.instance_2).to({scaleX:0.62,scaleY:0.62,y:-136.9},106).wait(1));
+	this.timeline.addTween(cjs.Tween.get(this.instance_2).to({scaleX:0.61,scaleY:0.61,x:507.4,y:-105.3},106).wait(1));
 
 	// Layer 2
 	this.shape = new cjs.Shape();

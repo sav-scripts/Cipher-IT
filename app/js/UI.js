@@ -63,6 +63,11 @@
                 SceneHandler.toHash("/ParticipateRule");
             });
 
+            setupButton(10, 'Roulette', function()
+            {
+                SceneHandler.toHash("/Roulette");
+            });
+
             setupButton(12, 'to offical site', function()
             {
                 window.open('http://www.theglenlivet.com.tw/');
@@ -144,22 +149,23 @@
         $doms.bar2 = $doms.icon.find(".bar-2");
         $doms.bar3 = $doms.icon.find(".bar-3");
 
-        var bars = [$doms.bar1[0], $doms.bar2[0], $doms.bar3[0]];
+        //var bars = [$doms.bar1[0], $doms.bar2[0], $doms.bar3[0]];
 
         var tl = _iconTl = new TimelineMax();
         tl.addLabel("start");
 
-        tl.set($doms.bar1, {marginTop: -9, width:12, autoAlpha:1, transformOrigin:"center center"});
-        tl.set($doms.bar2, {marginTop: -1, width:12, autoAlpha:1, transformOrigin:"center center"});
-        tl.set($doms.bar3, {marginTop: 7, width:12, autoAlpha:1, transformOrigin:"center center"});
-        tl.to($doms.bar1,.4, {marginTop: -1, ease:Power1.easeIn}, 0);
-        tl.to($doms.bar3,.4, {marginTop: -1, ease:Power1.easeIn}, 0);
+        tl.set($doms.bar1, {marginLeft: -6, marginTop: -9, width:12, autoAlpha:1, transformOrigin:"center center"});
+        tl.set($doms.bar2, {marginLeft: -6, marginTop: -1, width:12, autoAlpha:1, transformOrigin:"center center"});
+        tl.set($doms.bar3, {marginLeft: -6, marginTop: 7, width:12, autoAlpha:1, transformOrigin:"center center"});
+
+        tl.to($doms.bar1,.3, {marginTop: -1, ease:Power1.easeIn}, 0);
+        tl.to($doms.bar3,.3, {marginTop: -1, ease:Power1.easeIn}, 0);
         tl.set($doms.bar2, {autoAlpha: 0});
         tl.set($doms.bar1, {marginLeft:-1, width: 2, height: 2});
-        tl.to($doms.bar1,.4, {marginTop:-6, height: 12, ease:Power1.easeOut});
+        tl.to($doms.bar1,.3, {marginTop:-6, height: 12, ease:Power1.easeOut});
         tl.addLabel("hoverComplete");
-        tl.to($doms.bar1,.4, {rotation: 45});
-        tl.to($doms.bar3,.4, {rotation: 45}, "-=.4");
+        tl.to($doms.bar1,.3, {rotation: 45});
+        tl.to($doms.bar3,.3, {rotation: 45}, "-=.3");
         tl.addLabel("end");
 
         tl.pause();
