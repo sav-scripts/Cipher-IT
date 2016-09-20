@@ -16,7 +16,7 @@
 
             _materialDic['normal'] = createNormal();
             createWireframe();
-            createFlashShape();
+            //createFlashShape();
             createNoise();
 
         },

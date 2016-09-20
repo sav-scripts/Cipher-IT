@@ -234,6 +234,9 @@
 
 
             $(window).on("resize", onResize);
+
+            //alert("screen width = " + screen.width + ", window width = " + $(window).width());
+
             onResize();
         },
 
@@ -300,12 +303,25 @@
             if(vp.ranges[i] >= width) break;
         }
 
+
         var oldIndex = vp.index;
 
         vp.index = i;
         vp.width = width;
         vp.height = height;
         vp.changed = (oldIndex !== vp.index);
+
+        /*
+        if(screen.width <= 640)
+        {
+            var scale = 640 / screen.width ;
+            $('body').css('height', scale*screen.height + 'px');
+        }
+        else
+        {
+            $('body').css("height", '');
+        }
+        */
 
         if(SceneHandler.currentScene)
         {

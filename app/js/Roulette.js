@@ -49,6 +49,10 @@
 
         self.resize();
 
+        $("#logo").toggleClass("roulette-mode", true);
+        $("#menu").find(".icon").toggleClass("roulette-mode", true);
+        $("body").toggleClass("roulette-mode", true);
+
 
         Menu.show();
         Menu.Logo._show();
@@ -71,6 +75,9 @@
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
         {
+            $("#logo").toggleClass("roulette-mode", false);
+            $("#menu").find(".icon").toggleClass("roulette-mode", false);
+            $("body").toggleClass("roulette-mode", false);
             $doms.container.detach();
             cb.apply();
         });

@@ -159,7 +159,7 @@ body.no-scroll-mode {
     width: 1024px;
   }
 }
-@media (max-height: 600px) {
+@media (max-height: 600px) and (min-width: 641px) {
   body {
     overflow-y: auto;
   }
@@ -1730,6 +1730,9 @@ body.no-scroll-mode {
     overflow-x: auto;
     width: 640px;
   }
+  body.roulette-mode {
+    overflow: hidden;
+  }
   #scene-container {
     width: 640px;
   }
@@ -1762,6 +1765,9 @@ body.no-scroll-mode {
     transform: scale(1.3396);
     right: 14px;
     top: 14px;
+  }
+  #menu .icon.roulette-mode {
+    transform: none;
   }
   #menu .container {
     position: absolute;
@@ -2479,6 +2485,9 @@ body.no-scroll-mode {
     background-position: center center;
     background-repeat: no-repeat;
     background-color: #121212;
+  }
+  .footer.roulette-mode {
+    min-height: initial;
   }
   .footer.menu-open-mode {
     margin-left: -100%;
@@ -7230,9 +7239,10 @@ body.no-scroll-mode {
 }
 /** happy-end **/
 #happy-end {
-  position: absolute;
+  position: static;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 #happy-end .background {
   position: absolute;
@@ -7656,6 +7666,7 @@ body.no-scroll-mode {
   position: absolute;
   width: 100%;
   height: 100%;
+  border: none;
 }
 /** story rule **/
 #story-rule {
@@ -7757,6 +7768,12 @@ body.no-scroll-mode {
     width: 102px;
     height: 77px;
     background-image: url("../images/logo-top.m.png");
+    background-size: auto;
+  }
+  #logo.roulette-mode {
+    width: 91px;
+    height: 70px;
+    background-image: url("../images/logo-top.png");
     background-size: auto;
   }
   /** rotate screen hint **/
@@ -7884,7 +7901,7 @@ body.no-scroll-mode {
   }
   /** intro **/
   #intro {
-    position: absolute;
+    position: static;
     width: 100%;
     height: 100%;
     min-height: 855px;
@@ -7967,7 +7984,8 @@ body.no-scroll-mode {
   }
   /** story **/
   #story {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     /** drag hint **/
     /** coners **/
     /** story buttons **/
@@ -8222,6 +8240,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -8641,6 +8660,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
     background-color: black;
@@ -8757,6 +8777,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -8821,6 +8842,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -8912,6 +8934,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -8976,6 +8999,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -9258,6 +9282,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -9322,6 +9347,7 @@ body.no-scroll-mode {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 750px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.85);
   }
@@ -9911,6 +9937,11 @@ body.no-scroll-mode {
   }
   #story-rule .btn-close:hover .btn-close-x {
     transform: rotate(90deg);
+  }
+}
+@media (max-width: 640px) and (min-height: 950px) {
+  #intro {
+    position: absolute;
   }
 }
 @media (max-width: 640px) and (max-width: 640px) {

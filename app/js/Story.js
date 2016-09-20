@@ -419,6 +419,7 @@
             if(_isInit)
             {
                 Story.Scene.engine.resize();
+
                 self.Evidences.resize();
                 self.Fingerprint.resize();
 

@@ -4,6 +4,10 @@
     body{
         overflow-x: auto;
         width: 640px;
+
+        &.roulette-mode{
+            overflow: hidden;
+        }
     }
 
     #scene-container{
@@ -12,7 +16,15 @@
         &.menu-open-mode{
             margin-left: -100%;
         }
+
+
+//        @media (max-height: @pc-height) {
+//            #scene-container{
+//                min-height: initial;
+//            }
+//        }
     }
+
 
     /** loading **/
     #loading{
@@ -51,6 +63,10 @@
             transform: scale(1.3396);
             right: 14px;
             top: 14px;
+
+            &.roulette-mode{
+                transform: none;
+            }
         }
 
         .container{
@@ -313,6 +329,9 @@
         background-repeat: no-repeat;
         background-color: #121212;
 
+        &.roulette-mode{
+            min-height: initial;
+        }
 
         &.menu-open-mode{
             margin-left: -100%;
