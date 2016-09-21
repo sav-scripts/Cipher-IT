@@ -223,8 +223,7 @@
         {
             if(!isLocking)
             {
-
-                //alert("_shareEntrySerial = " + _shareEntrySerial);
+                /*
                 Main.loginFB('/Story/Fingerprint', function()
                 {
                     var picture = Utility.getPath() + "misc/share_fail.jpg";
@@ -243,6 +242,21 @@
                         }
                     );
                 });
+                */
+
+                toSharedMode();
+
+                if(!FB) return;
+                FB.ui
+                (
+                    {
+                        app_id:Main.settings.fb_appid,
+                        method:"feed",
+                        link: Utility.getPathWithFilename() + "?sharetype=fingerprint"
+                    },function()
+                    {
+                    }
+                );
 
 
             }

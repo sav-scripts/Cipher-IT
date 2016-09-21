@@ -238,7 +238,8 @@
         {
             cmd: 'get_lottery_data',
             page_index: 0,
-            page_size: 0
+            page_size: 0,
+            mode: 'lottery_all'
         };
 
         Loading.show();

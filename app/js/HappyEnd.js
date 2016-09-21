@@ -192,6 +192,7 @@
 
         $doms.container.find(".btn-to-form-2").on(_CLICK_, function()
         {
+            /*
             Main.loginFB('/HappyEnd/NotReally', function()
             {
                 var picture = Utility.getPath() + "misc/share_fail.jpg";
@@ -211,6 +212,22 @@
                     }
                 );
             });
+            */
+
+            _isFail = true;
+            SceneHandler.toHash("/HappyEnd/Form");
+
+            if(!FB) return;
+            FB.ui
+            (
+                {
+                    app_id:Main.settings.fb_appid,
+                    method:"feed",
+                    link: Utility.getPathWithFilename() + "?sharetype=badend"
+                },function()
+                {
+                }
+            );
         });
     }
 
@@ -220,6 +237,7 @@
 
         var $btn = $doms.container.find(".btn-to-form").on(_CLICK_, function()
         {
+            /*
             Main.loginFB('/HappyEnd/Yes', function()
             {
                 var picture = Utility.getPath() + "misc/share_success.jpg?v=1";
@@ -239,6 +257,22 @@
                     }
                 );
             });
+            */
+
+            _isFail = false;
+            SceneHandler.toHash("/HappyEnd/Form");
+
+            if(!FB) return;
+            FB.ui
+            (
+                {
+                    app_id:Main.settings.fb_appid,
+                    method:"feed",
+                    link: Utility.getPathWithFilename() + "?sharetype=happyend"
+                },function()
+                {
+                }
+            );
         });
 
 

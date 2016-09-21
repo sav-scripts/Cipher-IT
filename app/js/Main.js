@@ -6,20 +6,23 @@
         version: "0.0.0",
         demoSettings:
         {
-            fb_appid: "917314775079865",
-            path: "demo.ogilvyrw.com/website/theglenlivet-Cipher/phase2/phase2.html"
+            //fb_appid: "917314775079865",
+            fb_appid: "181931492244009",
+            path: "demo.ogilvyrw.com/website/theglenlivet-Cipher/phase2/"
         },
         localSettings:
         {
-            fb_appid: "917314171746592",
-            path: "http://local.savorks.com/projects/hogarth-ogilvy/Cipher-IT/app/phase2.html"
+            //fb_appid: "917314171746592",
+            fb_appid: "181932332243925",
+            path: "http://local.savorks.com/projects/hogarth-ogilvy/Cipher-IT/app/"
         },
         settings:
         {
-            fb_appid: "917311835080159",
+            //fb_appid: "917311835080159",
+            fb_appid: "181926195577872",
             fbPermissions: [],
 
-            path: "http://www.theglenlivet.com.tw/events/2016Cipher/dist/phase2.html",
+            path: "http://www.theglenlivet.com.tw/events/2016Cipher/dist/",
 
             isLocal: false,
             isMobile: false,
@@ -97,6 +100,9 @@
 
         init: function()
         {
+
+            removeShareTYpe();
+
             CSSPlugin.defaultTransformPerspective = 400;
 
             if( window.location.host == "local.savorks.com" || window.location.host == "socket.savorks.com")
@@ -142,8 +148,10 @@
             Menu.init();
 
             //startApp();
-            //FBHelper.init(Main.settings.fb_appid, startApp);
+            FBHelper.init(Main.settings.fb_appid);
+            startApp();
 
+            /*
             FBHelper.init(Main.settings.fb_appid, function()
             {
                 FBHelper.checkLoginStatus(Main.settings.fbPermissions, function(error, authResponse)
@@ -175,7 +183,7 @@
                     }
                 });
             });
-
+            */
 
 
             function startApp()
@@ -365,25 +373,12 @@
         }
     }
 
-    function removeFBParams()
+    function removeShareTYpe()
     {
         if(history && history.replaceState)
         {
-            var hash = Main.settings.fbState;
-            var uri = Helper.removeURLParameter(location.href, 'code');
-            uri = Helper.removeURLParameter(uri, 'state');
-
-            var currentHash = SceneHandler.getHash();
-
-            uri = uri.replace('?#' + currentHash, '').replace('#' + currentHash, '');
-
-            uri += "#" + hash;
-
-            //console.log("final uri = " + uri);
+            var uri = Helper.removeURLParameter(location.href, 'sharetype');
             window.history.replaceState({path: uri}, '', uri);
-
-            //history.go(-length);
-            //window.location.replace(Utility.getPath() + "#" + Utility.urlParams.state);
         }
     }
 

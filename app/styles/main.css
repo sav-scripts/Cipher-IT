@@ -3371,7 +3371,6 @@ body.no-scroll-mode {
   margin-top: -70.5px;
   background-image: url("../images/story-drag-bg.png");
   background-size: auto;
-  z-index: 100;
   pointer-events: none;
   transition: opacity .5s linear;
   transition-delay: 0s;
