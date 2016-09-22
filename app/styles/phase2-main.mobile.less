@@ -10,6 +10,17 @@
         overflow-x: hidden;
     }
 
+    body{
+        &.inner-scroll{
+            overflow-y: hidden;
+
+            #scene-container{
+                overflow-y: auto;
+                height: 90%;
+            }
+        }
+    }
+
     #logo {
         left: 18px;
         top: 15px;
@@ -140,10 +151,12 @@
     /** intro **/
     #intro{
 
-        position: static;
+//        position: static;
+        position: absolute;
         width: 100%;
         height: 100%;
         min-height: @mobile-content-height;
+//        min-height: 900px;
 
         @media (min-height: 950px) {
             position: absolute;
@@ -699,7 +712,7 @@
 
     }
 
-    /** intro **/
+    /** happy end **/
     #happy-end{
 
         min-height: @mobile-content-height;
@@ -1017,6 +1030,178 @@
                 }
             }
 
+        }
+    }
+
+    /** notes **/
+    #notes{
+        position: static;
+
+
+        overflow: hidden;
+
+        .layout{
+            position: absolute;
+            .image-bg("layouts/notes-m.jpg");
+            width: 640px;
+            height: 9878px;
+            opacity: .3;
+            left: 50%;
+            margin-left: -320px;
+            top:0;
+        }
+
+        .top-menu{
+            position: fixed;
+            width: 100%;
+            height: 298px;
+            top:0;
+            background-color:rgba(0,0,0,0);
+
+            z-index: 1;
+
+            transition: background-color .5s ease-out, top .5s ease-out;
+
+            &.scrolled-mode{
+                background-color:rgba(25,25,25,1);
+                top: -82px;
+            }
+
+            .my-logo{
+                position: absolute;
+                top: 34px;
+                left: 50%;
+                margin-left: -154px;
+                width: 306px;
+                height: 30px;
+                .image-bg("notes/logo.m.png");
+            }
+
+            .button-container{
+
+                @btn-width: 74px;
+                @bth-height: 74px;
+                @btn-margin-left:6px;
+                @btn-margin-right:12px;
+
+                @num-buttons: 10;
+
+                @w-gap: @btn-width + @btn-margin-left + @btn-margin-right;
+
+                @container-width: @w-gap * @num-buttons * .5;
+
+                position: absolute;
+                width: @container-width;
+                left:50%;
+
+                top: 95px;
+
+                margin-left: -230px;
+
+
+
+                .my-loop (1);
+                .my-loop (@i) when (@i <= @num-buttons) {
+                    .my-mixin(@i);
+                    .my-loop(@i + 1);
+                }
+
+                .my-mixin(@index;)
+                {
+                    .button:nth-child(@{index})
+                    {
+                        position: relative;
+                        float: left;
+                        width: @btn-width;
+                        height: @bth-height;
+                        margin-left: @btn-margin-left;
+                        margin-right: @btn-margin-right;
+
+                        margin-bottom: 24px;
+
+                        touch-action: none;
+
+                        @texture-left: -(@index - 1) * @btn-width;
+
+                        @duration: .4s;
+
+                        .normal-state{
+                            position: absolute;
+                            .image-bg("notes/icon-section-m.png");
+                            width: 100%;
+                            height: 100%;
+                            background-position: @texture-left top;
+
+                            opacity: 1;
+                            transition:opacity @duration ease-out;
+                            transition-delay:0s;
+
+                            touch-action: none;
+                        }
+
+                        .hover-state{
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            .image-bg("notes/icon-section-m.png");
+                            background-position: @texture-left bottom;
+
+                            touch-action: none;
+
+                            opacity: 0;
+                            visibility:hidden;
+                            transition:visibility 0s linear @duration,opacity @duration ease-out;
+                        }
+
+                        &:hover{
+                            .hover-state{
+//                                opacity: 0;
+//                                visibility:hidden;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .sections{
+
+            position: relative;
+            width: 100%;
+            top:0;
+            left:7px;
+
+            overflow-x: hidden;
+
+            @width: 500px;
+
+            .my-mixin(1, 556, 342);
+            .my-mixin(2, 919);
+            .my-mixin(3, 1053);
+            .my-mixin(4, 731);
+            .my-mixin(5, 777);
+
+            .my-mixin(6, 1006);
+            .my-mixin(7, 915);
+            .my-mixin(8, 639);
+            .my-mixin(9, 1105);
+            .my-mixin(10, 686, 120, 200);
+
+            .my-mixin(@index; @height; @marginTop: 98px;@marginBottom: 0px;)
+            {
+                .section:nth-child(@{index}){
+
+                    position: relative;
+                    width: @width * 1px;
+                    height: @height * 1px;
+                    margin-top: @marginTop * 1px;
+                    margin-bottom: @marginBottom * 1px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    .image-bg("notes/section-@{index}m.jpg");
+                }
+            }
         }
     }
 

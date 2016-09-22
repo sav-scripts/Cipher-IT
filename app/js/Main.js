@@ -86,6 +86,7 @@
             "/HappyEnd/Form",
 
             "/Roulette",
+            "/Notes",
 
             "/Participate",
             "/Participate/Product",

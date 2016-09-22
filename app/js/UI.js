@@ -65,7 +65,37 @@
 
             setupButton(10, 'Roulette', function()
             {
-                SceneHandler.toHash("/Roulette");
+                //SceneHandler.toHash("/Roulette");
+
+
+                var cipherBase = 'https://cipherapp.theglenlivet.com',
+                    w,
+                    messageReceived = false,
+                    proceed = function() {
+                        w.close();
+                        SceneHandler.toHash("/Roulette");
+                    };
+
+                window.addEventListener('message', function(e) {
+                    if ((e.origin || e.originalEvent.origin) === cipherBase && e.data === 'cookie set') {
+                        messageReceived = true;
+                        proceed();
+                    }
+                }, false);
+
+                w = window.open(cipherBase + '/cookie', 'Setting cookie...', 'toolbar=no,height=100,width=200');
+                window.setTimeout(function() {
+                    if (!messageReceived) {
+                        proceed();
+                    }
+                }, 5000);
+
+
+            });
+
+            setupButton(11, 'Notes', function()
+            {
+                SceneHandler.toHash("/Notes");
             });
 
             setupButton(12, 'to offical site', function()

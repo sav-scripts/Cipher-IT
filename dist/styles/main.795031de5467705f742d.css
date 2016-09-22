@@ -821,7 +821,9 @@ body.no-scroll-mode {
   background-size: auto;
   cursor: pointer;
   z-index: 100;
-  transition: opacity .4s linear;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
 }
 #logo .logo-bottom {
   position: absolute;
@@ -836,6 +838,8 @@ body.no-scroll-mode {
 }
 #logo.hide-mode {
   opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
 }
 /** footer **/
 .footer {
@@ -2479,7 +2483,6 @@ body.no-scroll-mode {
     bottom: 0;
     width: 100%;
     height: 10%;
-    min-height: 95px;
     background-image: url("../images/footer.m.png");
     background-size: contain;
     background-position: center center;
@@ -7660,13 +7663,6 @@ body.no-scroll-mode {
   top: 193px;
   width: 450px;
 }
-/** roulette **/
-#roulette {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
 /** story rule **/
 #story-rule {
   position: fixed;
@@ -7757,9 +7753,583 @@ body.no-scroll-mode {
     transform: rotate(90deg);
   }
 }
+/** roulette **/
+#roulette {
+  position: static;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+/** notes **/
+#notes {
+  position: static;
+}
+#notes .layout {
+  position: absolute;
+  background-image: url("../images/layouts/notes-pc.jpg");
+  background-size: auto;
+  width: 1200px;
+  height: 4595px;
+  opacity: .3;
+  left: 50%;
+  margin-left: -600px;
+  top: 0;
+}
+#notes .top-menu {
+  position: fixed;
+  width: 100%;
+  height: 92px;
+  top: 0;
+  background-color: #000000;
+  z-index: 1;
+  transition: background-color 0.5s ease-out;
+}
+#notes .top-menu.scrolled-mode {
+  background-color: #191919;
+}
+#notes .top-menu .my-logo {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  margin-left: -487px;
+  width: 190px;
+  height: 70px;
+  background-image: url("../images/notes/logo.png");
+  background-size: auto;
+}
+#notes .top-menu .button-container {
+  position: absolute;
+  width: 710px;
+  top: 24px;
+  left: 50%;
+  margin-left: -263px;
+}
+#notes .top-menu .button-container .button:nth-child(1) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(1) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: 0px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(1) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: 0px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(1).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(1).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(2) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(2) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -56px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(2) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -56px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(2).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(2).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(3) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(3) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -112px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(3) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -112px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(3).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(3).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(4) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(4) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -168px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(4) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -168px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(4).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(4).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(5) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(5) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -224px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(5) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -224px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(5).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(5).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(6) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(6) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -280px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(6) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -280px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(6).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(6).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(7) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(7) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -336px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(7) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -336px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(7).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(7).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(8) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(8) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -392px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(8) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -392px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(8).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(8).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(9) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(9) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -448px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(9) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -448px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(9).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(9).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(10) {
+  position: relative;
+  float: left;
+  width: 56px;
+  height: 56px;
+  margin-left: 6px;
+  margin-right: 9px;
+}
+#notes .top-menu .button-container .button:nth-child(10) .normal-state {
+  position: absolute;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  width: 100%;
+  height: 100%;
+  background-position: -504px top;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  transition-delay: 0s;
+}
+#notes .top-menu .button-container .button:nth-child(10) .hover-state {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/notes/icon-section.png");
+  background-size: auto;
+  background-position: -504px bottom;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+}
+#notes .top-menu .button-container .button:nth-child(10).selected-mode {
+  cursor: pointer;
+}
+#notes .top-menu .button-container .button:nth-child(10).selected-mode .hover-state {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#notes .sections {
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 11px;
+}
+#notes .sections .section:nth-child(1) {
+  position: relative;
+  width: 970px;
+  height: 307px;
+  margin-top: 172px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-1.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(2) {
+  position: relative;
+  width: 970px;
+  height: 334px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-2.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(3) {
+  position: relative;
+  width: 970px;
+  height: 474px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-3.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(4) {
+  position: relative;
+  width: 970px;
+  height: 309px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-4.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(5) {
+  position: relative;
+  width: 970px;
+  height: 311px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-5.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(6) {
+  position: relative;
+  width: 970px;
+  height: 373px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-6.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(7) {
+  position: relative;
+  width: 970px;
+  height: 381px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-7.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(8) {
+  position: relative;
+  width: 970px;
+  height: 308px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-8.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(9) {
+  position: relative;
+  width: 970px;
+  height: 464px;
+  margin-top: 86px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-9.jpg");
+  background-size: auto;
+}
+#notes .sections .section:nth-child(10) {
+  position: relative;
+  width: 970px;
+  height: 305px;
+  margin-top: 120px;
+  margin-bottom: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../images/notes/section-10.jpg");
+  background-size: auto;
+}
 @media (max-width: 640px) {
   #scene-container {
     overflow-x: hidden;
+  }
+  body.inner-scroll {
+    overflow-y: hidden;
+  }
+  body.inner-scroll #scene-container {
+    overflow-y: auto;
+    height: 90%;
   }
   #logo {
     left: 18px;
@@ -7900,7 +8470,7 @@ body.no-scroll-mode {
   }
   /** intro **/
   #intro {
-    position: static;
+    position: absolute;
     width: 100%;
     height: 100%;
     min-height: 855px;
@@ -9423,7 +9993,7 @@ body.no-scroll-mode {
     background-image: url("../images/story-briefcase-btn-unlock-base.png");
     background-size: cover;
   }
-  /** intro **/
+  /** happy end **/
   #happy-end {
     min-height: 855px;
   }
@@ -9936,6 +10506,509 @@ body.no-scroll-mode {
   }
   #story-rule .btn-close:hover .btn-close-x {
     transform: rotate(90deg);
+  }
+  /** notes **/
+  #notes {
+    position: static;
+    overflow: hidden;
+  }
+  #notes .layout {
+    position: absolute;
+    background-image: url("../images/layouts/notes-m.jpg");
+    background-size: auto;
+    width: 640px;
+    height: 9878px;
+    opacity: .3;
+    left: 50%;
+    margin-left: -320px;
+    top: 0;
+  }
+  #notes .top-menu {
+    position: fixed;
+    width: 100%;
+    height: 298px;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1;
+    transition: background-color 0.5s ease-out, top 0.5s ease-out;
+  }
+  #notes .top-menu.scrolled-mode {
+    background-color: #191919;
+    top: -82px;
+  }
+  #notes .top-menu .my-logo {
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    margin-left: -154px;
+    width: 306px;
+    height: 30px;
+    background-image: url("../images/notes/logo.m.png");
+    background-size: auto;
+  }
+  #notes .top-menu .button-container {
+    position: absolute;
+    width: 460px;
+    left: 50%;
+    top: 95px;
+    margin-left: -230px;
+  }
+  #notes .top-menu .button-container .button:nth-child(1) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(1) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: 0px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(1) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: 0px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(2) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(2) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -74px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(2) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -74px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(3) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(3) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -148px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(3) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -148px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(4) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(4) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -222px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(4) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -222px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(5) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(5) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -296px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(5) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -296px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(6) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(6) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -370px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(6) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -370px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(7) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(7) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -444px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(7) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -444px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(8) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(8) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -518px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(8) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -518px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(9) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(9) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -592px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(9) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -592px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .top-menu .button-container .button:nth-child(10) {
+    position: relative;
+    float: left;
+    width: 74px;
+    height: 74px;
+    margin-left: 6px;
+    margin-right: 12px;
+    margin-bottom: 24px;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(10) .normal-state {
+    position: absolute;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    width: 100%;
+    height: 100%;
+    background-position: -666px top;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+    transition-delay: 0s;
+    touch-action: none;
+  }
+  #notes .top-menu .button-container .button:nth-child(10) .hover-state {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/notes/icon-section-m.png");
+    background-size: auto;
+    background-position: -666px bottom;
+    touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+  }
+  #notes .sections {
+    position: relative;
+    width: 100%;
+    top: 0;
+    left: 7px;
+    overflow-x: hidden;
+  }
+  #notes .sections .section:nth-child(1) {
+    position: relative;
+    width: 500px;
+    height: 556px;
+    margin-top: 342px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-1m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(2) {
+    position: relative;
+    width: 500px;
+    height: 919px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-2m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(3) {
+    position: relative;
+    width: 500px;
+    height: 1053px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-3m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(4) {
+    position: relative;
+    width: 500px;
+    height: 731px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-4m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(5) {
+    position: relative;
+    width: 500px;
+    height: 777px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-5m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(6) {
+    position: relative;
+    width: 500px;
+    height: 1006px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-6m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(7) {
+    position: relative;
+    width: 500px;
+    height: 915px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-7m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(8) {
+    position: relative;
+    width: 500px;
+    height: 639px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-8m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(9) {
+    position: relative;
+    width: 500px;
+    height: 1105px;
+    margin-top: 98px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-9m.jpg");
+    background-size: auto;
+  }
+  #notes .sections .section:nth-child(10) {
+    position: relative;
+    width: 500px;
+    height: 686px;
+    margin-top: 120px;
+    margin-bottom: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url("../images/notes/section-10m.jpg");
+    background-size: auto;
   }
 }
 @media (max-width: 640px) and (min-height: 950px) {

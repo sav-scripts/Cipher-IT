@@ -41,6 +41,7 @@ $picture = $pictures[$shareType];
     <title>探索秘酩之謎</title>
     <link rel="icon" href="misc/icon.png" type="image/x-icon"/>
     <meta charset="UTF-8">
+    <meta name="description" content="<?= $description ?>">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -63,7 +64,7 @@ $picture = $pictures[$shareType];
     <!--<meta id="myViewport" name="viewport" content="width=640,user-scalable=1">-->
     <!--<meta id="myViewport" name="viewport" content="width=device-width">-->
 
-    <link rel="stylesheet" href="styles/main.ae008ce311698f63031f.css">
+    <link rel="stylesheet" href="styles/main.795031de5467705f742d.css">
 
 </head>
 
@@ -152,9 +153,9 @@ $picture = $pictures[$shareType];
                     <div class="item-6"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-7"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-8"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-9 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-10 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-11 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-9"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-10"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-11"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-12"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-13"><div class="normal-state"></div><div class="hover-state"></div></div>
                 </div>
@@ -194,6 +195,6 @@ $picture = $pictures[$shareType];
     <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
     <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/optimized.0b7a80f6eea0b83b1dc8.js"></script>
+    <script src="js/optimized.0515cf6d48293134d7a1.js"></script>
 </body>
 </html>

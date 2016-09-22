@@ -1527,15 +1527,6 @@
     }
 }
 
-/** roulette **/
-#roulette{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    border: none;
-}
-
 /** story rule **/
 #story-rule{
     position: fixed;
@@ -1571,4 +1562,185 @@
     }
 
     .common-btn-close(true);
+}
+
+
+/** roulette **/
+#roulette{
+    position: static;
+    width: 100%;
+    height: 100%;
+
+    border: none;
+}
+
+/** notes **/
+#notes{
+    position: static;
+
+    .layout{
+        position: absolute;
+        .image-bg("layouts/notes-pc.jpg");
+        width: 1200px;
+        height: 4595px;
+        opacity: .3;
+        left: 50%;
+        margin-left: -600px;
+        top:0;
+    }
+
+    .top-menu{
+        position: fixed;
+        width: 100%;
+        height: 92px;
+        top:0;
+        background-color:rgba(0,0,0,1);
+
+        z-index: 1;
+
+        transition: background-color .5s ease-out;
+
+        &.scrolled-mode{
+            background-color:rgba(25,25,25,1);
+        }
+
+        .my-logo{
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            margin-left: -487px;
+            width: 190px;
+            height: 70px;
+            .image-bg("notes/logo.png");
+
+        }
+
+        .button-container{
+
+            @btn-width: 56px;
+            @bth-height: 56px;
+            @btn-margin-left:6px;
+            @btn-margin-right:9px;
+
+            @num-buttons: 10;
+
+            @w-gap: @btn-width + @btn-margin-left + @btn-margin-right;
+
+            @container-width: @w-gap * @num-buttons;
+
+            position: absolute;
+            width: @container-width;
+            top: 24px;
+
+            left:50%;
+            margin-left: -263px;
+
+
+
+            .my-loop (1);
+            .my-loop (@i) when (@i <= @num-buttons) {
+                .my-mixin(@i);
+                .my-loop(@i + 1);
+            }
+
+            .my-mixin(@index;)
+            {
+                .button:nth-child(@{index})
+                {
+                    position: relative;
+                    float: left;
+                    width: @btn-width;
+                    height: @bth-height;
+                    margin-left: @btn-margin-left;
+                    margin-right: @btn-margin-right;
+
+                    @texture-left: -(@index - 1) * @btn-width;
+
+                    @duration: .4s;
+
+                    .normal-state{
+                        position: absolute;
+                        .image-bg("notes/icon-section.png");
+                        width: 100%;
+                        height: 100%;
+                        background-position: @texture-left top;
+
+                        pointer-events: none;
+
+                        opacity: 1;
+                        transition:opacity @duration ease-out;
+                        transition-delay:0s;
+                    }
+
+                    .hover-state{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        .image-bg("notes/icon-section.png");
+                        background-position: @texture-left bottom;
+
+                        pointer-events: none;
+
+                        opacity: 0;
+                        visibility:hidden;
+                        transition:visibility 0s linear @duration,opacity @duration ease-out;
+                    }
+
+//                    &:hover, &.selected-mode{
+                    &.selected-mode{
+                        cursor: pointer;
+                        .normal-state{
+                            //                            opacity: 0;
+                            //                            visibility:hidden;
+                            //                            transition:visibility 0s linear @duration,opacity @duration ease-out;
+                        }
+                        .hover-state{
+                            opacity: 1;
+                            visibility:visible;
+                            transition-delay:0s;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    .sections{
+
+        position: relative;
+        width: 100%;
+        top:0;
+        left:11px;
+
+        @width: 970px;
+
+        .my-mixin(1, 307, 172);
+        .my-mixin(2, 334);
+        .my-mixin(3, 474);
+        .my-mixin(4, 309);
+        .my-mixin(5, 311);
+
+        .my-mixin(6, 373);
+        .my-mixin(7, 381);
+        .my-mixin(8, 308);
+        .my-mixin(9, 464);
+        .my-mixin(10, 305, 120, 400px);
+//        .my-mixin(10, 305, 120, calc(~"100% - 305px"));
+
+        .my-mixin(@index; @height; @marginTop: 86px;@marginBottom: 0px;)
+        {
+            .section:nth-child(@{index}){
+
+                position: relative;
+                width: @width * 1px;
+                height: @height * 1px;
+                margin-top: @marginTop * 1px;
+                margin-bottom: @marginBottom;
+                margin-left: auto;
+                margin-right: auto;
+                .image-bg("notes/section-@{index}.jpg");
+            }
+        }
+    }
 }

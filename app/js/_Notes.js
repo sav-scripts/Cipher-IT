@@ -3,7 +3,7 @@
     var $doms = {},
         _isInit = false;
 
-    var self = window.Roulette =
+    var self = window.Notes =
     {
         stageIn: function (options, cb)
         {
@@ -16,10 +16,10 @@
 
             function loadAndBuild(cb)
             {
-                    Loading.hide();
-                    build();
-                    _isInit = true;
-                    cb.apply(null);
+                Loading.hide();
+                build();
+                _isInit = true;
+                cb.apply(null);
             }
         },
 
@@ -38,8 +38,8 @@
     function build()
     {
         //var iframeUrl = 'http://cipher-demo.gl-azhdanov.demo.terricone.com/?language=tw&country=tw';
-        var iframeUrl = 'https://cipherapp.theglenlivet.com/?language=tw&country=tw';
-        $doms.container = $('<iframe id="roulette" src="'+iframeUrl+'" width="100%" height="100%"></iframe>');
+        var iframeUrl = './notes/';
+        $doms.container = $('<iframe id="notes" src="'+iframeUrl+'" width="100%" height="100%"></iframe>');
 
         $doms.container.attr("width", "100%").attr("height", "100%");
     }
@@ -48,12 +48,14 @@
     {
         $("#scene-container").append($doms.container);
 
+        $('body').toggleClass("inner-scroll", true);
+
         self.resize();
 
-        $("#logo").toggleClass("roulette-mode", true);
-        $("#menu").find(".icon").toggleClass("roulette-mode", true);
-        $("body").toggleClass("roulette-mode", true);
-        $(".footer").toggleClass("roulette-mode", true);
+        //$("#logo").toggleClass("roulette-mode", true);
+        //$("#menu").find(".icon").toggleClass("roulette-mode", true);
+        //$("body").toggleClass("roulette-mode", true);
+        //$(".footer").toggleClass("roulette-mode", true);
 
 
         Menu.show();
@@ -77,10 +79,12 @@
         tl.to($doms.container, .4, {autoAlpha: 0});
         tl.add(function ()
         {
-            $("#logo").toggleClass("roulette-mode", false);
-            $("#menu").find(".icon").toggleClass("roulette-mode", false);
-            $("body").toggleClass("roulette-mode", false);
-            $(".footer").toggleClass("roulette-mode", false);
+            //$("#logo").toggleClass("roulette-mode", false);
+            //$("#menu").find(".icon").toggleClass("roulette-mode", false);
+            //$("body").toggleClass("roulette-mode", false);
+            //$(".footer").toggleClass("roulette-mode", false);
+
+            $('body').toggleClass("inner-scroll", false);
             $doms.container.detach();
             cb.apply();
         });

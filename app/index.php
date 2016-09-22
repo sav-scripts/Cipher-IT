@@ -41,6 +41,7 @@ $picture = $pictures[$shareType];
     <title>探索秘酩之謎</title>
     <link rel="icon" href="misc/icon.png" type="image/x-icon"/>
     <meta charset="UTF-8">
+    <meta name="description" content="<?= $description ?>">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -152,9 +153,9 @@ $picture = $pictures[$shareType];
                     <div class="item-6"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-7"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-8"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-9 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-10 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-11 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-9"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-10"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-11"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-12"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-13"><div class="normal-state"></div><div class="hover-state"></div></div>
                 </div>
@@ -227,6 +228,7 @@ $picture = $pictures[$shareType];
     <script src="js/StoryRule.js"></script>
     <script src="js/HappyEnd.js"></script>
     <script src="js/Roulette.js"></script>
+    <script src="js/Notes.js"></script>
     <script src="js/Participate.js"></script>
     <script src="js/ParticipateRule.js"></script>
     <script src="js/CustomCamera.js"></script>

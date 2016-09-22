@@ -45,6 +45,11 @@
             hide(cb);
         },
 
+        executeAfterPopupClosed: function()
+        {
+            Menu.show();
+        },
+
         resize: function ()
         {
             if(_isInit)
@@ -124,6 +129,8 @@
 
         $("#scene-container").append($doms.container);
 
+        $('body').toggleClass("inner-scroll", true);
+
         self.resize();
 
         ScalableContent.updateResizeAble();
@@ -160,6 +167,7 @@
         tl.add(function ()
         {
             $doms.container.detach();
+            $('body').toggleClass("inner-scroll", false);
             cb.apply();
         });
     }

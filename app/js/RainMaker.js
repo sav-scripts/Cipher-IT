@@ -3,16 +3,16 @@
  */
 (function(){
 
-    var _range = 200,
-        _speed = 50,
-        _cameraAlpha = 0;
+    var _range = 130,
+        _rate = 1000,
+        _speed = 50;
 
     window.RainMaker =
     {
         init: function(scene)
         {
             //return;
-            var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+            var particleSystem = new BABYLON.ParticleSystem("particles", _rate, scene);
             particleSystem.particleTexture = new BABYLON.Texture("textures/rain-drop.png?v=1232", scene);
 
             particleSystem.minSize = 20.0;
@@ -23,7 +23,7 @@
             particleSystem.minEmitPower = 50.5;
             //particleSystem.maxEmitPower = 6.0;
             particleSystem.emitter = new BABYLON.Vector3(0, 50, 0);
-            particleSystem.emitRate = 2000;
+            particleSystem.emitRate = _rate;
             particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
             //particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
             particleSystem.direction1 = new BABYLON.Vector3(0, -_speed, 0);
@@ -40,6 +40,11 @@
             particleSystem.renderingGroupId = 2;
 
             //particleSystem.minAngularSpeed = 1;
+
+            //particleSystem.startDirectionFunction = function(emitPower, worldMatrix, directionToUpdate)
+            //{
+            //    BABYLON.Vector3.TransformNormalFromFloatsToRef(0, -_speed*emitPower, 0, worldMatrix, directionToUpdate);
+            //};
 
             particleSystem.start();
 
