@@ -353,6 +353,12 @@
 
         tl.to($doms.leftContent,.8, {autoAlpha:1, x:0, ease:Back.easeOut}, t);
         tl.to($doms.btnPlay,.8, {autoAlpha:1, x:0, ease:Back.easeOut}, t + .3);
+
+        //tl.add(function()
+        //{
+        //    $doms.btnSkip.toggleClass("hide-mode", true);
+        //}, "-=1.5");
+
         tl.add(function()
         {
             if(_isActive)

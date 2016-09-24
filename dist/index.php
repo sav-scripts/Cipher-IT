@@ -64,7 +64,7 @@ $picture = $pictures[$shareType];
     <!--<meta id="myViewport" name="viewport" content="width=640,user-scalable=1">-->
     <!--<meta id="myViewport" name="viewport" content="width=device-width">-->
 
-    <link rel="stylesheet" href="styles/main.795031de5467705f742d.css">
+    <link rel="stylesheet" href="styles/main.eee05c76e4bd5439a67a.css">
 
 </head>
 
@@ -173,6 +173,8 @@ $picture = $pictures[$shareType];
 
     <div class="footer"></div>
 
+    <div class="safety-text"></div>
+
     <div id="rotate-screen-hint" class="hide-mode">
         <div class="pic"></div>
     </div>
@@ -195,6 +197,6 @@ $picture = $pictures[$shareType];
     <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
     <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/optimized.0515cf6d48293134d7a1.js"></script>
+    <script src="js/optimized.bb68be6aa02b4b94f97d.js"></script>
 </body>
 </html>

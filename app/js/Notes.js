@@ -83,7 +83,9 @@
                 var vp = Main.settings.viewport;
                 var $section = $doms['section-10'];
 
-                var minMb = vp.height * .1 + 20,
+                var bottomBleed = vp.index == 0? 50: 300;
+
+                var minMb = vp.height * .1 + bottomBleed,
                     mb = vp.height - $section.height() - getTopBleed();
 
                 if(mb < minMb) mb = minMb;

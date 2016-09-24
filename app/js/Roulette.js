@@ -30,7 +30,19 @@
 
         resize: function ()
         {
-
+            //if(_isInit)
+            //{
+            //    var vp = Main.settings.viewport;
+            //
+            //    var bleed = 100,
+            //        contentWidth = 1200,
+            //        contentHeight = 677;
+            //
+            //    var bound = Helper.getSize_contain(vp.width-bleed, vp.height *.9 - 180, contentWidth, contentHeight);
+            //    console.log(bound);
+            //    $doms.container.css('width', bound.width).css('height', bound.height).css("left", "50%").css("top", "45%").css("margin-left", -bound.width *.5).css("margin-top", -bound.height *.5 + 40);
+            //
+            //}
         }
     };
 
@@ -40,6 +52,9 @@
         //var iframeUrl = 'http://cipher-demo.gl-azhdanov.demo.terricone.com/?language=tw&country=tw';
         var iframeUrl = 'https://cipherapp.theglenlivet.com/?language=tw&country=tw';
         $doms.container = $('<iframe id="roulette" src="'+iframeUrl+'" width="100%" height="100%"></iframe>');
+
+
+
 
         $doms.container.attr("width", "100%").attr("height", "100%");
     }

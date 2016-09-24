@@ -173,6 +173,8 @@ $picture = $pictures[$shareType];
 
     <div class="footer"></div>
 
+    <div class="safety-text"></div>
+
     <div id="rotate-screen-hint" class="hide-mode">
         <div class="pic"></div>
     </div>

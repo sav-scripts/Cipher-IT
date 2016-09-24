@@ -535,6 +535,22 @@ body{
     }
 }
 
+/** safety text **/
+.safety-text{
+    position: fixed;
+    .image-bg('notes/safety_txt_m.png');
+    @w: 164px;
+    @h: 11px;
+
+    width: @w;
+    height: @h;
+
+    bottom: calc(~"10vh + 20px");
+    right: 15px;
+
+    z-index: 99;
+}
+
 /** landing page **/
 #landing-page{
     position: absolute;

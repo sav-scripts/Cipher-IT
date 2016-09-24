@@ -860,6 +860,17 @@ body.no-scroll-mode {
 .footer.menu-open-mode {
   margin-left: -363px;
 }
+/** safety text **/
+.safety-text {
+  position: fixed;
+  background-image: url("../images/notes/safety_txt_m.png");
+  background-size: auto;
+  width: 164px;
+  height: 11px;
+  bottom: calc(10vh + 20px);
+  right: 15px;
+  z-index: 99;
+}
 /** landing page **/
 #landing-page {
   position: absolute;
@@ -3319,8 +3330,8 @@ body.no-scroll-mode {
 }
 #intro .btn-skip {
   position: absolute;
-  right: 70px;
-  bottom: 40px;
+  right: 19px;
+  bottom: 70px;
   width: 77px;
   height: 20px;
   background-image: url("../images/intro-btn-skip.png");
@@ -7755,9 +7766,9 @@ body.no-scroll-mode {
 }
 /** roulette **/
 #roulette {
-  position: static;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 90%;
   border: none;
 }
 /** notes **/
@@ -8319,6 +8330,16 @@ body.no-scroll-mode {
   margin-right: auto;
   background-image: url("../images/notes/section-10.jpg");
   background-size: auto;
+}
+#notes .barrel {
+  position: absolute;
+  background-image: url("../images/notes/barrel.png");
+  background-size: auto;
+  width: 2020px;
+  height: 291px;
+  bottom: 10vh;
+  left: 50%;
+  margin-left: -1010px;
 }
 @media (max-width: 640px) {
   #scene-container {
@@ -10538,11 +10559,11 @@ body.no-scroll-mode {
   }
   #notes .top-menu .my-logo {
     position: absolute;
-    top: 34px;
+    top: 36px;
     left: 50%;
-    margin-left: -154px;
-    width: 306px;
-    height: 30px;
+    margin-left: -153px;
+    width: 303px;
+    height: 24px;
     background-image: url("../images/notes/logo.m.png");
     background-size: auto;
   }
@@ -10898,7 +10919,6 @@ body.no-scroll-mode {
     width: 100%;
     top: 0;
     left: 7px;
-    opacity: .5;
     overflow-x: hidden;
   }
   #notes .sections .section:nth-child(1) {
@@ -11010,6 +11030,9 @@ body.no-scroll-mode {
     margin-right: auto;
     background-image: url("../images/notes/section-10m.jpg");
     background-size: auto;
+  }
+  #notes .barrel {
+    display: none;
   }
 }
 @media (max-width: 640px) and (min-height: 950px) {
