@@ -9,7 +9,7 @@
         _isHiding = true,
         _ba,
         _firstTimeHide = true,
-        _dialogText = '<span>嫌犯棄車匆匆逃逸，在現場掉了一把刻有</span><span class="green">Ｃ的鑰匙</span><span>，這也許是某種線索</span>';
+        _dialogText = '<span>嫌犯棄車匆匆逃逸，在現場掉了一把刻有</span><span class="green">Ｃ的鑰匙</span><span>，請用這把鑰匙找出下一個線索</span>';
 
     var self = window.Story.Key=
     {

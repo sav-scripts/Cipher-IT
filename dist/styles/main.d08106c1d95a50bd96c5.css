@@ -870,6 +870,10 @@ body.no-scroll-mode {
   bottom: calc(10vh + 20px);
   right: 15px;
   z-index: 99;
+  transition: right 0.4s ease-out;
+}
+.safety-text.scroll-mode {
+  right: 35px;
 }
 /** landing page **/
 #landing-page {
@@ -4609,6 +4613,15 @@ body.no-scroll-mode {
   visibility: hidden;
   transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;
 }
+#story .phone-popup .content .quez-container .hint-line {
+  position: absolute;
+  left: -142%;
+  top: -171%;
+  width: 245%;
+  height: 261%;
+  background-image: url("../images/story-phone-hint-line.png");
+  background-size: cover;
+}
 #story .phone-popup .content .quez-container .numbers {
   position: absolute;
   width: 100%;
@@ -7764,6 +7777,95 @@ body.no-scroll-mode {
     transform: rotate(90deg);
   }
 }
+/** winners **/
+#winners {
+  position: fixed;
+  width: 100%;
+  height: 90%;
+  z-index: 20;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: black;
+}
+#winners .container {
+  position: absolute;
+  width: 1200px;
+  height: 1977px;
+  left: 50%;
+  margin-left: -600px;
+}
+#winners .container .content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1200px;
+  height: 1977px;
+  background-image: url("../images/winners-pic.jpg");
+  background-size: auto;
+}
+#winners .btn-close {
+  position: absolute;
+  width: 53px;
+  height: 53px;
+  right: 16px;
+  top: 16px;
+  background-color: #3b3b3b;
+  z-index: 100;
+  position: fixed;
+  right: 30px;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+#winners .btn-close.showing-mode {
+  opacity: 1;
+}
+#winners .btn-close .btn-close-x {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  background-image: url("../images/btn-close-x.png");
+  background-size: auto;
+  left: 50%;
+  top: 50%;
+  margin-left: -8.5px;
+  margin-top: -8.5px;
+  transform-origin: center center;
+  transition: transform 0.4s ease-out;
+}
+#winners .btn-close:hover {
+  cursor: pointer;
+}
+#winners .btn-close:hover .btn-close-x {
+  transform: rotate(90deg);
+}
+@media (max-width: 640px) {
+  #winners .btn-close {
+    position: fixed;
+    width: 71px;
+    height: 71px;
+    right: 14px;
+    top: 14px;
+  }
+  #winners .btn-close.showing-mode {
+    opacity: 1;
+  }
+  #winners .btn-close .btn-close-x {
+    width: 21px;
+    height: 21px;
+    background-image: url("../images/btn-close-x.png");
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-left: -10.5px;
+    margin-top: -10.5px;
+  }
+  #winners .btn-close:hover {
+    cursor: pointer;
+  }
+  #winners .btn-close:hover .btn-close-x {
+    transform: rotate(90deg);
+  }
+}
 /** roulette **/
 #roulette {
   position: fixed;
@@ -10526,6 +10628,75 @@ body.no-scroll-mode {
     cursor: pointer;
   }
   #story-rule .btn-close:hover .btn-close-x {
+    transform: rotate(90deg);
+  }
+  /** winners **/
+  #winners {
+    position: fixed;
+    width: 640px;
+    height: 90%;
+    z-index: 10;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  #winners .top-bar {
+    position: fixed;
+    z-index: 11;
+    width: 640px;
+    height: 101px;
+    top: -101px;
+    visibility: hidden;
+    transition: top 0.5s ease-out, visibility 0s linear 0.5s;
+    background-image: url("../images/participate-top-bar.m.png");
+    background-size: auto;
+  }
+  #winners .top-bar.open-mode {
+    top: 0;
+    transition-delay: 0s;
+    visibility: visible;
+  }
+  #winners .container {
+    width: 640px;
+    height: 3437px;
+    margin-left: -320px;
+  }
+  #winners .container .content {
+    width: 640px;
+    height: 3437px;
+    background-image: url("../images/winners-pic.m.jpg");
+    background-size: auto;
+  }
+  #winners .btn-close {
+    position: fixed;
+    width: 71px;
+    height: 71px;
+    right: 14px;
+    top: 14px;
+    background-color: #3b3b3b;
+    z-index: 12;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+  #winners .btn-close.showing-mode {
+    opacity: 1;
+  }
+  #winners .btn-close .btn-close-x {
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    background-image: url("../images/btn-close-x.png");
+    background-size: cover;
+    left: 50%;
+    top: 50%;
+    margin-left: -10.5px;
+    margin-top: -10.5px;
+    transform-origin: center center;
+    transition: transform 0.4s ease-out;
+  }
+  #winners .btn-close:hover {
+    cursor: pointer;
+  }
+  #winners .btn-close:hover .btn-close-x {
     transform: rotate(90deg);
   }
   /** notes **/

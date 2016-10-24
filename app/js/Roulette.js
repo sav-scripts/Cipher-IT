@@ -72,7 +72,7 @@
 
 
         Menu.show();
-        Menu.Logo._show();
+        //Menu.Logo._show();
 
         var tl = new TimelineMax;
         tl.set($doms.container, {autoAlpha: 0});
@@ -86,7 +86,7 @@
     function hide(cb)
     {
         Menu.hide();
-        Menu.Logo._hide();
+        //Menu.Logo._hide();
 
         var tl = new TimelineMax;
         tl.to($doms.container, .4, {autoAlpha: 0});

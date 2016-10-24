@@ -1035,6 +1035,97 @@
         }
     }
 
+    /** winners **/
+    #winners{
+        position: fixed;
+        width: 640px;
+        height: 90%;
+
+        z-index: 10;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        .top-bar{
+            position: fixed;
+            z-index: 11;
+            width: 640px;
+            height: 101px;
+
+            top:-101px;
+
+            visibility: hidden;
+            transition: top .5s ease-out,visibility .0s linear .5s;
+
+            .image-bg("participate-top-bar.m.png");
+
+            &.open-mode{
+                top:0;
+                transition-delay: 0s;
+                visibility: visible;
+            }
+        }
+
+        .container{
+            @w: 640px;
+            @h: 3437px;
+
+            width: @w;
+            height: @h;
+
+            margin-left: -@w * .5;
+
+            .content{
+                width: @w;
+                height: @h;
+                .image-bg("winners-pic.m.jpg");
+
+            }
+        }
+
+        .btn-close{
+            position: fixed;
+            width: 71px;
+            height: 71px;
+            right: 14px;
+            top: 14px;
+            background-color: #3b3b3b;
+
+            z-index: 12;
+
+            opacity: 0;
+            transition: opacity .4s ease-out;
+
+            &.showing-mode{
+                opacity: 1;
+            }
+
+            .btn-close-x{
+                position: absolute;
+                width: 21px;
+                height:21px;
+                .image-bg("btn-close-x.png", cover);
+                left:50%;
+                top:50%;
+                margin-left: -10.5px;
+                margin-top: -10.5px;
+
+                transform-origin: center center;
+                transition: transform .4s ease-out;
+            }
+
+            &:hover{
+
+                cursor: pointer;
+
+                .btn-close-x{
+                    transform: rotate(90deg);
+                }
+            }
+
+        }
+    }
+
     /** notes **/
     #notes{
         position: static;

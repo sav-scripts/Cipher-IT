@@ -92,12 +92,14 @@
             "/Participate/Product",
             "/Participate/Form",
 
+            "/Winners",
+
             "/ParticipateRule",
             "/StoryRule"
         ],
 
         firstHash: '',
-        defaultHash: '/Intro',
+        defaultHash: '/Winners',
 
         init: function()
         {

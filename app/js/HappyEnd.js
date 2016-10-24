@@ -215,7 +215,7 @@
             */
 
             _isFail = true;
-            SceneHandler.toHash("/HappyEnd/Form");
+            //SceneHandler.toHash("/HappyEnd/Form");
 
             if(!FB) return;
             FB.ui
@@ -228,6 +228,10 @@
                 {
                 }
             );
+
+            alert("抽獎活動已結束，謝謝您的參與");
+            //SceneHandler.toHash("/HappyEnd/Form");
+            SceneHandler.toHash("/Participate/Product");
         });
     }
 
@@ -260,7 +264,6 @@
             */
 
             _isFail = false;
-            SceneHandler.toHash("/HappyEnd/Form");
 
             if(!FB) return;
             FB.ui
@@ -273,6 +276,10 @@
                 {
                 }
             );
+
+            alert("抽獎活動已結束，謝謝您的參與");
+            //SceneHandler.toHash("/HappyEnd/Form");
+            SceneHandler.toHash("/Participate/Product");
         });
 
 

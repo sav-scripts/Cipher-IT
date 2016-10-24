@@ -148,7 +148,7 @@ $picture = $pictures[$shareType];
                     <div class="item-1"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-2"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-3"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-4 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-4"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-5"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-6"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-7"><div class="normal-state"></div><div class="hover-state"></div></div>
@@ -233,6 +233,7 @@ $picture = $pictures[$shareType];
     <script src="js/Notes.js"></script>
     <script src="js/Participate.js"></script>
     <script src="js/ParticipateRule.js"></script>
+    <script src="js/Winners.js"></script>
     <script src="js/CustomCamera.js"></script>
     <script src="js/RainMaker.js"></script>
     <script src="js/PostProcessLib.js"></script>

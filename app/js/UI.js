@@ -46,6 +46,11 @@
                 SceneHandler.toHash("/StoryRule");
             });
 
+            setupButton(4, 'winners', function()
+            {
+                SceneHandler.toHash("/Winners");
+            });
+
             setupButton(6, 'participate to part2', function()
             {
                 //Participate.toContent('part2');
@@ -66,6 +71,14 @@
             setupButton(10, 'Roulette', function()
             {
                 //SceneHandler.toHash("/Roulette");
+
+                //function isFacebookApp() {
+                //    var ua = navigator.userAgent || navigator.vendor || window.opera;
+                //    return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
+                //}
+                //
+                //alert("is fb app = " + isFacebookApp());
+                //return;
 
 
                 var cipherBase = 'https://cipherapp.theglenlivet.com',

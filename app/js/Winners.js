@@ -3,7 +3,7 @@
     var $doms = {},
         _isInit = false;
 
-    var self = window.StoryRule =
+    var self = window.Winners =
     {
         _isPopup: true,
 
@@ -38,7 +38,6 @@
         hide: function (cb)
         {
             $doms.container.unbind("scroll", updateScrollTop);
-
             //Menu.show();
             $doms.btnClose.toggleClass("showing-mode", false);
 
@@ -70,7 +69,7 @@
     {
         var templates =
             [
-                {url: "_story_rule.html", startWeight: 0, weight: 100, dom: null}
+                {url: "_winners.html", startWeight: 0, weight: 100, dom: null}
             ];
 
         SceneHandler.loadTemplate(null, templates, function loadComplete()
@@ -85,14 +84,21 @@
     function build(templates)
     {
         $("#invisible-container").append(templates[0].dom);
-        $doms.container = $("#story-rule");
+        $doms.container = $("#winners");
 
         $doms.contentContainer = $doms.container.find(".container");
         $doms.topBar = $doms.container.find(".top-bar");
 
         $doms.btnClose = $doms.container.find(".btn-close").on(_CLICK_, function()
         {
-            SceneHandler.toLastHash();
+            if(SceneHandler.getLastHash() == "/LandingPage")
+            {
+                SceneHandler.toHash("/Intro");
+            }
+            else
+            {
+                SceneHandler.toLastHash();
+            }
         });
 
         $doms.container.detach();

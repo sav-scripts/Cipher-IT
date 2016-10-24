@@ -69,15 +69,16 @@ function get_lottery_data()
 
     if($mode == 'view')
     {
-        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` ".$limit;
+//        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` ".$limit;
+        $sql = "SELECT SQL_CALC_FOUND_ROWS *, COUNT(1) as NUM FROM `lottery` GROUP BY `phone` ".$limit;
     }
     else if($mode == 'lottery_success')
     {
-        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` WHERE `lottery`.`is_fail` = 0 GROUP BY `phone` ORDER BY rand() ".$limit;
+        $sql = "SELECT SQL_CALC_FOUND_ROWS *, COUNT(1) as NUM FROM `lottery` WHERE `lottery`.`is_fail` = 0 GROUP BY `phone` ORDER BY rand() ".$limit;
     }
     else if($mode == 'lottery_all')
     {
-        $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM `lottery` GROUP BY `phone` ORDER BY rand() ".$limit;
+        $sql = "SELECT SQL_CALC_FOUND_ROWS *, COUNT(1) as NUM FROM `lottery` GROUP BY `phone` ORDER BY rand() ".$limit;
     }
     else
     {

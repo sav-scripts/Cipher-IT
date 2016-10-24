@@ -64,7 +64,7 @@ $picture = $pictures[$shareType];
     <!--<meta id="myViewport" name="viewport" content="width=640,user-scalable=1">-->
     <!--<meta id="myViewport" name="viewport" content="width=device-width">-->
 
-    <link rel="stylesheet" href="styles/main.eee05c76e4bd5439a67a.css">
+    <link rel="stylesheet" href="styles/main.d08106c1d95a50bd96c5.css">
 
 </head>
 
@@ -148,7 +148,7 @@ $picture = $pictures[$shareType];
                     <div class="item-1"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-2"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-3"><div class="normal-state"></div><div class="hover-state"></div></div>
-                    <div class="item-4 hide-mode"><div class="normal-state"></div><div class="hover-state"></div></div>
+                    <div class="item-4"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-5"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-6"><div class="normal-state"></div><div class="hover-state"></div></div>
                     <div class="item-7"><div class="normal-state"></div><div class="hover-state"></div></div>
@@ -197,6 +197,6 @@ $picture = $pictures[$shareType];
     <script src="js/lib/jquery.detectmobilebrowser.min.js"></script>
     <script src="js/lib/jquery.lettering-0.6.1.min.js"></script>
 
-    <script src="js/optimized.bb68be6aa02b4b94f97d.js"></script>
+    <script src="js/optimized.b4fa3255e8173011e25a.js"></script>
 </body>
 </html>

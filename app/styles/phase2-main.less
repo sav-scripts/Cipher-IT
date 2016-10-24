@@ -703,6 +703,19 @@
                     }
                 }
 
+                .hint-line{
+
+                    .percent-div(none, -142, -171, 245, 261, "story-phone-hint-line.png");
+
+//                    @keyframes fade-loop {
+//                        0%   { opacity: 0; }
+//                        50%   { opacity: 1; }
+//                        100% { opacity: 0; }
+//                    }
+//
+//                    animation: fade-loop 2s infinite;
+                }
+
                 .numbers{
                     .percent-container(absolute, 100%, 100%,-195%, -224%);
 
@@ -1579,6 +1592,44 @@
             width: @w;
             height: @h;
             .image-bg("story-rule-content.png");
+
+        }
+    }
+
+    .common-btn-close(true);
+}
+
+/** winners **/
+#winners{
+    position: fixed;
+    width: 100%;
+    height: 90%;
+
+    z-index: 20;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    //.image-bg("winners-pic.jpg", cover);
+    background-color:black;
+
+    .container{
+        @w: 1200px;
+        @h: 1977px;
+        position: absolute;
+        width: @w;
+        height: @h;
+
+        left:50%;
+        margin-left: -@w * .5;
+
+        .content{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: @w;
+            height: @h;
+            .image-bg("winners-pic.jpg");
 
         }
     }

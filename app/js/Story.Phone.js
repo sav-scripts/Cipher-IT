@@ -55,19 +55,20 @@
                 }
             });
 
-            $doms.cLetter = $doms.container.find(".c-letter").css("visibility", "hidden");
+            //$doms.cLetter = $doms.container.find(".c-letter").css("visibility", "hidden");
+            $doms.cLetter = $doms.container.find(".hint-line").css("visibility", "hidden");
 
-            var tl = _tlPlayHint = new TimelineMax;
+            var tl = _tlPlayHint = new TimelineMax({repeat:-1});
             tl.set($doms.cLetter, {autoAlpha:0});
-            tl.to($doms.cLetter, 1.5, {autoAlpha:1, ease:Power1.easeInOut});
-            tl.to($doms.cLetter, 1.5, {autoAlpha:0, ease:Power1.easeInOut});
+            tl.to($doms.cLetter, .9, {autoAlpha:1, ease:Power1.easeInOut});
+            tl.to($doms.cLetter, .9, {autoAlpha:0, ease:Power1.easeInOut});
             tl.pause();
 
             tl = _tlPlayHintTimer = new TimelineMax;
             tl.add(function()
             {
                 _tlPlayHint.restart();
-            }, 15);
+            }, 10);
             tl.pause();
 
             setupQuez();
@@ -86,6 +87,8 @@
 
             _btnCloseClicked = false;
             _isLocking = false;
+
+            _tlPlayHint.progress(0).pause();
 
             //Story.ObjectManager.clearObject("/Phone");
             if(Story.Evidences.unlockEvidence("/Phone"))
@@ -279,6 +282,7 @@
         if(_isDetecting) return;
         _isDetecting = true;
 
+        _tlPlayHint.progress(0).pause();
         _tlPlayHintTimer.restart();
         $doms.container.on("pointerdown", detectDrag);
     }
@@ -376,7 +380,7 @@
 
         function reset()
         {
-            _tlPlayHintTimer.restart();
+            //_tlPlayHintTimer.restart();
             $doms.wrong._play();
 
             var i, $num;
